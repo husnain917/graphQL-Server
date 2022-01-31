@@ -7,51 +7,122 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Toolbar, IconButton, Typography, Tooltip, Hidden } from '@mui/material';
-import moment from 'moment';
-//Import from Files
-import { ReservartionTableStyle } from './TableStyle';
+import SearchIcon from '@mui/icons-material/Search'
 
-export default function ReservationTable({
-  tickets = { tickets },
-  searchingFor = { searchingFor },
-  searchQuery = { searchQuery },
-  modalHandler = { modalHandler },
-  updateHandler = { updateHandler } }) {
+//Import from Files
+import GlobalSearch from '../globalSearch/GlobalSearch';
+import { TableStyle } from './TableStyle';
+import { UseTable } from './UseTable';
+
+
+export default function Table({ data , title }) {
+
+  const [{ searchShow, setSearchShow, searchQuery, onTextChangeHandler, cancelSearch, searchingFor }] = UseTable();
+
   return (
     <>
+      <Toolbar disableGutters>
+        <TableStyle.BoxElement style={{ backgroundColor: '#0D4cb5', color: 'white' }} searchShow  >
+          <Hidden smDown>
+            <TableStyle.SeachContainer >
+              <Typography
+                variant="h6"
+                component="div"
+                noWrap={true}
+              >
+                {title}
+              </Typography>
+              <GlobalSearch
+                onChangeText={onTextChangeHandler}
+                placeholder="Search here..."
+                searchCancel={cancelSearch}
+              />
+            </TableStyle.SeachContainer>
+          </Hidden>
+
+
+          <Hidden smUp>
+            <Box sx={{ display: searchShow ? 'block' : 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography
+                variant="h6"
+                component="div"
+                noWrap={true}
+                sx={{ display: searchShow && 'none' }}
+              >
+                All Students
+              </Typography>
+              {
+                searchShow &&
+                <TableStyle.SearchBox  >
+                  <GlobalSearch
+                    onChangeText={onTextChangeHandler}
+                    placeholder="Search here..."
+                    searchCancel={cancelSearch}
+                  />
+                  <IconButton
+                    disableFocusRipple
+                    disableRipple
+                    onClick={(val) => { setSearchShow(!searchShow); cancelSearch(val) }}
+                  >
+                    <TableStyle.CloseIconBox>
+                      <TableStyle.CloseIcon fontSize='small' />
+                    </TableStyle.CloseIconBox>
+                  </IconButton>
+                </TableStyle.SearchBox>
+              }
+              {
+                !searchShow &&
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  aria-label="search"
+                  disableFocusRipple
+                  disableRipple
+                  onClick={() => setSearchShow(!searchShow)}
+                >
+                  <SearchIcon />
+                </IconButton>
+              }
+
+            </Box>
+          </Hidden>
+        </TableStyle.BoxElement>
+      </Toolbar>
       <TableContainer component={Paper} >
-        <ReservartionTableStyle.CustomTable size="small" aria-label="a dense table">
+        <TableStyle.CustomTable size="small" aria-label="a dense table">
           <TableHead >
             <TableRow>
-              <TableCell>PNR</TableCell>
-              <TableCell align="center">PAX</TableCell>
-              <TableCell align="center">Expiry</TableCell>
-              <TableCell align="center">Airlines</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell align="center">Email</TableCell>
+              <TableCell align="center">Status</TableCell>
+              <TableCell align="center">Phone</TableCell>
+              <TableCell align="center">Image</TableCell>
               <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {tickets
+            {data
               .filter(
                 searchingFor(searchQuery),
               )
               .map((row, index) => (
-                <ReservartionTableStyle.CustomTableRow
+                <TableStyle.CustomTableRow
                   key={row.name}
                 >
                   <TableCell component="th" scope="row">
-                    {row.pnr}
+                    {row.name}
                   </TableCell>
-                  <TableCell align="center">{row.pax}</TableCell>
-                  <TableCell align="center">{moment(row.expiryDateAndTime).format('DD-MMM-YY hh:mm A')}</TableCell>
-                  <TableCell align="center">{row.airline}</TableCell>
+                  <TableCell align="center">{row?.email}</TableCell>
+                  <TableCell align="center">{row?.status}</TableCell>
+                  <TableCell align="center">{row?.phone}</TableCell>
+                  <TableCell align="center">{row?.image}</TableCell>
                   <TableCell align="center">
                     <Tooltip title='Delete'>
                       <IconButton
                         aria-label='delete'
                         size='small'
                       >
-                        <ReservartionTableStyle.DeleteIcon onClick={() => modalHandler(row.id, row.cronDataId)} />
+                        <TableStyle.DeleteIcon/>
                       </IconButton>
 
                     </Tooltip>
@@ -59,16 +130,15 @@ export default function ReservationTable({
                       <IconButton
                         aria-label='update'
                         size='small'
-                        onClick={() => updateHandler(row, index)}
                       >
-                        <ReservartionTableStyle.EditIcon />
+                        <TableStyle.EditIcon />
                       </IconButton>
                     </Tooltip>
                   </TableCell>
-                </ReservartionTableStyle.CustomTableRow>
+                </TableStyle.CustomTableRow>
               ))}
           </TableBody>
-        </ReservartionTableStyle.CustomTable>
+        </TableStyle.CustomTable>
       </TableContainer>
     </>
   );

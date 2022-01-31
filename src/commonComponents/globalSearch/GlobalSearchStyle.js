@@ -2,7 +2,7 @@
 import { styled, alpha } from '@mui/material/styles';
 
 import InputBase from '@mui/material/InputBase';
-import { colors } from '../../constants/Color';
+import { colors } from '../constants/Color';
 
 export const Search = styled('div')(({ theme }) => ({
     position: 'relative',

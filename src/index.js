@@ -3,11 +3,25 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import client from './lib/ApolloClient'
+import {
+  ApolloProvider,
+  gql
+} from "@apollo/client";
+client
+  .query({
+    query: gql`
+    query GetRates {
+      rates(currency: "USD") {
+        currency
+      }
+    }
+     `
+  })
 ReactDOM.render(
-  <React.StrictMode>
+  <ApolloProvider client={client}>
     <App />
-  </React.StrictMode>,
+  </ApolloProvider>,
   document.getElementById('root')
 );
 

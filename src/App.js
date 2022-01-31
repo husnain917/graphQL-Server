@@ -1,17 +1,15 @@
 import './App.css';
-import Sidebar from './components/sidebar/Sidebar';
-import AllAdmins from './modules/adminPortal/allAdmins/AllAdmins';
-import AllStudents from './modules/adminPortal/allStudents/AllStudents';
-import AllTeachers from './modules/adminPortal/allTeachers/AllTeachers';
+import { BrowserRouter as Router} from "react-router-dom";
+import ScrollToTop from './navigation/ScrollToTop';
+import Navigation from './navigation/Navigation';
 
 function App() {
   return (
-    <div>
-      <Sidebar >
-        {/* <AllStudents /> */}
-        {/* <AllTeachers /> */}
-        <AllAdmins />
-      </Sidebar>
+    <div className="App">
+      <Router>
+        <ScrollToTop />
+        <Navigation />
+      </Router>
     </div>
   );
 }

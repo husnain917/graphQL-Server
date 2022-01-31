@@ -2,7 +2,10 @@ import { Box, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
-import { colors } from '../../commonComponents/constants/Color'
+import { colors } from '../../commonComponents/constants/Color';
+import { Link } from "react-router-dom";
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 const drawerWidth = 240;
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -33,10 +36,11 @@ export const SidebarStyle = {
   AppBar: styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
   })(({ theme, open }) => ({
+    backgroundColor:colors.lightBlue,
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: theme.transitions.duration.leavingScreen
     }),
     [theme.breakpoints.up('sm')]: {
       ...(open && {
@@ -87,7 +91,7 @@ export const SidebarStyle = {
     marginRight: 30,
   })),
   //Drawer + Image Wrapper
-  DrawerHeader : styled('div')(({ theme }) => ({
+  DrawerHeader: styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -111,5 +115,17 @@ export const SidebarStyle = {
       padding: theme.spacing(1),
     },
   })),
+    // ===================== Sidebar Links =====================
 
+  DomLink: styled(Link)(() => ({
+    display: 'flex',
+    textDecoration: 'none'
+  })),
+  ListItemIconTag: styled(ListItemIcon)(() => ({
+    color: '#145DA0'
+  })),
+  ListItemTextTag: styled(ListItemText)(() => ({
+    color: colors.black + 90,
+    marginLeft: -2
+  })),
 };

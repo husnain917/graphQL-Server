@@ -19,7 +19,7 @@ export const UseDrawer = () => {
         {
             text: 'Dashboard',
             icon: <Dashboard />,
-            path: '/',
+            path: '/dashboard',
         },
         {
             text: 'Admins',
@@ -74,7 +74,7 @@ export const UseDrawer = () => {
         {
             text: 'Logout',
             icon: <ExitToApp />,
-            path: '/logout'
+            path: '/login'
         },
     ];
 

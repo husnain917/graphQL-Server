@@ -6,13 +6,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import { UseDrawer } from './UseSidebar';
 import { SidebarStyle } from './SidebarStyle';
 import logo from '../../assets/logo.png'
 import { Divider } from '@mui/material';
-
+import { useLocation  } from 'react-router-dom';
 const drawerWidth = 240;
 function Sidebar(props) {
     const [{
@@ -21,20 +19,27 @@ function Sidebar(props) {
         handleDrawer
     }] = UseDrawer()
     const { window } = props;
-    const anchorRef = React.useRef(null)
+    const location = useLocation();
+    const anchorRef = React.useRef(null);
     const container = window !== undefined ? () => window().document.body : undefined;
     //List Item 
     const renderSidebarItems = (item, index) => {
         return (
             <>
-                <ListItem
-                    key={index}
-                    ref={anchorRef}
-                    button
-                >
-                    <ListItemIcon >{item.icon}</ListItemIcon>
-                    <ListItemText primary={item.text} />
-                </ListItem>
+                <SidebarStyle.DomLink to={item?.path}>
+                    <ListItem
+                        key={index}
+                        ref={anchorRef}
+                        button
+                        onClick={handleDrawer}
+                        sx={location?.pathname === item?.path ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
+
+                    >
+                        <SidebarStyle.ListItemIconTag >{item?.icon}</SidebarStyle.ListItemIconTag>
+                        <SidebarStyle.ListItemTextTag primary={item?.text} />
+                    </ListItem>
+                </SidebarStyle.DomLink>
+                <Divider />
             </>
         );
     };

@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Toolbar, IconButton, Typography, Tooltip, Hidden } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search'
-
+import {colors} from '../constants/Color';
 //Import from Files
 import GlobalSearch from '../globalSearch/GlobalSearch';
 import { TableStyle } from './TableStyle';
@@ -22,7 +22,7 @@ export default function Table({ data , title }) {
   return (
     <>
       <Toolbar disableGutters>
-        <TableStyle.BoxElement style={{ backgroundColor: '#0D4cb5', color: 'white' }} searchShow  >
+        <TableStyle.BoxElement style={{ backgroundColor:colors.lightBlue, color: 'white' }} searchShow  >
           <Hidden smDown>
             <TableStyle.SeachContainer >
               <Typography

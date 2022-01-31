@@ -13,7 +13,10 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-loader-spinner": "^5.1.0",
+<<<<<<< HEAD
+=======
     "react-router-dom": "^6.2.1",
+>>>>>>> c8cca5b22d19825e102b7db23ec67c28a4bfd151
     "react-scripts": "5.0.0",
     "react-toastify": "^8.1.0",
     "web-vitals": "^2.1.4"

@@ -3,7 +3,7 @@ import { styled, alpha } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { Close, Delete, Edit } from '@mui/icons-material'
 import { TableRow, Table } from '@mui/material';
-export const ReservartionTableStyle = {
+export const TableStyle = {
     LoaderContainer: styled('div')(() => ({
         width: '100%',
         justifyContent: 'center',

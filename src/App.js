@@ -1,10 +1,15 @@
 import './App.css';
-import Sidebar from './components/sidebar/Sidebar';
+import { BrowserRouter as Router} from "react-router-dom";
+import ScrollToTop from './navigation/ScrollToTop';
+import Navigation from './navigation/Navigation';
 
 function App() {
   return (
     <div className="App">
-      <Sidebar />
+      <Router>
+        <ScrollToTop />
+        <Navigation />
+      </Router>
     </div>
   );
 }

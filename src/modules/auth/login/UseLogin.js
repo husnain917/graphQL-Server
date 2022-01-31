@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 export default function UseLogin() {
+  let navigate = useNavigate();
   const[loading,setLoading]=useState(false);
   const [email, setEmail] = React.useState('');
   const [values, setValues] = React.useState({
@@ -20,8 +22,9 @@ export default function UseLogin() {
     });
   };
   
-  const loginHandler = () =>{
-      alert('Login Function Called')
+  const loginHandler = (setAuthState) =>{
+      navigate('/dashboard')
+      setAuthState(true);
   }
 
   return [{values, handleChange, handleClickShowPassword,email,setEmail,loginHandler,loading}]

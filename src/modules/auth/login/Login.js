@@ -5,7 +5,7 @@ import UseLogin from './UseLogin';
 import CommonTooltip from '../../../commonComponents/commonTooltip/CommonTooltip';
 import {ThreeDots} from "react-loader-spinner";
 import { ToastContainer } from 'react-toastify';
-export default function Login() {
+export default function Login({setAuthState}) {
     const [{values, handleChange, handleClickShowPassword, email, setEmail, loginHandler, loading}] = UseLogin();
     return (
         <LoginStyle.MainPage>
@@ -61,7 +61,7 @@ export default function Login() {
                     </LoginStyle.LoaderContainer>
                     :
                     <LoginStyle.ButtonContainer>
-                        <LoginStyle.LoginButton onClick={loginHandler}>Login</LoginStyle.LoginButton>
+                        <LoginStyle.LoginButton onClick={()=>loginHandler(setAuthState)}>Login</LoginStyle.LoginButton>
                     </LoginStyle.ButtonContainer>
                 }
             </LoginStyle.LoginContainer>

@@ -1,15 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
-// import Sidebar from './components/sidebar/Sidebar';
-// import MiniDrawer from './components/dummyDrawer/Drawer';
-import Login from './modules/auth/login/Login';
+import { BrowserRouter as Router} from "react-router-dom";
+import ScrollToTop from './navigation/ScrollToTop';
+import Navigation from './navigation/Navigation';
+
 function App() {
   return (
     <div className="App">
-      {/* <Sidebar /> */}
-      {/* <MiniDrawer /> */}
-      {/* <h1>Hello</h1> */}
-      <Login />
+      <Router>
+        <ScrollToTop />
+        <Navigation />
+      </Router>
     </div>
   );
 }

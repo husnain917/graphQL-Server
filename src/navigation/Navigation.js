@@ -6,6 +6,8 @@ import Dashboard from '../modules/dashboard/Dashboard';
 import AllAdmins from '../modules/adminPortal/allAdmins/AllAdmins';
 import AllStudents from '../modules/adminPortal/allStudents/AllStudents';
 import AllTeachers from '../modules/adminPortal/allTeachers/AllTeachers';
+import SuccessStory from '../modules/successStory/SuccessStory';
+import Courses from '../modules/courses/Course'
 export default function Navigation() {
     const [authState, setAuthState] = useState(false);
     return (
@@ -23,6 +25,8 @@ export default function Navigation() {
                         <Route path="/teachers" element={<AllTeachers />} />
                         <Route path="/students" element={<AllStudents />} />
                         <Route path="*" element={<Dashboard />} />
+                        <Route path="/successStory" element={<SuccessStory/>}/>
+                        <Route path='/courses' element={<Courses/>}/>
                     </Routes >
                 </Sidebar>
             }

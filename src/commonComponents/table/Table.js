@@ -8,21 +8,21 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Toolbar, IconButton, Typography, Tooltip, Hidden } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search'
-import {colors} from '../constants/Color';
+import { colors } from '../constants/Color';
 //Import from Files
 import GlobalSearch from '../globalSearch/GlobalSearch';
 import { TableStyle } from './TableStyle';
 import { UseTable } from './UseTable';
 
 
-export default function Table({ data , title }) {
+export default function Table({ data, title, tableHeading }) {
 
   const [{ searchShow, setSearchShow, searchQuery, onTextChangeHandler, cancelSearch, searchingFor }] = UseTable();
 
   return (
     <>
       <Toolbar disableGutters>
-        <TableStyle.BoxElement style={{ backgroundColor:colors.lightBlue, color: 'white' }} searchShow  >
+        <TableStyle.BoxElement style={{ backgroundColor: colors.lightBlue, color: 'white' }} searchShow  >
           <Hidden smDown>
             <TableStyle.SeachContainer >
               <Typography
@@ -92,12 +92,42 @@ export default function Table({ data , title }) {
         <TableStyle.CustomTable size="small" aria-label="a dense table">
           <TableHead >
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="center">Email</TableCell>
-              <TableCell align="center">Status</TableCell>
-              <TableCell align="center">Phone</TableCell>
-              <TableCell align="center">Image</TableCell>
-              <TableCell align="center">Actions</TableCell>
+              {
+                tableHeading ?
+                  <>
+                    {
+                      tableHeading.map((item, index) => {
+                        return (
+                          <>
+                            {
+                              index === 0 ?
+                                <TableCell >{item?.heading}</TableCell>
+                                :
+                                <>
+                                  <TableCell align="center">{item?.heading}</TableCell>
+                                </>
+                            }
+
+                          </>
+                        )
+                      })
+                    }
+
+                  </>
+
+                  :
+                  <>
+                    <TableCell>Name</TableCell>
+                    <TableCell align="center">Email</TableCell>
+                    <TableCell align="center">Status</TableCell>
+                    <TableCell align="center">Phone</TableCell>
+                    <TableCell align="center">Image</TableCell>
+                    <TableCell align="center">Actions</TableCell>
+                  </>
+
+              }
+
+
             </TableRow>
           </TableHead>
           <TableBody>
@@ -122,7 +152,7 @@ export default function Table({ data , title }) {
                         aria-label='delete'
                         size='small'
                       >
-                        <TableStyle.DeleteIcon/>
+                        <TableStyle.DeleteIcon />
                       </IconButton>
 
                     </Tooltip>

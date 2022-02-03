@@ -15,7 +15,7 @@ export default function SuccessStory() {
         </SuccessStoryStyle.LoaderContainer>
       ) : (
         <div>
-          <Table data={data} title={'Success Story'} />
+          <Table data={data} title={'Success Stories'} />
         </div>
       )}
     </>

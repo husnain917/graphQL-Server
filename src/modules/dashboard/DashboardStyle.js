@@ -8,7 +8,7 @@ import {
 } from '@mui/icons-material';
 import PersonIcon from '@mui/icons-material/Person';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import { colors } from '../../commonComponents/constants/Color';
+import { colors } from '../../constants/Color';
 export const DS = {
     MainPageContainer: styled('div')(() => ({
         width: '100%',

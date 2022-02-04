@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Toolbar, IconButton, Typography, Tooltip, Hidden } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search'
-import { colors } from '../constants/Color';
+import { colors } from '../../constants/Color';
 //Import from Files
 import GlobalSearch from '../globalSearch/GlobalSearch';
 import { TableStyle } from './TableStyle';

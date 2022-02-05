@@ -3,7 +3,12 @@ import { styled, alpha } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { Close, Delete, Edit } from '@mui/icons-material'
 import { TableRow, Table } from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { colors } from '../../constants/Color';
+import SearchIcon from '@mui/icons-material/Search';
+import FilterListIcon from '@mui/icons-material/FilterList';
 export const TableStyle = {
+    // Data Fetching Loading Container
     LoaderContainer: styled('div')(() => ({
         width: '100%',
         justifyContent: 'center',
@@ -11,6 +16,9 @@ export const TableStyle = {
         alignItems: 'center',
         height: '100vh',
     })),
+
+    // Table Header With Search Bar Box Container
+
     BoxElement: styled(Box)(({ theme }) => ({
         height: 60,
         flexGrow: 1,
@@ -23,7 +31,8 @@ export const TableStyle = {
             paddingTop: 6,
         },
         paddingBottom: 10,
-        backgroundColor: '#fffe',
+        backgroundColor: colors.lightBlue,
+        color:'white',
         boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19)",
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
@@ -34,12 +43,26 @@ export const TableStyle = {
         marginBottom: 10
     })),
 
+    // Table Header With Search Bar For Big Screens
+
+
     SeachContainer: styled(Box)(({ theme }) => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
     })),
+    SearchAndBtnsContainer:styled('div')(()=>({
+        display:'inline-flex',
+        alignItems:'center',
+    })),
+    
+    // Table Header With Search Bar For Small Screens
 
+    MobileViewTableHeader:styled(Box)(({searchShow})=>({
+        display: searchShow ? 'block' : 'flex', 
+        justifyContent: 'space-between',
+         alignItems: 'center',
+    })),
     SearchBox: styled(Box)(({ theme }) => ({
         display: 'flex',
         alignItems: 'center',
@@ -52,9 +75,13 @@ export const TableStyle = {
         borderRadius: 999,
 
     })),
-    CloseIcon: styled(Close)({
-        color: '#fff',
-    }),
+    HeaderIconsContainer:styled('div')(()=>({
+        display:'flex',
+        alignItems:'center',
+    })),
+
+    // Table
+
     CustomTable: styled(Table)(({ theme }) => ({
         minWidth: 650,
         [theme.breakpoints.up('sm')]: {
@@ -64,6 +91,24 @@ export const TableStyle = {
     })),
     CustomTableRow: styled(TableRow)(({ theme }) => ({
         '&:last-child td, &:last-child th': { border: 0 }
+    })),
+
+    // Icons
+    FilterListIcon:styled(FilterListIcon)(()=>({
+        fontSize:35,
+        marginRight:10,
+        marginLeft:10,
+        cursor:'pointer',
+    })),
+    AddIcon:styled(AddCircleOutlineIcon)(()=>({
+        fontSize:35,
+        cursor:'pointer',
+    })),
+    CloseIcon: styled(Close)({
+        color: '#fff',
+    }),
+    SearchIcon:styled(SearchIcon)(()=>({
+        fontSize:27,
     })),
     DeleteIcon: styled(Delete)(() => ({
         color: '#f44336'

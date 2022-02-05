@@ -13,16 +13,26 @@ import { colors } from '../../constants/Color';
 import GlobalSearch from '../globalSearch/GlobalSearch';
 import { TableStyle } from './TableStyle';
 import { UseTable } from './UseTable';
+import FormModal from '../formModal/FormModal';
+import DropDownMenu from '../dropDownMenu/DropDownMenu';
 
-
-export default function Table({ data, title, tableHeading }) {
-
+export default function Table({ data, title, tableHeading, handleClickOpen, open, handleClose, anchorEl, handleAnchorClose, handleAnchorClick, openAnchor }) {
   const [{ searchShow, setSearchShow, searchQuery, onTextChangeHandler, cancelSearch, searchingFor }] = UseTable();
-
   return (
     <>
+      {/* Drop Down menu for filter Button */}
+      <DropDownMenu handleAnchorClose={handleAnchorClose} anchorEl={anchorEl} openAnchor={openAnchor} />
+      {/* Drop Down menu for filter Button */}
+
+      {/* Form Modal */}
+      <FormModal open={open} handleClose={handleClose} />
+      {/* Form Modal */}
+
       <Toolbar disableGutters>
-        <TableStyle.BoxElement style={{ backgroundColor: colors.lightBlue, color: 'white' }} searchShow  >
+        <TableStyle.BoxElement searchShow  >
+
+          {/* Table Header For Big Screens */}
+
           <Hidden smDown>
             <TableStyle.SeachContainer >
               <Typography
@@ -32,17 +42,22 @@ export default function Table({ data, title, tableHeading }) {
               >
                 {title}
               </Typography>
-              <GlobalSearch
-                onChangeText={onTextChangeHandler}
-                placeholder="Search here..."
-                searchCancel={cancelSearch}
-              />
+              <TableStyle.SearchAndBtnsContainer>
+                <GlobalSearch
+                  onChangeText={onTextChangeHandler}
+                  placeholder="Search here..."
+                  searchCancel={cancelSearch}
+                />
+                <TableStyle.FilterListIcon onClick={handleAnchorClick} />
+                <TableStyle.AddIcon onClick={handleClickOpen} />
+              </TableStyle.SearchAndBtnsContainer>
             </TableStyle.SeachContainer>
           </Hidden>
 
+          {/* Table Header For Small Screens */}
 
           <Hidden smUp>
-            <Box sx={{ display: searchShow ? 'block' : 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <TableStyle.MobileViewTableHeader searchShow={searchShow} >
               <Typography
                 variant="h6"
                 component="div"
@@ -54,80 +69,60 @@ export default function Table({ data, title, tableHeading }) {
               {
                 searchShow &&
                 <TableStyle.SearchBox  >
+                  <TableStyle.FilterListIcon />
                   <GlobalSearch
                     onChangeText={onTextChangeHandler}
                     placeholder="Search here..."
                     searchCancel={cancelSearch}
                   />
                   <IconButton
+                    size="large"
                     disableFocusRipple
                     disableRipple
                     onClick={(val) => { setSearchShow(!searchShow); cancelSearch(val) }}
                   >
                     <TableStyle.CloseIconBox>
-                      <TableStyle.CloseIcon fontSize='small' />
+                      <TableStyle.CloseIcon />
                     </TableStyle.CloseIconBox>
                   </IconButton>
+                  <TableStyle.AddIcon onClick={handleClickOpen} />
                 </TableStyle.SearchBox>
               }
               {
                 !searchShow &&
-                <IconButton
-                  size="large"
-                  color="inherit"
-                  aria-label="search"
-                  disableFocusRipple
-                  disableRipple
-                  onClick={() => setSearchShow(!searchShow)}
-                >
-                  <SearchIcon />
-                </IconButton>
+                <TableStyle.HeaderIconsContainer>
+                  <TableStyle.FilterListIcon />
+                  <IconButton
+                    size="large"
+                    color="inherit"
+                    aria-label="search"
+                    disableFocusRipple
+                    disableRipple
+                    onClick={() => setSearchShow(!searchShow)}
+                  >
+                    <TableStyle.SearchIcon />
+                  </IconButton>
+                  <TableStyle.AddIcon onClick={handleClickOpen} />
+                </TableStyle.HeaderIconsContainer>
               }
-
-            </Box>
+            </TableStyle.MobileViewTableHeader>
           </Hidden>
         </TableStyle.BoxElement>
       </Toolbar>
+
+      {/* Table  */}
+
       <TableContainer component={Paper} >
         <TableStyle.CustomTable size="small" aria-label="a dense table">
           <TableHead >
             <TableRow>
               {
-                tableHeading ?
-                  <>
-                    {
-                      tableHeading.map((item, index) => {
-                        return (
-                          <>
-                            {
-                              index === 0 ?
-                                <TableCell >{item?.heading}</TableCell>
-                                :
-                                <>
-                                  <TableCell align="center">{item?.heading}</TableCell>
-                                </>
-                            }
-
-                          </>
-                        )
-                      })
-                    }
-
-                  </>
-
-                  :
-                  <>
-                    <TableCell>Name</TableCell>
-                    <TableCell align="center">Email</TableCell>
-                    <TableCell align="center">Status</TableCell>
-                    <TableCell align="center">Phone</TableCell>
-                    <TableCell align="center">Image</TableCell>
-                    <TableCell align="center">Actions</TableCell>
-                  </>
-
+                tableHeading?.map((item) => {
+                  return (
+                    <TableCell align="center">{item&&item}</TableCell>
+                  )
+                })
               }
-
-
             </TableRow>
           </TableHead>
           <TableBody>
@@ -135,12 +130,12 @@ export default function Table({ data, title, tableHeading }) {
               .filter(
                 searchingFor(searchQuery),
               )
-              .map((row, index) => (
+              .map((row) => (
                 <TableStyle.CustomTableRow
-                  key={row.name}
+                  key={row?.name}
                 >
-                  <TableCell component="th" scope="row">
-                    {row.name}
+                  <TableCell align="center" component="th" scope="row">
+                    {row?.name}
                   </TableCell>
                   <TableCell align="center">{row?.email}</TableCell>
                   <TableCell align="center">{row?.status}</TableCell>

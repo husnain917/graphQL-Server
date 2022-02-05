@@ -22,8 +22,8 @@ export const DS = {
         justifyContent: 'space-between',
     })),
     CardContainer: styled('div')(() => ({
-        width: '32%',
-        marginBottom: 10,
+        width: '32.3%',
+        marginBottom: 20,
         "@media (max-width: 900px)": {
             width: '100%',
         },

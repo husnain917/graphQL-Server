@@ -3,9 +3,8 @@ import Sidebar from '../commonComponents/sidebar/Sidebar';
 import { Route, Routes } from "react-router-dom";
 import Login from '../modules/auth/login/Login';
 import Dashboard from '../modules/dashboard/Dashboard';
-import AllAdmins from '../modules/adminPortal/allAdmins/AllAdmins';
 import AllStudents from '../modules/adminPortal/allStudents/AllStudents';
-import AllTeachers from '../modules/adminPortal/allTeachers/AllTeachers';
+import AllStaff from '../modules/adminPortal/allStaff/AllStaff';
 import SuccessStory from '../modules/successStory/SuccessStory';
 import Courses from '../modules/courses/Course'
 export default function Navigation() {
@@ -21,12 +20,11 @@ export default function Navigation() {
                 <Sidebar>
                     <Routes>
                         <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/admin" element={<AllAdmins />} />
-                        <Route path="/teachers" element={<AllTeachers />} />
+                        <Route path="/staff" element={<AllStaff />} />
                         <Route path="/students" element={<AllStudents />} />
                         <Route path="*" element={<Dashboard />} />
-                        <Route path="/successStory" element={<SuccessStory/>}/>
-                        <Route path='/courses' element={<Courses/>}/>
+                        <Route path="/successStory" element={<SuccessStory />} />
+                        <Route path='/courses' element={<Courses />} />
                     </Routes >
                 </Sidebar>
             }

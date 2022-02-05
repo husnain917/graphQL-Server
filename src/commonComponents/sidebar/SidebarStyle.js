@@ -2,7 +2,7 @@ import { Box, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
-import { colors } from '../../commonComponents/constants/Color';
+import { colors } from '../../constants/Color';
 import { Link } from "react-router-dom";
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';

@@ -8,7 +8,7 @@ import {
 } from '@mui/icons-material';
 import PersonIcon from '@mui/icons-material/Person';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import { colors } from '../../commonComponents/constants/Color';
+import { colors } from '../../constants/Color';
 export const DS = {
     MainPageContainer: styled('div')(() => ({
         width: '100%',
@@ -22,8 +22,8 @@ export const DS = {
         justifyContent: 'space-between',
     })),
     CardContainer: styled('div')(() => ({
-        width: '32%',
-        marginBottom: 10,
+        width: '32.3%',
+        marginBottom: 20,
         "@media (max-width: 900px)": {
             width: '100%',
         },

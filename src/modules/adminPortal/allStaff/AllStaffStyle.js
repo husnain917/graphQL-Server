@@ -1,6 +1,6 @@
 
 import { styled } from '@mui/material/styles';
-export const AllAdminsStyle = {
+export const AllStaffStyle = {
     LoaderContainer: styled('div')(() => ({
         width: '100%',
         justifyContent: 'center',

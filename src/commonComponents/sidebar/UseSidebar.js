@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-    Person,
-    RecordVoiceOver,
     Subscriptions,
     PeopleOutline,
     LocalActivity,
@@ -12,6 +10,7 @@ import {
     QuestionAnswerRounded,
     ContactMail,
 } from '@mui/icons-material';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 export const UseDrawer = () => {
     const [open, setOpen] = React.useState(false);
@@ -22,15 +21,10 @@ export const UseDrawer = () => {
             path: '/dashboard',
         },
         {
-            text: 'Admins',
-            icon: <Person />,
-            path: '/admin'
-        },
-        {
-            text: 'Teachers',
-            icon: <RecordVoiceOver />,
-            path: '/teachers'
-        },
+            text: 'Staff',
+            icon: <PeopleAltIcon  />,
+            path: '/staff'
+        },   
         {
             text: 'Courses',
             icon: <Subscriptions />,

@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import LockIcon from '@mui/icons-material/Lock';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { colors } from '../../../commonComponents/constants/Color';
+import { colors } from '../../../constants/Color';
 export const LoginStyle = {
     MainPage: styled('div')(() => ({
         backgroundColor: '#f2f4f7',

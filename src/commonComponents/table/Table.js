@@ -6,23 +6,33 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Toolbar, IconButton, Typography, Tooltip, Hidden } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search'
-import {colors} from '../constants/Color';
+import { Toolbar, IconButton, Typography, Tooltip, Hidden } from '@mui/material';
 //Import from Files
 import GlobalSearch from '../globalSearch/GlobalSearch';
 import { TableStyle } from './TableStyle';
 import { UseTable } from './UseTable';
+import FormModal from '../formModal/FormModal';
+import DropDownMenu from '../dropDownMenu/DropDownMenu';
 
-
-export default function Table({ data , title }) {
+export default function Table({ data, title, handleClickOpen, open, handleClose, anchorEl, handleAnchorClose, handleAnchorClick, openAnchor }) {
 
   const [{ searchShow, setSearchShow, searchQuery, onTextChangeHandler, cancelSearch, searchingFor }] = UseTable();
 
   return (
     <>
+      {/* Drop Down menu for filter Button */}
+      <DropDownMenu handleAnchorClose={handleAnchorClose} anchorEl={anchorEl} openAnchor={openAnchor}  />
+      {/* Drop Down menu for filter Button */}
+
+      {/* Form Modal */}
+      <FormModal open={open} handleClose={handleClose} />
+      {/* Form Modal */}
+
       <Toolbar disableGutters>
-        <TableStyle.BoxElement style={{ backgroundColor:colors.lightBlue, color: 'white' }} searchShow  >
+        <TableStyle.BoxElement searchShow  >
+
+          {/* Table Header For Big Screens */}
+
           <Hidden smDown>
             <TableStyle.SeachContainer >
               <Typography
@@ -32,17 +42,22 @@ export default function Table({ data , title }) {
               >
                 {title}
               </Typography>
-              <GlobalSearch
-                onChangeText={onTextChangeHandler}
-                placeholder="Search here..."
-                searchCancel={cancelSearch}
-              />
+              <TableStyle.SearchAndBtnsContainer>
+                <GlobalSearch
+                  onChangeText={onTextChangeHandler}
+                  placeholder="Search here..."
+                  searchCancel={cancelSearch}
+                />
+                <TableStyle.FilterListIcon onClick={handleAnchorClick} />
+                <TableStyle.AddIcon onClick={handleClickOpen} />
+              </TableStyle.SearchAndBtnsContainer>
             </TableStyle.SeachContainer>
           </Hidden>
 
+          {/* Table Header For Small Screens */}
 
           <Hidden smUp>
-            <Box sx={{ display: searchShow ? 'block' : 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <TableStyle.MobileViewTableHeader searchShow={searchShow} >
               <Typography
                 variant="h6"
                 component="div"
@@ -54,40 +69,49 @@ export default function Table({ data , title }) {
               {
                 searchShow &&
                 <TableStyle.SearchBox  >
+                  <TableStyle.FilterListIcon />
                   <GlobalSearch
                     onChangeText={onTextChangeHandler}
                     placeholder="Search here..."
                     searchCancel={cancelSearch}
                   />
                   <IconButton
+                    size="large"
                     disableFocusRipple
                     disableRipple
                     onClick={(val) => { setSearchShow(!searchShow); cancelSearch(val) }}
                   >
                     <TableStyle.CloseIconBox>
-                      <TableStyle.CloseIcon fontSize='small' />
+                      <TableStyle.CloseIcon />
                     </TableStyle.CloseIconBox>
                   </IconButton>
+                  <TableStyle.AddIcon onClick={handleClickOpen} />
                 </TableStyle.SearchBox>
               }
               {
                 !searchShow &&
-                <IconButton
-                  size="large"
-                  color="inherit"
-                  aria-label="search"
-                  disableFocusRipple
-                  disableRipple
-                  onClick={() => setSearchShow(!searchShow)}
-                >
-                  <SearchIcon />
-                </IconButton>
+                <TableStyle.HeaderIconsContainer>
+                  <TableStyle.FilterListIcon />
+                  <IconButton
+                    size="large"
+                    color="inherit"
+                    aria-label="search"
+                    disableFocusRipple
+                    disableRipple
+                    onClick={() => setSearchShow(!searchShow)}
+                  >
+                    <TableStyle.SearchIcon />
+                  </IconButton>
+                  <TableStyle.AddIcon onClick={handleClickOpen} />
+                </TableStyle.HeaderIconsContainer>
               }
-
-            </Box>
+            </TableStyle.MobileViewTableHeader>
           </Hidden>
         </TableStyle.BoxElement>
       </Toolbar>
+
+      {/* Table  */}
+
       <TableContainer component={Paper} >
         <TableStyle.CustomTable size="small" aria-label="a dense table">
           <TableHead >
@@ -122,7 +146,7 @@ export default function Table({ data , title }) {
                         aria-label='delete'
                         size='small'
                       >
-                        <TableStyle.DeleteIcon/>
+                        <TableStyle.DeleteIcon />
                       </IconButton>
 
                     </Tooltip>

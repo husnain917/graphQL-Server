@@ -6,7 +6,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Toolbar, IconButton, Typography, Tooltip, Hidden } from '@mui/material';
+import { Box, Toolbar, IconButton, Typography, Tooltip, Hidden } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search'
+import { colors } from '../../constants/Color';
 //Import from Files
 import GlobalSearch from '../globalSearch/GlobalSearch';
 import { TableStyle } from './TableStyle';
@@ -14,14 +16,12 @@ import { UseTable } from './UseTable';
 import FormModal from '../formModal/FormModal';
 import DropDownMenu from '../dropDownMenu/DropDownMenu';
 
-export default function Table({ data, title, handleClickOpen, open, handleClose, anchorEl, handleAnchorClose, handleAnchorClick, openAnchor }) {
-
+export default function Table({ data, title, tableHeading, handleClickOpen, open, handleClose, anchorEl, handleAnchorClose, handleAnchorClick, openAnchor }) {
   const [{ searchShow, setSearchShow, searchQuery, onTextChangeHandler, cancelSearch, searchingFor }] = UseTable();
-
   return (
     <>
       {/* Drop Down menu for filter Button */}
-      <DropDownMenu handleAnchorClose={handleAnchorClose} anchorEl={anchorEl} openAnchor={openAnchor}  />
+      <DropDownMenu handleAnchorClose={handleAnchorClose} anchorEl={anchorEl} openAnchor={openAnchor} />
       {/* Drop Down menu for filter Button */}
 
       {/* Form Modal */}
@@ -116,12 +116,13 @@ export default function Table({ data, title, handleClickOpen, open, handleClose,
         <TableStyle.CustomTable size="small" aria-label="a dense table">
           <TableHead >
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="center">Email</TableCell>
-              <TableCell align="center">Status</TableCell>
-              <TableCell align="center">Phone</TableCell>
-              <TableCell align="center">Image</TableCell>
-              <TableCell align="center">Actions</TableCell>
+              {
+                tableHeading?.map((item) => {
+                  return (
+                    <TableCell align="center">{item&&item}</TableCell>
+                  )
+                })
+              }
             </TableRow>
           </TableHead>
           <TableBody>
@@ -129,12 +130,12 @@ export default function Table({ data, title, handleClickOpen, open, handleClose,
               .filter(
                 searchingFor(searchQuery),
               )
-              .map((row, index) => (
+              .map((row) => (
                 <TableStyle.CustomTableRow
-                  key={row.name}
+                  key={row?.name}
                 >
-                  <TableCell component="th" scope="row">
-                    {row.name}
+                  <TableCell align="center" component="th" scope="row">
+                    {row?.name}
                   </TableCell>
                   <TableCell align="center">{row?.email}</TableCell>
                   <TableCell align="center">{row?.status}</TableCell>

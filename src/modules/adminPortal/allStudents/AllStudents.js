@@ -27,6 +27,7 @@ export default function AllStudents() {
             <Table
               title={'All Students'}
               data={data}
+              tableHeading={['Name','Email','Role','Phone','Image','Actions']}
             />
           </>
       }

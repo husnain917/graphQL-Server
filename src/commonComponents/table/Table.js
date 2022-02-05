@@ -16,7 +16,7 @@ import { UseTable } from './UseTable';
 import FormModal from '../formModal/FormModal';
 import DropDownMenu from '../dropDownMenu/DropDownMenu';
 
-export default function Table({ data, title, tableHeading, handleClickOpen, open, handleClose, anchorEl, handleAnchorClose, handleAnchorClick, openAnchor }) {
+export default function Table({ data, title, tableHeadings, handleClickOpen, open, handleClose, anchorEl, handleAnchorClose, handleAnchorClick, openAnchor }) {
   const [{ searchShow, setSearchShow, searchQuery, onTextChangeHandler, cancelSearch, searchingFor }] = UseTable();
   return (
     <>
@@ -117,7 +117,7 @@ export default function Table({ data, title, tableHeading, handleClickOpen, open
           <TableHead >
             <TableRow>
               {
-                tableHeading?.map((item) => {
+                tableHeadings?.map((item) => {
                   return (
                     <TableCell align="center">{item&&item}</TableCell>
                   )

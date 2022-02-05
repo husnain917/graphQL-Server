@@ -16,7 +16,7 @@ export default function Course() {
                     </CoursesStyle.LoaderContainer>
                     :
                     <Table data={data} title={'Courses'}
-                    tableHeading={['Name','Email','Role','Phone','Image','Actions']}
+                    tableHeadings={['Name','Email','Role','Phone','Image','Actions']}
                       />
             }
         </>

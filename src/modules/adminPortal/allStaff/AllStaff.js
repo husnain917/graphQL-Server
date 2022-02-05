@@ -32,7 +32,7 @@ export default function AllStaff() {
           :
           <>
             <Table
-              tableHeading={['Name','Email','Role','Phone','Image','Actions']}
+              tableHeadings={['Name','Email','Role','Phone','Image','Actions']}
               title={'All Staff'}
               data={filterDataArray}
               handleClickOpen={handleClickOpen}

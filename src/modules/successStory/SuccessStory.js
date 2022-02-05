@@ -16,7 +16,7 @@ export default function SuccessStory() {
       ) : (
         <div>
           <Table data={data} title={'Success Stories'}
-            tableHeading={['Name', 'Email', 'Role', 'Phone', 'Image', 'Actions']}
+            tableHeadings={['Name', 'Email', 'Role', 'Phone', 'Image', 'Actions']}
           />
         </div>
       )}

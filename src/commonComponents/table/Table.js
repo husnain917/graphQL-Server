@@ -6,9 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Toolbar, IconButton, Typography, Tooltip, Hidden } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search'
-import { colors } from '../../constants/Color';
+import { Toolbar, IconButton, Typography, Tooltip, Hidden } from '@mui/material';
 //Import from Files
 import GlobalSearch from '../globalSearch/GlobalSearch';
 import { TableStyle } from './TableStyle';
@@ -119,7 +117,7 @@ export default function Table({ data, title, tableHeadings, handleClickOpen, ope
               {
                 tableHeadings?.map((item) => {
                   return (
-                    <TableCell align="center">{item&&item}</TableCell>
+                    <TableCell align="center">{item && item}</TableCell>
                   )
                 })
               }
@@ -127,39 +125,151 @@ export default function Table({ data, title, tableHeadings, handleClickOpen, ope
           </TableHead>
           <TableBody>
             {data
-              .filter(
-                searchingFor(searchQuery),
-              )
-              .map((row) => (
+              // .filter(
+              //   searchingFor(searchQuery),
+              // )
+              .map((row, i) => (
                 <TableStyle.CustomTableRow
-                  key={row?.name}
+                  key={row?.i}
                 >
-                  <TableCell align="center" component="th" scope="row">
-                    {row?.name}
-                  </TableCell>
-                  <TableCell align="center">{row?.email}</TableCell>
-                  <TableCell align="center">{row?.status}</TableCell>
-                  <TableCell align="center">{row?.phone}</TableCell>
-                  <TableCell align="center">{row?.image}</TableCell>
-                  <TableCell align="center">
-                    <Tooltip title='Delete'>
-                      <IconButton
-                        aria-label='delete'
-                        size='small'
-                      >
-                        <TableStyle.DeleteIcon />
-                      </IconButton>
 
-                    </Tooltip>
-                    <Tooltip title='Update'>
-                      <IconButton
-                        aria-label='update'
-                        size='small'
-                      >
-                        <TableStyle.EditIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
+                  {
+                    title === "Courses" ?
+                      (
+                        <>
+                          <TableCell align="center" component="th" scope="row">
+                            {row?.name}
+                          </TableCell>
+                          <TableCell align="center">{row?.trainer}</TableCell>
+                          <TableCell align="center">{row?.status}</TableCell>
+                          <TableCell align="center">{row?.phone}</TableCell>
+                          <TableCell align="center">{row?.image}</TableCell>
+                          <TableCell align="center">
+                            <Tooltip title='Delete'>
+                              <IconButton
+                                aria-label='delete'
+                                size='small'
+                              >
+                                <TableStyle.DeleteIcon />
+                              </IconButton>
+
+                            </Tooltip>
+                            <Tooltip title='Update'>
+                              <IconButton
+                                aria-label='update'
+                                size='small'
+                              >
+                                <TableStyle.EditIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </TableCell>
+                        </>
+                      )
+                      :
+                      title === "Enrollment Approval" ?
+                        (
+
+                          <>
+                            <>
+                              <TableCell align="center" component="th" scope="row">
+                                {row?.name}
+                              </TableCell>
+                              <TableCell align="center">{row?.email}</TableCell>
+                              <TableCell align="center">{row?.course}</TableCell>
+                              <TableCell align="center">{row?.paymentMethod}</TableCell>
+                              <TableCell align="center">{row?.amount}</TableCell>
+                              <TableCell align="center">{row?.transactionId}</TableCell>
+                              <TableCell align="center">{row?.status}</TableCell>
+
+                              <TableCell align="center">
+                                <Tooltip title='Delete'>
+                                  <IconButton
+                                    aria-label='delete'
+                                    size='small'
+                                  >
+                                    <TableStyle.DeleteIcon />
+                                  </IconButton>
+
+                                </Tooltip>
+                                <Tooltip title='Update'>
+                                  <IconButton
+                                    aria-label='update'
+                                    size='small'
+                                  >
+                                    <TableStyle.EditIcon />
+                                  </IconButton>
+                                </Tooltip>
+                              </TableCell>
+                            </>
+
+                          </>
+                        )
+                        :
+                        title === "Events" ?
+                          (
+                            <>
+                              <TableCell align="center" component="th" scope="row">
+                                {row?.Title}
+                              </TableCell>
+                              <TableCell align="center">{row?.Venue}</TableCell>
+                              <TableCell align="center">{row?.MaxTickets}</TableCell>
+                              <TableCell align="center">{row?.DateTime}</TableCell>
+                              <TableCell align="center">{row?.EventType}</TableCell>
+                              <TableCell align="center">{row?.Status}</TableCell>
+                              <TableCell align="center">{row?.Speakers}</TableCell>
+                              <TableCell align="center">
+                                <Tooltip title='Delete'>
+                                  <IconButton
+                                    aria-label='delete'
+                                    size='small'
+                                  >
+                                    <TableStyle.DeleteIcon />
+                                  </IconButton>
+
+                                </Tooltip>
+                                <Tooltip title='Update'>
+                                  <IconButton
+                                    aria-label='update'
+                                    size='small'
+                                  >
+                                    <TableStyle.EditIcon />
+                                  </IconButton>
+                                </Tooltip>
+                              </TableCell>
+                            </>
+                          )
+                          :
+                          (
+                            <>
+                              <TableCell align="center" component="th" scope="row">
+                                {row?.name}
+                              </TableCell>
+                              <TableCell align="center">{row?.email}</TableCell>
+                              <TableCell align="center">{row?.status}</TableCell>
+                              <TableCell align="center">{row?.phone}</TableCell>
+                              <TableCell align="center">{row?.image}</TableCell>
+                              <TableCell align="center">
+                                <Tooltip title='Delete'>
+                                  <IconButton
+                                    aria-label='delete'
+                                    size='small'
+                                  >
+                                    <TableStyle.DeleteIcon />
+                                  </IconButton>
+
+                                </Tooltip>
+                                <Tooltip title='Update'>
+                                  <IconButton
+                                    aria-label='update'
+                                    size='small'
+                                  >
+                                    <TableStyle.EditIcon />
+                                  </IconButton>
+                                </Tooltip>
+                              </TableCell>
+                            </>
+                          )
+                  }
                 </TableStyle.CustomTableRow>
               ))}
           </TableBody>

@@ -7,6 +7,8 @@ import AllStudents from '../modules/adminPortal/allStudents/AllStudents';
 import AllStaff from '../modules/adminPortal/allStaff/AllStaff';
 import SuccessStory from '../modules/successStory/SuccessStory';
 import Courses from '../modules/courses/Course'
+import EnrollmentApproval from '../modules/enrollmentApproval/EnrollmentApproval';
+import Events from '../modules/events/Events';
 export default function Navigation() {
     const [authState, setAuthState] = useState(false);
     return (
@@ -25,6 +27,8 @@ export default function Navigation() {
                         <Route path="*" element={<Dashboard />} />
                         <Route path="/successStory" element={<SuccessStory />} />
                         <Route path='/courses' element={<Courses />} />
+                        <Route path="/approve-enrollment" element={<EnrollmentApproval />} />
+                        <Route path="/events" element={<Events />} />
                     </Routes >
                 </Sidebar>
             }

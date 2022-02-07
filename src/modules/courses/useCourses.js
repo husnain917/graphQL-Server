@@ -2,31 +2,32 @@ import { useState } from 'react';
 
 export function UseCourses() {
   const [loading, setLoading] = useState(false)
+ 
   const data = [
     {
       name: 'sami',
-      email: 'samishokat@gmail.com',
+      trainer:'Naveed sarwar',
       status: 'Active',
       phone: '000000000000',
       image: 'image'
     },
     {
       name: 'sami',
-      email: 'samishokat@gmail.com',
+      trainer:'Naveed sarwar',
       status: 'Closed',
       phone: '000000000000',
       image: 'image'
     },
     {
       name: 'sami',
-      email: 'samishokat@gmail.com',
+      trainer:'Naveed sarwar',
       status: 'Active',
       phone: '000000000000',
       image: 'image'
     },
     {
       name: 'sami',
-      email: 'samishokat@gmail.com',
+      trainer:'Naveed sarwar',
       status: 'Active',
       phone: '000000000000',
       image: 'image'

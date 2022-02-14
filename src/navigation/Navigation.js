@@ -9,6 +9,7 @@ import SuccessStory from '../modules/successStory/SuccessStory';
 import Courses from '../modules/courses/Course'
 import EnrollmentApproval from '../modules/enrollmentApproval/EnrollmentApproval';
 import Events from '../modules/events/Events';
+import FAQS from '../modules/faqs/FAQS';
 export default function Navigation() {
     const [authState, setAuthState] = useState(false);
     return (
@@ -29,6 +30,8 @@ export default function Navigation() {
                         <Route path='/courses' element={<Courses />} />
                         <Route path="/approve-enrollment" element={<EnrollmentApproval />} />
                         <Route path="/events" element={<Events />} />
+                        <Route path='/faq' element={<FAQS/>}/>
+
                     </Routes >
                 </Sidebar>
             }

@@ -5,7 +5,7 @@ import { Audio } from 'react-loader-spinner';
 import { SuccessStoryStyle } from './SuccessStoryStyle';
 import { ToastContainer } from 'react-toastify';
 export default function SuccessStory() {
-  const [data, loading] = useSuccessStory();
+  const [{filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick}] = useSuccessStory();
   return (
     <>
       <ToastContainer />
@@ -15,8 +15,17 @@ export default function SuccessStory() {
         </SuccessStoryStyle.LoaderContainer>
       ) : (
         <div>
-          <Table data={data} title={'Success Stories'}
+          <Table
+            title={'Success Stories'}
             tableHeadings={['Name', 'Email', 'Role', 'Phone', 'Image', 'Actions']}
+            data={filterDataArray}
+            handleClickOpen={handleClickOpen}
+            open={open}
+            handleClose={handleClose}
+            anchorEl={anchorEl}
+            handleAnchorClose={handleAnchorClose}
+            handleAnchorClick={handleAnchorClick}
+            openAnchor={openAnchor}
           />
         </div>
       )}

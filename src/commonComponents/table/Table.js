@@ -49,6 +49,7 @@ export default function Table({
         handleAnchorClose={handleAnchorClose}
         anchorEl={anchorEl}
         openAnchor={openAnchor}
+        title={title}
       />
       {/* Drop Down menu for filter Button */}
 
@@ -71,16 +72,6 @@ export default function Table({
                   placeholder="Search here..."
                   searchCancel={cancelSearch}
                 />
-                {/* <Search style={{ backgroundColor: 'white' }}>
-                  <SearchIconWrapper>
-                    <SearchIcon />
-                  </SearchIconWrapper>
-
-                  <StyledInputBase
-                    placeholder='Search...'
-                    inputProps={{ 'aria-label': 'search' }}
-                  />
-                </Search> */}
                 <TableStyle.FilterListIcon onClick={handleAnchorClick} />
                 <TableStyle.AddIcon onClick={handleClickOpen} />
               </TableStyle.SearchAndBtnsContainer>
@@ -97,7 +88,8 @@ export default function Table({
                 noWrap={true}
                 sx={{ display: searchShow && 'none' }}
               >
-                All Students
+                {/* All Students */}
+                {title}
               </Typography>
               {searchShow && (
                 <TableStyle.SearchBox>

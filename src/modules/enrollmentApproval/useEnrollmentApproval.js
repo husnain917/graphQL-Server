@@ -2,21 +2,10 @@ import React from 'react';
 
 export function useEnrollmentApproval() {
   const [loading, setLoading] = React.useState(false)
-  //   const data=[
-  //       {
-  //         StudentName:'sami',
-  //         Email:'sami@gmail.com',
-  //         Course:'React Native',
-  //         PaymentMethod:'Credit card',
-  //         Amount:'-----',
-  //         TransactionID:'-------',
-  //         Status:'active',
-  //       }
-  //   ]
   const data = [
     {
       name: 'sami',
-      email: 'samishokat@gmail.com',
+      email: 'samishokat1234@gmail.com',
       course: 'react native',
       paymentMethod: 'debit card',
       amount: '15000 RS',

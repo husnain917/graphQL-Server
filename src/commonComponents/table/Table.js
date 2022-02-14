@@ -1,12 +1,18 @@
 //Import from Libraries
-import React from 'react'
+import React from 'react';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Toolbar, IconButton, Typography, Tooltip, Hidden } from '@mui/material';
+import {
+  Toolbar,
+  IconButton,
+  Typography,
+  Tooltip,
+  Hidden,
+} from '@mui/material';
 //Import from Files
 import GlobalSearch from '../globalSearch/GlobalSearch';
 import { TableStyle } from './TableStyle';
@@ -14,12 +20,36 @@ import { UseTable } from './UseTable';
 import FormModal from '../formModal/FormModal';
 import DropDownMenu from '../dropDownMenu/DropDownMenu';
 
-export default function Table({ data, title, tableHeadings, handleClickOpen, open, handleClose, anchorEl, handleAnchorClose, handleAnchorClick, openAnchor }) {
-  const [{ searchShow, setSearchShow, searchQuery, onTextChangeHandler, cancelSearch, searchingFor }] = UseTable();
+export default function Table({
+  data,
+  title,
+  tableHeadings,
+  handleClickOpen,
+  open,
+  handleClose,
+  anchorEl,
+  handleAnchorClose,
+  handleAnchorClick,
+  openAnchor,
+}) {
+  const [
+    {
+      searchShow,
+      setSearchShow,
+      searchQuery,
+      onTextChangeHandler,
+      cancelSearch,
+      searchingFor,
+    },
+  ] = UseTable();
   return (
     <>
       {/* Drop Down menu for filter Button */}
-      <DropDownMenu handleAnchorClose={handleAnchorClose} anchorEl={anchorEl} openAnchor={openAnchor} />
+      <DropDownMenu
+        handleAnchorClose={handleAnchorClose}
+        anchorEl={anchorEl}
+        openAnchor={openAnchor}
+      />
       {/* Drop Down menu for filter Button */}
 
       {/* Form Modal */}
@@ -27,17 +57,12 @@ export default function Table({ data, title, tableHeadings, handleClickOpen, ope
       {/* Form Modal */}
 
       <Toolbar disableGutters>
-        <TableStyle.BoxElement searchShow  >
-
+        <TableStyle.BoxElement searchShow>
           {/* Table Header For Big Screens */}
 
           <Hidden smDown>
-            <TableStyle.SeachContainer >
-              <Typography
-                variant="h6"
-                component="div"
-                noWrap={true}
-              >
+            <TableStyle.SeachContainer>
+              <Typography variant='h6' component='div' noWrap={true}>
                 {title}
               </Typography>
               <TableStyle.SearchAndBtnsContainer>
@@ -46,6 +71,16 @@ export default function Table({ data, title, tableHeadings, handleClickOpen, ope
                   placeholder="Search here..."
                   searchCancel={cancelSearch}
                 />
+                {/* <Search style={{ backgroundColor: 'white' }}>
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+
+                  <StyledInputBase
+                    placeholder='Search...'
+                    inputProps={{ 'aria-label': 'search' }}
+                  />
+                </Search> */}
                 <TableStyle.FilterListIcon onClick={handleAnchorClick} />
                 <TableStyle.AddIcon onClick={handleClickOpen} />
               </TableStyle.SearchAndBtnsContainer>
@@ -55,29 +90,31 @@ export default function Table({ data, title, tableHeadings, handleClickOpen, ope
           {/* Table Header For Small Screens */}
 
           <Hidden smUp>
-            <TableStyle.MobileViewTableHeader searchShow={searchShow} >
+            <TableStyle.MobileViewTableHeader searchShow={searchShow}>
               <Typography
-                variant="h6"
-                component="div"
+                variant='h6'
+                component='div'
                 noWrap={true}
                 sx={{ display: searchShow && 'none' }}
               >
                 All Students
               </Typography>
-              {
-                searchShow &&
-                <TableStyle.SearchBox  >
+              {searchShow && (
+                <TableStyle.SearchBox>
                   <TableStyle.FilterListIcon />
                   <GlobalSearch
                     onChangeText={onTextChangeHandler}
-                    placeholder="Search here..."
+                    placeholder='Search here...'
                     searchCancel={cancelSearch}
                   />
                   <IconButton
-                    size="large"
+                    size='large'
                     disableFocusRipple
                     disableRipple
-                    onClick={(val) => { setSearchShow(!searchShow); cancelSearch(val) }}
+                    onClick={(val) => {
+                      setSearchShow(!searchShow);
+                      cancelSearch(val);
+                    }}
                   >
                     <TableStyle.CloseIconBox>
                       <TableStyle.CloseIcon />
@@ -85,15 +122,14 @@ export default function Table({ data, title, tableHeadings, handleClickOpen, ope
                   </IconButton>
                   <TableStyle.AddIcon onClick={handleClickOpen} />
                 </TableStyle.SearchBox>
-              }
-              {
-                !searchShow &&
+              )}
+              {!searchShow && (
                 <TableStyle.HeaderIconsContainer>
                   <TableStyle.FilterListIcon />
                   <IconButton
-                    size="large"
-                    color="inherit"
-                    aria-label="search"
+                    size='large'
+                    color='inherit'
+                    aria-label='search'
                     disableFocusRipple
                     disableRipple
                     onClick={() => setSearchShow(!searchShow)}
@@ -102,7 +138,7 @@ export default function Table({ data, title, tableHeadings, handleClickOpen, ope
                   </IconButton>
                   <TableStyle.AddIcon onClick={handleClickOpen} />
                 </TableStyle.HeaderIconsContainer>
-              }
+              )}
             </TableStyle.MobileViewTableHeader>
           </Hidden>
         </TableStyle.BoxElement>
@@ -110,166 +146,122 @@ export default function Table({ data, title, tableHeadings, handleClickOpen, ope
 
       {/* Table  */}
 
-      <TableContainer component={Paper} >
-        <TableStyle.CustomTable size="small" aria-label="a dense table">
-          <TableHead >
+      <TableContainer component={Paper}>
+        <TableStyle.CustomTable size='small' aria-label='a dense table'>
+          <TableHead>
             <TableRow>
-              {
-                tableHeadings?.map((item) => {
-                  return (
-                    <TableCell align="center">{item && item}</TableCell>
-                  )
-                })
-              }
+              {tableHeadings?.map((item) => {
+                return <TableCell align='center'>{item && item}</TableCell>;
+              })}
             </TableRow>
           </TableHead>
           <TableBody>
             {data
-              // .filter(
-              //   searchingFor(searchQuery),
-              // )
+              .filter(
+                searchingFor(searchQuery),
+              )
               .map((row, i) => (
-                <TableStyle.CustomTableRow
-                  key={row?.i}
-                >
+                <TableStyle.CustomTableRow key={row?.i}>
+                  {title === 'Courses' ? (
+                    <>
+                      <TableCell align='center' component='th' scope='row'>
+                        {row?.name}
+                      </TableCell>
+                      <TableCell align='center'>{row?.trainer}</TableCell>
+                      <TableCell align='center'>{row?.status}</TableCell>
+                      <TableCell align='center'>{row?.phone}</TableCell>
+                      <TableCell align='center'>{row?.image}</TableCell>
+                      <TableCell align='center'>
+                        <Tooltip title='Delete'>
+                          <IconButton aria-label='delete' size='small'>
+                            <TableStyle.DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title='Update'>
+                          <IconButton aria-label='update' size='small'>
+                            <TableStyle.EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </>
+                  ) : title === 'Enrollment Approval' ? (
+                    <>
+                      <>
+                        <TableCell align='center' component='th' scope='row'>
+                          {row?.name}
+                        </TableCell>
+                        <TableCell align='center'>{row?.email}</TableCell>
+                        <TableCell align='center'>{row?.course}</TableCell>
+                        <TableCell align='center'>
+                          {row?.paymentMethod}
+                        </TableCell>
+                        <TableCell align='center'>{row?.amount}</TableCell>
+                        <TableCell align='center'>
+                          {row?.transactionId}
+                        </TableCell>
+                        <TableCell align='center'>{row?.status}</TableCell>
 
-                  {
-                    title === "Courses" ?
-                      (
-                        <>
-                          <TableCell align="center" component="th" scope="row">
-                            {row?.name}
-                          </TableCell>
-                          <TableCell align="center">{row?.trainer}</TableCell>
-                          <TableCell align="center">{row?.status}</TableCell>
-                          <TableCell align="center">{row?.phone}</TableCell>
-                          <TableCell align="center">{row?.image}</TableCell>
-                          <TableCell align="center">
-                            <Tooltip title='Delete'>
-                              <IconButton
-                                aria-label='delete'
-                                size='small'
-                              >
-                                <TableStyle.DeleteIcon />
-                              </IconButton>
-
-                            </Tooltip>
-                            <Tooltip title='Update'>
-                              <IconButton
-                                aria-label='update'
-                                size='small'
-                              >
-                                <TableStyle.EditIcon />
-                              </IconButton>
-                            </Tooltip>
-                          </TableCell>
-                        </>
-                      )
-                      :
-                      title === "Enrollment Approval" ?
-                        (
-
-                          <>
-                            <>
-                              <TableCell align="center" component="th" scope="row">
-                                {row?.name}
-                              </TableCell>
-                              <TableCell align="center">{row?.email}</TableCell>
-                              <TableCell align="center">{row?.course}</TableCell>
-                              <TableCell align="center">{row?.paymentMethod}</TableCell>
-                              <TableCell align="center">{row?.amount}</TableCell>
-                              <TableCell align="center">{row?.transactionId}</TableCell>
-                              <TableCell align="center">{row?.status}</TableCell>
-
-                              <TableCell align="center">
-                                <Tooltip title='Delete'>
-                                  <IconButton
-                                    aria-label='delete'
-                                    size='small'
-                                  >
-                                    <TableStyle.DeleteIcon />
-                                  </IconButton>
-
-                                </Tooltip>
-                                <Tooltip title='Update'>
-                                  <IconButton
-                                    aria-label='update'
-                                    size='small'
-                                  >
-                                    <TableStyle.EditIcon />
-                                  </IconButton>
-                                </Tooltip>
-                              </TableCell>
-                            </>
-
-                          </>
-                        )
-                        :
-                        title === "Events" ?
-                          (
-                            <>
-                              <TableCell align="center" component="th" scope="row">
-                                {row?.Title}
-                              </TableCell>
-                              <TableCell align="center">{row?.Venue}</TableCell>
-                              <TableCell align="center">{row?.MaxTickets}</TableCell>
-                              <TableCell align="center">{row?.DateTime}</TableCell>
-                              <TableCell align="center">{row?.EventType}</TableCell>
-                              <TableCell align="center">{row?.Status}</TableCell>
-                              <TableCell align="center">{row?.Speakers}</TableCell>
-                              <TableCell align="center">
-                                <Tooltip title='Delete'>
-                                  <IconButton
-                                    aria-label='delete'
-                                    size='small'
-                                  >
-                                    <TableStyle.DeleteIcon />
-                                  </IconButton>
-
-                                </Tooltip>
-                                <Tooltip title='Update'>
-                                  <IconButton
-                                    aria-label='update'
-                                    size='small'
-                                  >
-                                    <TableStyle.EditIcon />
-                                  </IconButton>
-                                </Tooltip>
-                              </TableCell>
-                            </>
-                          )
-                          :
-                          (
-                            <>
-                              <TableCell align="center" component="th" scope="row">
-                                {row?.name}
-                              </TableCell>
-                              <TableCell align="center">{row?.email}</TableCell>
-                              <TableCell align="center">{row?.status}</TableCell>
-                              <TableCell align="center">{row?.phone}</TableCell>
-                              <TableCell align="center">{row?.image}</TableCell>
-                              <TableCell align="center">
-                                <Tooltip title='Delete'>
-                                  <IconButton
-                                    aria-label='delete'
-                                    size='small'
-                                  >
-                                    <TableStyle.DeleteIcon />
-                                  </IconButton>
-
-                                </Tooltip>
-                                <Tooltip title='Update'>
-                                  <IconButton
-                                    aria-label='update'
-                                    size='small'
-                                  >
-                                    <TableStyle.EditIcon />
-                                  </IconButton>
-                                </Tooltip>
-                              </TableCell>
-                            </>
-                          )
-                  }
+                        <TableCell align='center'>
+                          <Tooltip title='Delete'>
+                            <IconButton aria-label='delete' size='small'>
+                              <TableStyle.DeleteIcon />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title='Update'>
+                            <IconButton aria-label='update' size='small'>
+                              <TableStyle.EditIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                      </>
+                    </>
+                  ) : title === 'Events' ? (
+                    <>
+                      <TableCell align='center' component='th' scope='row'>
+                        {row?.Title}
+                      </TableCell>
+                      <TableCell align='center'>{row?.Venue}</TableCell>
+                      <TableCell align='center'>{row?.MaxTickets}</TableCell>
+                      <TableCell align='center'>{row?.DateTime}</TableCell>
+                      <TableCell align='center'>{row?.EventType}</TableCell>
+                      <TableCell align='center'>{row?.Status}</TableCell>
+                      <TableCell align='center'>{row?.Speakers}</TableCell>
+                      <TableCell align='center'>
+                        <Tooltip title='Delete'>
+                          <IconButton aria-label='delete' size='small'>
+                            <TableStyle.DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title='Update'>
+                          <IconButton aria-label='update' size='small'>
+                            <TableStyle.EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </>
+                  ) : (
+                    <>
+                      <TableCell align='center' component='th' scope='row'>
+                        {row?.name}
+                      </TableCell>
+                      <TableCell align='center'>{row?.email}</TableCell>
+                      <TableCell align='center'>{row?.status}</TableCell>
+                      <TableCell align='center'>{row?.phone}</TableCell>
+                      <TableCell align='center'>{row?.image}</TableCell>
+                      <TableCell align='center'>
+                        <Tooltip title='Delete'>
+                          <IconButton aria-label='delete' size='small'>
+                            <TableStyle.DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title='Update'>
+                          <IconButton aria-label='update' size='small'>
+                            <TableStyle.EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </>
+                  )}
                 </TableStyle.CustomTableRow>
               ))}
           </TableBody>

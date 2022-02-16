@@ -25,7 +25,7 @@ export  function useSuccessStory() {
       {
         name:'sami',
         email:'samishokat@gmail.com',
-        status:'Pending',
+        status:'pending',
         phone:'000000000000',
         image:'image'
       },
@@ -53,13 +53,13 @@ export  function useSuccessStory() {
   ]
 
   const filterDataArray=data.filter((item)=>{
-    if(filterValue==''){
+    if(filterValue===''){
       return item;
     }
-    else if(filterValue==item.status){
+    else if(filterValue===item.status){
       return item;
     }
-    else if (filterValue=='All'){
+    else if (filterValue==='All'){
       return item;
     }
   })

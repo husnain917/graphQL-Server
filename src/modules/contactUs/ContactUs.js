@@ -1,7 +1,10 @@
 import { Container, TextField, Stack} from '@mui/material'
 import React from 'react'
 import Pbutton from '../../commonComponents/Ibutton/Ibutton'
-import { TypoHead, TypoText, ContainerFields } from './ContactUsStyle'
+import {  ContainerFields } from './ContactUsStyle'
+import {TypoHead, TypoText} from '../../constants/Typos'
+import SendIcon from '@mui/icons-material/Send';
+
 
 export default function ContactUs() {
     return (
@@ -20,7 +23,7 @@ export default function ContactUs() {
                           
                         </Stack>
                         <br/>
-                        <Pbutton title="Contact Us" size="medium" />
+                        <Pbutton title="Send" size="medium" iconEnd={<SendIcon />} />
 
                     </ContainerFields>
 

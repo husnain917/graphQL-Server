@@ -148,7 +148,8 @@ export default function Table({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data
+            {
+            data
               .filter(
                 searchingFor(searchQuery),
               )

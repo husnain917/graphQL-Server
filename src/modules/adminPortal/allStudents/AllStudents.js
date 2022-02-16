@@ -2,17 +2,16 @@
 
 import React from 'react'
 import { ToastContainer } from 'react-toastify';
-import {Audio} from "react-loader-spinner";
+import { Audio } from "react-loader-spinner";
 //Import from Files
 
 import Table from '../../../commonComponents/table/Table';
 import { AllStudentsStyle } from './AllStudentsStyle';
-import {UseAllStudents} from './UseAllStudent'
+import { UseAllStudents } from './UseAllStudent'
 export default function AllStudents() {
   const [{
-    data,
-    loading
-  }]  = UseAllStudents();
+    filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick
+  }] = UseAllStudents();
 
   return (
     <>
@@ -26,8 +25,15 @@ export default function AllStudents() {
           <>
             <Table
               title={'All Students'}
-              data={data}
-              tableHeadings={['Name','Email','Role','Phone','Image','Actions']}
+              tableHeadings={['Name', 'Email', 'Role', 'Phone', 'Image', 'Actions']}
+              data={filterDataArray}
+              handleClickOpen={handleClickOpen}
+              open={open}
+              handleClose={handleClose}
+              anchorEl={anchorEl}
+              handleAnchorClose={handleAnchorClose}
+              handleAnchorClick={handleAnchorClick}
+              openAnchor={openAnchor}
             />
           </>
       }

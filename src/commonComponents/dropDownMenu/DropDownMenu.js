@@ -28,6 +28,24 @@ export default function DropDownMenu({ anchorEl, handleAnchorClose, openAnchor, 
                 </>
               )
               :
+              title === "Courses" ?
+              (
+                <>
+                  <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
+                  <MenuItem onClick={() => handleAnchorClose('Active')}>Active</MenuItem>
+                  <MenuItem onClick={() => handleAnchorClose('Closed')}>Closed</MenuItem>
+                </>
+              )
+              :
+              title === "All Students" ?
+              (
+                <>
+                  <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
+                  <MenuItem onClick={() => handleAnchorClose('Active')}>Active</MenuItem>
+                  <MenuItem onClick={() => handleAnchorClose('Closed')}>Closed</MenuItem>
+                </>
+              )
+              :
               (
                 <>
                   <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>

@@ -53,7 +53,7 @@ export const UseDrawer = () => {
         {
             text: 'Contact',
             icon: <ContactMail />,
-            path: '/contact'
+            path: '/contactus'
         },
         {
             text: 'FAQs',

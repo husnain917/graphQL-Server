@@ -21,7 +21,7 @@ export const LoginStyle = {
         margin: '0 auto',
         "@media (max-width: 700px)": {
             width: '95%',
-          },
+        },
     })),
     InlineHeaderContainer: styled('div')(() => ({
         display: 'flex',
@@ -32,7 +32,7 @@ export const LoginStyle = {
         marginTop: 40,
         "@media (max-width: 700px)": {
             width: '90%',
-          },
+        },
     })),
     LeftBorder: styled('div')(() => ({
         borderLeft: '4px solid #63Afff',
@@ -62,7 +62,7 @@ export const LoginStyle = {
         fontWeight: 'bold',
         "@media (max-width: 700px)": {
             width: '95%',
-          },
+        },
     })),
     IconAndInputField: styled('div')(() => ({
         width: '80%',
@@ -73,7 +73,7 @@ export const LoginStyle = {
         alignItems: 'center',
         "@media (max-width: 700px)": {
             width: '95%',
-          },
+        },
     })),
     IconContainer: styled('div')(() => ({
         alignItems: 'center',
@@ -84,15 +84,15 @@ export const LoginStyle = {
         justifyContent: 'center',
         "@media (max-width: 700px)": {
             width: '20%',
-          },
+        },
     })),
-    PersonOutlineIcon:styled( PersonOutlineIcon)(()=>({
-        color:'grey',
-        fontSize:20,
+    PersonOutlineIcon: styled(PersonOutlineIcon)(() => ({
+        color: 'grey',
+        fontSize: 20,
     })),
-    LockIcon:styled(LockIcon)(()=>({
-        width:20,
-        color:'grey',
+    LockIcon: styled(LockIcon)(() => ({
+        width: 20,
+        color: 'grey',
     })),
     Input: styled('input')(() => ({
         width: '90%',
@@ -104,7 +104,7 @@ export const LoginStyle = {
         border: " 2px solid #eeeeee",
         "@media (max-width: 700px)": {
             width: '90%',
-          },
+        },
     })),
     PasswordVisibleIconContainer: styled('div')(() => ({
         alignItems: 'center',
@@ -115,40 +115,40 @@ export const LoginStyle = {
         justifyContent: 'center',
         "@media (max-width: 700px)": {
             width: '20%',
-          },
+        },
     })),
-    VisibilityIcon :styled(VisibilityIcon )(({showPassword})=>({
-        width:20,
-        color:showPassword?'white':'grey',
-        cursor:'pointer',
+    VisibilityIcon: styled(VisibilityIcon)(({ showPassword }) => ({
+        width: 20,
+        color: showPassword ? 'white' : 'grey',
+        cursor: 'pointer',
     })),
-    LoaderContainer:styled('div')(()=>({
-        display:'flex',
-        alignItems:'center',
-        justifyContent:'center',
-        marginTop:30,
+    LoaderContainer: styled('div')(() => ({
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 30,
     })),
     ButtonContainer: styled('div')(() => ({
         width: '75%',
-        paddingRight:25,
+        paddingRight: 25,
         marginLeft: 'auto',
         marginRight: 'auto',
         "@media (max-width: 700px)": {
             width: '90%',
-          },
+        },
     })),
     LoginButton: styled('button')(() => ({
         backgroundColor: 'white',
         width: '100%',
         color: colors.lightBlue,
         padding: '10px 22px',
-        border:`1px solid ${colors.lightBlue}`,
+        border: `1px solid ${colors.lightBlue}`,
         textAlign: 'center',
         fontSize: '16px',
         transition: '0.3s',
         marginTop: 40,
         '&:hover': {
-            transition:'0.7s',
+            transition: '0.7s',
             backgroundColor: colors.lightBlue,
             color: 'white',
             cursor: 'pointer',

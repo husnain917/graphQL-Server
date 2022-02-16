@@ -6,7 +6,8 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import { ueFAQS } from './ueFAQS';
-import './FAQS.css'
+
+import PButton from '../../commonComponents/Ibutton/Ibutton';
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -108,7 +109,7 @@ export default function FAQS() {
                 </AccordionDetails>
             </Accordion>
             <br />
-            <button className='button'>View More</button>
+            <PButton title='View More' />
         </div>
     );
 }

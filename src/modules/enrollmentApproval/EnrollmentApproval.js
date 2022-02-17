@@ -5,7 +5,7 @@ import Table from '../../commonComponents/table/Table';
 import { EnrollmentApprovalStyle } from './EnrollmentApprovalStyle';
 import { useEnrollmentApproval } from './useEnrollmentApproval'
 function EnrollmentApproval() {
-    const [data, loading] = useEnrollmentApproval()
+    const [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick }] = useEnrollmentApproval()
     return (
         <div>
             <>
@@ -17,7 +17,16 @@ function EnrollmentApproval() {
                             <Audio type='Oval' color='#0D4cb5' height={100} width={100} />
                         </EnrollmentApprovalStyle.LoaderContainer>
                         :
-                        <Table title={'Enrollment Approval'} data={data}
+                        <Table title={'Enrollment Approval'}
+
+                            data={filterDataArray}
+                            handleClickOpen={handleClickOpen}
+                            open={open}
+                            handleClose={handleClose}
+                            anchorEl={anchorEl}
+                            handleAnchorClose={handleAnchorClose}
+                            handleAnchorClick={handleAnchorClick}
+                            openAnchor={openAnchor}
                             tableHeadings={['Student Name', 'Email', 'Course', 'Payment Method', 'Amount', 'Transaction ID', 'Status', 'Actions']} />
                 }
             </>

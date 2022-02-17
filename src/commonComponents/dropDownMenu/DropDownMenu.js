@@ -29,30 +29,48 @@ export default function DropDownMenu({ anchorEl, handleAnchorClose, openAnchor, 
               )
               :
               title === "Courses" ?
-              (
-                <>
-                  <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
-                  <MenuItem onClick={() => handleAnchorClose('Active')}>Active</MenuItem>
-                  <MenuItem onClick={() => handleAnchorClose('Closed')}>Closed</MenuItem>
-                </>
-              )
-              :
-              title === "All Students" ?
-              (
-                <>
-                  <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
-                  <MenuItem onClick={() => handleAnchorClose('Active')}>Active</MenuItem>
-                  <MenuItem onClick={() => handleAnchorClose('Closed')}>Closed</MenuItem>
-                </>
-              )
-              :
-              (
-                <>
-                  <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
-                  <MenuItem onClick={() => handleAnchorClose('Admin')}>Admins</MenuItem>
-                  <MenuItem onClick={() => handleAnchorClose('Teacher')}>Teachers</MenuItem>
-                </>
-              )
+                (
+                  <>
+                    <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
+                    <MenuItem onClick={() => handleAnchorClose('Active')}>Active</MenuItem>
+                    <MenuItem onClick={() => handleAnchorClose('Closed')}>Closed</MenuItem>
+                  </>
+                )
+                :
+                title === "All Students" ?
+                  (
+                    <>
+                      <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
+                      <MenuItem onClick={() => handleAnchorClose('Active')}>Active</MenuItem>
+                      <MenuItem onClick={() => handleAnchorClose('Closed')}>Closed</MenuItem>
+                    </>
+                  )
+                  :
+                  title === "Enrollment Approval" ?
+                    (
+                      <>
+                        <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
+                        <MenuItem onClick={() => handleAnchorClose('Active')}>Active</MenuItem>
+                        <MenuItem onClick={() => handleAnchorClose('Offline')}>Offline</MenuItem>
+                      </>
+                    )
+                    :
+                    title === "Events" ?
+                      (
+                        <>
+                          <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
+                          <MenuItem onClick={() => handleAnchorClose('Active')}>Active</MenuItem>
+                          <MenuItem onClick={() => handleAnchorClose('Offline')}>Offline</MenuItem>
+                        </>
+                      )
+                      :
+                      (
+                        <>
+                          <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
+                          <MenuItem onClick={() => handleAnchorClose('Admin')}>Admins</MenuItem>
+                          <MenuItem onClick={() => handleAnchorClose('Teacher')}>Teachers</MenuItem>
+                        </>
+                      )
 
           }
         </>

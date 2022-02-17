@@ -16,7 +16,7 @@ export default function Course() {
                     </CoursesStyle.LoaderContainer>
                     :
                     <Table title={'Courses'}
-                        tableHeadings={['Name', 'trainer', 'Role', 'Phone', 'Image', 'Actions']}
+                        tableHeadings={['Name', 'trainer', 'status', 'Phone', 'Image', 'Actions']}
                         data={filterDataArray}
                         handleClickOpen={handleClickOpen}
                         open={open}

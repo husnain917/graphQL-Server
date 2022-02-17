@@ -1,10 +1,10 @@
 import React from 'react'
-import { Ibutton } from './IButtonStyle'
+import { Ibutton } from './PButtonStyle'
 
-export default function PButton({ title, iconEnd,iconStart }) {
+export default function PButton({ title, iconEnd, iconStart, icon }) {
     return (
         <Ibutton startIcon={iconStart ? iconStart : ''} endIcon={iconEnd ? iconEnd : ''}>
-            {title}
+            {title ? title : icon}
         </Ibutton>
     )
 }

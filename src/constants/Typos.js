@@ -17,3 +17,9 @@ export const TypoText = styled(Typography)({
     fontWeight: '200',
     color: '#00668B'
 })
+export const TypoTextProfile = styled(Typography)({
+    fontSize: '20px',
+    fontWeight: '200',
+    color: '#00668B',
+    paddingTop:'20px'
+})

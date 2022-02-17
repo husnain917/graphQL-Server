@@ -1,6 +1,6 @@
 import { Container, TextField, Stack} from '@mui/material'
 import React from 'react'
-import Pbutton from '../../commonComponents/Ibutton/Ibutton'
+import Pbutton from '../../commonComponents/Pbutton/Pbutton'
 import {  ContainerFields } from './ContactUsStyle'
 import {TypoHead, TypoText} from '../../constants/Typos'
 import SendIcon from '@mui/icons-material/Send';

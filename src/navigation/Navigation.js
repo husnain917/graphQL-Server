@@ -11,6 +11,9 @@ import EnrollmentApproval from '../modules/enrollmentApproval/EnrollmentApproval
 import Events from '../modules/events/Events';
 import FAQS from '../modules/faqs/FAQS';
 import ContactUs from '../modules/contactUs/ContactUs';
+import Profile from '../modules/profile/Profile';
+import ChangePassword from '../modules/profile/changePassword/ChangePassword';
+import ProfileData from '../modules/profile/profileData/ProfileData';
 export default function Navigation() {
     const [authState, setAuthState] = useState(false);
     return (
@@ -31,9 +34,12 @@ export default function Navigation() {
                         <Route path='/courses' element={<Courses />} />
                         <Route path="/approve-enrollment" element={<EnrollmentApproval />} />
                         <Route path="/events" element={<Events />} />
-                        <Route path='/faq' element={<FAQS/>}/>
-                        <Route path='/contactus' element={<ContactUs/>}/>
-
+                        <Route path='/faq' element={<FAQS />} />
+                        <Route path='/contactus' element={<ContactUs />} />
+                        <Route path='profile' element={<Profile />}>
+                            <Route path='id:' element={<ProfileData />} />
+                            <Route path='ChangePassword' element={<ChangePassword />} />
+                        </Route>
                     </Routes >
                 </Sidebar>
             }

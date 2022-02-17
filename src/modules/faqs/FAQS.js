@@ -7,7 +7,7 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import { TypoHead } from '../../constants/Typos';
 import { useFAQS } from './useFAQS';
-import PButton from '../../commonComponents/Ibutton/Ibutton';
+import PButton from '../../commonComponents/Pbutton/Pbutton';
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({

@@ -64,6 +64,15 @@ export default function DropDownMenu({ anchorEl, handleAnchorClose, openAnchor, 
                         </>
                       )
                       :
+                      title === "Contact us" ?
+                      (
+                        <>
+                          <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
+                          <MenuItem onClick={() => handleAnchorClose('Pending')}>Pending</MenuItem>
+                          <MenuItem onClick={() => handleAnchorClose('Approved')}>Approved</MenuItem>
+                        </>
+                      )
+                      :
                       (
                         <>
                           <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>

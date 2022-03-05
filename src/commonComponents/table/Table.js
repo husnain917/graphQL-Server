@@ -19,6 +19,7 @@ import { TableStyle } from './TableStyle';
 import { UseTable } from './UseTable';
 import FormModal from '../formModal/FormModal';
 import DropDownMenu from '../dropDownMenu/DropDownMenu';
+import CommonModal from '../commonModal/CommonModal';
 
 export default function Table({
   data,
@@ -232,7 +233,53 @@ export default function Table({
                           </Tooltip>
                         </TableCell>
                       </>
-                    ) : (
+                    ): title === "Contact us" ? (
+                      <>
+                        <TableCell align='center' component='th' scope='row'>
+                          {row?.name}
+                        </TableCell>
+                        <TableCell align='center'>{row?.email}</TableCell>
+                        <TableCell align='center'>{row?.subject}</TableCell>
+                        <TableCell align='center'><CommonModal message={row?.message}/></TableCell>
+                        <TableCell align='center'>{row?.status}</TableCell>
+                        <TableCell align='center'>
+                          <Tooltip title='Delete'>
+                            <IconButton aria-label='delete' size='small'>
+                              <TableStyle.DeleteIcon />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title='Update'>
+                            <IconButton aria-label='update' size='small'>
+                              <TableStyle.EditIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                      </>
+                    )  
+                    : title === "FAQS" ? (
+                      <>
+                        <TableCell align='center' component='th' scope='row'>
+                          {row?.name}
+                        </TableCell>
+                        <TableCell align='center'>{row?.email}</TableCell>
+                        <TableCell align='center'>{row?.phone}</TableCell>
+                        <TableCell align='center'><CommonModal question={row?.question}/></TableCell>
+                      
+                        <TableCell align='center'>
+                          <Tooltip title='Delete'>
+                            <IconButton aria-label='delete' size='small'>
+                              <TableStyle.DeleteIcon />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title='Update'>
+                            <IconButton aria-label='update' size='small'>
+                              <TableStyle.EditIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                      </>
+                    )  
+                    : (
                       <>
                         <TableCell align='center' component='th' scope='row'>
                           {row?.name}

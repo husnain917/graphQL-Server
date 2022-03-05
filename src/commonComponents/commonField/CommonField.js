@@ -1,8 +1,8 @@
 import { Stack } from '@mui/material'
 import React, { useState } from 'react'
 import { CF } from './CommonFieldStyle'
-export default function CommonField({ Name, Label, Email, Address, Role, Password, PhoneNo ,passwordShown}) {
-   
+export default function CommonField({ Name, Label, Email, Address, Role, Password, PhoneNo, passwordShown, edit }) {
+
     return (
         <>
             <Stack spacing={2}>
@@ -30,6 +30,7 @@ export default function CommonField({ Name, Label, Email, Address, Role, Passwor
                                 }} />
 
                 }
+              
             </Stack>
         </>
     )

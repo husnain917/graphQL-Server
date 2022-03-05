@@ -1,9 +1,9 @@
 import React from 'react';
 import { UseCourses } from './useCourses';
 import Table from '../../commonComponents/table/Table';
-import { CoursesStyle } from './CoursesStyle';
 import { ToastContainer } from 'react-toastify';
 import { Audio } from 'react-loader-spinner';
+import { CommonLoadingStyle } from '../../constants/CommonTableStyle';
 export default function Course() {
     const [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick }] = UseCourses();
     return (
@@ -11,9 +11,9 @@ export default function Course() {
             <ToastContainer />
             {
                 loading ?
-                    <CoursesStyle.LoaderContainer>
+                    <CommonLoadingStyle.LoaderContainer>
                         <Audio type='Oval' color='#0D4cb5' height={100} width={100} />
-                    </CoursesStyle.LoaderContainer>
+                    </CommonLoadingStyle.LoaderContainer>
                     :
                     <Table title={'Courses'}
                         tableHeadings={['Name', 'trainer', 'status', 'Phone', 'Image', 'Actions']}

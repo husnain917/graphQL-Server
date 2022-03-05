@@ -37,5 +37,6 @@ export const P = {
            color:`${colors.blue}`
        }
 
-    }))
+    })),
+  
 }

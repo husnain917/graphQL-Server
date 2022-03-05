@@ -14,6 +14,7 @@ import ContactUs from '../modules/contactUs/ContactUs';
 import Profile from '../modules/profile/Profile';
 import ChangePassword from '../modules/profile/changePassword/ChangePassword';
 import ProfileData from '../modules/profile/profileData/ProfileData';
+import EditProfile from '../modules/profile/editProfile/EditProfile';
 export default function Navigation() {
     const [authState, setAuthState] = useState(false);
     return (
@@ -38,7 +39,9 @@ export default function Navigation() {
                         <Route path='/contactus' element={<ContactUs />} />
                         <Route path='profile' element={<Profile />}>
                             <Route path='id:' element={<ProfileData />} />
+                            <Route path='editProfile/id:' element={<EditProfile />} />
                             <Route path='ChangePassword' element={<ChangePassword />} />
+                           
                         </Route>
                     </Routes >
                 </Sidebar>

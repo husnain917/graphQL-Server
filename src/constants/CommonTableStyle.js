@@ -1,6 +1,6 @@
 
 import { styled } from '@mui/material/styles';
-export const EnrollmentApprovalStyle = {
+export const CommonLoadingStyle = {
     LoaderContainer: styled('div')(() => ({
         width: '100%',
         justifyContent: 'center',

@@ -2,8 +2,8 @@ import React from 'react';
 import { Audio } from 'react-loader-spinner';
 import { ToastContainer } from 'react-toastify';
 import Table from '../../commonComponents/table/Table';
-import { EventsStyle } from './EventsStyle';
 import { useEvents } from './useEvents'
+import { CommonLoadingStyle } from '../../constants/CommonTableStyle';
 export default function Events() {
     const [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick }] = useEvents()
     return (
@@ -11,9 +11,9 @@ export default function Events() {
             <ToastContainer />
             {
                 loading ?
-                    <EventsStyle.LoaderContainer>
+                    <CommonLoadingStyle.LoaderContainer>
                         <Audio type='Oval' color='#0D4cb5' height={100} width={100} />
-                    </EventsStyle.LoaderContainer>
+                    </CommonLoadingStyle.LoaderContainer>
                     :
                     <Table title={'Events'}
                         data={filterDataArray}

@@ -26,7 +26,9 @@ export default function Profile() {
                         <P.Mycontainer>
                            <Stack spacing={2}>
                            <P.MyLink to='id:' >Profile</P.MyLink>
+                           <P.MyLink to='editProfile/id:' >Edit Profile</P.MyLink>
                            <P.MyLink to='ChangePassword' >Change Password</P.MyLink>
+
                            </Stack>
                         </P.Mycontainer>
                     </Grid>

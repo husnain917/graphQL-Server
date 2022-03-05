@@ -1,81 +1,35 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
-import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionSummary from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import { TypoHead } from '../../constants/Typos';
-import { useFAQS } from './useFAQS';
-import PButton from '../../commonComponents/Pbutton/Pbutton';
-const Accordion = styled((props) => (
-    <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-    border: `1px solid ${theme.palette.divider}`,
-    '&:not(:last-child)': {
-        borderBottom: 0,
-    },
-    '&:before': {
-        display: 'none',
-    },
-}));
-
-const AccordionSummary = styled((props) => (
-    <MuiAccordionSummary
-        expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
-        {...props}
-    />
-))(({ theme }) => ({
-    backgroundColor:
-        theme.palette.mode === 'dark'
-            ? 'rgba(255, 255, 255, .05)'
-            : 'rgba(0, 0, 0, .03)',
-    flexDirection: 'row-reverse',
-    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-        transform: 'rotate(90deg)',
-    },
-    '& .MuiAccordionSummary-content': {
-        marginLeft: theme.spacing(1),
-    },
-}));
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-    padding: theme.spacing(2),
-    borderTop: '1px solid rgba(0, 0, 0, .125)',
-}));
-
+import React from 'react'
+import Table from '../../commonComponents/table/Table'
+import { useFAQS } from './useFAQS'
+import { CommonLoadingStyle } from '../../constants/CommonTableStyle'
+import { Audio } from 'react-loader-spinner'
+import { ToastContainer } from 'react-toastify'
 export default function FAQS() {
-    const [data] = useFAQS()
-    const [expanded, setExpanded] = React.useState('panel1');
-
-    const handleChange = (panel) => (event, newExpanded) => {
-        setExpanded(newExpanded ? panel : false);
-    };
-
+    const [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick }] = useFAQS()
     return (
-        <div>
 
-            <br />
-            <TypoHead variant='h2'>FAQS</TypoHead>
-            <br />
+        <>
+            <ToastContainer />
             {
-                data.map((item) => {
-                    return (
-                        <Accordion expanded={expanded === item.id} onChange={handleChange(item.id)}>
-                            <AccordionSummary aria-controls={`panel ${item.id}-content`} id={`panel ${item.id}-header`}>
-                                <Typography>{item.question}</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Typography>
-                                    {item.line}
-                                </Typography>
-                            </AccordionDetails>
-                        </Accordion>
-                    )
-                })
+                loading ?
+                    <CommonLoadingStyle.LoaderContainer>
+                        <Audio type='Oval' color='#0D4cb5' height={100} width={100} />
+                    </CommonLoadingStyle.LoaderContainer>
+                    :
+                    <Table title="FAQS"
+                        tableHeadings={['Name', 'Email', 'Phone', 'Question', 'Actions']}
+                        data={filterDataArray}
+                        handleClickOpen={handleClickOpen}
+                        open={open}
+                        handleClose={handleClose}
+                        anchorEl={anchorEl}
+                        handleAnchorClose={handleAnchorClose}
+                        handleAnchorClick={handleAnchorClick}
+                        openAnchor={openAnchor}
+                    />
             }
-            <br />
-            <PButton title='View More' />
-        </div>
-    );
+        </>
+
+
+    )
 }

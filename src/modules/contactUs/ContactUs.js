@@ -1,36 +1,34 @@
-import { Container, TextField, Stack} from '@mui/material'
-import React from 'react'
-import Pbutton from '../../commonComponents/Pbutton/Pbutton'
-import {  ContainerFields } from './ContactUsStyle'
-import {TypoHead, TypoText} from '../../constants/Typos'
-import SendIcon from '@mui/icons-material/Send';
-
-
+import React from "react"
+import Table from '../../commonComponents/table/Table'
+import useContactUs from "./useContactUs"
+import { CommonLoadingStyle } from "../../constants/CommonTableStyle"
+import { Audio } from "react-loader-spinner"
+import { ToastContainer } from "react-toastify"
 export default function ContactUs() {
+    const [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick }] = useContactUs()
     return (
         <div>
-            <TypoHead>Contact Us</TypoHead>
-            <TypoText>Contact the Help Team</TypoText>
-
-            <Container maxWidth='small'>
-                <center>
-                    <ContainerFields>
-                        <Stack spacing={2}>
-                            <TextField size="small" label={'Name'} id="margin-normal" margin="normal" />
-                            <TextField size="small" label={'Email'} id="margin-normal" margin="normal" />
-                            <TextField size="small" label={'Role'} id="margin-normal" margin="normal" />
-                            <TextField size="large" label={'Reason'} id="margin-normal" margin="normal" />
-                          
-                        </Stack>
-                        <br/>
-                        <Pbutton title="Send" size="medium" iconEnd={<SendIcon />} />
-
-                    </ContainerFields>
-
-                </center>
-
-            </Container>
-
+            <>
+                <ToastContainer />
+                {
+                    loading ?
+                        <CommonLoadingStyle.LoaderContainer>
+                            <Audio type='Oval' color='#0D4cb5' height={100} width={100} />
+                        </CommonLoadingStyle.LoaderContainer>
+                        :
+                        <Table title="Contact us"
+                            tableHeadings={['Name', 'Email', 'Subject', 'Message', 'Status', 'Actions']}
+                            data={filterDataArray}
+                            handleClickOpen={handleClickOpen}
+                            open={open}
+                            handleClose={handleClose}
+                            anchorEl={anchorEl}
+                            handleAnchorClose={handleAnchorClose}
+                            handleAnchorClick={handleAnchorClick}
+                            openAnchor={openAnchor}
+                        />
+                }
+            </>
 
 
 

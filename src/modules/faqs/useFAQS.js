@@ -1,32 +1,68 @@
+import { useState } from "react";
 
 
 export function useFAQS() {
+    const [loading, setLoading] = useState(false)
+    const [filterValue, setFilterValue] = useState('');
+    const [open, setOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const openAnchor = Boolean(anchorEl);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleAnchorClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleAnchorClose = (value) => {
+        setAnchorEl(null);
+        setFilterValue(typeof value == 'object' ? filterValue : value);
+    };
     const data = [
         {
-            id:1,
-            question:'Question1',
-            line: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendiss malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,sit amet blandit leo lobortis eget."
+            name: 'sami',
+            email: '--------',
+            phone: '-----------',
+            question: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendiss malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,sit amet blandit leo lobortis eget."
         },
         {
-            id:2,
-            question:'Question2',
-            line: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendiss malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,sit amet blandit leo lobortis eget."
+            name: 'sami',
+            email: '--------',
+            phone: '-----------',
+            question: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendiss malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,sit amet blandit leo lobortis eget."
         },
         {
-            id:3,
-            question:'Question3',
-            line: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendiss malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,sit amet blandit leo lobortis eget."
+            name: 'sami',
+            email: '--------',
+            phone: '-----------',
+            question: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendiss malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,sit amet blandit leo lobortis eget."
         },
         {
-            id:4,
-            question:'Question4',
-            line: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendiss malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,sit amet blandit leo lobortis eget."
+            name: 'sami',
+            email: '--------',
+            phone: '-----------',
+            question: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendiss malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,sit amet blandit leo lobortis eget."
         },
         {
-            id:5,
-            question:'Question5',
-            line: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendiss malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,sit amet blandit leo lobortis eget."
+            name: 'sami',
+            email: '--------',
+            phone: '-----------',
+            question: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendiss malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,sit amet blandit leo lobortis eget."
         },
     ]
-    return [data]
+    const filterDataArray = data.filter((item) => {
+        if (filterValue === '') {
+            return item;
+        }
+        else if (filterValue === item.status) {
+            return item;
+        }
+        else if (filterValue === 'All') {
+            return item;
+        }
+    })
+    return [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick }]
 }

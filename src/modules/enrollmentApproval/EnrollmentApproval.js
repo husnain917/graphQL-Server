@@ -2,7 +2,7 @@ import React from 'react';
 import { Audio } from 'react-loader-spinner';
 import { ToastContainer } from 'react-toastify';
 import Table from '../../commonComponents/table/Table';
-import { EnrollmentApprovalStyle } from './EnrollmentApprovalStyle';
+import { CommonLoadingStyle } from '../../constants/CommonTableStyle';
 import { useEnrollmentApproval } from './useEnrollmentApproval'
 function EnrollmentApproval() {
     const [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick }] = useEnrollmentApproval()
@@ -13,9 +13,9 @@ function EnrollmentApproval() {
                 <ToastContainer />
                 {
                     loading ?
-                        <EnrollmentApprovalStyle.LoaderContainer>
+                        <CommonLoadingStyle.LoaderContainer>
                             <Audio type='Oval' color='#0D4cb5' height={100} width={100} />
-                        </EnrollmentApprovalStyle.LoaderContainer>
+                        </CommonLoadingStyle.LoaderContainer>
                         :
                         <Table title={'Enrollment Approval'}
 

@@ -29,7 +29,6 @@ export const P = {
     })),
     MyLink:styled(NavLink)(()=>({
         textDecoration:'none',
-        color:`${colors.lightBlue}`,
         '&:hover':{
             textDecoration:'underline',
         },

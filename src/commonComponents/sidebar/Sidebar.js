@@ -31,7 +31,6 @@ function Sidebar(props) {
             key={index}
             ref={anchorRef}
             button
-            onClick={handleDrawer}
             sx={location?.pathname === item?.path ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
 
           >
@@ -70,7 +69,7 @@ function Sidebar(props) {
                 Training Portal
               </SidebarStyle.TypoTraining>
             </Grid>
-            <Grid item xl={9} lg={9} md={9} sm={0} xs={0}>
+            <Grid item xl={10} lg={10} md={9} sm={0} xs={0}>
               <CommonProfileDropDown/>
             </Grid>
 

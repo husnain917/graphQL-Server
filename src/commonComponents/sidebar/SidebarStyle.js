@@ -1,4 +1,4 @@
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -36,7 +36,7 @@ export const SidebarStyle = {
   AppBar: styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
   })(({ theme, open }) => ({
-    backgroundColor:colors.lightBlue,
+    backgroundColor: colors.lightBlue,
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -115,7 +115,7 @@ export const SidebarStyle = {
       padding: theme.spacing(1),
     },
   })),
-    // ===================== Sidebar Links =====================
+  // ===================== Sidebar Links =====================
 
   DomLink: styled(Link)(() => ({
     display: 'flex',
@@ -128,4 +128,13 @@ export const SidebarStyle = {
     color: colors.black + 90,
     marginLeft: -2
   })),
+ 
+  TypoTraining: styled(Typography)(() => ({
+    marginTop: '12px ',
+    "@media (max-width:900px)": {
+      marginTop: '0px',
+      float:'left'
+    }
+  })),
+ 
 };

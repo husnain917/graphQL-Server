@@ -6,18 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import client from './lib/ApolloClient'
 import {
   ApolloProvider,
-  gql
+ 
 } from "@apollo/client";
-client
-  .query({
-    query: gql`
-    query GetRates {
-      rates(currency: "USD") {
-        currency
-      }
-    }
-     `
-  })
+  
 ReactDOM.render(
   <ApolloProvider client={client}>
     <App />

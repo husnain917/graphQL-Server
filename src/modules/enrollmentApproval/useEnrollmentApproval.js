@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_ENROLLMENT } from '../../lib/queries/AllQueries'
 export function useEnrollmentApproval() {
-  const [loading, setLoading] = React.useState(false)
+  let { loading, error, data } = useQuery(GET_ENROLLMENT);
   const [filterValue, setFilterValue] = useState('');
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openAnchor = Boolean(anchorEl);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -20,45 +22,8 @@ export function useEnrollmentApproval() {
     setAnchorEl(null);
     setFilterValue(typeof value == 'object' ? filterValue : value);
   };
-  const data = [
-    {
-      name: 'sami',
-      email: 'samishokat1234@gmail.com',
-      course: 'react native',
-      paymentMethod: 'debit card',
-      amount: '15000 RS',
-      transactionId: 'none',
-      status: 'Active'
-    },
-    {
-      name: 'ahsan',
-      email: 'samishokat@gmail.com',
-      course: 'react native',
-      paymentMethod: 'debit card',
-      amount: '15000 RS',
-      transactionId: 'none',
-      status: 'Offline'
-    },
-    {
-      name: 'sami',
-      email: 'samishokat@gmail.com',
-      course: 'react native',
-      paymentMethod: 'debit card',
-      amount: '15000 RS',
-      transactionId: 'none',
-      status: 'Offline'
-    },
-    {
-      name: 'ali',
-      email: 'samishokat@gmail.com',
-      course: 'react native',
-      paymentMethod: 'debit card',
-      amount: '15000 RS',
-      transactionId: 'none',
-      status: 'Offline'
-    },
-  ]
-  const filterDataArray = data.filter((item) => {
+  console.log(data.enrollmentApprovals);
+  const filterDataArray = data.enrollmentApprovals.filter((item) => {
     if (filterValue === '') {
       return item;
     }
@@ -69,6 +34,6 @@ export function useEnrollmentApproval() {
       return item;
     }
   })
-  return [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick }]
+  return [{ filterDataArray, loading, open, handleClickOpen, handleClose, error, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick }]
 }
 

@@ -6,13 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import client from './lib/ApolloClient'
 import {
   ApolloProvider,
- 
+
 } from "@apollo/client";
-  
+
+
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
+  
+    <ApolloProvider client={client} >
+      <App />
+    </ApolloProvider>,
+
   document.getElementById('root')
 );
 

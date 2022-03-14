@@ -55,7 +55,7 @@ export default function Table({
       {/* Drop Down menu for filter Button */}
 
       {/* Form Modal */}
-      <FormModal open={open} handleClose={handleClose} />
+      <FormModal open={open} title={title} handleClose={handleClose} />
       {/* Form Modal */}
 
       <Toolbar disableGutters>
@@ -68,11 +68,11 @@ export default function Table({
                 {title}
               </Typography>
               <TableStyle.SearchAndBtnsContainer>
-                <GlobalSearch
+                {/* <GlobalSearch
                   onChangeText={onTextChangeHandler}
                   placeholder="Search here..."
                   searchCancel={cancelSearch}
-                />
+                /> */}
                 <TableStyle.FilterListIcon onClick={handleAnchorClick} />
                 <TableStyle.AddIcon onClick={handleClickOpen} />
               </TableStyle.SearchAndBtnsContainer>
@@ -150,7 +150,7 @@ export default function Table({
           </TableHead>
           <TableBody>
             {
-              data
+              data 
                 .filter(
                   searchingFor(searchQuery),
                 )
@@ -182,7 +182,7 @@ export default function Table({
                       <>
                         <>
                           <TableCell align='center' component='th' scope='row'>
-                            {row?.name}
+                            {row?.studentName}
                           </TableCell>
                           <TableCell align='center'>{row?.email}</TableCell>
                           <TableCell align='center'>{row?.course}</TableCell>
@@ -233,14 +233,14 @@ export default function Table({
                           </Tooltip>
                         </TableCell>
                       </>
-                    ): title === "Contact us" ? (
+                    ) : title === "Contact us" ? (
                       <>
                         <TableCell align='center' component='th' scope='row'>
                           {row?.name}
                         </TableCell>
                         <TableCell align='center'>{row?.email}</TableCell>
                         <TableCell align='center'>{row?.subject}</TableCell>
-                        <TableCell align='center'><CommonModal message={row?.message}/></TableCell>
+                        <TableCell align='center'><CommonModal message={row?.message} /></TableCell>
                         <TableCell align='center'>{row?.status}</TableCell>
                         <TableCell align='center'>
                           <Tooltip title='Delete'>
@@ -255,53 +255,53 @@ export default function Table({
                           </Tooltip>
                         </TableCell>
                       </>
-                    )  
-                    : title === "FAQS" ? (
-                      <>
-                        <TableCell align='center' component='th' scope='row'>
-                          {row?.name}
-                        </TableCell>
-                        <TableCell align='center'>{row?.email}</TableCell>
-                        <TableCell align='center'>{row?.phone}</TableCell>
-                        <TableCell align='center'><CommonModal question={row?.question}/></TableCell>
-                      
-                        <TableCell align='center'>
-                          <Tooltip title='Delete'>
-                            <IconButton aria-label='delete' size='small'>
-                              <TableStyle.DeleteIcon />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip title='Update'>
-                            <IconButton aria-label='update' size='small'>
-                              <TableStyle.EditIcon />
-                            </IconButton>
-                          </Tooltip>
-                        </TableCell>
-                      </>
-                    )  
-                    : (
-                      <>
-                        <TableCell align='center' component='th' scope='row'>
-                          {row?.name}
-                        </TableCell>
-                        <TableCell align='center'>{row?.email}</TableCell>
-                        <TableCell align='center'>{row?.status}</TableCell>
-                        <TableCell align='center'>{row?.phone}</TableCell>
-                        <TableCell align='center'>{row?.image}</TableCell>
-                        <TableCell align='center'>
-                          <Tooltip title='Delete'>
-                            <IconButton aria-label='delete' size='small'>
-                              <TableStyle.DeleteIcon />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip title='Update'>
-                            <IconButton aria-label='update' size='small'>
-                              <TableStyle.EditIcon />
-                            </IconButton>
-                          </Tooltip>
-                        </TableCell>
-                      </>
-                    )}
+                    )
+                      : title === "FAQS" ? (
+                        <>
+                          <TableCell align='center' component='th' scope='row'>
+                            {row?.name}
+                          </TableCell>
+                          <TableCell align='center'>{row?.email}</TableCell>
+                          <TableCell align='center'>{row?.phone}</TableCell>
+                          <TableCell align='center'><CommonModal question={row?.question} /></TableCell>
+
+                          <TableCell align='center'>
+                            <Tooltip title='Delete'>
+                              <IconButton aria-label='delete' size='small'>
+                                <TableStyle.DeleteIcon />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip title='Update'>
+                              <IconButton aria-label='update' size='small'>
+                                <TableStyle.EditIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </TableCell>
+                        </>
+                      )
+                        : (
+                          <>
+                            <TableCell align='center' component='th' scope='row'>
+                              {row?.name}
+                            </TableCell>
+                            <TableCell align='center'>{row?.email}</TableCell>
+                            <TableCell align='center'>{row?.status}</TableCell>
+                            <TableCell align='center'>{row?.phone}</TableCell>
+                            <TableCell align='center'>{row?.image}</TableCell>
+                            <TableCell align='center'>
+                              <Tooltip title='Delete'>
+                                <IconButton aria-label='delete' size='small'>
+                                  <TableStyle.DeleteIcon />
+                                </IconButton>
+                              </Tooltip>
+                              <Tooltip title='Update'>
+                                <IconButton aria-label='update' size='small'>
+                                  <TableStyle.EditIcon />
+                                </IconButton>
+                              </Tooltip>
+                            </TableCell>
+                          </>
+                        )}
                   </TableStyle.CustomTableRow>
                 ))}
           </TableBody>

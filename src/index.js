@@ -6,15 +6,32 @@ import reportWebVitals from './reportWebVitals';
 import client from './lib/ApolloClient'
 import {
   ApolloProvider,
+  gql
 
 } from "@apollo/client";
+// const client = ...
 
+client
+  .query({
+    query: gql`
+     query {
+  studentsList{
+    title
+    id
+    checkbox
+    
+  }
+}
+
+    `
+  })
+  .then(result => console.log(result));
 
 ReactDOM.render(
-  
-    <ApolloProvider client={client} >
-      <App />
-    </ApolloProvider>,
+
+  <ApolloProvider client={client} >
+    <App />
+  </ApolloProvider>,
 
   document.getElementById('root')
 );

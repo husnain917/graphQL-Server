@@ -23,7 +23,7 @@ export function useEnrollmentApproval() {
     setFilterValue(typeof value == 'object' ? filterValue : value);
   };
   console.log(data.enrollmentApprovals);
-  const filterDataArray = data.enrollmentApprovals.filter((item) => {
+  const filterDataArray = data?.enrollmentApprovals?.filter((item) => {
     if (filterValue === '') {
       return item;
     }

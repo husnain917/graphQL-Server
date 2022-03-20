@@ -4,7 +4,8 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import {OLS} from './OverlayLoaderStyle';
 import {ThreeDots} from "react-loader-spinner";
-export default function OverlayLoader({ open }) {
+import MetroSpinner  from 'react-spinners-kit'
+export default function OverlayLoader({ open ,loading}) {
     return (
         <div>
             <Modal
@@ -20,7 +21,8 @@ export default function OverlayLoader({ open }) {
                 <Fade in={open}>
                     <OLS.Box >
                         <OLS.LoaderContainer>
-                            <ThreeDots color="#0D4cb5" height={100} width={100} />
+                            {/* <ThreeDots color="#0D4cb5" height={100} width={100} /> */}
+                            <MetroSpinner size={30} color="#686769" loading={loading} />
                         </OLS.LoaderContainer>
                     </OLS.Box>
                 </Fade>

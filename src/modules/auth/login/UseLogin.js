@@ -1,8 +1,8 @@
 import { useMutation } from '@apollo/client';
-import React, { useState } from 'react';
-import { unstable_HistoryRouter, useNavigate } from "react-router-dom";
-import { LOGIN } from '../../../lib/mutation/AllMutation';
-// import { unstable_HistoryRouter } from "react-router-dom";
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { LOGIN } from '../../../lib/mutation/LoginMutation';
+import { toast ,Slide} from 'react-toastify';
 export default function UseLogin() {
   let navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -13,11 +13,10 @@ export default function UseLogin() {
     weightRange: '',
     showPassword: false,
   });
-  // let history = unstable_HistoryRouter();
+
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -25,9 +24,18 @@ export default function UseLogin() {
     });
   };
   let [Login, { loading, error }] = useMutation(LOGIN)
+  const notifyError = () => toast.error('Incorrect email or password', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    transition: Slide,
+  });
   const loginHandler = async (setAuthState) => {
-
-
     try {
       await Login({
         variables: {
@@ -37,16 +45,14 @@ export default function UseLogin() {
         onCompleted() {
           setAuthState(true);
           navigate('/dashboard')
-          // history.push("/dashboard");
-
         },
-
       })
 
 
     }
     catch (error) {
-      console.log(error.message);
+      notifyError()
+
     }
   }
 

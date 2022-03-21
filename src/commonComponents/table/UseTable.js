@@ -17,9 +17,10 @@ export function UseTable() {
   const searchingFor = (searchQuery) => {
     return function (data) {
       return (
-        (data?.name || data?.studentName).toLowerCase().includes(
+        (data?.name || data?.courseName || data?.studentName || data?.Title).toLowerCase().includes(
           searchQuery.toLowerCase(),
         )
+
       );
     };
   };

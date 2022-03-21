@@ -3,10 +3,10 @@ import { gql } from '@apollo/client';
 
 
 export const GET_ENROLLMENT = gql`
- query EnrollmentApprovals {
+query EnrollmentApprovals {
   enrollmentApprovals {
-    id
     studentName
+    id
     email
     course
     paymentMethod

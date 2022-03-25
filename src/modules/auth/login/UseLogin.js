@@ -1,10 +1,18 @@
-import { useMutation } from '@apollo/client';
-import { useState } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { LOGIN } from '../../../lib/mutation/LoginMutation';
-import { toast ,Slide} from 'react-toastify';
+import { toast, Slide } from 'react-toastify';
 export default function UseLogin() {
   let navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (JSON.parse(sessionStorage.getItem('localAuthState')) === 'true') {
+      navigate('/dashboard')
+      console.log('after');
+    }
+  }, [])
+
   const [email, setEmail] = useState('');
   const [values, setValues] = useState({
     amount: '',
@@ -23,7 +31,10 @@ export default function UseLogin() {
       showPassword: !values.showPassword,
     });
   };
-  let [Login, { loading, error }] = useMutation(LOGIN)
+
+
+
+  let [Login, { data, loading, error }] = useMutation(LOGIN)
   const notifyError = () => toast.error('Incorrect email or password', {
     position: "top-right",
     autoClose: 5000,
@@ -42,11 +53,19 @@ export default function UseLogin() {
           password: values.password,
           email: email
         },
-        onCompleted() {
-          setAuthState(true);
-          navigate('/dashboard')
+        onCompleted({ login }) {
+
+
+          if (login) {
+            localStorage.setItem('user', JSON.stringify(login));
+            sessionStorage.setItem('localAuthState', 'true');
+            setAuthState(true); // highlight-line
+            navigate('/dashboard')
+
+          }
         },
       })
+
 
 
     }
@@ -55,6 +74,7 @@ export default function UseLogin() {
 
     }
   }
+
 
   return [{ values, handleChange, handleClickShowPassword, email, setEmail, loginHandler, loading }]
 }

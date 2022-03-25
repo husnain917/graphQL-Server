@@ -50,7 +50,58 @@ export default function Table({
   error,
   setStatus,
   role,
-  phone, setRole, setPhone, ctaButtonHandler1
+  phone,
+  setRole,
+  setPhone,
+  ctaButtonHandler1,
+  courseDesc,
+  courseStatus,
+  courseCategoryId,
+  coursePrice,
+  courseIntro,
+  instructorId,
+  ctaButtonHandler2,
+  setcourseDesc,
+  setcourseStatus,
+  setcourseCategoryId,
+  setcoursePrice,
+  setcourseIntro,
+  setinstructorId,
+  ctaButtonHandler3,
+  freelancingProfileUrl,
+  setfreelancingProfileUrl,
+  paymentProof,
+  setpaymentProof,
+  description,
+  setdescription,
+  totalEarnedAmount,
+  settotalEarnedAmount,
+  city,
+  setcity,
+  whyReject,
+  setwhyReject,
+  ctaButtonHandler4,
+  eventDate,
+  seteventDate,
+  speakerId,
+  setspeakerId,
+  eventImage,
+  seteventImage,
+  ctaButtonHandler5,
+  subject,
+  message,
+  reply,
+  setsubject,
+  setmessage,
+  setreply,
+  ctaButtonHandler6,
+  faqQuestion,
+  faqAnswer,
+  setfaqQuestion,
+  setfaqAnswer,
+  ctaButtonHandler7,
+  filterValue,
+
 }) {
   const [
     {
@@ -65,12 +116,12 @@ export default function Table({
   return (
     <>
       {/* Drop Down menu for filter Button */}
-      {/* <DropDownMenu
+      <DropDownMenu
         handleAnchorClose={handleAnchorClose}
         anchorEl={anchorEl}
         openAnchor={openAnchor}
         title={title}
-      /> */}
+      />
       {/* Drop Down menu for filter Button */}
 
       {/* Form Modal */}
@@ -96,7 +147,56 @@ export default function Table({
         loading={loading}
         error={error}
         setStatus={setStatus}
-        ctaButtonHandler1={ctaButtonHandler1} />
+        ctaButtonHandler1={ctaButtonHandler1}
+        courseDesc={courseDesc}
+        courseStatus={courseStatus}
+        courseIntro={courseIntro}
+        coursePrice={coursePrice}
+        instructorId={instructorId}
+        ctaButtonHandler2={ctaButtonHandler2}
+        courseCategoryId={courseCategoryId}
+        setcourseDesc={setcourseDesc}
+        setcourseStatus={setcourseStatus}
+        setcourseCategoryId={setcourseCategoryId}
+        setcoursePrice={setcoursePrice}
+        setcourseIntro={setcourseIntro}
+        setinstructorId={setinstructorId}
+        ctaButtonHandler3={ctaButtonHandler3}
+        freelancingProfileUrl={freelancingProfileUrl}
+        setfreelancingProfileUrl={setfreelancingProfileUrl}
+        paymentProof={paymentProof}
+        setpaymentProof={setpaymentProof}
+        description={description}
+        setdescription={setdescription}
+        totalEarnedAmount={totalEarnedAmount}
+        settotalEarnedAmount={settotalEarnedAmount}
+        city={city}
+        setcity={setcity}
+        whyReject={whyReject}
+        setwhyReject={setwhyReject}
+        ctaButtonHandler4={ctaButtonHandler4}
+        eventDate={eventDate}
+        seteventDate={seteventDate}
+        speakerId={speakerId}
+        setspeakerId={setspeakerId}
+        eventImage={eventImage}
+        seteventImage={seteventImage}
+        ctaButtonHandler5={ctaButtonHandler5}
+        subject={subject}
+        message={message}
+        reply={reply}
+        setsubject={setsubject}
+        setmessage={setmessage}
+        setreply={setreply}
+        ctaButtonHandler6={ctaButtonHandler6}
+        faqQuestion={faqQuestion}
+        faqAnswer={faqAnswer}
+        setfaqQuestion={setfaqQuestion}
+        setfaqAnswer={setfaqAnswer}
+        ctaButtonHandler7={ctaButtonHandler7}
+
+
+      />
       {/* Form Modal */}
 
       <Toolbar disableGutters>
@@ -105,24 +205,18 @@ export default function Table({
 
           <Hidden smDown>
             <TableStyle.SeachContainer>
-              <Typography variant='h6' component='div' noWrap={true}>
+              <Typography variant='h6' component='div' noW3rap={true}>
                 {title}
               </Typography>
               <TableStyle.SearchAndBtnsContainer>
-                {/* <GlobalSearch
+                <GlobalSearch
                   onChangeText={onTextChangeHandler}
                   placeholder="Search here..."
                   searchCancel={cancelSearch}
-                /> */}
-                {
-                  title === "Contact us" ?
-                    ''
-                    :
-                    title === "FAQS" ?
-                      ''
-                      :
-                      <TableStyle.FilterListIcon onClick={handleAnchorClick} />
-                }
+                />
+
+                <TableStyle.FilterListIcon onClick={handleAnchorClick} />
+
                 <TableStyle.AddIcon onClick={handleClickOpen} />
               </TableStyle.SearchAndBtnsContainer>
             </TableStyle.SeachContainer>
@@ -262,14 +356,13 @@ export default function Table({
                     ) : title === 'Events' ? (
                       <>
                         <TableCell align='center' component='th' scope='row'>
-                          {row?.Title}
+                          {row?.eventName}
                         </TableCell>
-                        <TableCell align='center'>{row?.Venue}</TableCell>
-                        <TableCell align='center'>{row?.MaxTickets}</TableCell>
-                        <TableCell align='center'>{row?.DateTime}</TableCell>
-                        <TableCell align='center'>{row?.EventType}</TableCell>
-                        <TableCell align='center'>{row?.status}</TableCell>
-                        <TableCell align='center'>{row?.Speakers}</TableCell>
+                        <TableCell align='center'>{row?.eventDesc}</TableCell>
+                        <TableCell align='center'>{row?.eventDate}</TableCell>
+                        <TableCell align='center'>{row?.speakerId}</TableCell>
+                        <TableCell align='center'>{row?.eventStatus}</TableCell>
+                        <TableCell align='center'>{row?.eventImage}</TableCell>
                         <TableCell align='center'>
                           <Tooltip title='Delete'>
                             <IconButton aria-label='delete' size='small'>
@@ -288,9 +381,13 @@ export default function Table({
                         <TableCell align='center' component='th' scope='row'>
                           {row?.name}
                         </TableCell>
-                        <TableCell align='center'>{row?.email}</TableCell>
                         <TableCell align='center'>{row?.subject}</TableCell>
-                        <TableCell align='center'><CommonModal message={row?.message} /></TableCell>
+                        <TableCell align='center'>
+                          <CommonModal message={row?.message} />
+                        </TableCell>
+                        <TableCell align='center'>
+                          <CommonModal message={row?.reply} />
+                        </TableCell>
                         <TableCell align='center'>{row?.status}</TableCell>
                         <TableCell align='center'>
                           <Tooltip title='Delete'>
@@ -309,12 +406,13 @@ export default function Table({
                       : title === "FAQS" ? (
                         <>
                           <TableCell align='center' component='th' scope='row'>
-                            {row?.name}
+                            {row?.createdAt}
                           </TableCell>
-                          <TableCell align='center'>{row?.email}</TableCell>
-                          <TableCell align='center'>{row?.phone}</TableCell>
-                          <TableCell align='center'><CommonModal question={row?.question} /></TableCell>
-
+                          <TableCell align='center'><CommonModal question={row?.faqQuestion} /></TableCell>
+                          <TableCell align='center'><CommonModal question={row?.faqAnswer} /></TableCell>
+                          <TableCell align='center' component='th' scope='row'>
+                            {row?.updateAt}
+                          </TableCell>
                           <TableCell align='center'>
                             <Tooltip title='Delete'>
                               <IconButton aria-label='delete' size='small'>
@@ -352,15 +450,17 @@ export default function Table({
                             </TableCell>
                           </>
                         )
-                          : (
+                          : title === "Success Stories" ? (
                             <>
                               <TableCell align='center' component='th' scope='row'>
-                                {row?.name}
+                                {row?.city}
                               </TableCell>
-                              <TableCell align='center'>{row?.email}</TableCell>
+                              <TableCell align='center'>{row?.freelancingProfileUrl}</TableCell>
+                              <TableCell align='center'>{row?.paymentProof}</TableCell>
+                              <TableCell align='center'>{row?.description}</TableCell>
                               <TableCell align='center'>{row?.status}</TableCell>
-                              <TableCell align='center'>{row?.phone}</TableCell>
-                              <TableCell align='center'>{row?.image}</TableCell>
+                              <TableCell align='center'>{row?.totalEarnedAmount}</TableCell>
+                              <TableCell align='center'>{row?.whyReject}</TableCell>
                               <TableCell align='center'>
                                 <Tooltip title='Delete'>
                                   <IconButton aria-label='delete' size='small'>
@@ -374,7 +474,28 @@ export default function Table({
                                 </Tooltip>
                               </TableCell>
                             </>
-                          )}
+                          )
+                            : (
+                              <>
+                                <TableCell align='center' component='th' scope='row'>
+                                  {row?.name}
+                                </TableCell>
+                                <TableCell align='center'>{row?.email}</TableCell>
+                                <TableCell align='center'>{row?.status}</TableCell>
+                                <TableCell align='center'>
+                                  <Tooltip title='Delete'>
+                                    <IconButton aria-label='delete' size='small'>
+                                      <TableStyle.DeleteIcon />
+                                    </IconButton>
+                                  </Tooltip>
+                                  <Tooltip title='Update'>
+                                    <IconButton aria-label='update' size='small'>
+                                      <TableStyle.EditIcon />
+                                    </IconButton>
+                                  </Tooltip>
+                                </TableCell>
+                              </>
+                            )}
                   </TableStyle.CustomTableRow>
                 ))}
           </TableBody>

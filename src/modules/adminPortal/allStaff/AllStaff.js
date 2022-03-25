@@ -2,11 +2,9 @@
 
 import React from 'react'
 import { ToastContainer } from 'react-toastify';
-import { Audio } from "react-loader-spinner";
 //Import from Files
-
+import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader'
 import Table from '../../../commonComponents/table/Table';
-import { AllStaffStyle } from './AllStaffStyle';
 import { UseAllStaff } from './UseAllStaff'
 export default function AllStaff() {
   const [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick,error, ctaButtonHandler1, name, email, phone, role, setName, setEmail, setPhone, setRole }] = UseAllStaff();
@@ -16,9 +14,7 @@ export default function AllStaff() {
       <ToastContainer />
       {
         loading ?
-          <AllStaffStyle.LoaderContainer>
-            <Audio type="Oval" color="#0D4cb5" height={100} width={100} />
-          </AllStaffStyle.LoaderContainer>
+         <CommonTableLoader/>
           :
           <>
             <Table

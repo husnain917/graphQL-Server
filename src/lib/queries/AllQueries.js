@@ -25,6 +25,7 @@ query FindManyEvents {
     eventImage
     eventDate
     speakerId
+    eventStatus
   }
 }`
 
@@ -86,6 +87,7 @@ query Query {
     phone
     role
     cnic
+    token
   }
 }
 `
@@ -118,5 +120,18 @@ query Query {
     courseStatus
     whatYouLearn
     coursePrice
+  }
+}`
+
+
+export const GET_CONTACT_US = gql`
+query Query {
+  contactuses {
+    name
+    subject
+    message
+    id
+    status
+    reply
   }
 }`

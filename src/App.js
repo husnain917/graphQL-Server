@@ -3,15 +3,14 @@ import { useState } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom';
 import ScrollToTop from './navigation/ScrollToTop';
 import Navigation from './navigation/Navigation';
-import SampleDataFetch from './lib/queries/SampleDataFetch';
 import SplashScreen from './commonComponents/splash/SplashScreen'
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const [loading, setLoading] = useState(true)
   setTimeout(function () {
     setLoading(false);
-  }, 0);
+  }, 5000);
 
   return (
     <div className='App'>

@@ -2,24 +2,14 @@
 
 import React from 'react'
 import { ToastContainer } from 'react-toastify';
-import {Audio} from "react-loader-spinner";
+import { Audio } from "react-loader-spinner";
 //Import from Files
 
 import Table from '../../../commonComponents/table/Table';
 import { AllStaffStyle } from './AllStaffStyle';
-import {UseAllStaff} from './UseAllStaff'
+import { UseAllStaff } from './UseAllStaff'
 export default function AllStaff() {
-  const [{
-    filterDataArray,
-    loading,
-    open,
-    handleClickOpen,
-    handleClose,
-    openAnchor,
-    anchorEl,
-    handleAnchorClose,
-    handleAnchorClick,
-  }]  = UseAllStaff();
+  const [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick,error, ctaButtonHandler1, name, email, phone, role, setName, setEmail, setPhone, setRole }] = UseAllStaff();
 
   return (
     <>
@@ -32,9 +22,20 @@ export default function AllStaff() {
           :
           <>
             <Table
-              tableHeadings={['Name','Email','Role','Phone','Image','Actions']}
+              tableHeadings={['Name', 'Email', 'Role', 'Phone', 'Image', 'Actions']}
               title={'All Staff'}
               data={filterDataArray}
+              name={name}
+              email={email}
+              role={role}
+              phone={phone}
+              setName={setName}
+              setEmail={setEmail}
+              setRole={setRole}
+              setPhone={setPhone}
+              ctaButtonHandler1={ctaButtonHandler1}
+              loading={loading}
+              error={error}
               handleClickOpen={handleClickOpen}
               open={open}
               handleClose={handleClose}
@@ -44,6 +45,7 @@ export default function AllStaff() {
               openAnchor={openAnchor}
             />
           </>
+        
       }
     </>
   );

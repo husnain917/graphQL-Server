@@ -21,13 +21,13 @@ export default function Navigation() {
         <>
             {!authState ?
                 <Routes>
-                    <Route path="/login" element={<Login setAuthState={setAuthState} />} />
+                    <Route path="/login" element={<Login setAuthState={setAuthState} authState={authState} />} />
                     <Route path="*" element={<Login setAuthState={setAuthState} />} />
                 </Routes >
                 :
                 <Sidebar>
                     <Routes>
-                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/dashboard" element={<Dashboard  authState={authState}/>} />
                         <Route path="/staff" element={<AllStaff />} />
                         <Route path="/students" element={<AllStudents />} />
                         <Route path="*" element={<Dashboard />} />

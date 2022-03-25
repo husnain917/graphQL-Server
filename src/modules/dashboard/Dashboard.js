@@ -2,13 +2,16 @@ import React from "react";
 import { DS } from "./DashboardStyle";
 import Card from './card/Card';
 import UseDashboard from "./UseDashboard";
-import { ToastContainer } from 'react-toastify';
-export default function Dashboard() {
-    const [{ }] = UseDashboard();
+import { Navigate } from "react-router-dom";
+export default function Dashboard({ authState }) {
+    const [{ Notify }] = UseDashboard();
+    if (authState) {
+        // Navigate('/dashboard')
+        Notify()
+    }
     return (
-        
+
         <DS.MainPageContainer>
-            <ToastContainer />
             <DS.CardsRow>
                 <DS.CardContainer>
                     <Card value='0' heading='STUDENTS' icon={<DS.PeopleOutline />} />

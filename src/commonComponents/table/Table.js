@@ -32,6 +32,25 @@ export default function Table({
   handleAnchorClose,
   handleAnchorClick,
   openAnchor,
+  name,
+  email,
+  course,
+  paymentMethod,
+  amount,
+  transactionId,
+  status,
+  setName,
+  setEmail,
+  setCourse,
+  setamount,
+  settransactionId,
+  ctaButtonHandlerEnroll,
+  setpaymentMethod,
+  loading,
+  error,
+  setStatus,
+  role,
+  phone, setRole, setPhone, ctaButtonHandler1
 }) {
   const [
     {
@@ -46,16 +65,38 @@ export default function Table({
   return (
     <>
       {/* Drop Down menu for filter Button */}
-      <DropDownMenu
+      {/* <DropDownMenu
         handleAnchorClose={handleAnchorClose}
         anchorEl={anchorEl}
         openAnchor={openAnchor}
         title={title}
-      />
+      /> */}
       {/* Drop Down menu for filter Button */}
 
       {/* Form Modal */}
-      <FormModal open={open} title={title} handleClose={handleClose} />
+      <FormModal open={open} title={title} handleClose={handleClose}
+        name={name}
+        email={email}
+        course={course}
+        paymentMethod={paymentMethod}
+        amount={amount}
+        transactionId={transactionId}
+        status={status}
+        setName={setName}
+        setEmail={setEmail}
+        setCourse={setCourse}
+        setamount={setamount}
+        role={role}
+        phone={phone}
+        setRole={setRole}
+        setPhone={setPhone}
+        settransactionId={settransactionId}
+        ctaButtonHandlerEnroll={ctaButtonHandlerEnroll}
+        setpaymentMethod={setpaymentMethod}
+        loading={loading}
+        error={error}
+        setStatus={setStatus}
+        ctaButtonHandler1={ctaButtonHandler1} />
       {/* Form Modal */}
 
       <Toolbar disableGutters>
@@ -73,7 +114,15 @@ export default function Table({
                   placeholder="Search here..."
                   searchCancel={cancelSearch}
                 /> */}
-                <TableStyle.FilterListIcon onClick={handleAnchorClick} />
+                {
+                  title === "Contact us" ?
+                    ''
+                    :
+                    title === "FAQS" ?
+                      ''
+                      :
+                      <TableStyle.FilterListIcon onClick={handleAnchorClick} />
+                }
                 <TableStyle.AddIcon onClick={handleClickOpen} />
               </TableStyle.SearchAndBtnsContainer>
             </TableStyle.SeachContainer>
@@ -150,7 +199,7 @@ export default function Table({
           </TableHead>
           <TableBody>
             {
-              data 
+              data
                 .filter(
                   searchingFor(searchQuery),
                 )
@@ -159,12 +208,13 @@ export default function Table({
                     {title === 'Courses' ? (
                       <>
                         <TableCell align='center' component='th' scope='row'>
-                          {row?.name}
+                          {row?.courseName}
                         </TableCell>
-                        <TableCell align='center'>{row?.trainer}</TableCell>
-                        <TableCell align='center'>{row?.status}</TableCell>
-                        <TableCell align='center'>{row?.phone}</TableCell>
-                        <TableCell align='center'>{row?.image}</TableCell>
+                        <TableCell align='center'>{row?.courseDesc}</TableCell>
+                        <TableCell align='center'>{row?.courseIntro}</TableCell>
+                        <TableCell align='center'>{row?.courseStatus}</TableCell>
+                        <TableCell align='center'>{row?.coursePrice}</TableCell>
+
                         <TableCell align='center'>
                           <Tooltip title='Delete'>
                             <IconButton aria-label='delete' size='small'>
@@ -279,13 +329,13 @@ export default function Table({
                           </TableCell>
                         </>
                       )
-                        : (
+                        : title === "All Staff" ? (
                           <>
                             <TableCell align='center' component='th' scope='row'>
                               {row?.name}
                             </TableCell>
                             <TableCell align='center'>{row?.email}</TableCell>
-                            <TableCell align='center'>{row?.status}</TableCell>
+                            <TableCell align='center'>{row?.role}</TableCell>
                             <TableCell align='center'>{row?.phone}</TableCell>
                             <TableCell align='center'>{row?.image}</TableCell>
                             <TableCell align='center'>
@@ -301,7 +351,30 @@ export default function Table({
                               </Tooltip>
                             </TableCell>
                           </>
-                        )}
+                        )
+                          : (
+                            <>
+                              <TableCell align='center' component='th' scope='row'>
+                                {row?.name}
+                              </TableCell>
+                              <TableCell align='center'>{row?.email}</TableCell>
+                              <TableCell align='center'>{row?.status}</TableCell>
+                              <TableCell align='center'>{row?.phone}</TableCell>
+                              <TableCell align='center'>{row?.image}</TableCell>
+                              <TableCell align='center'>
+                                <Tooltip title='Delete'>
+                                  <IconButton aria-label='delete' size='small'>
+                                    <TableStyle.DeleteIcon />
+                                  </IconButton>
+                                </Tooltip>
+                                <Tooltip title='Update'>
+                                  <IconButton aria-label='update' size='small'>
+                                    <TableStyle.EditIcon />
+                                  </IconButton>
+                                </Tooltip>
+                              </TableCell>
+                            </>
+                          )}
                   </TableStyle.CustomTableRow>
                 ))}
           </TableBody>

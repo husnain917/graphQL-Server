@@ -17,7 +17,7 @@ export function UseTable() {
   const searchingFor = (searchQuery) => {
     return function (data) {
       return (
-        (data?.name || data?.courseName || data?.studentName || data?.Title).toLowerCase().includes(
+        (data?.name || data?.courseName || data?.studentName || data?.Title || data?.city || data?.eventName).toLowerCase().includes(
           searchQuery.toLowerCase(),
         )
 

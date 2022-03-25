@@ -25,6 +25,7 @@ query FindManyEvents {
     eventImage
     eventDate
     speakerId
+    eventStatus
   }
 }`
 

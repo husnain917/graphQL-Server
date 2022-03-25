@@ -25,7 +25,43 @@ export default function FormModal({ open, title, handleClose, name,
   setpaymentMethod,
   setStatus,
   loading, error,
-  role, phone, setRole, setPhone, ctaButtonHandler1 }) {
+  role, phone, setRole, setPhone, ctaButtonHandler1,
+  courseDesc,
+  courseStatus,
+  courseCategoryId,
+  coursePrice,
+  courseIntro,
+  instructorId,
+  ctaButtonHandler2,
+  setcourseDesc,
+  setcourseStatus,
+  setcourseCategoryId,
+  setcoursePrice,
+  setcourseIntro,
+  setinstructorId,
+  ctaButtonHandler3,
+  freelancingProfileUrl,
+  setfreelancingProfileUrl,
+  paymentProof,
+  setpaymentProof,
+  description,
+  setdescription,
+  totalEarnedAmount,
+  settotalEarnedAmount,
+  city,
+  setcity,
+  whyReject,
+  setwhyReject,
+  ctaButtonHandler4,
+  eventDate,
+  seteventDate,
+  speakerId,
+  setspeakerId,
+  eventImage,
+  seteventImage,
+  ctaButtonHandler5,
+
+}) {
   // let [
   //   {
   //     ctaButtonHandlerEnroll, role, setRole, phone, setPhone, loading, error, status, setStatus, name, setName, email, setEmail, course, setCourse, paymentMethod, setpaymentMethod, amount, setamount, transactionId, settransactionId
@@ -144,8 +180,9 @@ export default function FormModal({ open, title, handleClose, name,
                 <Button type='submit' onClick={handleClose}>Close</Button>
 
               </>
+
               :
-              title === "Courses" ?
+              title === "All Students" ?
                 <>
                   <TextField
                     autoFocus
@@ -174,35 +211,25 @@ export default function FormModal({ open, title, handleClose, name,
                     }}
                   />
                   <br />
+
                   <TextField
                     margin='dense'
-                    id='course'
-                    value={course}
-                    label='Course'
+                    id='Status'
+                    value={status}
+                    label='Status'
                     type='text'
                     fullWidth
                     variant='standard'
                     onChange={(event) => {
-                      setCourse(event.target.value);
+                      setStatus(event.target.value);
                     }}
                   />
                   <br />
-                  <TextField
-                    margin='dense'
-                    id='paymentMethod'
-                    value={paymentMethod}
-                    label='Payment Method'
-                    type='text'
-                    fullWidth
-                    variant='standard'
-                    onChange={(event) => {
-                      setpaymentMethod(event.target.value);
-                    }}
-                  />
-                  <br />
+                  <Button type='submit' onClick={ctaButtonHandler3}>Submit</Button>
+                  <Button type='submit' onClick={handleClose}>Close</Button>
                 </>
                 :
-                title === "All Students" ?
+                title === "All Staff" ?
                   <>
                     <TextField
                       autoFocus
@@ -234,112 +261,139 @@ export default function FormModal({ open, title, handleClose, name,
                     <TextField
                       margin='dense'
                       id='course'
-                      value={course}
+                      value={role}
                       label='Course'
                       type='text'
                       fullWidth
                       variant='standard'
                       onChange={(event) => {
-                        setCourse(event.target.value);
+                        setRole(event.target.value);
                       }}
                     />
                     <br />
                     <TextField
                       margin='dense'
                       id='paymentMethod'
-                      value={paymentMethod}
+                      value={phone}
                       label='Payment Method'
                       type='text'
                       fullWidth
                       variant='standard'
                       onChange={(event) => {
-                        setpaymentMethod(event.target.value);
+                        setPhone(event.target.value);
                       }}
                     />
                     <br />
-                    <TextField
-                      margin='dense'
-                      id='paymentMethod'
-                      value={paymentMethod}
-                      label='Payment Method'
-                      type='text'
-                      fullWidth
-                      variant='standard'
-                      onChange={(event) => {
-                        setpaymentMethod(event.target.value);
-                      }}
-                    />
-                    <br />
+                    <Button onClick={ctaButtonHandler1}>submit</Button>
+                    <Button type='submit' onClick={handleClose}>Close</Button>
+
                   </>
                   :
-                  title === "All Staff" ?
+                  title === "Success Stories" ?
                     <>
                       <TextField
                         autoFocus
                         margin='dense'
-                        id='name'
-                        value={name}
-                        label='Student Name'
+                        id='freelancingProfileUrl'
+                        value={freelancingProfileUrl}
+                        label='freelancingProfileUrl'
                         type='text'
                         fullWidth
                         variant='standard'
                         onChange={(event) => {
-                          setName(event.target.value);
+                          setfreelancingProfileUrl(event.target.value);
                         }}
                       />
                       <br />
                       <TextField
                         margin='dense'
-                        id='email'
-                        value={email}
-                        label='Email'
-                        type='email'
+                        id='paymentProof'
+                        value={paymentProof}
+                        label='paymentProof'
+                        type='text'
                         fullWidth
                         variant='standard'
                         onChange={(event) => {
-                          setEmail(event.target.value);
+                          setpaymentProof(event.target.value);
                         }}
                       />
                       <br />
                       <TextField
                         margin='dense'
-                        id='course'
-                        value={role}
-                        label='Course'
+                        id='description'
+                        value={description}
+                        label='description'
                         type='text'
                         fullWidth
                         variant='standard'
                         onChange={(event) => {
-                          setRole(event.target.value);
+                          setdescription(event.target.value);
                         }}
                       />
                       <br />
                       <TextField
                         margin='dense'
-                        id='paymentMethod'
-                        value={phone}
-                        label='Payment Method'
+                        id='totalEarnedAmount'
+                        value={totalEarnedAmount}
+                        label='totalEarnedAmount'
                         type='text'
                         fullWidth
                         variant='standard'
                         onChange={(event) => {
-                          setPhone(event.target.value);
+                          settotalEarnedAmount(event.target.value);
+                        }}
+                      />
+                      <TextField
+                        margin='dense'
+                        id='whyReject'
+                        value={status}
+                        label='status'
+                        type='text'
+                        fullWidth
+                        variant='standard'
+                        onChange={(event) => {
+                          setStatus(event.target.value);
                         }}
                       />
                       <br />
-                      <Button onClick={ctaButtonHandler1}>submit</Button>
+                      <TextField
+                        margin='dense'
+                        id='city'
+                        value={city}
+                        label='city'
+                        type='text'
+                        fullWidth
+                        variant='standard'
+                        onChange={(event) => {
+                          setcity(event.target.value);
+                        }}
+                      />
+                      <br />
+                      <TextField
+                        margin='dense'
+                        id='whyReject'
+                        value={whyReject}
+                        label='whyReject'
+                        type='text'
+                        fullWidth
+                        variant='standard'
+                        onChange={(event) => {
+                          setwhyReject(event.target.value);
+                        }}
+                      />
+                      <br />
+                      <Button onClick={ctaButtonHandler4}>submit</Button>
                       <Button type='submit' onClick={handleClose}>Close</Button>
-
                     </>
                     :
-                    title === "Success Stories" ?
+                    title === "Events" ?
                       <>
                         <TextField
                           autoFocus
                           margin='dense'
                           id='name'
                           value={name}
-                          label='Student Name'
+                          label='Name'
                           type='text'
                           fullWidth
                           variant='standard'
@@ -350,60 +404,59 @@ export default function FormModal({ open, title, handleClose, name,
                         <br />
                         <TextField
                           margin='dense'
-                          id='email'
-                          value={email}
-                          label='Email'
-                          type='email'
+                          id='description'
+                          value={description}
+                          label='description'
+                          type='text'
                           fullWidth
                           variant='standard'
                           onChange={(event) => {
-                            setEmail(event.target.value);
+                            setdescription(event.target.value);
                           }}
                         />
                         <br />
                         <TextField
                           margin='dense'
-                          id='course'
-                          value={course}
-                          label='Course'
+                          id='eventDate'
+                          value={eventDate}
+                          label='eventDate'
                           type='text'
                           fullWidth
                           variant='standard'
                           onChange={(event) => {
-                            setCourse(event.target.value);
+                            seteventDate(event.target.value);
                           }}
                         />
                         <br />
                         <TextField
                           margin='dense'
-                          id='paymentMethod'
-                          value={paymentMethod}
-                          label='Payment Method'
+                          id='speakerId'
+                          value={speakerId}
+                          label='speakerId'
                           type='text'
                           fullWidth
                           variant='standard'
                           onChange={(event) => {
-                            setpaymentMethod(event.target.value);
+                            setspeakerId(event.target.value);
                           }}
                         />
-                        <br />
                         <TextField
                           margin='dense'
-                          id='paymentMethod'
-                          value={paymentMethod}
-                          label='Payment Method'
+                          id='speakerId'
+                          value={status}
+                          label='status'
                           type='text'
                           fullWidth
                           variant='standard'
                           onChange={(event) => {
-                            setpaymentMethod(event.target.value);
+                            setStatus(event.target.value);
                           }}
                         />
                         <br />
-
-                      </>
-                      :
-                      title === "Events" ?
+                        <Button onClick={ctaButtonHandler5}>submit</Button>
+                        <Button type='submit' onClick={handleClose}>Close</Button>
+                      </> :
+                      title === "Courses" ?
                         <>
                           <TextField
                             autoFocus
@@ -421,57 +474,86 @@ export default function FormModal({ open, title, handleClose, name,
                           <br />
                           <TextField
                             margin='dense'
-                            id='email'
-                            value={email}
-                            label='Email'
-                            type='email'
+                            id='Course Des'
+                            value={courseDesc}
+                            label='Course Description'
+                            type='text'
                             fullWidth
                             variant='standard'
                             onChange={(event) => {
-                              setEmail(event.target.value);
+                              setcourseDesc(event.target.value);
                             }}
                           />
                           <br />
                           <TextField
                             margin='dense'
-                            id='course'
-                            value={course}
-                            label='Course'
+                            id='status'
+                            value={courseStatus}
+                            label='Status'
                             type='text'
                             fullWidth
                             variant='standard'
                             onChange={(event) => {
-                              setCourse(event.target.value);
+                              setcourseStatus(event.target.value);
                             }}
                           />
                           <br />
                           <TextField
                             margin='dense'
-                            id='paymentMethod'
-                            value={paymentMethod}
-                            label='Payment Method'
+                            id='courseCategoryId'
+                            value={courseCategoryId}
+                            label='courseCategoryId'
                             type='text'
                             fullWidth
                             variant='standard'
                             onChange={(event) => {
-                              setpaymentMethod(event.target.value);
+                              setcourseCategoryId(event.target.value);
                             }}
                           />
                           <br />
                           <TextField
                             margin='dense'
-                            id='paymentMethod'
-                            value={paymentMethod}
-                            label='Payment Method'
+                            id='coursePrice'
+                            value={coursePrice}
+                            label='coursePrice'
                             type='text'
                             fullWidth
                             variant='standard'
                             onChange={(event) => {
-                              setpaymentMethod(event.target.value);
+                              setcoursePrice(event.target.value);
                             }}
                           />
                           <br />
-                        </> :
+                          <TextField
+                            margin='dense'
+                            id='courseIntro'
+                            value={courseIntro}
+                            label='courseIntro'
+                            type='text'
+                            fullWidth
+                            variant='standard'
+                            onChange={(event) => {
+                              setcourseIntro(event.target.value);
+                            }}
+                          />
+                          <br />
+                          <TextField
+                            margin='dense'
+                            id='instructorId'
+                            value={instructorId}
+                            label='instructorId'
+                            type='text'
+                            fullWidth
+                            variant='standard'
+                            onChange={(event) => {
+                              setinstructorId(event.target.value);
+                            }}
+                          />
+                          <br />
+                          <Button onClick={ctaButtonHandler2}>submit</Button>
+                          <Button type='submit' onClick={handleClose}>Close</Button>
+                        </>
+                        :
                         ''
 
           }          <br />

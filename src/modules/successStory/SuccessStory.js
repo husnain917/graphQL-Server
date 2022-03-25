@@ -5,7 +5,34 @@ import { Audio } from 'react-loader-spinner';
 import { CommonLoadingStyle } from '../../constants/CommonTableStyle';
 import { ToastContainer } from 'react-toastify';
 export default function SuccessStory() {
-  const [{filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick}] = useSuccessStory();
+  const [
+    {
+      filterDataArray,
+      loading,
+      open,
+      handleClickOpen,
+      handleClose,
+      openAnchor,
+      anchorEl,
+      handleAnchorClose,
+      handleAnchorClick,
+      freelancingProfileUrl,
+      setfreelancingProfileUrl,
+      paymentProof,
+      setpaymentProof,
+      description,
+      setdescription,
+      status,
+      setstatus,
+      totalEarnedAmount,
+      settotalEarnedAmount,
+      city,
+      setcity,
+      whyReject,
+      setwhyReject,
+      ctaButtonHandler4,
+    },
+  ] = useSuccessStory();
   return (
     <>
       <ToastContainer />
@@ -17,8 +44,32 @@ export default function SuccessStory() {
         <div>
           <Table
             title={'Success Stories'}
-            tableHeadings={['Name', 'Email', 'Role', 'Phone', 'Image', 'Actions']}
+            tableHeadings={[
+              'city',
+              'freelancingProfileUrl',
+              'paymentProof',
+              'description',
+              'status',
+              'totalEarnedAmount',
+              'whyReject',
+              'Action',
+            ]}
             data={filterDataArray}
+            freelancingProfileUrl={freelancingProfileUrl}
+            setfreelancingProfileUrl={setfreelancingProfileUrl}
+            paymentProof={paymentProof}
+            setpaymentProof={setpaymentProof}
+            description={description}
+            setdescription={setdescription}
+            status={status}
+            setstatus={setstatus}
+            totalEarnedAmount={totalEarnedAmount}
+            settotalEarnedAmount={settotalEarnedAmount}
+            city={city}
+            setcity={setcity}
+            whyReject={whyReject}
+            setwhyReject={setwhyReject}
+            ctaButtonHandler4={ctaButtonHandler4}
             handleClickOpen={handleClickOpen}
             open={open}
             handleClose={handleClose}

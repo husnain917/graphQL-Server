@@ -1,9 +1,8 @@
 import React from 'react';
 import Table from '../../commonComponents/table/Table';
 import { useSuccessStory } from './useSuccessStory';
-import { Audio } from 'react-loader-spinner';
-import { CommonLoadingStyle } from '../../constants/CommonTableStyle';
 import { ToastContainer } from 'react-toastify';
+import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
 export default function SuccessStory() {
   const [
     {
@@ -37,9 +36,7 @@ export default function SuccessStory() {
     <>
       <ToastContainer />
       {loading ? (
-        <CommonLoadingStyle.LoaderContainer>
-          <Audio type='Oval' color='#0D4cb5' height={100} width={100} />
-        </CommonLoadingStyle.LoaderContainer>
+       <CommonTableLoader/>
       ) : (
         <div>
           <Table

@@ -2,8 +2,7 @@ import React from 'react';
 import { UseCourses } from './useCourses';
 import Table from '../../commonComponents/table/Table';
 import { ToastContainer } from 'react-toastify';
-import { Audio } from 'react-loader-spinner';
-import { CommonLoadingStyle } from '../../constants/CommonTableStyle';
+import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
 export default function Course() {
     const [
         {
@@ -31,16 +30,14 @@ export default function Course() {
             setcoursePrice,
             setcourseIntro,
             setinstructorId,
-            setclose,
+           
         },
     ] = UseCourses();
     return (
         <>
             <ToastContainer />
             {loading ? (
-                <CommonLoadingStyle.LoaderContainer>
-                    <Audio type='Oval' color='#0D4cb5' height={100} width={100} />
-                </CommonLoadingStyle.LoaderContainer>
+               <CommonTableLoader/>
             ) : (
                 <Table
                     title={'Courses'}

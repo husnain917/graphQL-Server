@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Sidebar from '../commonComponents/sidebar/Sidebar';
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from '../modules/auth/login/Login';
 import Dashboard from '../modules/dashboard/Dashboard';
 import AllStudents from '../modules/adminPortal/allStudents/AllStudents';
@@ -17,6 +17,7 @@ import ProfileData from '../modules/profile/profileData/ProfileData';
 import EditProfile from '../modules/profile/editProfile/EditProfile';
 export default function Navigation() {
     const [authState, setAuthState] = useState(false);
+   
     return (
         <>
             {!authState ?
@@ -27,7 +28,7 @@ export default function Navigation() {
                 :
                 <Sidebar>
                     <Routes>
-                        <Route path="/dashboard" element={<Dashboard  authState={authState}/>} />
+                        <Route path="/dashboard" element={<Dashboard authState={authState} />} />
                         <Route path="/staff" element={<AllStaff />} />
                         <Route path="/students" element={<AllStudents />} />
                         <Route path="*" element={<Dashboard />} />
@@ -41,7 +42,7 @@ export default function Navigation() {
                             <Route path='id:' element={<ProfileData />} />
                             <Route path='editProfile/id:' element={<EditProfile />} />
                             <Route path='ChangePassword' element={<ChangePassword />} />
-                           
+
                         </Route>
                     </Routes >
                 </Sidebar>

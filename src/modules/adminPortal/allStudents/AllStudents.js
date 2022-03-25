@@ -2,12 +2,11 @@
 
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
-import { Audio } from 'react-loader-spinner';
 //Import from Files
 
 import Table from '../../../commonComponents/table/Table';
-import { AllStudentsStyle } from './AllStudentsStyle';
 import { UseAllStudents } from './UseAllStudent';
+import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
 export default function AllStudents() {
   const [
     {
@@ -34,9 +33,7 @@ export default function AllStudents() {
     <>
       <ToastContainer />
       {loading ? (
-        <AllStudentsStyle.LoaderContainer>
-          <Audio type='Oval' color='#0D4cb5' height={100} width={100} />
-        </AllStudentsStyle.LoaderContainer>
+       <CommonTableLoader/>
       ) : (
         <>
           <Table

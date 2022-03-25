@@ -2,13 +2,15 @@ import React from "react";
 import { DS } from "./DashboardStyle";
 import Card from './card/Card';
 import UseDashboard from "./UseDashboard";
-import { Navigate } from "react-router-dom";
+import { GetStudentsNum } from './Usecards'
 export default function Dashboard({ authState }) {
+    GetStudentsNum()
     const [{ Notify }] = UseDashboard();
     if (authState) {
-        // Navigate('/dashboard')
+        // Navigate('/dashboard)
         Notify()
     }
+
     return (
 
         <DS.MainPageContainer>

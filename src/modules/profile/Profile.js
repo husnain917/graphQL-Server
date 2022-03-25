@@ -5,6 +5,7 @@ import { TypoHead, TypoTextProfile } from '../../constants/Typos'
 import img from '../../assets/profile.jpg'
 import { Outlet } from 'react-router-dom'
 export default function Profile() {
+    const items = JSON.parse(localStorage.getItem('user'));
     return (
         <>
             <P.MycontainerBorder>
@@ -19,29 +20,29 @@ export default function Profile() {
                             <Stack direction="row" spacing={2}>
                                 <P.Myimg src={img} alt='broken-img' />
                                 <TypoTextProfile>
-                                    sami shoukat
+                                   {items.name}
                                 </TypoTextProfile>
                             </Stack>
                         </P.MycontainerName>
                         <P.Mycontainer>
-                           <Stack spacing={2}>
-                           <P.MyLink to='id:' style={isActive => ({
+                            <Stack spacing={2}>
+                                <P.MyLink to='id:' style={isActive => ({
                                     color: isActive ? "#00688B" : "black"
                                 })}>Profile</P.MyLink>
-                           <P.MyLink to='editProfile/id:' style={isActive => ({
+                                <P.MyLink to='editProfile/id:' style={isActive => ({
                                     color: isActive ? "#00688B" : "black"
                                 })}>Edit Profile</P.MyLink>
-                           <P.MyLink to='ChangePassword' style={isActive => ({
+                                <P.MyLink to='ChangePassword' style={isActive => ({
                                     color: isActive ? "#00688B" : "black"
                                 })}>Change Password</P.MyLink>
 
-                           </Stack>
+                            </Stack>
                         </P.Mycontainer>
                     </Grid>
                     <Grid item xl={8} lg={8} md={8} sm={12} xs={12}>
-                    <P.Mycontainer>
-                    <Outlet />
-                    </P.Mycontainer> 
+                        <P.Mycontainer>
+                            <Outlet />
+                        </P.Mycontainer>
                     </Grid>
                 </Grid>
             </P.Mycontainer>

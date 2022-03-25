@@ -60,6 +60,19 @@ export default function FormModal({ open, title, handleClose, name,
   eventImage,
   seteventImage,
   ctaButtonHandler5,
+  subject,
+  message,
+  reply,
+  setsubject,
+  setmessage,
+  setreply,
+  ctaButtonHandler6,
+  faqQuestion,
+  faqAnswer,
+  setfaqQuestion,
+  setfaqAnswer,
+  ctaButtonHandler7,
+
 
 }) {
   // let [
@@ -554,7 +567,115 @@ export default function FormModal({ open, title, handleClose, name,
                           <Button type='submit' onClick={handleClose}>Close</Button>
                         </>
                         :
-                        ''
+                        title === "Contact us" ?
+                          <>
+                            <TextField
+                              autoFocus
+                              margin='dense'
+                              id='name'
+                              value={name}
+                              label='Name'
+                              type='text'
+                              fullWidth
+                              variant='standard'
+                              onChange={(event) => {
+                                setName(event.target.value);
+                              }}
+                            />
+                            <br />
+                            <TextField
+                              margin='dense'
+                              id='subject'
+                              value={subject}
+                              label='subject'
+                              type='text'
+                              fullWidth
+                              variant='standard'
+                              onChange={(event) => {
+                                setsubject(event.target.value);
+                              }}
+                            />
+                            <br />
+                            <TextField
+                              margin='dense'
+                              id='status'
+                              value={status}
+                              label='Status'
+                              type='text'
+                              fullWidth
+                              variant='standard'
+                              onChange={(event) => {
+                                setStatus(event.target.value);
+                              }}
+                            />
+                            <br />
+                            <TextField
+                              margin='dense'
+                              id='message'
+                              value={message}
+                              label='message'
+                              type='text'
+                              fullWidth
+                              variant='standard'
+                              onChange={(event) => {
+                                setmessage(event.target.value);
+                              }}
+                            />
+                            <br />
+                            <TextField
+                              margin='dense'
+                              id='reply'
+                              value={reply}
+                              label='reply'
+                              type='text'
+                              fullWidth
+                              variant='standard'
+                              onChange={(event) => {
+                                setreply(event.target.value);
+                              }}
+                            />
+                            <br />
+                            <Button onClick={ctaButtonHandler6}>submit</Button>
+                            <Button type='submit' onClick={handleClose}>Close</Button>
+                          </>
+
+                          :
+                          title === "FAQS" ?
+                            <>
+                              <TextField
+                                autoFocus
+                                margin='dense'
+                                id='faqQuestion'
+                                value={faqQuestion}
+                                label='faqQuestion'
+                                type='text'
+                                fullWidth
+                                variant='standard'
+                                onChange={(event) => {
+                                  setfaqQuestion(event.target.value);
+                                }}
+                              />
+                              <br />
+                              <TextField
+                                margin='dense'
+                                id='faqAnswer'
+                                value={faqAnswer}
+                                label='faqAnswer'
+                                type='text'
+                                fullWidth
+                                variant='standard'
+                                onChange={(event) => {
+                                  setfaqAnswer(event.target.value);
+                                }}
+                              />
+                              <br />
+
+                              <Button onClick={ctaButtonHandler7}>submit</Button>
+                              <Button type='submit' onClick={handleClose}>Close</Button>
+                            </>
+
+                            :
+                            ''
 
           }          <br />
 

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Audio } from 'react-loader-spinner';
 import { ToastContainer } from 'react-toastify';
 import Table from '../../commonComponents/table/Table';
 import { useEvents } from './useEvents';
-import { CommonLoadingStyle } from '../../constants/CommonTableStyle';
+import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
 export default function Events() {
     const [
         {
@@ -35,9 +34,7 @@ export default function Events() {
         <div>
             <ToastContainer />
             {loading ? (
-                <CommonLoadingStyle.LoaderContainer>
-                    <Audio type='Oval' color='#0D4cb5' height={100} width={100} />
-                </CommonLoadingStyle.LoaderContainer>
+               <CommonTableLoader/>
             ) : (
                 <Table
                     title={'Events'}

@@ -46,3 +46,18 @@ mutation CreateManyEvents($data: [EventsCreateManyInput!]!) {
     count
     }
 }`
+
+
+export const ADD_CONTACT_US = gql`
+mutation Mutation($data: [ContactUsCreateManyInput!]!) {
+  createManyContactUs(data: $data) {
+    count
+  }
+}`
+
+export const ADD_FAQS = gql`
+mutation Mutation($data: [FaqCreateManyInput!]!) {
+  createManyFaq(data: $data) {
+    count
+  }
+}`

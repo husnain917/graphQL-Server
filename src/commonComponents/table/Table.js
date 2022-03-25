@@ -88,6 +88,20 @@ export default function Table({
   eventImage,
   seteventImage,
   ctaButtonHandler5,
+  subject,
+  message,
+  reply,
+  setsubject,
+  setmessage,
+  setreply,
+  ctaButtonHandler6,
+  faqQuestion,
+  faqAnswer,
+  setfaqQuestion,
+  setfaqAnswer,
+  ctaButtonHandler7,
+  filterValue,
+
 }) {
   const [
     {
@@ -168,6 +182,18 @@ export default function Table({
         eventImage={eventImage}
         seteventImage={seteventImage}
         ctaButtonHandler5={ctaButtonHandler5}
+        subject={subject}
+        message={message}
+        reply={reply}
+        setsubject={setsubject}
+        setmessage={setmessage}
+        setreply={setreply}
+        ctaButtonHandler6={ctaButtonHandler6}
+        faqQuestion={faqQuestion}
+        faqAnswer={faqAnswer}
+        setfaqQuestion={setfaqQuestion}
+        setfaqAnswer={setfaqAnswer}
+        ctaButtonHandler7={ctaButtonHandler7}
 
 
       />
@@ -355,9 +381,13 @@ export default function Table({
                         <TableCell align='center' component='th' scope='row'>
                           {row?.name}
                         </TableCell>
-                        <TableCell align='center'>{row?.email}</TableCell>
                         <TableCell align='center'>{row?.subject}</TableCell>
-                        <TableCell align='center'><CommonModal message={row?.message} /></TableCell>
+                        <TableCell align='center'>
+                          <CommonModal message={row?.message} />
+                        </TableCell>
+                        <TableCell align='center'>
+                          <CommonModal message={row?.reply} />
+                        </TableCell>
                         <TableCell align='center'>{row?.status}</TableCell>
                         <TableCell align='center'>
                           <Tooltip title='Delete'>
@@ -376,12 +406,13 @@ export default function Table({
                       : title === "FAQS" ? (
                         <>
                           <TableCell align='center' component='th' scope='row'>
-                            {row?.name}
+                            {row?.createdAt}
                           </TableCell>
-                          <TableCell align='center'>{row?.email}</TableCell>
-                          <TableCell align='center'>{row?.phone}</TableCell>
-                          <TableCell align='center'><CommonModal question={row?.question} /></TableCell>
-
+                          <TableCell align='center'><CommonModal question={row?.faqQuestion} /></TableCell>
+                          <TableCell align='center'><CommonModal question={row?.faqAnswer} /></TableCell>
+                          <TableCell align='center' component='th' scope='row'>
+                            {row?.updateAt}
+                          </TableCell>
                           <TableCell align='center'>
                             <Tooltip title='Delete'>
                               <IconButton aria-label='delete' size='small'>

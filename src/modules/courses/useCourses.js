@@ -86,7 +86,17 @@ export function UseCourses() {
         setclose(true)
       }
       catch (error) {
-        console.log(error.message);
+        toast.error('status must be PUBLISH/UNPUBLISH', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
       }
     }
   }
@@ -110,12 +120,12 @@ export function UseCourses() {
     if (filterValue === '') {
       return item;
     }
-    else if (filterValue === item.status) {
+    else if (filterValue === item.courseStatus) {
       return item;
     }
     else if (filterValue === 'All') {
       return item;
     }
   })
-  return [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick ,name,courseDesc,courseStatus,courseCategoryId,coursePrice,courseIntro,instructorId,close,ctaButtonHandler2,setName,setcourseDesc,setcourseStatus,setcourseCategoryId,setcoursePrice,setcourseIntro,setinstructorId,setclose}]
+  return [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick, name, courseDesc, courseStatus, courseCategoryId, coursePrice, courseIntro, instructorId, close, ctaButtonHandler2, setName, setcourseDesc, setcourseStatus, setcourseCategoryId, setcoursePrice, setcourseIntro, setinstructorId, setclose }]
 }

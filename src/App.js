@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom';
 import ScrollToTop from './navigation/ScrollToTop';
 import Navigation from './navigation/Navigation';
@@ -7,16 +7,21 @@ import SplashScreen from './commonComponents/splash/SplashScreen'
 import { ToastContainer } from 'react-toastify';
 
 function App() {
+
+
   const [loading, setLoading] = useState(true)
   setTimeout(function () {
     setLoading(false);
-  }, 5000);
+  }, 0);
+ 
+
+
 
   return (
     <div className='App'>
       {
         loading ?
-          <SplashScreen/>
+          <SplashScreen />
           :
           <Router>
             <ScrollToTop />

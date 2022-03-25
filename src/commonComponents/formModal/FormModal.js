@@ -6,7 +6,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useFormModal } from './useFormModal';
 // import OverlayLoader from '../overlayLoader/OverlayLoader';
 import { MagicSpinner } from 'react-spinners-kit';
 export default function FormModal({ open, title, handleClose, name,
@@ -75,11 +74,7 @@ export default function FormModal({ open, title, handleClose, name,
 
 
 }) {
-  // let [
-  //   {
-  //     ctaButtonHandlerEnroll, role, setRole, phone, setPhone, loading, error, status, setStatus, name, setName, email, setEmail, course, setCourse, paymentMethod, setpaymentMethod, amount, setamount, transactionId, settransactionId
-  //   },
-  // ] = useFormModal();
+
   if (loading) {
     return (
       <MagicSpinner />
@@ -182,6 +177,7 @@ export default function FormModal({ open, title, handleClose, name,
                   id='status'
                   value={status}
                   label='status'
+                  placeholder='PENDING/APPROVED/REJECTED'
                   type='text'
                   fullWidth
                   onChange={(event) => {
@@ -231,6 +227,7 @@ export default function FormModal({ open, title, handleClose, name,
                     value={status}
                     label='Status'
                     type='text'
+                    placeholder='ACTIVE/OFFLINE'
                     fullWidth
                     variant='standard'
                     onChange={(event) => {
@@ -273,9 +270,10 @@ export default function FormModal({ open, title, handleClose, name,
                     <br />
                     <TextField
                       margin='dense'
-                      id='course'
+                      id='role'
                       value={role}
-                      label='Course'
+                      label='Role'
+                      placeholder='TEACHER/ADMIN'
                       type='text'
                       fullWidth
                       variant='standard'
@@ -286,10 +284,10 @@ export default function FormModal({ open, title, handleClose, name,
                     <br />
                     <TextField
                       margin='dense'
-                      id='paymentMethod'
+                      id='Phone'
                       value={phone}
-                      label='Payment Method'
-                      type='text'
+                      label='Phone'
+                      type='number'
                       fullWidth
                       variant='standard'
                       onChange={(event) => {
@@ -309,7 +307,7 @@ export default function FormModal({ open, title, handleClose, name,
                         margin='dense'
                         id='freelancingProfileUrl'
                         value={freelancingProfileUrl}
-                        label='freelancingProfileUrl'
+                        label='Freelancing Profile Url'
                         type='text'
                         fullWidth
                         variant='standard'
@@ -322,7 +320,7 @@ export default function FormModal({ open, title, handleClose, name,
                         margin='dense'
                         id='paymentProof'
                         value={paymentProof}
-                        label='paymentProof'
+                        label='Payment Proof'
                         type='text'
                         fullWidth
                         variant='standard'
@@ -335,7 +333,7 @@ export default function FormModal({ open, title, handleClose, name,
                         margin='dense'
                         id='description'
                         value={description}
-                        label='description'
+                        label='Description'
                         type='text'
                         fullWidth
                         variant='standard'
@@ -348,7 +346,7 @@ export default function FormModal({ open, title, handleClose, name,
                         margin='dense'
                         id='totalEarnedAmount'
                         value={totalEarnedAmount}
-                        label='totalEarnedAmount'
+                        label='Total Earned Amount'
                         type='text'
                         fullWidth
                         variant='standard'
@@ -360,7 +358,8 @@ export default function FormModal({ open, title, handleClose, name,
                         margin='dense'
                         id='whyReject'
                         value={status}
-                        label='status'
+                        label='Status'
+                        placeholder='PUBLISH/UNPUBLISH'
                         type='text'
                         fullWidth
                         variant='standard'
@@ -373,7 +372,7 @@ export default function FormModal({ open, title, handleClose, name,
                         margin='dense'
                         id='city'
                         value={city}
-                        label='city'
+                        label='City'
                         type='text'
                         fullWidth
                         variant='standard'
@@ -386,7 +385,7 @@ export default function FormModal({ open, title, handleClose, name,
                         margin='dense'
                         id='whyReject'
                         value={whyReject}
-                        label='whyReject'
+                        label='Why Reject'
                         type='text'
                         fullWidth
                         variant='standard'
@@ -419,7 +418,7 @@ export default function FormModal({ open, title, handleClose, name,
                           margin='dense'
                           id='description'
                           value={description}
-                          label='description'
+                          label='Description'
                           type='text'
                           fullWidth
                           variant='standard'
@@ -432,7 +431,7 @@ export default function FormModal({ open, title, handleClose, name,
                           margin='dense'
                           id='eventDate'
                           value={eventDate}
-                          label='eventDate'
+                          label='Event Date'
                           type='text'
                           fullWidth
                           variant='standard'
@@ -445,7 +444,7 @@ export default function FormModal({ open, title, handleClose, name,
                           margin='dense'
                           id='speakerId'
                           value={speakerId}
-                          label='speakerId'
+                          label='Speaker Id'
                           type='text'
                           fullWidth
                           variant='standard'
@@ -455,9 +454,10 @@ export default function FormModal({ open, title, handleClose, name,
                         />
                         <TextField
                           margin='dense'
-                          id='speakerId'
+                          id='Status'
+                          placeholder='UPCOMING/PAST'
                           value={status}
-                          label='status'
+                          label='Status'
                           type='text'
                           fullWidth
                           variant='standard'
@@ -503,6 +503,7 @@ export default function FormModal({ open, title, handleClose, name,
                             id='status'
                             value={courseStatus}
                             label='Status'
+                            placeholder='PUBLISH/UNPUBLISH'
                             type='text'
                             fullWidth
                             variant='standard'
@@ -515,7 +516,7 @@ export default function FormModal({ open, title, handleClose, name,
                             margin='dense'
                             id='courseCategoryId'
                             value={courseCategoryId}
-                            label='courseCategoryId'
+                            label='Course Category Id'
                             type='text'
                             fullWidth
                             variant='standard'
@@ -528,7 +529,7 @@ export default function FormModal({ open, title, handleClose, name,
                             margin='dense'
                             id='coursePrice'
                             value={coursePrice}
-                            label='coursePrice'
+                            label='Course Price'
                             type='text'
                             fullWidth
                             variant='standard'
@@ -541,7 +542,7 @@ export default function FormModal({ open, title, handleClose, name,
                             margin='dense'
                             id='courseIntro'
                             value={courseIntro}
-                            label='courseIntro'
+                            label='Course Intro'
                             type='text'
                             fullWidth
                             variant='standard'
@@ -554,7 +555,7 @@ export default function FormModal({ open, title, handleClose, name,
                             margin='dense'
                             id='instructorId'
                             value={instructorId}
-                            label='instructorId'
+                            label='Instructor Id'
                             type='text'
                             fullWidth
                             variant='standard'
@@ -601,6 +602,7 @@ export default function FormModal({ open, title, handleClose, name,
                               id='status'
                               value={status}
                               label='Status'
+                              placeholder=' UNSEEN/CONTACTED/DECLINE/USEFUL'
                               type='text'
                               fullWidth
                               variant='standard'
@@ -613,7 +615,7 @@ export default function FormModal({ open, title, handleClose, name,
                               margin='dense'
                               id='message'
                               value={message}
-                              label='message'
+                              label='Message'
                               type='text'
                               fullWidth
                               variant='standard'
@@ -626,7 +628,7 @@ export default function FormModal({ open, title, handleClose, name,
                               margin='dense'
                               id='reply'
                               value={reply}
-                              label='reply'
+                              label='Reply'
                               type='text'
                               fullWidth
                               variant='standard'
@@ -647,7 +649,7 @@ export default function FormModal({ open, title, handleClose, name,
                                 margin='dense'
                                 id='faqQuestion'
                                 value={faqQuestion}
-                                label='faqQuestion'
+                                label='Faq Question'
                                 type='text'
                                 fullWidth
                                 variant='standard'
@@ -660,7 +662,7 @@ export default function FormModal({ open, title, handleClose, name,
                                 margin='dense'
                                 id='faqAnswer'
                                 value={faqAnswer}
-                                label='faqAnswer'
+                                label='Faq Answer'
                                 type='text'
                                 fullWidth
                                 variant='standard'
@@ -678,8 +680,6 @@ export default function FormModal({ open, title, handleClose, name,
                             ''
 
           }          <br />
-
-          {error && <p>{error.message}</p>}
         </DialogContent>
         <DialogActions>
         </DialogActions>

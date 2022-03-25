@@ -8,7 +8,7 @@ export function UseAllStudents() {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openAnchor = Boolean(anchorEl);
-  let { data, loading, error } = useQuery(GET_STUDENT)
+  let { data, loading } = useQuery(GET_STUDENT)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -77,7 +77,17 @@ export function UseAllStudents() {
         setclose(true)
       }
       catch (error) {
-        console.log(error.message);
+        toast.error("Status must be ACTIVE/OFFLINE", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
       }
     }
   }

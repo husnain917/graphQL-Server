@@ -32,10 +32,6 @@ export default function Profile() {
                                 <P.MyLink to='editProfile/id:' style={isActive => ({
                                     color: isActive ? "#00688B" : "black"
                                 })}>Edit Profile</P.MyLink>
-                                <P.MyLink to='ChangePassword' style={isActive => ({
-                                    color: isActive ? "#00688B" : "black"
-                                })}>Change Password</P.MyLink>
-
                             </Stack>
                         </P.Mycontainer>
                     </Grid>

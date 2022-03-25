@@ -35,8 +35,49 @@ export function UseAllStaff() {
   });
   let [CreateManyStaff] = useMutation(ADD_STAFF);
   const ctaButtonHandler1 = async (event, item) => {
-      if (name === '' || email === '' || email === '' || role === '' || phone === '') {
-        toast.warning('please fill all fields', {
+    if (name === '' || email === '' || email === '' || role === '' || phone === '') {
+      toast.warning('please fill all fields', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Slide,
+      });
+      return
+    } else {
+      event.preventDefault();
+      try {
+        await CreateManyStaff({
+          variables: {
+            data: {
+              name: name,
+              email: email,
+              role: role,
+              phone: phone
+            }
+          },
+          onCompleted(data, cache) {
+            console.log("updated cart");
+            console.log(data);
+            Notify()
+          },
+          refetchQueries: [{ query: GET_STAFF }],
+
+        })
+        setName('');
+        setEmail('');
+        setRole('');
+        setPhone('')
+
+        setclose(true)
+      }
+      catch (error) {
+
+        toast.error("Role must be TEACHER/ADMIN", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -47,38 +88,8 @@ export function UseAllStaff() {
           theme: "colored",
           transition: Slide,
         });
-        return
-      } else {
-    event.preventDefault();
-    try {
-      await CreateManyStaff({
-        variables: {
-          data: {
-            name: name,
-            email: email,
-            role: role,
-            phone: phone
-          }
-        },
-        onCompleted(data, cache) {
-          console.log("updated cart");
-          console.log(data);
-          Notify()
-        },
-        refetchQueries: [{ query: GET_STAFF }],
-
-      })
-      setName('');
-      setEmail('');
-      setRole('');
-      setPhone('')
-
-      setclose(true)
-    }
-    catch (error) {
-      console.log(error.message);
-    }
       }
+    }
   }
 
 
@@ -114,7 +125,7 @@ export function UseAllStaff() {
     if (filterValue == '') {
       return item;
     }
-    else if (filterValue == item.status) {
+    else if (filterValue == item.role) {
       return item;
     }
     else if (filterValue == 'All') {

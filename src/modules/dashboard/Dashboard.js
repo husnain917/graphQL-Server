@@ -2,37 +2,35 @@ import React from "react";
 import { DS } from "./DashboardStyle";
 import Card from './card/Card';
 import UseDashboard from "./UseDashboard";
-import { GetStudentsNum } from './Usecards'
 export default function Dashboard({ authState }) {
-    GetStudentsNum()
-    const [{ Notify }] = UseDashboard();
+    const [{ Notify, student, success, staff, course, event, admin }] = UseDashboard();
     if (authState) {
-        // Navigate('/dashboard)
         Notify()
     }
+
 
     return (
 
         <DS.MainPageContainer>
             <DS.CardsRow>
                 <DS.CardContainer>
-                    <Card value='0' heading='STUDENTS' icon={<DS.PeopleOutline />} />
+                    <Card value={student ? student : 0} heading='STUDENTS' icon={<DS.PeopleOutline />} />
                 </DS.CardContainer>
                 <DS.CardContainer>
-                    <Card value='0' heading='TEACHERS' icon={<DS.RecordVoiceOver />} />
+                    <Card value={staff ? staff : 0} heading='TEACHERS' icon={<DS.RecordVoiceOver />} />
                 </DS.CardContainer><DS.CardContainer>
-                    <Card value='0' heading='ADMINS' icon={<DS.PersonIcon />} />
+                    <Card value={admin ? admin : 0} heading='ADMINS' icon={<DS.PersonIcon />} />
                 </DS.CardContainer>
             </DS.CardsRow>
             <DS.CardsRow>
                 <DS.CardContainer>
-                    <Card value='0' heading='SUCCESS STORIES' icon={<DS.LocalActivity />} />
+                    <Card value={success ? success : 0} heading='SUCCESS STORIES' icon={<DS.LocalActivity />} />
                 </DS.CardContainer>
                 <DS.CardContainer>
-                    <Card value='0' heading='EVENTS' icon={<DS.EventAvailableIcon />} />
+                    <Card value={event ? event : 0} heading='EVENTS' icon={<DS.EventAvailableIcon />} />
                 </DS.CardContainer>
                 <DS.CardContainer>
-                    <Card value='0' heading='COURSES' icon={<DS.Subscriptions />} />
+                    <Card value={course ? course : 0} heading='COURSES' icon={<DS.Subscriptions />} />
                 </DS.CardContainer>
             </DS.CardsRow>
         </DS.MainPageContainer>

@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { Slide, toast } from 'react-toastify';
-import { ADD_FAQS } from '../../lib/mutation/AllMutations';
+import { ADD_FAQS, DELETE_SINGLE_FAQ } from '../../lib/mutation/AllMutations';
 import { GET_FAQS } from '../../lib/queries/AllQueries';
 
 export function useFAQS() {
@@ -14,6 +14,8 @@ export function useFAQS() {
         setOpen(true);
     };
 
+
+    // ADD FAQ
     const [faqQuestion, setfaqQuestion] = useState('');
     const [faqAnswer, setfaqAnswer] = useState('');
 
@@ -83,6 +85,8 @@ export function useFAQS() {
         setFilterValue(typeof value == 'object' ? filterValue : value);
     };
 
+
+    // GET FAQ
     // eslint-disable-next-line array-callback-return
     const filterDataArray = data?.faqs.filter((item) => {
         if (filterValue === '') {
@@ -93,6 +97,50 @@ export function useFAQS() {
             return item;
         }
     });
+
+
+// DELETE FAQ
+    let [DeleteFaq, { loading: DeleteLoading }] = useMutation(DELETE_SINGLE_FAQ)
+    const ctaDeleteHandlerFAQ = async ({ e, ...props }) => {
+        console.log(props.id);
+        try {
+            await DeleteFaq({
+                variables: {
+                    where: {
+                        id: props.id
+                    }
+                },
+                onCompleted(data) {
+                    toast.success("Faq deleted Successfully", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                        transition: Slide,
+                    });
+                },
+                refetchQueries: [{ query: GET_FAQS}],
+            })
+        } catch (error) {
+            toast.error(error.message, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Slide,
+            });
+        }
+    }
+
+
     return [
         {
             filterDataArray,
@@ -109,6 +157,8 @@ export function useFAQS() {
             faqQuestion,
             setfaqQuestion,
             ctaButtonHandler7,
+            ctaDeleteHandlerFAQ,
+            DeleteLoading
         },
     ];
 }

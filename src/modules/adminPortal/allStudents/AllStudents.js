@@ -26,6 +26,8 @@ export default function AllStudents() {
       setEmail,
       setStatus,
       ctaButtonHandler3,
+      ctaDeleteHandlerStudent,
+      DeleteLoading
     },
   ] = UseAllStudents();
 
@@ -33,7 +35,9 @@ export default function AllStudents() {
     <>
       <ToastContainer />
       {loading ? (
-       <CommonTableLoader/>
+        <CommonTableLoader />
+      ) : DeleteLoading ? (
+        <CommonTableLoader />
       ) : (
         <>
           <Table
@@ -47,6 +51,7 @@ export default function AllStudents() {
             setEmail={setEmail}
             setStatus={setStatus}
             ctaButtonHandler3={ctaButtonHandler3}
+            ctaDeleteHandlerStudent={ctaDeleteHandlerStudent}
             handleClickOpen={handleClickOpen}
             open={open}
             handleClose={handleClose}

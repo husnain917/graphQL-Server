@@ -20,7 +20,6 @@ export default function FormModal({ open, title, handleClose, name,
   setCourse,
   setamount,
   settransactionId,
-  ctaButtonHandler,
   setpaymentMethod,
   setStatus,
   loading, error,
@@ -71,6 +70,7 @@ export default function FormModal({ open, title, handleClose, name,
   setfaqQuestion,
   setfaqAnswer,
   ctaButtonHandler7,
+  ctaButtonHandlerEnroll
 
 
 }) {
@@ -185,7 +185,7 @@ export default function FormModal({ open, title, handleClose, name,
                   }}
                   variant='standard'
                 />
-                <Button type='submit' onClick={ctaButtonHandler}>Submit</Button>
+                <Button type='submit' onClick={ctaButtonHandlerEnroll}>Submit</Button>
                 <Button type='submit' onClick={handleClose}>Close</Button>
 
               </>

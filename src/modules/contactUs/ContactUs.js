@@ -25,7 +25,9 @@ export default function ContactUs() {
             setStatus,
             setmessage,
             setreply,
-            ctaButtonHandler6
+            ctaButtonHandler6,
+            ctaDeleteHandlerContact,
+            DeleteLoading
         },
     ] = useContactUs();
     return (
@@ -34,7 +36,10 @@ export default function ContactUs() {
                 <ToastContainer />
                 {loading ? (
                     <CommonTableLoader/>
-                ) : (
+                ):
+                DeleteLoading ? (
+                    <CommonTableLoader/>
+                )  : (
                     <Table
                         title='Contact us'
                         tableHeadings={[
@@ -58,6 +63,7 @@ export default function ContactUs() {
                         setreply={setreply}
                         ctaButtonHandler6={ctaButtonHandler6}
                         handleClickOpen={handleClickOpen}
+                        ctaDeleteHandlerContact={ctaDeleteHandlerContact}
                         open={open}
                         handleClose={handleClose}
                         anchorEl={anchorEl}

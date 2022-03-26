@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { Slide, toast } from 'react-toastify';
-import { ADD_CONTACT_US } from '../../lib/mutation/AllMutations';
+import { ADD_CONTACT_US, DELETE_CONTACT } from '../../lib/mutation/AllMutations';
 import { GET_CONTACT_US } from '../../lib/queries/AllQueries';
 
 export default function useContactUs() {
@@ -9,10 +9,15 @@ export default function useContactUs() {
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const openAnchor = Boolean(anchorEl);
+
+    //GET ROW QUERY
     let { data, loading, error } = useQuery(GET_CONTACT_US);
     const handleClickOpen = () => {
         setOpen(true);
     };
+
+
+    // ADD_ROW
 
     const [name, setName] = useState('');
     const [subject, setsubject] = useState('');
@@ -92,7 +97,7 @@ export default function useContactUs() {
                     progress: undefined,
                     theme: "colored",
                     transition: Slide,
-                  });
+                });
             }
         }
     };
@@ -108,6 +113,9 @@ export default function useContactUs() {
         setFilterValue(typeof value == 'object' ? filterValue : value);
     };
 
+
+    //GET DATA
+
     const filterDataArray = data?.contactuses.filter((item) => {
         if (filterValue === '') {
             return item;
@@ -117,6 +125,52 @@ export default function useContactUs() {
             return item;
         }
     });
+
+
+
+
+
+    // DELETE ROW
+
+    let [DeleteMutation,{loading:DeleteLoading}] = useMutation(DELETE_CONTACT);
+    const ctaDeleteHandlerContact = async ({ e, ...props }) => {
+        console.log(props.id);
+        try {
+            await DeleteMutation({
+                variables: {
+                    where: {
+                        id: props.id
+                    }
+                },
+                onCompleted(data) {
+                    toast.success("Contact deleted Successfully", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                        transition: Slide,
+                    });
+                },
+                refetchQueries: [{ query: GET_CONTACT_US }],
+            })
+        } catch (error) {
+            toast.error(error.message, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Slide,
+            });
+        }
+    }
     return [
         {
             filterDataArray,
@@ -139,6 +193,8 @@ export default function useContactUs() {
             setmessage,
             setreply,
             ctaButtonHandler6,
+            ctaDeleteHandlerContact,
+            DeleteLoading
 
         },
     ];

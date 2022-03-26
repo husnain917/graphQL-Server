@@ -17,7 +17,8 @@ import ProfileData from '../modules/profile/profileData/ProfileData';
 import EditProfile from '../modules/profile/editProfile/EditProfile';
 export default function Navigation() {
     const [authState, setAuthState] = useState(false);
-   
+    const items = JSON.parse(localStorage.getItem('user'));
+
     return (
         <>
             {!authState ?
@@ -39,9 +40,9 @@ export default function Navigation() {
                         <Route path='/faq' element={<FAQS />} />
                         <Route path='/contactus' element={<ContactUs />} />
                         <Route path='profile' element={<Profile />}>
-                            <Route path='id:' element={<ProfileData />} />
-                            <Route path='editProfile/id:' element={<EditProfile />} />
-                            <Route path='ChangePassword' element={<ChangePassword />} />
+                            <Route path={`id:${items.id}`} element={<ProfileData />} />
+                            <Route path={`editProfile/id:${items.id}`} element={<EditProfile />} />
+                            {/* <Route path='ChangePassword' element={<ChangePassword />} /> */}
 
                         </Route>
                     </Routes >

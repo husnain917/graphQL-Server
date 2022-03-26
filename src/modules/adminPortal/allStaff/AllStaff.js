@@ -1,24 +1,57 @@
 //Import from Libraries
 
-import React from 'react'
+import React from 'react';
 import { ToastContainer } from 'react-toastify';
 //Import from Files
-import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader'
+import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
 import Table from '../../../commonComponents/table/Table';
-import { UseAllStaff } from './UseAllStaff'
+import { UseAllStaff } from './UseAllStaff';
 export default function AllStaff() {
-  const [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick,error, ctaButtonHandler1, name, email, phone, role, setName, setEmail, setPhone, setRole }] = UseAllStaff();
+  const [
+    {
+      filterDataArray,
+      loading,
+      open,
+      handleClickOpen,
+      handleClose,
+      openAnchor,
+      anchorEl,
+      handleAnchorClose,
+      handleAnchorClick,
+      error,
+      ctaButtonHandler1,
+      name,
+      email,
+      phone,
+      role,
+      setName,
+      setEmail,
+      setPhone,
+      setRole,
+      ctaDeleteHandlerStaff,
+      DeleteLoading
+    },
+  ] = UseAllStaff();
 
   return (
     <>
       <ToastContainer />
-      {
-        loading ?
-         <CommonTableLoader/>
-          :
+      {loading ? (
+        <CommonTableLoader />
+      ) :
+        DeleteLoading ? (
+          <CommonTableLoader />
+        ) : (
           <>
             <Table
-              tableHeadings={['Name', 'Email', 'Role', 'Phone', 'Image', 'Actions']}
+              tableHeadings={[
+                'Name',
+                'Email',
+                'Role',
+                'Phone',
+                'Image',
+                'Actions',
+              ]}
               title={'All Staff'}
               data={filterDataArray}
               name={name}
@@ -30,6 +63,7 @@ export default function AllStaff() {
               setRole={setRole}
               setPhone={setPhone}
               ctaButtonHandler1={ctaButtonHandler1}
+              ctaDeleteHandlerStaff={ctaDeleteHandlerStaff}
               loading={loading}
               error={error}
               handleClickOpen={handleClickOpen}
@@ -41,8 +75,7 @@ export default function AllStaff() {
               openAnchor={openAnchor}
             />
           </>
-        
-      }
+        )}
     </>
   );
 }

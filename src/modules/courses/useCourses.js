@@ -1,7 +1,7 @@
 import { useQuery, useMutation } from '@apollo/client';
 import { useState } from 'react';
 import { GET_COURSES } from '../../lib/queries/AllQueries';
-import { ADD_COURSES } from '../../lib/mutation/AllMutations'
+import { ADD_COURSES, DELETE_SINGLE_COURSE } from '../../lib/mutation/AllMutations'
 import { toast, Slide } from 'react-toastify'
 export function UseCourses() {
   // const [loading, setLoading] = useState(false)
@@ -13,6 +13,11 @@ export function UseCourses() {
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+
+
+  //ADD COURSE
+
 
   const [name, setName] = useState('')
   const [courseDesc, setcourseDesc] = useState('')
@@ -116,6 +121,9 @@ export function UseCourses() {
     setFilterValue(typeof value == 'object' ? filterValue : value);
   };
 
+
+
+  //GET COURSE
   const filterDataArray = data?.findManyCourses.filter((item) => {
     if (filterValue === '') {
       return item;
@@ -127,5 +135,52 @@ export function UseCourses() {
       return item;
     }
   })
-  return [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick, name, courseDesc, courseStatus, courseCategoryId, coursePrice, courseIntro, instructorId, close, ctaButtonHandler2, setName, setcourseDesc, setcourseStatus, setcourseCategoryId, setcoursePrice, setcourseIntro, setinstructorId, setclose }]
+
+
+
+  //DELETE COURSE
+
+  let [DeleteMutation, { loading: Deleteloading }] = useMutation(DELETE_SINGLE_COURSE);
+  const ctaDeleteHandlerCourse = async ({ e, ...props }) => {
+    console.log(props.id);
+    try {
+      await DeleteMutation({
+        variables: {
+          where: {
+            id: props.id
+          }
+        },
+        onCompleted(data) {
+          toast.success("Course deleted Successfully", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
+        },
+        refetchQueries: [{ query: GET_COURSES }],
+      })
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Slide,
+      });
+    }
+  }
+
+
+
+  return [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick, name, courseDesc, courseStatus, courseCategoryId, coursePrice, courseIntro, instructorId, close, ctaButtonHandler2, setName, setcourseDesc, setcourseStatus, setcourseCategoryId, setcoursePrice, setcourseIntro, setinstructorId, setclose, ctaDeleteHandlerCourse, Deleteloading }]
 }

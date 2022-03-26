@@ -7,6 +7,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { colors } from '../../constants/Color';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import { MagicSpinner } from 'react-spinners-kit';
 export const TableStyle = {
     // Data Fetching Loading Container
     LoaderContainer: styled('div')(() => ({
@@ -32,7 +33,7 @@ export const TableStyle = {
         },
         paddingBottom: 10,
         backgroundColor: colors.lightBlue,
-        color:'white',
+        color: 'white',
         boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19)",
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
@@ -51,17 +52,17 @@ export const TableStyle = {
         justifyContent: 'space-between',
         alignItems: 'center'
     })),
-    SearchAndBtnsContainer:styled('div')(()=>({
-        display:'inline-flex',
-        alignItems:'center',
+    SearchAndBtnsContainer: styled('div')(() => ({
+        display: 'inline-flex',
+        alignItems: 'center',
     })),
-    
+
     // Table Header With Search Bar For Small Screens
 
-    MobileViewTableHeader:styled(Box)(({searchShow})=>({
-        display: searchShow ? 'block' : 'flex', 
+    MobileViewTableHeader: styled(Box)(({ searchShow }) => ({
+        display: searchShow ? 'block' : 'flex',
         justifyContent: 'space-between',
-         alignItems: 'center',
+        alignItems: 'center',
     })),
     SearchBox: styled(Box)(({ theme }) => ({
         display: 'flex',
@@ -75,9 +76,9 @@ export const TableStyle = {
         borderRadius: 999,
 
     })),
-    HeaderIconsContainer:styled('div')(()=>({
-        display:'flex',
-        alignItems:'center',
+    HeaderIconsContainer: styled('div')(() => ({
+        display: 'flex',
+        alignItems: 'center',
     })),
 
     // Table
@@ -94,28 +95,29 @@ export const TableStyle = {
     })),
 
     // Icons
-    FilterListIcon:styled(FilterListIcon)(()=>({
-        fontSize:35,
-        marginRight:10,
-        marginLeft:10,
-        cursor:'pointer',
+    FilterListIcon: styled(FilterListIcon)(() => ({
+        fontSize: 35,
+        marginRight: 10,
+        marginLeft: 10,
+        cursor: 'pointer',
     })),
-    AddIcon:styled(AddCircleOutlineIcon)(()=>({
-        fontSize:35,
-        cursor:'pointer',
+    AddIcon: styled(AddCircleOutlineIcon)(() => ({
+        fontSize: 35,
+        cursor: 'pointer',
     })),
     CloseIcon: styled(Close)({
         color: '#fff',
     }),
-    SearchIcon:styled(SearchIcon)(()=>({
-        fontSize:27,
+    SearchIcon: styled(SearchIcon)(() => ({
+        fontSize: 27,
     })),
     DeleteIcon: styled(Delete)(() => ({
         color: '#f44336'
     })),
     EditIcon: styled(Edit)(({ theme }) => ({
         color: '#ffeb3b'
-    }))
+    })),
+    
 }
 
 

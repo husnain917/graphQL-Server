@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { Slide, toast } from 'react-toastify';
-import { ADD_SUCCESS_STORY } from '../../lib/mutation/AllMutations';
+import { ADD_SUCCESS_STORY, DELETE_SINGLE_SUCCESS_STORY } from '../../lib/mutation/AllMutations';
 import { GET_SUCCESS_STORIES } from '../../lib/queries/AllQueries';
 
 export function useSuccessStory() {
@@ -14,6 +14,9 @@ export function useSuccessStory() {
     setOpen(true);
   };
 
+
+
+  //ADD STORY
   const [freelancingProfileUrl, setfreelancingProfileUrl] = useState('');
   const [paymentProof, setpaymentProof] = useState('');
   const [description, setdescription] = useState('');
@@ -116,6 +119,9 @@ export function useSuccessStory() {
     setFilterValue(typeof value == 'object' ? filterValue : value);
   };
 
+
+
+  // GET STORY 
   const filterDataArray = data?.findManySuccessStories.filter((item) => {
     if (filterValue === '') {
       return item;
@@ -125,6 +131,66 @@ export function useSuccessStory() {
       return item;
     }
   });
+
+
+
+
+
+
+
+
+
+
+
+
+  //DELETE STORY 
+
+
+  let [DeleteSuccessStories, { loading: DeleteLoading }] = useMutation(DELETE_SINGLE_SUCCESS_STORY);
+  const ctaDeleteHandlerStory = async ({ e, ...props }) => {
+    console.log(props.id);
+    try {
+      await DeleteSuccessStories({
+        variables: {
+          where: {
+            id: props.id
+          }
+        },
+        onCompleted(data) {
+          toast.success("Story deleted Successfully", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
+        },
+        refetchQueries: [{ query: GET_SUCCESS_STORIES }],
+      })
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Slide,
+      });
+    }
+  }
+
+
+
+
+
+
   return [
     {
       filterDataArray,
@@ -151,6 +217,8 @@ export function useSuccessStory() {
       whyReject,
       setwhyReject,
       ctaButtonHandler4,
+      ctaDeleteHandlerStory,
+      DeleteLoading
 
     },
   ];

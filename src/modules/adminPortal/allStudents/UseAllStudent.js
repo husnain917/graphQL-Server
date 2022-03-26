@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { Slide, toast } from "react-toastify";
-import { ADD_STUDENT } from "../../../lib/mutation/AllMutations";
+import { ADD_STUDENT, DELETE_SINGLE_STUDENT } from "../../../lib/mutation/AllMutations";
 import { GET_STUDENT } from "../../../lib/queries/AllQueries";
 export function UseAllStudents() {
   const [filterValue, setFilterValue] = useState('');
@@ -15,7 +15,7 @@ export function UseAllStudents() {
 
 
 
-
+// ADD STUDENT
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -94,7 +94,7 @@ export function UseAllStudents() {
 
 
 
-
+//GET STUDENT
   const handleClose = () => {
     setOpen(false);
   };
@@ -105,7 +105,7 @@ export function UseAllStudents() {
     setAnchorEl(null);
     setFilterValue(typeof value == 'object' ? filterValue : value);
   };
-
+//GET STUDENT
   const filterDataArray = data?.findManyStudents.filter((item) => {
     if (filterValue === '') {
       return item;
@@ -118,5 +118,50 @@ export function UseAllStudents() {
     }
   })
 
-  return [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick, name, email, status, setName, setEmail, setStatus, ctaButtonHandler3 }]
+
+
+//DELETE STUDENT
+  let [DeleteStudents,{loading:DeleteLoading}] = useMutation(DELETE_SINGLE_STUDENT);
+  const ctaDeleteHandlerStudent = async ({ e, ...props }) => {
+    console.log(props.id);
+    try {
+      await DeleteStudents({
+        variables: {
+          where: {
+            id: props.id
+          }
+        },
+        onCompleted(data) {
+          toast.success("Student deleted Successfully", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
+        },
+        refetchQueries: [{ query: GET_STUDENT}],
+      })
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Slide,
+      });
+    }
+  }
+
+
+
+  return [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick, name, email, status, setName, setEmail, setStatus, ctaButtonHandler3,ctaDeleteHandlerStudent,DeleteLoading }]
 }

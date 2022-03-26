@@ -132,7 +132,7 @@ export default function useContactUs() {
 
     // DELETE ROW
 
-    let [DeleteMutation] = useMutation(DELETE_CONTACT);
+    let [DeleteMutation,{loading:DeleteLoading}] = useMutation(DELETE_CONTACT);
     const ctaDeleteHandlerContact = async ({ e, ...props }) => {
         console.log(props.id);
         try {
@@ -193,7 +193,8 @@ export default function useContactUs() {
             setmessage,
             setreply,
             ctaButtonHandler6,
-            ctaDeleteHandlerContact
+            ctaDeleteHandlerContact,
+            DeleteLoading
 
         },
     ];

@@ -20,39 +20,44 @@ export default function FAQS() {
             faqQuestion,
             setfaqQuestion,
             ctaButtonHandler7,
+            ctaDeleteHandlerFAQ,
+            DeleteLoading
         },
     ] = useFAQS();
     return (
         <>
             <ToastContainer />
             {loading ? (
-               <CommonTableLoader/>
-            ) : (
-                <Table
-                    title='FAQS'
-                    tableHeadings={[
-                        'Faq Question',
-                        'Faq Answer',
-                        'Created At',
-                        'Question',
-                        'Update At',
-                        'Action',
-                    ]}
-                    data={filterDataArray}
-                    faqQuestion={faqQuestion}
-                    setfaqQuestion={setfaqQuestion}
-                    faqAnswer={faqAnswer}
-                    setfaqAnswer={setfaqAnswer}
-                    ctaButtonHandler7={ctaButtonHandler7}
-                    handleClickOpen={handleClickOpen}
-                    open={open}
-                    handleClose={handleClose}
-                    anchorEl={anchorEl}
-                    handleAnchorClose={handleAnchorClose}
-                    handleAnchorClick={handleAnchorClick}
-                    openAnchor={openAnchor}
-                />
-            )}
+                <CommonTableLoader />
+            ) :
+                DeleteLoading ? (
+                    <CommonTableLoader />
+                ) : (
+                    <Table
+                        title='FAQS'
+                        tableHeadings={[
+                            'Created At',
+                            'Faq Question',
+                            'Faq Answer',
+                            'Update At',
+                            'Action',
+                        ]}
+                        data={filterDataArray}
+                        faqQuestion={faqQuestion}
+                        setfaqQuestion={setfaqQuestion}
+                        faqAnswer={faqAnswer}
+                        setfaqAnswer={setfaqAnswer}
+                        ctaButtonHandler7={ctaButtonHandler7}
+                        ctaDeleteHandlerFAQ={ctaDeleteHandlerFAQ}
+                        handleClickOpen={handleClickOpen}
+                        open={open}
+                        handleClose={handleClose}
+                        anchorEl={anchorEl}
+                        handleAnchorClose={handleAnchorClose}
+                        handleAnchorClick={handleAnchorClick}
+                        openAnchor={openAnchor}
+                    />
+                )}
         </>
     );
 }

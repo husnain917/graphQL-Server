@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import React, { useState } from "react";
 import { Slide, toast } from "react-toastify";
-import { ADD_STAFF } from "../../../lib/mutation/AllMutations";
+import { ADD_STAFF, DELETE_SINGLE_STAFF } from "../../../lib/mutation/AllMutations";
 import { GET_STAFF } from "../../../lib/queries/AllQueries";
 export function UseAllStaff() {
   const [filterValue, setFilterValue] = useState('');
@@ -13,7 +13,7 @@ export function UseAllStaff() {
 
 
 
-
+// ADD STAFF
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -120,17 +120,68 @@ export function UseAllStaff() {
   };
 
 
-  console.log(data?.findManyStaff);
+  // GET STAFF
   const filterDataArray = data?.findManyStaff?.filter((item) => {
-    if (filterValue == '') {
+    if (filterValue === '') {
       return item;
     }
-    else if (filterValue == item.role) {
+    else if (filterValue === item.role) {
       return item;
     }
-    else if (filterValue == 'All') {
+    else if (filterValue === 'All') {
       return item;
     }
   })
-  return [{ filterDataArray, loading, error, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick, ctaButtonHandler1, name, email, phone, role, setName, setEmail, setPhone, setRole }]
+
+
+
+
+
+
+
+// DELETE STAFF
+  let [DeleteStaff,{loading:DeleteLoading}] = useMutation(DELETE_SINGLE_STAFF);
+  const ctaDeleteHandlerStaff = async ({ e, ...props }) => {
+    console.log(props.id);
+    try {
+      await DeleteStaff({
+        variables: {
+          where: {
+            id: props.id
+          }
+        },
+        onCompleted(data) {
+          toast.success("Staff deleted Successfully", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
+        },
+        refetchQueries: [{ query: GET_STAFF}],
+      })
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Slide,
+      });
+    }
+  }
+
+
+
+
+  return [{ filterDataArray, loading, error, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick, ctaButtonHandler1, name, email, phone, role, setName, setEmail, setPhone, setRole,ctaDeleteHandlerStaff,DeleteLoading }]
 }

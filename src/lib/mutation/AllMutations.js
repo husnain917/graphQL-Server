@@ -68,6 +68,28 @@ mutation Mutation($data: [FaqCreateManyInput!]!) {
 
 //SINGLE DELETE MUTATIONS
 
+export const DELETE_SINGLE_STAFF = gql`
+
+mutation DeleteStaff($where: StaffWhereUniqueInput!) {
+  deleteStaff(where: $where) {
+    name
+  }
+}`
+
+export const DELETE_SINGLE_STUDENT = gql`
+mutation DeleteStudents($where: StudentsWhereUniqueInput!) {
+  deleteStudents(where: $where) {
+    name
+  }
+}`
+
+
+export const DELETE_SINGLE_COURSE = gql`
+mutation DeleteCourses($where: CoursesWhereUniqueInput!) {
+  deleteCourses(where: $where) {
+    courseName
+  }
+}`
 
 export const DELETE_ENROLMMENT_APPROVAL = gql`
 mutation DeleteEnrollmentApproval($where: EnrollmentApprovalWhereUniqueInput!) {
@@ -82,6 +104,28 @@ export const DELETE_CONTACT = gql`
 mutation DeleteMutation($where: ContactUsWhereUniqueInput!) {
   deleteContactUs(where: $where) {
     name
+  }
+}
+`
+
+export const DELETE_SINGLE_SUCCESS_STORY = gql`
+mutation DeleteSuccessStories($where: SuccessStoriesWhereUniqueInput!) {
+  deleteSuccessStories(where: $where) {
+    id
+  }
+}`
+
+export const DELETE_SINGLE_EVENT = gql`
+mutation DeleteEvents($where: EventsWhereUniqueInput!) {
+  deleteEvents(where: $where) {
+    id
+  }
+}`
+
+export const DELETE_SINGLE_FAQ = gql`
+mutation DeleteFaq($where: FaqWhereUniqueInput!) {
+  deleteFaq(where: $where) {
+    id
   }
 }
 `

@@ -104,7 +104,13 @@ export default function Table({
 
   //Delete Handlers
   ctaDeleteHandlerEnroll,
-  ctaDeleteHandlerContact
+  ctaDeleteHandlerContact,
+  ctaDeleteHandlerStaff,
+  ctaDeleteHandlerStudent,
+  ctaDeleteHandlerCourse,
+  ctaDeleteHandlerStory,
+  ctaDeleteHandlerEvent,
+  ctaDeleteHandlerFAQ
 }) {
   const [
     {
@@ -319,7 +325,7 @@ export default function Table({
 
                         <TableCell align='center'>
                           <Tooltip title='Delete'>
-                            <IconButton aria-label='delete' size='small'>
+                            <IconButton aria-label='delete' size='small' onClick={() => ctaDeleteHandlerCourse(row)}>
                               <TableStyle.DeleteIcon />
                             </IconButton>
                           </Tooltip>
@@ -349,7 +355,7 @@ export default function Table({
 
                           <TableCell align='center'>
                             <Tooltip title='Delete'>
-                              <IconButton aria-label='delete' size='small' onClick={() => ctaDeleteHandlerEnroll((row))}>
+                              <IconButton aria-label='delete' size='small' onClick={() => ctaDeleteHandlerEnroll(row)}>
                                 <TableStyle.DeleteIcon />
                               </IconButton>
                             </Tooltip>
@@ -373,7 +379,7 @@ export default function Table({
                         <TableCell align='center'>{row?.eventImage}</TableCell>
                         <TableCell align='center'>
                           <Tooltip title='Delete'>
-                            <IconButton aria-label='delete' size='small'>
+                            <IconButton aria-label='delete' size='small' onClick={() => ctaDeleteHandlerEvent(row)}>
                               <TableStyle.DeleteIcon />
                             </IconButton>
                           </Tooltip>
@@ -399,7 +405,7 @@ export default function Table({
                         <TableCell align='center'>{row?.status}</TableCell>
                         <TableCell align='center'>
                           <Tooltip title='Delete'>
-                            <IconButton aria-label='delete' size='small' onClick={() => ctaDeleteHandlerContact((row))}>
+                            <IconButton aria-label='delete' size='small' onClick={() => ctaDeleteHandlerContact(row)}>
                               <TableStyle.DeleteIcon />
                             </IconButton>
                           </Tooltip>
@@ -423,7 +429,7 @@ export default function Table({
                           </TableCell>
                           <TableCell align='center'>
                             <Tooltip title='Delete'>
-                              <IconButton aria-label='delete' size='small'>
+                              <IconButton aria-label='delete' size='small' onClick={() => ctaDeleteHandlerFAQ(row)}>
                                 <TableStyle.DeleteIcon />
                               </IconButton>
                             </Tooltip>
@@ -446,7 +452,7 @@ export default function Table({
                             <TableCell align='center'>{row?.image}</TableCell>
                             <TableCell align='center'>
                               <Tooltip title='Delete'>
-                                <IconButton aria-label='delete' size='small'>
+                                <IconButton aria-label='delete' size='small' onClick={() => ctaDeleteHandlerStaff(row)}>
                                   <TableStyle.DeleteIcon />
                                 </IconButton>
                               </Tooltip>
@@ -459,6 +465,7 @@ export default function Table({
                           </>
                         )
                           : title === "Success Stories" ? (
+
                             <>
                               <TableCell align='center' component='th' scope='row'>
                                 {row?.city}
@@ -471,7 +478,7 @@ export default function Table({
                               <TableCell align='center'>{row?.whyReject}</TableCell>
                               <TableCell align='center'>
                                 <Tooltip title='Delete'>
-                                  <IconButton aria-label='delete' size='small'>
+                                  <IconButton aria-label='delete' size='small' onClick={() => ctaDeleteHandlerStory(row)}>
                                     <TableStyle.DeleteIcon />
                                   </IconButton>
                                 </Tooltip>
@@ -483,7 +490,7 @@ export default function Table({
                               </TableCell>
                             </>
                           )
-                            : (
+                            : title === "All Students" ? (
                               <>
                                 <TableCell align='center' component='th' scope='row'>
                                   {row?.name}
@@ -492,7 +499,7 @@ export default function Table({
                                 <TableCell align='center'>{row?.status}</TableCell>
                                 <TableCell align='center'>
                                   <Tooltip title='Delete'>
-                                    <IconButton aria-label='delete' size='small'>
+                                    <IconButton aria-label='delete' size='small' onClick={() => ctaDeleteHandlerStudent(row)}>
                                       <TableStyle.DeleteIcon />
                                     </IconButton>
                                   </Tooltip>
@@ -503,7 +510,10 @@ export default function Table({
                                   </Tooltip>
                                 </TableCell>
                               </>
-                            )}
+                            )
+                              :
+                              ''
+                    }
                   </TableStyle.CustomTableRow>
                 ))}
           </TableBody>

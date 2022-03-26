@@ -26,7 +26,8 @@ export default function ContactUs() {
             setmessage,
             setreply,
             ctaButtonHandler6,
-            ctaDeleteHandlerContact
+            ctaDeleteHandlerContact,
+            DeleteLoading
         },
     ] = useContactUs();
     return (
@@ -35,7 +36,10 @@ export default function ContactUs() {
                 <ToastContainer />
                 {loading ? (
                     <CommonTableLoader/>
-                ) : (
+                ):
+                DeleteLoading ? (
+                    <CommonTableLoader/>
+                )  : (
                     <Table
                         title='Contact us'
                         tableHeadings={[

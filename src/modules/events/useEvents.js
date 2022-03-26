@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { Slide, toast } from 'react-toastify';
-import { ADD_EVENTS } from '../../lib/mutation/AllMutations';
+import { ADD_EVENTS, DELETE_SINGLE_EVENT } from '../../lib/mutation/AllMutations';
 import { GET_EVENTS } from '../../lib/queries/AllQueries';
 
 export function useEvents() {
@@ -14,6 +14,8 @@ export function useEvents() {
         setOpen(true);
     };
 
+
+    // ADD EVENTS
     const [name, setName] = useState('');
     const [description, setdescription] = useState('');
     const [status, setStatus] = useState('PAST');
@@ -94,7 +96,7 @@ export function useEvents() {
                     progress: undefined,
                     theme: "colored",
                     transition: Slide,
-                  });
+                });
             }
         }
     };
@@ -110,6 +112,8 @@ export function useEvents() {
         setFilterValue(typeof value == 'object' ? filterValue : value);
     };
 
+
+    // GET EVENTS
     const filterDataArray = data?.findManyEvents.filter((item) => {
         if (filterValue === '') {
             return item;
@@ -119,6 +123,50 @@ export function useEvents() {
             return item;
         }
     });
+
+
+
+    //DELETE EVENT
+    let [DeleteEvents, { loading: DeleteLoading }] = useMutation(DELETE_SINGLE_EVENT);
+    const ctaDeleteHandlerEvent = async ({ e, ...props }) => {
+        console.log(props.id);
+        try {
+            await DeleteEvents({
+                variables: {
+                    where: {
+                        id: props.id
+                    }
+                },
+                onCompleted(data) {
+                    toast.success("Event deleted Successfully", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                        transition: Slide,
+                    });
+                },
+                refetchQueries: [{ query: GET_EVENTS }],
+            })
+        } catch (error) {
+            toast.error(error.message, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Slide,
+            });
+        }
+    }
+
 
     return [
         {
@@ -144,7 +192,8 @@ export function useEvents() {
             eventImage,
             seteventImage,
             ctaButtonHandler5,
-
+            ctaDeleteHandlerEvent,
+            DeleteLoading
         },
     ];
 }

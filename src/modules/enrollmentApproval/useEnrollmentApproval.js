@@ -133,7 +133,7 @@ export function useEnrollmentApproval() {
 
   //DELETE ENROLL MUTATION
 
-  let [DeleteEnrollmentApproval] = useMutation(DELETE_ENROLMMENT_APPROVAL);
+  let [DeleteEnrollmentApproval,{loading:DeleteLoading}] = useMutation(DELETE_ENROLMMENT_APPROVAL);
 
   const ctaDeleteHandlerEnroll = async ({ e, ...props }) => {
     console.log(props.id);
@@ -202,6 +202,7 @@ export function useEnrollmentApproval() {
       ctaButtonHandlerEnroll,
       setStatus,
       ctaDeleteHandlerEnroll,
+      DeleteLoading
     },
   ];
 }

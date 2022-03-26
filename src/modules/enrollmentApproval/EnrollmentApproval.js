@@ -31,7 +31,8 @@ function EnrollmentApproval() {
             setamount,
             settransactionId,
             ctaButtonHandlerEnroll,
-            ctaDeleteHandlerEnroll
+            ctaDeleteHandlerEnroll,
+            DeleteLoading
         },
     ] = useEnrollmentApproval();
     return (
@@ -40,49 +41,50 @@ function EnrollmentApproval() {
                 <ToastContainer />
                 {loading ? (
                     <CommonTableLoader />
-                ) : error ? (
-                    <p>Error</p>
-                ) : (
-                    <Table
-                        title={'Enrollment Approval'}
-                        data={filterDataArray}
-                        name={name}
-                        email={email}
-                        course={course}
-                        paymentMethod={paymentMethod}
-                        amount={amount}
-                        transactionId={transactionId}
-                        status={status}
-                        setName={setName}
-                        setEmail={setEmail}
-                        setCourse={setCourse}
-                        setamount={setamount}
-                        setStatus={setStatus}
-                        settransactionId={settransactionId}
-                        ctaButtonHandlerEnroll={ctaButtonHandlerEnroll}
-                        ctaDeleteHandlerEnroll={ctaDeleteHandlerEnroll}
-                        setpaymentMethod={setpaymentMethod}
-                        loading={loading}
-                        error={error}
-                        handleClickOpen={handleClickOpen}
-                        open={open}
-                        handleClose={handleClose}
-                        anchorEl={anchorEl}
-                        handleAnchorClose={handleAnchorClose}
-                        handleAnchorClick={handleAnchorClick}
-                        openAnchor={openAnchor}
-                        tableHeadings={[
-                            'Student Name',
-                            'Email',
-                            'Course',
-                            'Payment Method',
-                            'Amount',
-                            'Transaction ID',
-                            'Status',
-                            'Actions',
-                        ]}
-                    />
-                )}
+                ) :
+                    DeleteLoading ? (
+                        <CommonTableLoader />
+                    )  : (
+                        <Table
+                            title={'Enrollment Approval'}
+                            data={filterDataArray}
+                            name={name}
+                            email={email}
+                            course={course}
+                            paymentMethod={paymentMethod}
+                            amount={amount}
+                            transactionId={transactionId}
+                            status={status}
+                            setName={setName}
+                            setEmail={setEmail}
+                            setCourse={setCourse}
+                            setamount={setamount}
+                            setStatus={setStatus}
+                            settransactionId={settransactionId}
+                            ctaButtonHandlerEnroll={ctaButtonHandlerEnroll}
+                            ctaDeleteHandlerEnroll={ctaDeleteHandlerEnroll}
+                            setpaymentMethod={setpaymentMethod}
+                            loading={loading}
+                            error={error}
+                            handleClickOpen={handleClickOpen}
+                            open={open}
+                            handleClose={handleClose}
+                            anchorEl={anchorEl}
+                            handleAnchorClose={handleAnchorClose}
+                            handleAnchorClick={handleAnchorClick}
+                            openAnchor={openAnchor}
+                            tableHeadings={[
+                                'Student Name',
+                                'Email',
+                                'Course',
+                                'Payment Method',
+                                'Amount',
+                                'Transaction ID',
+                                'Status',
+                                'Actions',
+                            ]}
+                        />
+                    )}
             </>
         </div>
     );

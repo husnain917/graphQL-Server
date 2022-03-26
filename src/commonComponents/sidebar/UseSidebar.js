@@ -4,7 +4,6 @@ import {
     PeopleOutline,
     LocalActivity,
     Face,
-    ExitToApp,
     Dashboard,
     LibraryAddCheck,
     QuestionAnswerRounded,
@@ -66,11 +65,6 @@ export const UseDrawer = () => {
             text: 'Profile ',
             icon: <Face />,
             path: `/profile/id:${items.id}`
-        },
-        {
-            text: 'Logout',
-            icon: <ExitToApp />,
-            path: '/login'
         },
     ];
 

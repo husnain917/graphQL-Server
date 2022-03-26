@@ -8,6 +8,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 // import OverlayLoader from '../overlayLoader/OverlayLoader';
 import { MagicSpinner } from 'react-spinners-kit';
+import { BASIC_CONTACT_ROLE, BASIC_COURSE_ROLE, BASIC_ENROLL_ROLES, BASIC_EVENTS_ROLE, BASIC_STAFF_ROLE, BASIC_STUDENT_ROLE, BASIC_SUCCESS_ROLE } from '../../constants/AllRolesStatus';
+import { MenuItem, Stack } from '@mui/material';
 export default function FormModal({ open, title, handleClose, name,
   email,
   course,
@@ -159,37 +161,41 @@ export default function FormModal({ open, title, handleClose, name,
                   }}
                 />
                 <br />
-                <TextField
-                  margin='dense'
-                  id='transactionId'
-                  value={transactionId}
-                  label='Transaction ID'
-                  type='numeric'
-                  fullWidth
-                  onChange={(event) => {
-                    settransactionId(event.target.value);
-                  }}
-                  variant='standard'
-                />
-                <br />
-                <TextField
-                  margin='dense'
-                  id='status'
-                  value={status}
-                  label='status'
-                  placeholder='PENDING/APPROVED/REJECTED'
-                  type='text'
-                  fullWidth
-                  onChange={(event) => {
-                    setStatus(event.target.value);
-                  }}
-                  variant='standard'
-                />
-                <Button type='submit' onClick={ctaButtonHandlerEnroll}>Submit</Button>
-                <Button type='submit' onClick={handleClose}>Close</Button>
-
+                <Stack >
+                  <TextField
+                    margin='dense'
+                    id='transactionId'
+                    value={transactionId}
+                    label='Transaction ID'
+                    type='numeric'
+                    fullWidth
+                    onChange={(event) => {
+                      settransactionId(event.target.value);
+                    }}
+                    variant='standard'
+                  />
+                  <br />
+                  <TextField
+                    id="standard-select-currency"
+                    select
+                    label="Select Roles/Status"
+                    fullWidth="bool"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
+                    {BASIC_ENROLL_ROLES.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <br />
+                </Stack>
+                <Stack direction="row" spacing={1}>
+                  <Button type='submit' variant="outlined" onClick={ctaButtonHandlerEnroll}>Submit</Button>
+                  <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                </Stack>
               </>
-
               :
               title === "All Students" ?
                 <>
@@ -207,36 +213,41 @@ export default function FormModal({ open, title, handleClose, name,
                     }}
                   />
                   <br />
-                  <TextField
-                    margin='dense'
-                    id='email'
-                    value={email}
-                    label='Email'
-                    type='email'
-                    fullWidth
-                    variant='standard'
-                    onChange={(event) => {
-                      setEmail(event.target.value);
-                    }}
-                  />
-                  <br />
+                  <Stack>
+                    <TextField
+                      margin='dense'
+                      id='email'
+                      value={email}
+                      label='Email'
+                      type='email'
+                      fullWidth
+                      variant='standard'
+                      onChange={(event) => {
+                        setEmail(event.target.value);
+                      }}
+                    />
+                    <br />
 
-                  <TextField
-                    margin='dense'
-                    id='Status'
-                    value={status}
-                    label='Status'
-                    type='text'
-                    placeholder='ACTIVE/OFFLINE'
-                    fullWidth
-                    variant='standard'
-                    onChange={(event) => {
-                      setStatus(event.target.value);
-                    }}
-                  />
+                    <TextField
+                      id="standard-select-currency"
+                      select
+                      label="Select Roles/Status"
+                      fullWidth="bool"
+                      value={status}
+                      onChange={(e) => setStatus(e.target.value)}
+                    >
+                      {BASIC_STUDENT_ROLE.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Stack>
                   <br />
-                  <Button type='submit' onClick={ctaButtonHandler3}>Submit</Button>
-                  <Button type='submit' onClick={handleClose}>Close</Button>
+                  <Stack direction="row" spacing={1}>
+                    <Button type='submit' variant="outlined" onClick={ctaButtonHandler3}>Submit</Button>
+                    <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                  </Stack>
                 </>
                 :
                 title === "All Staff" ?
@@ -254,7 +265,6 @@ export default function FormModal({ open, title, handleClose, name,
                         setName(event.target.value);
                       }}
                     />
-                    <br />
                     <TextField
                       margin='dense'
                       id='email'
@@ -268,35 +278,41 @@ export default function FormModal({ open, title, handleClose, name,
                       }}
                     />
                     <br />
-                    <TextField
-                      margin='dense'
-                      id='role'
-                      value={role}
-                      label='Role'
-                      placeholder='TEACHER/ADMIN'
-                      type='text'
-                      fullWidth
-                      variant='standard'
-                      onChange={(event) => {
-                        setRole(event.target.value);
-                      }}
-                    />
+
+                    <Stack>
+                      <TextField
+                        margin='dense'
+                        id='Phone'
+                        value={phone}
+                        label='Phone'
+                        type='number'
+                        fullWidth
+                        variant='standard'
+                        onChange={(event) => {
+                          setPhone(event.target.value);
+                        }}
+                      />
+                      <br />
+                      <TextField
+                        id="standard-select-currency"
+                        select
+                        label="Select Roles/Status"
+                        fullWidth="bool"
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
+                      >
+                        {BASIC_STAFF_ROLE.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Stack>
                     <br />
-                    <TextField
-                      margin='dense'
-                      id='Phone'
-                      value={phone}
-                      label='Phone'
-                      type='number'
-                      fullWidth
-                      variant='standard'
-                      onChange={(event) => {
-                        setPhone(event.target.value);
-                      }}
-                    />
-                    <br />
-                    <Button onClick={ctaButtonHandler1}>submit</Button>
-                    <Button type='submit' onClick={handleClose}>Close</Button>
+                    <Stack direction='row' spacing={1}>
+                      <Button type='submit' variant="outlined" onClick={ctaButtonHandler1}>submit</Button>
+                      <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                    </Stack>
 
                   </>
                   :
@@ -354,19 +370,7 @@ export default function FormModal({ open, title, handleClose, name,
                           settotalEarnedAmount(event.target.value);
                         }}
                       />
-                      <TextField
-                        margin='dense'
-                        id='whyReject'
-                        value={status}
-                        label='Status'
-                        placeholder='PUBLISH/UNPUBLISH'
-                        type='text'
-                        fullWidth
-                        variant='standard'
-                        onChange={(event) => {
-                          setStatus(event.target.value);
-                        }}
-                      />
+
                       <br />
                       <TextField
                         margin='dense'
@@ -381,21 +385,41 @@ export default function FormModal({ open, title, handleClose, name,
                         }}
                       />
                       <br />
-                      <TextField
-                        margin='dense'
-                        id='whyReject'
-                        value={whyReject}
-                        label='Why Reject'
-                        type='text'
-                        fullWidth
-                        variant='standard'
-                        onChange={(event) => {
-                          setwhyReject(event.target.value);
-                        }}
-                      />
+                      <Stack>
+                        <TextField
+                          margin='dense'
+                          id='whyReject'
+                          value={whyReject}
+                          label='Why Reject'
+                          type='text'
+                          fullWidth
+                          variant='standard'
+                          onChange={(event) => {
+                            setwhyReject(event.target.value);
+                          }}
+                        />
+
+                        <br />
+                        <TextField
+                          id="standard-select-currency"
+                          select
+                          label="Select Roles/Status"
+                          fullWidth="bool"
+                          value={status}
+                          onChange={(e) => setStatus(e.target.value)}
+                        >
+                          {BASIC_SUCCESS_ROLE.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                              {option.label}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Stack>
                       <br />
-                      <Button onClick={ctaButtonHandler4}>submit</Button>
-                      <Button type='submit' onClick={handleClose}>Close</Button>
+                      <Stack direction='row' spacing={1}>
+                        <Button type='submit' variant="outlined" onClick={ctaButtonHandler4}>submit</Button>
+                        <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                      </Stack>
                     </>
                     :
                     title === "Events" ?
@@ -440,34 +464,41 @@ export default function FormModal({ open, title, handleClose, name,
                           }}
                         />
                         <br />
-                        <TextField
-                          margin='dense'
-                          id='speakerId'
-                          value={speakerId}
-                          label='Speaker Id'
-                          type='text'
-                          fullWidth
-                          variant='standard'
-                          onChange={(event) => {
-                            setspeakerId(event.target.value);
-                          }}
-                        />
-                        <TextField
-                          margin='dense'
-                          id='Status'
-                          placeholder='UPCOMING/PAST'
-                          value={status}
-                          label='Status'
-                          type='text'
-                          fullWidth
-                          variant='standard'
-                          onChange={(event) => {
-                            setStatus(event.target.value);
-                          }}
-                        />
+                        <Stack>
+                          <TextField
+                            margin='dense'
+                            id='speakerId'
+                            value={speakerId}
+                            label='Speaker Id'
+                            type='text'
+                            fullWidth
+                            variant='standard'
+                            onChange={(event) => {
+                              setspeakerId(event.target.value);
+                            }}
+                          />
+                          <br />
+                          <TextField
+                            id="standard-select-currency"
+                            select
+                            label="Select Roles/Status"
+                            fullWidth="bool"
+                            value={status}
+                            onChange={(e) => setStatus(e.target.value)}
+                          >
+                            {BASIC_EVENTS_ROLE.map((option) => (
+                              <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                        </Stack>
+
                         <br />
-                        <Button onClick={ctaButtonHandler5}>submit</Button>
-                        <Button type='submit' onClick={handleClose}>Close</Button>
+                        <Stack direction='row' spacing={1}>
+                          <Button type='submit' variant="outlined" onClick={ctaButtonHandler5}>submit</Button>
+                          <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                        </Stack>
                       </> :
                       title === "Courses" ?
                         <>
@@ -498,19 +529,7 @@ export default function FormModal({ open, title, handleClose, name,
                             }}
                           />
                           <br />
-                          <TextField
-                            margin='dense'
-                            id='status'
-                            value={courseStatus}
-                            label='Status'
-                            placeholder='PUBLISH/UNPUBLISH'
-                            type='text'
-                            fullWidth
-                            variant='standard'
-                            onChange={(event) => {
-                              setcourseStatus(event.target.value);
-                            }}
-                          />
+
                           <br />
                           <TextField
                             margin='dense'
@@ -551,21 +570,40 @@ export default function FormModal({ open, title, handleClose, name,
                             }}
                           />
                           <br />
-                          <TextField
-                            margin='dense'
-                            id='instructorId'
-                            value={instructorId}
-                            label='Instructor Id'
-                            type='text'
-                            fullWidth
-                            variant='standard'
-                            onChange={(event) => {
-                              setinstructorId(event.target.value);
-                            }}
-                          />
+                          <Stack>
+                            <TextField
+                              margin='dense'
+                              id='instructorId'
+                              value={instructorId}
+                              label='Instructor Id'
+                              type='text'
+                              fullWidth
+                              variant='standard'
+                              onChange={(event) => {
+                                setinstructorId(event.target.value);
+                              }}
+                            />
+                            <br />
+                            <TextField
+                              id="standard-select-currency"
+                              select
+                              label="Select Roles/Status"
+                              fullWidth="bool"
+                              value={status}
+                              onChange={(e) => setStatus(e.target.value)}
+                            >
+                              {BASIC_COURSE_ROLE.map((option) => (
+                                <MenuItem key={option.value} value={option.value}>
+                                  {option.label}
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          </Stack>
                           <br />
-                          <Button onClick={ctaButtonHandler2}>submit</Button>
-                          <Button type='submit' onClick={handleClose}>Close</Button>
+                          <Stack direction='row' spacing={1}>
+                            <Button type='submit' variant="outlined" onClick={ctaButtonHandler2}>submit</Button>
+                            <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                          </Stack>
                         </>
                         :
                         title === "Contact us" ?
@@ -597,19 +635,7 @@ export default function FormModal({ open, title, handleClose, name,
                               }}
                             />
                             <br />
-                            <TextField
-                              margin='dense'
-                              id='status'
-                              value={status}
-                              label='Status'
-                              placeholder=' UNSEEN/CONTACTED/DECLINE/USEFUL'
-                              type='text'
-                              fullWidth
-                              variant='standard'
-                              onChange={(event) => {
-                                setStatus(event.target.value);
-                              }}
-                            />
+
                             <br />
                             <TextField
                               margin='dense'
@@ -624,21 +650,40 @@ export default function FormModal({ open, title, handleClose, name,
                               }}
                             />
                             <br />
-                            <TextField
-                              margin='dense'
-                              id='reply'
-                              value={reply}
-                              label='Reply'
-                              type='text'
-                              fullWidth
-                              variant='standard'
-                              onChange={(event) => {
-                                setreply(event.target.value);
-                              }}
-                            />
+                            <Stack>
+                              <TextField
+                                margin='dense'
+                                id='reply'
+                                value={reply}
+                                label='Reply'
+                                type='text'
+                                fullWidth
+                                variant='standard'
+                                onChange={(event) => {
+                                  setreply(event.target.value);
+                                }}
+                              />
+                              <br />
+                              <TextField
+                                id="standard-select-currency"
+                                select
+                                label="Select Roles/Status"
+                                fullWidth="bool"
+                                value={status}
+                                onChange={(e) => setStatus(e.target.value)}
+                              >
+                                {BASIC_CONTACT_ROLE.map((option) => (
+                                  <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                  </MenuItem>
+                                ))}
+                              </TextField>
+                            </Stack>
                             <br />
-                            <Button onClick={ctaButtonHandler6}>submit</Button>
-                            <Button type='submit' onClick={handleClose}>Close</Button>
+                            <Stack direction='row' spacing={1}>
+                              <Button type='submit' variant="outlined" onClick={ctaButtonHandler6}>submit</Button>
+                              <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                            </Stack>
                           </>
 
                           :
@@ -672,8 +717,10 @@ export default function FormModal({ open, title, handleClose, name,
                               />
                               <br />
 
-                              <Button onClick={ctaButtonHandler7}>submit</Button>
-                              <Button type='submit' onClick={handleClose}>Close</Button>
+                              <Stack direction='row' spacing={1}>
+                                <Button type='submit' variant="outlined" onClick={ctaButtonHandler7}>submit</Button>
+                                <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                              </Stack>
                             </>
 
                             :

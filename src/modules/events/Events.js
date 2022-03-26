@@ -29,7 +29,8 @@ export default function Events() {
             seteventImage,
             ctaButtonHandler5,
             ctaDeleteHandlerEvent,
-            DeleteLoading
+            DeleteLoading,
+            AddLoading
         },
     ] = useEvents();
     return (
@@ -40,42 +41,46 @@ export default function Events() {
             ) :
                 DeleteLoading ? (
                     <CommonTableLoader />
-                ) : (
-                    <Table
-                        title={'Events'}
-                        data={filterDataArray}
-                        handleClickOpen={handleClickOpen}
-                        open={open}
-                        name={name}
-                        setName={setName}
-                        description={description}
-                        setdescription={setdescription}
-                        status={status}
-                        setStatus={setStatus}
-                        eventDate={eventDate}
-                        seteventDate={seteventDate}
-                        speakerId={speakerId}
-                        setspeakerId={setspeakerId}
-                        eventImage={eventImage}
-                        seteventImage={seteventImage}
-                        ctaButtonHandler5={ctaButtonHandler5}
-                        ctaDeleteHandlerEvent={ctaDeleteHandlerEvent}
-                        handleClose={handleClose}
-                        anchorEl={anchorEl}
-                        handleAnchorClose={handleAnchorClose}
-                        handleAnchorClick={handleAnchorClick}
-                        openAnchor={openAnchor}
-                        tableHeadings={[
-                            'eventName',
-                            'eventDesc',
-                            'eventDate',
-                            'speakerId',
-                            'status',
-                            'eventImage',
-                            'Actions',
-                        ]}
-                    />
-                )}
+                )
+                    :
+                    AddLoading ? (
+                        <CommonTableLoader />
+                    ) : (
+                        <Table
+                            title={'Events'}
+                            data={filterDataArray}
+                            handleClickOpen={handleClickOpen}
+                            open={open}
+                            name={name}
+                            setName={setName}
+                            description={description}
+                            setdescription={setdescription}
+                            status={status}
+                            setStatus={setStatus}
+                            eventDate={eventDate}
+                            seteventDate={seteventDate}
+                            speakerId={speakerId}
+                            setspeakerId={setspeakerId}
+                            eventImage={eventImage}
+                            seteventImage={seteventImage}
+                            ctaButtonHandler5={ctaButtonHandler5}
+                            ctaDeleteHandlerEvent={ctaDeleteHandlerEvent}
+                            handleClose={handleClose}
+                            anchorEl={anchorEl}
+                            handleAnchorClose={handleAnchorClose}
+                            handleAnchorClick={handleAnchorClick}
+                            openAnchor={openAnchor}
+                            tableHeadings={[
+                                'eventName',
+                                'eventDesc',
+                                'eventDate',
+                                'speakerId',
+                                'status',
+                                'eventImage',
+                                'Actions',
+                            ]}
+                        />
+                    )}
         </div>
     );
 }

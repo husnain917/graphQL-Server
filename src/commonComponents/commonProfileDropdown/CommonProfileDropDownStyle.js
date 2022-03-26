@@ -26,7 +26,9 @@ export const CPD = {
         color:'black'
     })),
     DropDown: styled(MenuItem)(() => ({
-        padding: '0px'
+        padding: '0px',
+        paddingLeft:'14px',
+        paddingRight:'14px',
     })),
     Menu: styled(Menu)(() => ({
         padding: '0'

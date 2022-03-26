@@ -31,7 +31,8 @@ export default function Course() {
             setcourseIntro,
             setinstructorId,
             ctaDeleteHandlerCourse,
-            Deleteloading
+            Deleteloading,
+            AddLoading
 
         },
     ] = UseCourses();
@@ -43,43 +44,47 @@ export default function Course() {
             ) :
                 Deleteloading ? (
                     <CommonTableLoader />
-                ) : (
-                    <Table
-                        title={'Courses'}
-                        tableHeadings={[
-                            'Course Name',
-                            'Course Desc',
-                            'Course Intro',
-                            'Course Status',
-                            'Course Price',
-                            'Actions',
-                        ]}
-                        data={filterDataArray}
-                        name={name}
-                        courseDesc={courseDesc}
-                        courseStatus={courseStatus}
-                        courseIntro={courseIntro}
-                        coursePrice={coursePrice}
-                        instructorId={instructorId}
-                        ctaButtonHandler2={ctaButtonHandler2}
-                        courseCategoryId={courseCategoryId}
-                        setName={setName}
-                        setcourseDesc={setcourseDesc}
-                        setcourseStatus={setcourseStatus}
-                        setcourseCategoryId={setcourseCategoryId}
-                        setcoursePrice={setcoursePrice}
-                        setcourseIntro={setcourseIntro}
-                        setinstructorId={setinstructorId}
-                        handleClickOpen={handleClickOpen}
-                        ctaDeleteHandlerCourse={ctaDeleteHandlerCourse}
-                        open={open}
-                        handleClose={handleClose}
-                        anchorEl={anchorEl}
-                        handleAnchorClose={handleAnchorClose}
-                        handleAnchorClick={handleAnchorClick}
-                        openAnchor={openAnchor}
-                    />
-                )}
+                ) :
+
+                    AddLoading ? (
+                        <CommonTableLoader />
+                    ) : (
+                        <Table
+                            title={'Courses'}
+                            tableHeadings={[
+                                'Course Name',
+                                'Course Desc',
+                                'Course Intro',
+                                'Course Status',
+                                'Course Price',
+                                'Actions',
+                            ]}
+                            data={filterDataArray}
+                            name={name}
+                            courseDesc={courseDesc}
+                            courseStatus={courseStatus}
+                            courseIntro={courseIntro}
+                            coursePrice={coursePrice}
+                            instructorId={instructorId}
+                            ctaButtonHandler2={ctaButtonHandler2}
+                            courseCategoryId={courseCategoryId}
+                            setName={setName}
+                            setcourseDesc={setcourseDesc}
+                            setcourseStatus={setcourseStatus}
+                            setcourseCategoryId={setcourseCategoryId}
+                            setcoursePrice={setcoursePrice}
+                            setcourseIntro={setcourseIntro}
+                            setinstructorId={setinstructorId}
+                            handleClickOpen={handleClickOpen}
+                            ctaDeleteHandlerCourse={ctaDeleteHandlerCourse}
+                            open={open}
+                            handleClose={handleClose}
+                            anchorEl={anchorEl}
+                            handleAnchorClose={handleAnchorClose}
+                            handleAnchorClick={handleAnchorClick}
+                            openAnchor={openAnchor}
+                        />
+                    )}
         </>
     );
 }

@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import React, { useState } from "react";
 import { Slide, toast } from "react-toastify";
+import { BASIC_STAFF_ROLE } from "../../../constants/AllRolesStatus";
 import { ADD_STAFF, DELETE_SINGLE_STAFF } from "../../../lib/mutation/AllMutations";
 import { GET_STAFF } from "../../../lib/queries/AllQueries";
 export function UseAllStaff() {
@@ -13,16 +14,16 @@ export function UseAllStaff() {
 
 
 
-// ADD STAFF
+  // ADD STAFF
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [role, setRole] = useState('TEACHER')
+  const [role, setRole] = useState(BASIC_STAFF_ROLE)
   const [phone, setPhone] = useState('')
   const [close, setclose] = useState(false)
 
 
-  const Notify = () => toast.success('Enrollment added successfully', {
+  const Notify = () => toast.success('Staff added successfully', {
     position: "top-right",
     autoClose: 5000,
     hideProgressBar: false,
@@ -33,7 +34,7 @@ export function UseAllStaff() {
     theme: "colored",
     transition: Slide,
   });
-  let [CreateManyStaff] = useMutation(ADD_STAFF);
+  let [CreateManyStaff,{loading:AddLoading}] = useMutation(ADD_STAFF);
   const ctaButtonHandler1 = async (event, item) => {
     if (name === '' || email === '' || email === '' || role === '' || phone === '') {
       toast.warning('please fill all fields', {
@@ -61,8 +62,6 @@ export function UseAllStaff() {
             }
           },
           onCompleted(data, cache) {
-            console.log("updated cart");
-            console.log(data);
             Notify()
           },
           refetchQueries: [{ query: GET_STAFF }],
@@ -72,12 +71,11 @@ export function UseAllStaff() {
         setEmail('');
         setRole('');
         setPhone('')
-
+        setOpen(false)
         setclose(true)
       }
       catch (error) {
-
-        toast.error("Role must be TEACHER/ADMIN", {
+        toast.error(error.message, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -88,6 +86,8 @@ export function UseAllStaff() {
           theme: "colored",
           transition: Slide,
         });
+
+
       }
     }
   }
@@ -139,8 +139,8 @@ export function UseAllStaff() {
 
 
 
-// DELETE STAFF
-  let [DeleteStaff,{loading:DeleteLoading}] = useMutation(DELETE_SINGLE_STAFF);
+  // DELETE STAFF
+  let [DeleteStaff, { loading: DeleteLoading }] = useMutation(DELETE_SINGLE_STAFF);
   const ctaDeleteHandlerStaff = async ({ e, ...props }) => {
     console.log(props.id);
     try {
@@ -163,10 +163,10 @@ export function UseAllStaff() {
             transition: Slide,
           });
         },
-        refetchQueries: [{ query: GET_STAFF}],
+        refetchQueries: [{ query: GET_STAFF }],
       })
     } catch (error) {
-      toast.error(error.message, {
+      toast.error('Bad Response', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -183,5 +183,5 @@ export function UseAllStaff() {
 
 
 
-  return [{ filterDataArray, loading, error, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick, ctaButtonHandler1, name, email, phone, role, setName, setEmail, setPhone, setRole,ctaDeleteHandlerStaff,DeleteLoading }]
+  return [{ filterDataArray, loading, error, open, handleClickOpen, handleClose, openAnchor, anchorEl,AddLoading, handleAnchorClose, handleAnchorClick, ctaButtonHandler1, name, email, phone, role, setName, setEmail, setPhone, setRole, ctaDeleteHandlerStaff, DeleteLoading }]
 }

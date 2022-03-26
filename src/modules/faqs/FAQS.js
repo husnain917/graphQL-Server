@@ -21,7 +21,8 @@ export default function FAQS() {
             setfaqQuestion,
             ctaButtonHandler7,
             ctaDeleteHandlerFAQ,
-            DeleteLoading
+            DeleteLoading,
+            AddLoading
         },
     ] = useFAQS();
     return (
@@ -31,6 +32,9 @@ export default function FAQS() {
                 <CommonTableLoader />
             ) :
                 DeleteLoading ? (
+                    <CommonTableLoader />
+                ) :
+                AddLoading ? (
                     <CommonTableLoader />
                 ) : (
                     <Table

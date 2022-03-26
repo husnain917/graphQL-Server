@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { GET_COURSES } from '../../lib/queries/AllQueries';
 import { ADD_COURSES, DELETE_SINGLE_COURSE } from '../../lib/mutation/AllMutations'
 import { toast, Slide } from 'react-toastify'
+import { BASIC_COURSE_ROLE } from '../../constants/AllRolesStatus';
 export function UseCourses() {
   // const [loading, setLoading] = useState(false)
   const [filterValue, setFilterValue] = useState('');
@@ -21,7 +22,7 @@ export function UseCourses() {
 
   const [name, setName] = useState('')
   const [courseDesc, setcourseDesc] = useState('')
-  const [courseStatus, setcourseStatus] = useState('UNPUBLISH')
+  const [courseStatus, setcourseStatus] = useState(BASIC_COURSE_ROLE)
   const [courseCategoryId, setcourseCategoryId] = useState('')
   const [coursePrice, setcoursePrice] = useState('')
   const [courseIntro, setcourseIntro] = useState()
@@ -30,7 +31,7 @@ export function UseCourses() {
   const [close, setclose] = useState(false)
 
 
-  const Notify = () => toast.success('Enrollment added successfully', {
+  const Notify = () => toast.success('Course added successfully', {
     position: "top-right",
     autoClose: 5000,
     hideProgressBar: false,
@@ -41,7 +42,7 @@ export function UseCourses() {
     theme: "colored",
     transition: Slide,
   });
-  let [Mutation] = useMutation(ADD_COURSES);
+  let [Mutation , {loading:AddLoading}] = useMutation(ADD_COURSES);
   const ctaButtonHandler2 = async (event, item) => {
     if (name === '' || courseDesc === '' || courseStatus === '' || courseCategoryId === '' || coursePrice === '' || courseIntro === '' || instructorId === '') {
       toast.warning('please fill all fields', {
@@ -74,8 +75,6 @@ export function UseCourses() {
             }
           },
           onCompleted(data, cache) {
-            console.log("updated cart");
-            console.log(data);
             Notify()
           },
           refetchQueries: [{ query: GET_COURSES }],
@@ -88,10 +87,11 @@ export function UseCourses() {
         setcoursePrice('')
         setcourseIntro('')
         setinstructorId('')
-        setclose(true)
+        setclose(true);
+        setOpen(false)
       }
       catch (error) {
-        toast.error('status must be PUBLISH/UNPUBLISH', {
+        toast.error(error.message, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -182,5 +182,5 @@ export function UseCourses() {
 
 
 
-  return [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick, name, courseDesc, courseStatus, courseCategoryId, coursePrice, courseIntro, instructorId, close, ctaButtonHandler2, setName, setcourseDesc, setcourseStatus, setcourseCategoryId, setcoursePrice, setcourseIntro, setinstructorId, setclose, ctaDeleteHandlerCourse, Deleteloading }]
+  return [{ filterDataArray, loading, open,AddLoading, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick, name, courseDesc, courseStatus, courseCategoryId, coursePrice, courseIntro, instructorId, close, ctaButtonHandler2, setName, setcourseDesc, setcourseStatus, setcourseCategoryId, setcoursePrice, setcourseIntro, setinstructorId, setclose, ctaDeleteHandlerCourse, Deleteloading }]
 }

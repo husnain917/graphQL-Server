@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Slide, toast } from 'react-toastify';
 import { ADD_SUCCESS_STORY, DELETE_SINGLE_SUCCESS_STORY } from '../../lib/mutation/AllMutations';
 import { GET_SUCCESS_STORIES } from '../../lib/queries/AllQueries';
-
+import {BASIC_SUCCESS_ROLE} from '../../constants/AllRolesStatus';
 export function useSuccessStory() {
   const [filterValue, setFilterValue] = useState('');
   const [open, setOpen] = useState(false);
@@ -20,7 +20,7 @@ export function useSuccessStory() {
   const [freelancingProfileUrl, setfreelancingProfileUrl] = useState('');
   const [paymentProof, setpaymentProof] = useState('');
   const [description, setdescription] = useState('');
-  const [status, setstatus] = useState('UNPUBLISH');
+  const [status, setstatus] = useState(BASIC_SUCCESS_ROLE);
   const [totalEarnedAmount, settotalEarnedAmount] = useState('');
   const [city, setcity] = useState('');
   const [whyReject, setwhyReject] = useState('');
@@ -39,7 +39,7 @@ export function useSuccessStory() {
       theme: 'colored',
       transition: Slide,
     });
-  let [CreateManyStories] = useMutation(ADD_SUCCESS_STORY);
+  let [CreateManyStories, { loading: AddLoading }] = useMutation(ADD_SUCCESS_STORY);
   const ctaButtonHandler4 = async (event, item) => {
     if (
       freelancingProfileUrl === '' ||
@@ -218,7 +218,8 @@ export function useSuccessStory() {
       setwhyReject,
       ctaButtonHandler4,
       ctaDeleteHandlerStory,
-      DeleteLoading
+      DeleteLoading,
+      AddLoading
 
     },
   ];

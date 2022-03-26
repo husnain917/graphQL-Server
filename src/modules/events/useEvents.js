@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { Slide, toast } from 'react-toastify';
+import { BASIC_EVENTS_ROLE } from '../../constants/AllRolesStatus';
 import { ADD_EVENTS, DELETE_SINGLE_EVENT } from '../../lib/mutation/AllMutations';
 import { GET_EVENTS } from '../../lib/queries/AllQueries';
 
@@ -18,7 +19,7 @@ export function useEvents() {
     // ADD EVENTS
     const [name, setName] = useState('');
     const [description, setdescription] = useState('');
-    const [status, setStatus] = useState('PAST');
+    const [status, setStatus] = useState(BASIC_EVENTS_ROLE);
     const [eventDate, seteventDate] = useState('');
     const [speakerId, setspeakerId] = useState('');
     const [eventImage, seteventImage] = useState('');
@@ -26,7 +27,7 @@ export function useEvents() {
     const [close, setclose] = useState(false);
 
     const Notify = () =>
-        toast.success('Enrollment added successfully', {
+        toast.success('Event added successfully', {
             position: 'top-right',
             autoClose: 5000,
             hideProgressBar: false,
@@ -37,7 +38,7 @@ export function useEvents() {
             theme: 'colored',
             transition: Slide,
         });
-    let [CreateManyStudents] = useMutation(ADD_EVENTS);
+    let [CreateManyStudents,{loading:AddLoading}] = useMutation(ADD_EVENTS);
     const ctaButtonHandler5 = async (event, item) => {
         if (
             name === '' ||
@@ -72,8 +73,6 @@ export function useEvents() {
                         },
                     },
                     onCompleted(data, cache) {
-                        console.log('updated cart');
-                        console.log(data);
                         Notify();
                     },
                     refetchQueries: [{ query: GET_EVENTS }],
@@ -85,8 +84,9 @@ export function useEvents() {
                 seteventImage('');
                 setStatus('');
                 setclose(true);
+                setOpen(false)
             } catch (error) {
-                toast.warning('Status must be UPCOMING/PAST', {
+                toast.warning(error.message, {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -193,7 +193,8 @@ export function useEvents() {
             seteventImage,
             ctaButtonHandler5,
             ctaDeleteHandlerEvent,
-            DeleteLoading
+            DeleteLoading,
+            AddLoading
         },
     ];
 }

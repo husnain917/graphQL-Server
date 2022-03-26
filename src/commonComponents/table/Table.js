@@ -100,6 +100,7 @@ export default function Table({
   setfaqQuestion,
   setfaqAnswer,
   ctaButtonHandler7,
+  
 
 
   //Delete Handlers
@@ -325,7 +326,7 @@ export default function Table({
 
                         <TableCell align='center'>
                           <Tooltip title='Delete'>
-                            <IconButton aria-label='delete' size='small' onClick={() => ctaDeleteHandlerCourse(row)}>
+                            <IconButton aria-label='delete'  size='small' onClick={() => ctaDeleteHandlerCourse(row)}>
                               <TableStyle.DeleteIcon />
                             </IconButton>
                           </Tooltip>

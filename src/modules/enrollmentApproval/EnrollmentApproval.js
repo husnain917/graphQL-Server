@@ -32,7 +32,8 @@ function EnrollmentApproval() {
             settransactionId,
             ctaButtonHandlerEnroll,
             ctaDeleteHandlerEnroll,
-            DeleteLoading
+            DeleteLoading,
+            AddLoading
         },
     ] = useEnrollmentApproval();
     return (
@@ -43,6 +44,9 @@ function EnrollmentApproval() {
                     <CommonTableLoader />
                 ) :
                     DeleteLoading ? (
+                        <CommonTableLoader />
+                    ) :
+                    AddLoading ? (
                         <CommonTableLoader />
                     )  : (
                         <Table

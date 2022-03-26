@@ -20,18 +20,19 @@ export default function Profile() {
                             <Stack direction="row" spacing={2}>
                                 <P.Myimg src={img} alt='broken-img' />
                                 <TypoTextProfile>
-                                   {items.name}
+                                    {items.name}
                                 </TypoTextProfile>
                             </Stack>
                         </P.MycontainerName>
                         <P.Mycontainer>
                             <Stack spacing={2}>
-                                <P.MyLink to='id:' style={isActive => ({
+                                <P.MyLink to={`id:${items.id}`} style={isActive => ({
                                     color: isActive ? "#00688B" : "black"
                                 })}>Profile</P.MyLink>
-                                <P.MyLink to='editProfile/id:' style={isActive => ({
+                                <P.MyLink to={`editProfile/id:${items.id}`} style={isActive => ({
                                     color: isActive ? "#00688B" : "black"
                                 })}>Edit Profile</P.MyLink>
+
                             </Stack>
                         </P.Mycontainer>
                     </Grid>

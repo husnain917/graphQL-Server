@@ -25,7 +25,8 @@ export default function ContactUs() {
             setStatus,
             setmessage,
             setreply,
-            ctaButtonHandler6
+            ctaButtonHandler6,
+            ctaDeleteHandlerContact
         },
     ] = useContactUs();
     return (
@@ -58,6 +59,7 @@ export default function ContactUs() {
                         setreply={setreply}
                         ctaButtonHandler6={ctaButtonHandler6}
                         handleClickOpen={handleClickOpen}
+                        ctaDeleteHandlerContact={ctaDeleteHandlerContact}
                         open={open}
                         handleClose={handleClose}
                         anchorEl={anchorEl}

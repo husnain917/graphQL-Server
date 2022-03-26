@@ -61,3 +61,27 @@ mutation Mutation($data: [FaqCreateManyInput!]!) {
     count
   }
 }`
+
+
+
+
+
+//SINGLE DELETE MUTATIONS
+
+
+export const DELETE_ENROLMMENT_APPROVAL = gql`
+mutation DeleteEnrollmentApproval($where: EnrollmentApprovalWhereUniqueInput!) {
+  deleteEnrollmentApproval(where: $where) {
+    studentName
+  }
+}
+`
+
+
+export const DELETE_CONTACT = gql`
+mutation DeleteMutation($where: ContactUsWhereUniqueInput!) {
+  deleteContactUs(where: $where) {
+    name
+  }
+}
+`

@@ -100,8 +100,11 @@ export default function Table({
   setfaqQuestion,
   setfaqAnswer,
   ctaButtonHandler7,
-  filterValue,
 
+
+  //Delete Handlers
+  ctaDeleteHandlerEnroll,
+  ctaDeleteHandlerContact
 }) {
   const [
     {
@@ -291,7 +294,7 @@ export default function Table({
         <TableStyle.CustomTable size='small' aria-label='a dense table'>
           <TableHead>
             <TableRow>
-              {tableHeadings?.map((item) => {
+              {tableHeadings?.map((item, i) => {
                 return <TableCell align='center'>{item && item}</TableCell>;
               })}
             </TableRow>
@@ -302,8 +305,8 @@ export default function Table({
                 .filter(
                   searchingFor(searchQuery),
                 )
-                .map((row, i) => (
-                  <TableStyle.CustomTableRow key={row?.i}>
+                .map((row, index) => (
+                  <TableStyle.CustomTableRow key={index}>
                     {title === 'Courses' ? (
                       <>
                         <TableCell align='center' component='th' scope='row'>
@@ -346,7 +349,7 @@ export default function Table({
 
                           <TableCell align='center'>
                             <Tooltip title='Delete'>
-                              <IconButton aria-label='delete' size='small'>
+                              <IconButton aria-label='delete' size='small' onClick={() => ctaDeleteHandlerEnroll((row))}>
                                 <TableStyle.DeleteIcon />
                               </IconButton>
                             </Tooltip>
@@ -396,7 +399,7 @@ export default function Table({
                         <TableCell align='center'>{row?.status}</TableCell>
                         <TableCell align='center'>
                           <Tooltip title='Delete'>
-                            <IconButton aria-label='delete' size='small'>
+                            <IconButton aria-label='delete' size='small' onClick={() => ctaDeleteHandlerContact((row))}>
                               <TableStyle.DeleteIcon />
                             </IconButton>
                           </Tooltip>

@@ -14,6 +14,8 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 export const UseDrawer = () => {
     const [open, setOpen] = React.useState(false);
+    const items = JSON.parse(localStorage.getItem('user'));
+
     const menuItems = [
         {
             text: 'Dashboard',
@@ -22,9 +24,9 @@ export const UseDrawer = () => {
         },
         {
             text: 'Staff',
-            icon: <PeopleAltIcon  />,
+            icon: <PeopleAltIcon />,
             path: '/staff'
-        },   
+        },
         {
             text: 'Courses',
             icon: <Subscriptions />,
@@ -61,9 +63,9 @@ export const UseDrawer = () => {
             path: '/faq'
         },
         {
-            text: 'Profile',
+            text: 'Profile ',
             icon: <Face />,
-            path: '/profile/id:'
+            path: `/profile/id:${items.id}`
         },
         {
             text: 'Logout',

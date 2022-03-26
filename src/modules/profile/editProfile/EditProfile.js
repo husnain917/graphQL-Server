@@ -16,9 +16,6 @@ export default function EditProfile() {
                     <CommonEditField Label='Name' />
                 </Grid>
                 <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-                    <CommonEditField Label='Father Name' />
-                </Grid>
-                <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
                     <CommonEditField Label='Email' />
                 </Grid>
                 <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>

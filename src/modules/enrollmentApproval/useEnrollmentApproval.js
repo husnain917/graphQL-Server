@@ -79,7 +79,17 @@ export function useEnrollmentApproval() {
         setclose(true)
       }
       catch (error) {
-        console.log(error.message);
+        toast.error('Status must be PENDING/APPROVED/REJECT', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
       }
     }
   }

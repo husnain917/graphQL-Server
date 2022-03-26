@@ -215,7 +215,12 @@ export default function Table({
                   searchCancel={cancelSearch}
                 />
 
-                <TableStyle.FilterListIcon onClick={handleAnchorClick} />
+                {
+                  title === "FAQS" ?
+                    ''
+                    :
+                    <TableStyle.FilterListIcon onClick={handleAnchorClick} />
+                }
 
                 <TableStyle.AddIcon onClick={handleClickOpen} />
               </TableStyle.SearchAndBtnsContainer>

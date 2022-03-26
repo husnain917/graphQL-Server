@@ -84,7 +84,17 @@ export function useEvents() {
                 setStatus('');
                 setclose(true);
             } catch (error) {
-                console.log(error.message);
+                toast.warning('Status must be UPCOMING/PAST', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    transition: Slide,
+                  });
             }
         }
     };
@@ -103,7 +113,7 @@ export function useEvents() {
     const filterDataArray = data?.findManyEvents.filter((item) => {
         if (filterValue === '') {
             return item;
-        } else if (filterValue === item.status) {
+        } else if (filterValue === item.eventStatus) {
             return item;
         } else if (filterValue === 'All') {
             return item;

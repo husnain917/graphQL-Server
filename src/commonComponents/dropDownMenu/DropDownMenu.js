@@ -21,10 +21,9 @@ export default function DropDownMenu({ anchorEl, handleAnchorClose, openAnchor, 
               (
                 <>
                   <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
-                  <MenuItem onClick={() => handleAnchorClose('pending')}>pending</MenuItem>
-                  <MenuItem onClick={() => handleAnchorClose('Approved')}>Approve</MenuItem>
-                  <MenuItem onClick={() => handleAnchorClose('Rejected')}>Reject</MenuItem>
-
+                  <MenuItem onClick={() => handleAnchorClose('UNPUBLISH')}>UNPUBLISH</MenuItem>
+                  <MenuItem onClick={() => handleAnchorClose('PUBLISH')}>PUBLISH</MenuItem>
+                  
                 </>
               )
               :
@@ -32,8 +31,8 @@ export default function DropDownMenu({ anchorEl, handleAnchorClose, openAnchor, 
                 (
                   <>
                     <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
-                    <MenuItem onClick={() => handleAnchorClose('Active')}>Active</MenuItem>
-                    <MenuItem onClick={() => handleAnchorClose('Closed')}>Closed</MenuItem>
+                  <MenuItem onClick={() => handleAnchorClose('UNPUBLISH')}>UNPUBLISH</MenuItem>
+                  <MenuItem onClick={() => handleAnchorClose('PUBLISH')}>PUBLISH</MenuItem>
                   </>
                 )
                 :
@@ -41,8 +40,8 @@ export default function DropDownMenu({ anchorEl, handleAnchorClose, openAnchor, 
                   (
                     <>
                       <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
-                      <MenuItem onClick={() => handleAnchorClose('Active')}>Active</MenuItem>
-                      <MenuItem onClick={() => handleAnchorClose('Closed')}>Closed</MenuItem>
+                      <MenuItem onClick={() => handleAnchorClose('ACTIVE')}>ACTIVE</MenuItem>
+                      <MenuItem onClick={() => handleAnchorClose('OFFLINE')}>OFFLINE</MenuItem>
                     </>
                   )
                   :
@@ -50,8 +49,10 @@ export default function DropDownMenu({ anchorEl, handleAnchorClose, openAnchor, 
                     (
                       <>
                         <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
-                        <MenuItem onClick={() => handleAnchorClose('PENDING')}>pending</MenuItem>
-                        <MenuItem onClick={() => handleAnchorClose('APPROVED')}>Approve</MenuItem>
+                        <MenuItem onClick={() => handleAnchorClose('PENDING')}>PENDING</MenuItem>
+                        <MenuItem onClick={() => handleAnchorClose('APPROVED')}>APPROVED</MenuItem>
+                        <MenuItem onClick={() => handleAnchorClose('REJECT')}>REJECT</MenuItem>
+
                       </>
                     )
                     :
@@ -59,8 +60,10 @@ export default function DropDownMenu({ anchorEl, handleAnchorClose, openAnchor, 
                       (
                         <>
                           <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
-                          <MenuItem onClick={() => handleAnchorClose('Active')}>Active</MenuItem>
-                          <MenuItem onClick={() => handleAnchorClose('Offline')}>Offline</MenuItem>
+                          <MenuItem onClick={() => handleAnchorClose('FUTURE')}>FUTURE</MenuItem>
+                          <MenuItem onClick={() => handleAnchorClose('CURRENT')}>CURRENT</MenuItem>
+                          <MenuItem onClick={() => handleAnchorClose('PAST')}>PAST</MenuItem>
+
                         </>
                       )
                       :
@@ -68,16 +71,18 @@ export default function DropDownMenu({ anchorEl, handleAnchorClose, openAnchor, 
                         (
                           <>
                             <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
-                            <MenuItem onClick={() => handleAnchorClose('Pending')}>Pending</MenuItem>
-                            <MenuItem onClick={() => handleAnchorClose('Approved')}>Approved</MenuItem>
+                            <MenuItem onClick={() => handleAnchorClose('UNSEEN')}>UNSEEN</MenuItem>
+                            <MenuItem onClick={() => handleAnchorClose('CONTACTED')}>CONTACTED</MenuItem>
+                            <MenuItem onClick={() => handleAnchorClose('DECLINE')}>DECLINE</MenuItem>
+                            <MenuItem onClick={() => handleAnchorClose('USEFUL')}>USEFUL</MenuItem>
                           </>
                         )
                         :
                         (
                           <>
                             <MenuItem onClick={() => handleAnchorClose('All')}>All</MenuItem>
-                            <MenuItem onClick={() => handleAnchorClose('Admin')}>Admins</MenuItem>
-                            <MenuItem onClick={() => handleAnchorClose('Teacher')}>Teachers</MenuItem>
+                            <MenuItem onClick={() => handleAnchorClose('ADMIN')}>ADMINS</MenuItem>
+                            <MenuItem onClick={() => handleAnchorClose('TEACHER')}>TEACHERS</MenuItem>
                           </>
                         )
 

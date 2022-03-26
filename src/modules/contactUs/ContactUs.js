@@ -27,7 +27,8 @@ export default function ContactUs() {
             setreply,
             ctaButtonHandler6,
             ctaDeleteHandlerContact,
-            DeleteLoading
+            DeleteLoading,
+            AddLoading
         },
     ] = useContactUs();
     return (
@@ -38,6 +39,9 @@ export default function ContactUs() {
                     <CommonTableLoader/>
                 ):
                 DeleteLoading ? (
+                    <CommonTableLoader/>
+                ):
+                AddLoading ? (
                     <CommonTableLoader/>
                 )  : (
                     <Table

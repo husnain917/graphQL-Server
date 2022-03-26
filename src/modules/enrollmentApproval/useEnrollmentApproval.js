@@ -6,6 +6,7 @@ import {
   ADD_ENROLMMENT_APPROVAL,
   DELETE_ENROLMMENT_APPROVAL,
 } from '../../lib/mutation/AllMutations';
+import { BASIC_ENROLL_ROLES } from '../../constants/AllRolesStatus';
 export function useEnrollmentApproval() {
   let { loading, error, data } = useQuery(GET_ENROLLMENT);
   const [filterValue, setFilterValue] = useState('');
@@ -13,14 +14,14 @@ export function useEnrollmentApproval() {
   const [anchorEl, setAnchorEl] = useState(null);
 
   //ADD ENROLL MUTATION
-
+ 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [course, setCourse] = useState('');
   const [paymentMethod, setpaymentMethod] = useState('');
   const [amount, setamount] = useState('');
   const [transactionId, settransactionId] = useState('');
-  const [status, setStatus] = useState('PENDING');
+  const [status, setStatus] = useState(BASIC_ENROLL_ROLES);
   const [close, setclose] = useState(false);
 
   const Notify = () =>
@@ -35,7 +36,7 @@ export function useEnrollmentApproval() {
       theme: 'colored',
       transition: Slide,
     });
-  let [Mutation] = useMutation(ADD_ENROLMMENT_APPROVAL);
+  let [Mutation,{loading:AddLoading}] = useMutation(ADD_ENROLMMENT_APPROVAL);
   const ctaButtonHandlerEnroll = async (event, item) => {
     if (
       name === '' ||
@@ -74,8 +75,6 @@ export function useEnrollmentApproval() {
             },
           },
           onCompleted(data, cache) {
-            console.log('updated cart');
-            console.log(data);
             Notify();
           },
           refetchQueries: [{ query: GET_ENROLLMENT }],
@@ -87,6 +86,7 @@ export function useEnrollmentApproval() {
         setamount('');
         settransactionId('');
         setclose(true);
+        setOpen(false)
       } catch (error) {
         toast.error('Status must be PENDING/APPROVED/REJECT', {
           position: 'top-right',
@@ -133,7 +133,7 @@ export function useEnrollmentApproval() {
 
   //DELETE ENROLL MUTATION
 
-  let [DeleteEnrollmentApproval,{loading:DeleteLoading}] = useMutation(DELETE_ENROLMMENT_APPROVAL);
+  let [DeleteEnrollmentApproval, { loading: DeleteLoading }] = useMutation(DELETE_ENROLMMENT_APPROVAL);
 
   const ctaDeleteHandlerEnroll = async ({ e, ...props }) => {
     console.log(props.id);
@@ -202,7 +202,8 @@ export function useEnrollmentApproval() {
       ctaButtonHandlerEnroll,
       setStatus,
       ctaDeleteHandlerEnroll,
-      DeleteLoading
+      DeleteLoading,
+      AddLoading
     },
   ];
 }

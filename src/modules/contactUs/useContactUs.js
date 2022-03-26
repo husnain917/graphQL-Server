@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Slide, toast } from 'react-toastify';
 import { ADD_CONTACT_US, DELETE_CONTACT } from '../../lib/mutation/AllMutations';
 import { GET_CONTACT_US } from '../../lib/queries/AllQueries';
-
+import {BASIC_CONTACT_ROLE} from '../../constants/AllRolesStatus';
 export default function useContactUs() {
     const [filterValue, setFilterValue] = useState('');
     const [open, setOpen] = useState(false);
@@ -21,14 +21,14 @@ export default function useContactUs() {
 
     const [name, setName] = useState('');
     const [subject, setsubject] = useState('');
-    const [status, setStatus] = useState('CONTACTED');
+    const [status, setStatus] = useState(BASIC_CONTACT_ROLE);
     const [message, setmessage] = useState('');
     const [reply, setreply] = useState('');
 
     const [close, setclose] = useState(false);
 
     const Notify = () =>
-        toast.success('Enrollment added successfully', {
+        toast.success('Contact added successfully', {
             position: 'top-right',
             autoClose: 5000,
             hideProgressBar: false,
@@ -39,7 +39,7 @@ export default function useContactUs() {
             theme: 'colored',
             transition: Slide,
         });
-    let [Mutation] = useMutation(ADD_CONTACT_US);
+    let [Mutation,{loading:AddLoading}] = useMutation(ADD_CONTACT_US);
     const ctaButtonHandler6 = async (event, item) => {
         if (
             name === '' ||
@@ -74,8 +74,6 @@ export default function useContactUs() {
                         },
                     },
                     onCompleted(data, cache) {
-                        console.log('updated cart');
-                        console.log(data);
                         Notify();
                     },
                     refetchQueries: [{ query: GET_CONTACT_US }],
@@ -86,8 +84,9 @@ export default function useContactUs() {
                 setmessage('');
                 setreply('');
                 setclose(true);
+                setOpen(false)
             } catch (error) {
-                toast.error("status must be  UNSEEN/CONTACTED/DECLINE/USEFUL", {
+                toast.error(error.message, {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -132,7 +131,7 @@ export default function useContactUs() {
 
     // DELETE ROW
 
-    let [DeleteMutation,{loading:DeleteLoading}] = useMutation(DELETE_CONTACT);
+    let [DeleteMutation, { loading: DeleteLoading }] = useMutation(DELETE_CONTACT);
     const ctaDeleteHandlerContact = async ({ e, ...props }) => {
         console.log(props.id);
         try {
@@ -194,7 +193,8 @@ export default function useContactUs() {
             setreply,
             ctaButtonHandler6,
             ctaDeleteHandlerContact,
-            DeleteLoading
+            DeleteLoading,
+            AddLoading
 
         },
     ];

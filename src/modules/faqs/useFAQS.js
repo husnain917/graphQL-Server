@@ -22,7 +22,7 @@ export function useFAQS() {
     const [close, setclose] = useState(false);
 
     const Notify = () =>
-        toast.success('Enrollment added successfully', {
+        toast.success('FAQS added successfully', {
             position: 'top-right',
             autoClose: 5000,
             hideProgressBar: false,
@@ -33,7 +33,7 @@ export function useFAQS() {
             theme: 'colored',
             transition: Slide,
         });
-    let [Mutation] = useMutation(ADD_FAQS);
+    let [Mutation,{loading:AddLoading}] = useMutation(ADD_FAQS);
     const ctaButtonHandler7 = async (event, item) => {
         if (faqQuestion === '' || faqAnswer === '') {
             toast.warning('please fill all fields', {
@@ -59,8 +59,6 @@ export function useFAQS() {
                         },
                     },
                     onCompleted(data, cache) {
-                        console.log('updated cart');
-                        console.log(data);
                         Notify();
                     },
                     refetchQueries: [{ query: GET_FAQS }],
@@ -68,8 +66,19 @@ export function useFAQS() {
                 setfaqQuestion('');
                 setfaqAnswer('');
                 setclose(true);
+                setOpen(false)
             } catch (error) {
-                console.log(error.message);
+                toast.error(error.message, {
+                    position: 'top-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'colored',
+                    transition: Slide,
+                });
             }
         }
     };
@@ -99,7 +108,7 @@ export function useFAQS() {
     });
 
 
-// DELETE FAQ
+    // DELETE FAQ
     let [DeleteFaq, { loading: DeleteLoading }] = useMutation(DELETE_SINGLE_FAQ)
     const ctaDeleteHandlerFAQ = async ({ e, ...props }) => {
         console.log(props.id);
@@ -123,7 +132,7 @@ export function useFAQS() {
                         transition: Slide,
                     });
                 },
-                refetchQueries: [{ query: GET_FAQS}],
+                refetchQueries: [{ query: GET_FAQS }],
             })
         } catch (error) {
             toast.error(error.message, {
@@ -158,7 +167,8 @@ export function useFAQS() {
             setfaqQuestion,
             ctaButtonHandler7,
             ctaDeleteHandlerFAQ,
-            DeleteLoading
+            DeleteLoading,
+            AddLoading
         },
     ];
 }

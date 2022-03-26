@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Slide, toast } from "react-toastify";
 import { ADD_STUDENT, DELETE_SINGLE_STUDENT } from "../../../lib/mutation/AllMutations";
 import { GET_STUDENT } from "../../../lib/queries/AllQueries";
+import {BASIC_STUDENT_ROLE} from "../../../constants/AllRolesStatus";
 export function UseAllStudents() {
   const [filterValue, setFilterValue] = useState('');
   const [open, setOpen] = useState(false);
@@ -19,12 +20,12 @@ export function UseAllStudents() {
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState('OFFLINE')
+  const [status, setStatus] = useState(BASIC_STUDENT_ROLE)
 
   const [close, setclose] = useState(false)
 
 
-  const Notify = () => toast.success('Enrollment added successfully', {
+  const Notify = () => toast.success('Student added successfully', {
     position: "top-right",
     autoClose: 5000,
     hideProgressBar: false,
@@ -35,7 +36,7 @@ export function UseAllStudents() {
     theme: "colored",
     transition: Slide,
   });
-  let [CreateManyStudents] = useMutation(ADD_STUDENT);
+  let [CreateManyStudents,{loading:AddLoading}] = useMutation(ADD_STUDENT);
   const ctaButtonHandler3 = async (event, item) => {
     if (name === '' || email === '' || status === '') {
       toast.warning('please fill all fields', {
@@ -74,10 +75,11 @@ export function UseAllStudents() {
         setName('');
         setEmail('')
         setStatus('')
-        setclose(true)
+        setclose(true);
+        setOpen(false)
       }
       catch (error) {
-        toast.error("Status must be ACTIVE/OFFLINE", {
+        toast.error(error.message, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -163,5 +165,5 @@ export function UseAllStudents() {
 
 
 
-  return [{ filterDataArray, loading, open, handleClickOpen, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick, name, email, status, setName, setEmail, setStatus, ctaButtonHandler3,ctaDeleteHandlerStudent,DeleteLoading }]
+  return [{ filterDataArray, loading, open, handleClickOpen,AddLoading, handleClose, openAnchor, anchorEl, handleAnchorClose, handleAnchorClick, name, email, status, setName, setEmail, setStatus, ctaButtonHandler3,ctaDeleteHandlerStudent,DeleteLoading }]
 }

@@ -27,7 +27,8 @@ export default function AllStudents() {
       setStatus,
       ctaButtonHandler3,
       ctaDeleteHandlerStudent,
-      DeleteLoading
+      DeleteLoading,
+      AddLoading
     },
   ] = UseAllStudents();
 
@@ -38,29 +39,32 @@ export default function AllStudents() {
         <CommonTableLoader />
       ) : DeleteLoading ? (
         <CommonTableLoader />
+      ) 
+      : AddLoading ? (
+      <CommonTableLoader />
       ) : (
-        <>
-          <Table
-            title={'All Students'}
-            tableHeadings={['Name', 'Email', 'Status', 'Actions']}
-            data={filterDataArray}
-            name={name}
-            email={email}
-            status={status}
-            setName={setName}
-            setEmail={setEmail}
-            setStatus={setStatus}
-            ctaButtonHandler3={ctaButtonHandler3}
-            ctaDeleteHandlerStudent={ctaDeleteHandlerStudent}
-            handleClickOpen={handleClickOpen}
-            open={open}
-            handleClose={handleClose}
-            anchorEl={anchorEl}
-            handleAnchorClose={handleAnchorClose}
-            handleAnchorClick={handleAnchorClick}
-            openAnchor={openAnchor}
-          />
-        </>
+      <>
+        <Table
+          title={'All Students'}
+          tableHeadings={['Name', 'Email', 'Status', 'Actions']}
+          data={filterDataArray}
+          name={name}
+          email={email}
+          status={status}
+          setName={setName}
+          setEmail={setEmail}
+          setStatus={setStatus}
+          ctaButtonHandler3={ctaButtonHandler3}
+          ctaDeleteHandlerStudent={ctaDeleteHandlerStudent}
+          handleClickOpen={handleClickOpen}
+          open={open}
+          handleClose={handleClose}
+          anchorEl={anchorEl}
+          handleAnchorClose={handleAnchorClose}
+          handleAnchorClick={handleAnchorClick}
+          openAnchor={openAnchor}
+        />
+      </>
       )}
     </>
   );

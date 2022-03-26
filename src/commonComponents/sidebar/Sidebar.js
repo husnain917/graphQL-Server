@@ -9,7 +9,7 @@ import { UseDrawer } from './UseSidebar';
 import { SidebarStyle } from './SidebarStyle';
 import logo from '../../assets/logo.png'
 import { Divider, Grid } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import CommonProfileDropDown from '../commonProfileDropdown/CommonProfileDropDown';
 const drawerWidth = 240;
 function Sidebar(props) {
@@ -18,6 +18,15 @@ function Sidebar(props) {
     open,
     handleDrawer
   }] = UseDrawer()
+  const navigate = useNavigate()
+  const ctaLogoutHandler = () => {
+    localStorage.removeItem('user')
+    localStorage.removeItem('localAuth')
+    window.location.reload()
+    localStorage.clear();
+    navigate('/login')
+
+  }
   const { window } = props;
   const location = useLocation();
   const anchorRef = React.useRef(null);
@@ -64,13 +73,13 @@ function Sidebar(props) {
             <MenuIcon />
           </SidebarStyle.IconButton>
           <Grid container>
-            <Grid item xl={2} lg={2} md={2} sm={4} xs={12}>
+            <Grid item xl={2} lg={2} md={2} sm={4} xs={8}>
               <SidebarStyle.TypoTraining variant='h6' noWrap component='div'>
                 Training Portal
               </SidebarStyle.TypoTraining>
             </Grid>
             <Grid item xl={10} lg={10} md={9} sm={0} xs={0}>
-              <CommonProfileDropDown/>
+              <CommonProfileDropDown />
             </Grid>
 
           </Grid>
@@ -83,7 +92,9 @@ function Sidebar(props) {
         </SidebarStyle.DrawerHeader>
         <Divider />
         {drawer}
+        <SidebarStyle.LogoutLink to='/login' onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink>
       </SidebarStyle.WebDrawer>
+
       <SidebarStyle.MobileDrawer
         drawerWidth={drawerWidth}
         container={container}
@@ -96,6 +107,7 @@ function Sidebar(props) {
       >
         <Toolbar />
         {drawer}
+        <SidebarStyle.LogoutLink to='/login' onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink>
       </SidebarStyle.MobileDrawer>
 
       <SidebarStyle.MainBox component="main" >

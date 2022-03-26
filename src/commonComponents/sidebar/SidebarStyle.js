@@ -128,13 +128,22 @@ export const SidebarStyle = {
     color: colors.black + 90,
     marginLeft: -2
   })),
- 
+
   TypoTraining: styled(Typography)(() => ({
     marginTop: '12px ',
     "@media (max-width:900px)": {
       marginTop: '0px',
-      float:'left'
+      float: 'left'
     }
   })),
- 
+  LogoutLink: styled(Link)(() => ({
+    textDecoration: 'none',
+    color: colors.lightBlue,
+    marginTop: '-7.8px',
+    padding: '10px',
+    border: '1px solid ' + colors.lightBlue,
+    textAlign: 'center',
+  }))
+
+
 };

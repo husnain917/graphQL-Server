@@ -5,6 +5,7 @@ import { Slide, toast } from 'react-toastify';
 import {
   ADD_ENROLMMENT_APPROVAL,
   DELETE_ENROLMMENT_APPROVAL,
+  UPDATE_SINGLE_ENROLLMENT,
 } from '../../lib/mutation/AllMutations';
 import { BASIC_ENROLL_ROLES } from '../../constants/AllRolesStatus';
 export function useEnrollmentApproval() {
@@ -12,9 +13,9 @@ export function useEnrollmentApproval() {
   const [filterValue, setFilterValue] = useState('');
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const [flag6, setFlag6] = useState(false)
   //ADD ENROLL MUTATION
- 
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [course, setCourse] = useState('');
@@ -36,7 +37,7 @@ export function useEnrollmentApproval() {
       theme: 'colored',
       transition: Slide,
     });
-  let [Mutation,{loading:AddLoading}] = useMutation(ADD_ENROLMMENT_APPROVAL);
+  let [Mutation, { loading: AddLoading }] = useMutation(ADD_ENROLMMENT_APPROVAL);
   const ctaButtonHandlerEnroll = async (event, item) => {
     if (
       name === '' ||
@@ -174,6 +175,126 @@ export function useEnrollmentApproval() {
     }
   };
 
+
+
+
+
+  //UPDATE ENROLMENT
+
+  let [updatedIndex, setUpdatedIndex] = useState('');
+
+
+  let [UpdateEnrollmentApproval, { loading: UpdateLoading }] = useMutation(UPDATE_SINGLE_ENROLLMENT);
+  const ctaUpdateEnroll = ({ ...props }) => {
+    setUpdatedIndex(props.id);
+    setName(props.studentName);
+    setEmail(props.email);
+    setCourse(props.course);
+    setStatus(props.status);
+    setpaymentMethod(props.paymentMethod);
+    setamount(props.amount);
+    settransactionId(props.transactionId);
+    setFlag6(true);
+  }
+
+  const handleCloseUpdate = () => {
+    setFlag6(false);
+  };
+  const ctaUpdateHandlerEnroll = async (event) => {
+    if (
+      name === '' ||
+      email === '' ||
+      course === '' ||
+      status === '' ||
+      paymentMethod === '' ||
+      amount === '' ||
+      transactionId === ''
+    ) {
+      toast.warning('please fill all fields', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Slide,
+      });
+      return;
+    } else {
+      event.preventDefault();
+
+      try {
+        await UpdateEnrollmentApproval({
+          variables: {
+            where: {
+              id: updatedIndex
+            },
+            data: {
+              studentName: {
+                set: name
+              },
+              email: {
+                set: email
+              },
+              course: {
+                set: course
+              },
+              paymentMethod: {
+                set: paymentMethod
+              },
+              amount: {
+                set: amount
+              },
+              transactionId: {
+                set: transactionId
+              },
+              status: {
+                set: status
+              }
+            },
+
+          },
+          onCompleted() {
+            toast.success("Enrollment updated Successfully", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              transition: Slide,
+            });
+            setName('');
+            setEmail('');
+            setCourse('');
+            setStatus('');
+            setpaymentMethod('');
+            setamount('');
+            settransactionId('');
+            setUpdatedIndex('');
+            setFlag6(false);
+          },
+          refetchQueries: [{ query: GET_ENROLLMENT }],
+        })
+      } catch (error) {
+        toast.info("Bad respond, PLease recheck fields", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
+      }
+    }
+  }
   return [
     {
       filterDataArray,
@@ -203,7 +324,12 @@ export function useEnrollmentApproval() {
       setStatus,
       ctaDeleteHandlerEnroll,
       DeleteLoading,
-      AddLoading
+      AddLoading,
+      ctaUpdateEnroll,
+      flag6,
+      handleCloseUpdate,
+      ctaUpdateHandlerEnroll,
+      UpdateLoading
     },
   ];
 }

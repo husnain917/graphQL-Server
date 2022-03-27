@@ -30,7 +30,13 @@ export default function AllStaff() {
       setRole,
       ctaDeleteHandlerStaff,
       DeleteLoading,
-      AddLoading
+      AddLoading,
+      ctaUpdateStaff,
+      flag1,
+      handleCloseUpdate,
+      ctaUpdateHandlerStaff,
+      UpdateLoading,
+      setFlag1
     },
   ] = UseAllStaff();
 
@@ -44,6 +50,10 @@ export default function AllStaff() {
           <CommonTableLoader />
         ) :
           AddLoading ? (
+            <CommonTableLoader />
+          )
+          :
+          UpdateLoading ? (
             <CommonTableLoader />
           ) : (
             <>
@@ -68,6 +78,12 @@ export default function AllStaff() {
                 setPhone={setPhone}
                 ctaButtonHandler1={ctaButtonHandler1}
                 ctaDeleteHandlerStaff={ctaDeleteHandlerStaff}
+
+                ctaUpdateStaff={ctaUpdateStaff}
+                flag={flag1}
+                setFlag1={setFlag1}
+                handleCloseUpdate={handleCloseUpdate}
+                ctaUpdateHandlerStaff={ctaUpdateHandlerStaff}
                 loading={loading}
                 error={error}
                 handleClickOpen={handleClickOpen}

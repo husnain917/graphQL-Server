@@ -16,4 +16,12 @@ export const Ibutton = styled(Button)({
         color: 'white',
         cursor: 'pointer',
     },
+    "@media (max-width: 900px)": {
+        paddingTop: '5px',
+        paddingBottom: '5px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
+        fontSize:'13px !important'
+    }
+   
 })

@@ -30,7 +30,12 @@ export default function Events() {
             ctaButtonHandler5,
             ctaDeleteHandlerEvent,
             DeleteLoading,
-            AddLoading
+            AddLoading,
+            flag8,
+            ctaUpdateEvent,
+            handleCloseUpdate,
+            ctaUpdateHandlerEvent,
+            UpdateLoading
         },
     ] = useEvents();
     return (
@@ -44,6 +49,10 @@ export default function Events() {
                 )
                     :
                     AddLoading ? (
+                        <CommonTableLoader />
+                    )
+                    :
+                    UpdateLoading ? (
                         <CommonTableLoader />
                     ) : (
                         <Table
@@ -65,6 +74,10 @@ export default function Events() {
                             seteventImage={seteventImage}
                             ctaButtonHandler5={ctaButtonHandler5}
                             ctaDeleteHandlerEvent={ctaDeleteHandlerEvent}
+                            flag={flag8}
+                            ctaUpdateEvent={ctaUpdateEvent}
+                            handleCloseUpdate={handleCloseUpdate}
+                            ctaUpdateHandlerEvent={ctaUpdateHandlerEvent}
                             handleClose={handleClose}
                             anchorEl={anchorEl}
                             handleAnchorClose={handleAnchorClose}

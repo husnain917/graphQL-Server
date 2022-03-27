@@ -73,7 +73,7 @@ export default function UseLogin() {
             localStorage.setItem('eventCount', data5 ? data5.findManyEvents.length : 0);
             localStorage.setItem('adminCount', login.role === 'admin' ? 1 : 0);
 
-
+           
           }
         },
       })

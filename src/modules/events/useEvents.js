@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { Slide, toast } from 'react-toastify';
 import { BASIC_EVENTS_ROLE } from '../../constants/AllRolesStatus';
-import { ADD_EVENTS, DELETE_SINGLE_EVENT } from '../../lib/mutation/AllMutations';
+import { ADD_EVENTS, DELETE_SINGLE_EVENT, UPDATE_SINGLE_EVENT } from '../../lib/mutation/AllMutations';
 import { GET_EVENTS } from '../../lib/queries/AllQueries';
 
 export function useEvents() {
@@ -10,6 +10,7 @@ export function useEvents() {
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const openAnchor = Boolean(anchorEl);
+    const [flag8, setFlag8] = useState(false)
     let { loading, data, error } = useQuery(GET_EVENTS);
     const handleClickOpen = () => {
         setOpen(true);
@@ -38,7 +39,7 @@ export function useEvents() {
             theme: 'colored',
             transition: Slide,
         });
-    let [CreateManyStudents,{loading:AddLoading}] = useMutation(ADD_EVENTS);
+    let [CreateManyStudents, { loading: AddLoading }] = useMutation(ADD_EVENTS);
     const ctaButtonHandler5 = async (event, item) => {
         if (
             name === '' ||
@@ -168,6 +169,111 @@ export function useEvents() {
     }
 
 
+
+
+    //UPDATE SINGLE EVENT
+    let [updatedIndex, setUpdatedIndex] = useState('');
+
+
+    let [UpdateEvents, { loading: UpdateLoading }] = useMutation(UPDATE_SINGLE_EVENT);
+    const ctaUpdateEvent = ({ ...props }) => {
+        setUpdatedIndex(props.id);
+        setName(props.eventName);
+        setdescription(props.eventDesc);
+        seteventDate(props.eventDate);
+        setStatus(props.eventStatus);
+        setFlag8(true);
+    }
+
+    const handleCloseUpdate = () => {
+        setFlag8(false);
+    };
+    const ctaUpdateHandlerEvent = async (event) => {
+        if (
+            name === '' ||
+            description === '' ||
+            status === '' ||
+            eventDate === '' 
+            // eventImage === ''
+        ) {
+            toast.warning('please fill all fields', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored',
+                transition: Slide,
+            });
+            return;
+        } else {
+            event.preventDefault();
+
+            try {
+                await UpdateEvents({
+                    variables: {
+                        where: {
+                            id: updatedIndex
+                        },
+                        data: {
+                            eventName: {
+                                set: name
+                            },
+                            eventDesc: {
+                                set: description
+                            },
+                            eventDate: {
+                                set: eventDate
+                            },
+                            eventStatus: {
+                                set: status
+                            }
+                        },
+
+                    },
+                    onCompleted() {
+                        toast.success("Story updated Successfully", {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                            transition: Slide,
+                        });
+                        setName('');
+                        setdescription('');
+                        setStatus('');
+                        seteventDate('');
+                        // setspeakerId('');
+                        // seteventImage('');
+                        setUpdatedIndex('');
+                        setFlag8(false);
+                    },
+                    refetchQueries: [{ query: GET_EVENTS }],
+                })
+            } catch (error) {
+                toast.error(error.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    transition: Slide,
+                });
+            }
+        }
+    }
+
+
+
     return [
         {
             filterDataArray,
@@ -194,7 +300,12 @@ export function useEvents() {
             ctaButtonHandler5,
             ctaDeleteHandlerEvent,
             DeleteLoading,
-            AddLoading
+            AddLoading,
+            ctaUpdateEvent,
+            flag8,
+            handleCloseUpdate,
+            ctaUpdateHandlerEvent,
+            UpdateLoading
         },
     ];
 }

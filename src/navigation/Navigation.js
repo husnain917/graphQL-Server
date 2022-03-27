@@ -42,7 +42,7 @@ export default function Navigation() {
                         <Route path='profile' element={<Profile />}>
                             <Route path={`id:${items.id}`} element={<ProfileData />} />
                             <Route path={`editProfile/id:${items.id}`} element={<EditProfile />} />
-                            {/* <Route path='ChangePassword' element={<ChangePassword />} /> */}
+                            <Route path={`ChangePassword/id:${items.id}`} element={<ChangePassword />} />
 
                         </Route>
                     </Routes >

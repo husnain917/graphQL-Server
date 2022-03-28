@@ -28,7 +28,13 @@ export default function ContactUs() {
             ctaButtonHandler6,
             ctaDeleteHandlerContact,
             DeleteLoading,
-            AddLoading
+            AddLoading,
+          
+            flag7,
+            ctaUpdateContact,
+            handleCloseUpdate,
+            ctaUpdateHandlerContact,
+            UpdateLoading
         },
     ] = useContactUs();
     return (
@@ -36,46 +42,54 @@ export default function ContactUs() {
             <>
                 <ToastContainer />
                 {loading ? (
-                    <CommonTableLoader/>
-                ):
-                DeleteLoading ? (
-                    <CommonTableLoader/>
-                ):
-                AddLoading ? (
-                    <CommonTableLoader/>
-                )  : (
-                    <Table
-                        title='Contact us'
-                        tableHeadings={[
-                            'Name',
-                            'Email',
-                            'Subject',
-                            'Message',
-                            'Status',
-                            'Actions',
-                        ]}
-                        data={filterDataArray}
-                        name={name}
-                        subject={subject}
-                        status={status}
-                        message={message}
-                        reply={reply}
-                        setName={setName}
-                        setsubject={setsubject}
-                        setStatus={setStatus}
-                        setmessage={setmessage}
-                        setreply={setreply}
-                        ctaButtonHandler6={ctaButtonHandler6}
-                        handleClickOpen={handleClickOpen}
-                        ctaDeleteHandlerContact={ctaDeleteHandlerContact}
-                        open={open}
-                        handleClose={handleClose}
-                        anchorEl={anchorEl}
-                        handleAnchorClose={handleAnchorClose}
-                        handleAnchorClick={handleAnchorClick}
-                        openAnchor={openAnchor}
-                    />
-                )}
+                    <CommonTableLoader />
+                ) :
+                    DeleteLoading ? (
+                        <CommonTableLoader />
+                    ) :
+                        AddLoading ? (
+                            <CommonTableLoader />
+                        )
+                            :
+                            UpdateLoading ? (
+                                <CommonTableLoader />
+                            ) : (
+                                <Table
+                                    title='Contact us'
+                                    tableHeadings={[
+                                        'Name',
+                                        'Email',
+                                        'Subject',
+                                        'Message',
+                                        'Status',
+                                        'Actions',
+                                    ]}
+                                    data={filterDataArray}
+                                    name={name}
+                                    subject={subject}
+                                    status={status}
+                                    message={message}
+                                    reply={reply}
+                                    setName={setName}
+                                    setsubject={setsubject}
+                                    setStatus={setStatus}
+                                    setmessage={setmessage}
+                                    setreply={setreply}
+                                    ctaButtonHandler6={ctaButtonHandler6}
+                                    handleClickOpen={handleClickOpen}
+                                    ctaDeleteHandlerContact={ctaDeleteHandlerContact}
+                                    flag={flag7}
+                                    ctaUpdateContact={ctaUpdateContact}
+                                    handleCloseUpdate={handleCloseUpdate}
+                                    ctaUpdateHandlerContact={ctaUpdateHandlerContact}
+                                    open={open}
+                                    handleClose={handleClose}
+                                    anchorEl={anchorEl}
+                                    handleAnchorClose={handleAnchorClose}
+                                    handleAnchorClick={handleAnchorClick}
+                                    openAnchor={openAnchor}
+                                />
+                            )}
             </>
         </div>
     );

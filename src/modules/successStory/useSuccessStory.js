@@ -1,18 +1,17 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { Slide, toast } from 'react-toastify';
-import { ADD_SUCCESS_STORY, DELETE_SINGLE_SUCCESS_STORY } from '../../lib/mutation/AllMutations';
+import { ADD_SUCCESS_STORY, DELETE_SINGLE_SUCCESS_STORY, UPDATE_SINGLE_SUCCESS } from '../../lib/mutation/AllMutations';
 import { GET_SUCCESS_STORIES } from '../../lib/queries/AllQueries';
-import {BASIC_SUCCESS_ROLE} from '../../constants/AllRolesStatus';
+import { BASIC_SUCCESS_ROLE } from '../../constants/AllRolesStatus';
 export function useSuccessStory() {
   const [filterValue, setFilterValue] = useState('');
   const [open, setOpen] = useState(false);
+  const [flag, setFlag] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null);
   const openAnchor = Boolean(anchorEl);
-  let { data, loading, error } = useQuery(GET_SUCCESS_STORIES);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  let { data, loading } = useQuery(GET_SUCCESS_STORIES);
+
 
 
 
@@ -20,10 +19,11 @@ export function useSuccessStory() {
   const [freelancingProfileUrl, setfreelancingProfileUrl] = useState('');
   const [paymentProof, setpaymentProof] = useState('');
   const [description, setdescription] = useState('');
-  const [status, setstatus] = useState(BASIC_SUCCESS_ROLE);
+  const [status, setStatus] = useState(BASIC_SUCCESS_ROLE);
   const [totalEarnedAmount, settotalEarnedAmount] = useState('');
   const [city, setcity] = useState('');
   const [whyReject, setwhyReject] = useState('');
+
 
   const [close, setclose] = useState(false);
 
@@ -87,7 +87,7 @@ export function useSuccessStory() {
         setfreelancingProfileUrl('');
         setpaymentProof('');
         setdescription('');
-        setstatus('');
+        setStatus('');
         settotalEarnedAmount('');
         setcity('');
         setwhyReject('');
@@ -190,6 +190,134 @@ export function useSuccessStory() {
 
 
 
+  //UPDATE SINGLE STORY
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+
+
+
+  let [updatedIndex, setUpdatedIndex] = useState('');
+
+ 
+  let [UpdateSuccessStories, { loading: UpdateLoading }] = useMutation(UPDATE_SINGLE_SUCCESS);
+  const ctaUpdateStory = ({ ...props }) => {
+    setUpdatedIndex(props.id);
+    setfreelancingProfileUrl(props.freelancingProfileUrl);
+    setpaymentProof(props.paymentProof);
+    setdescription(props.description);
+    setStatus(props.status);
+    settotalEarnedAmount(props.totalEarnedAmount);
+    setcity(props.city);
+    setwhyReject(props.whyReject);
+    setFlag(true);
+  }
+
+  const handleCloseUpdate = () => {
+    setFlag(false);
+  };
+  const ctaUpdateHandlerStory = async (event) => {
+    if (
+      freelancingProfileUrl === '' ||
+      paymentProof === '' ||
+      description === '' ||
+      status === '' ||
+      totalEarnedAmount === '' ||
+      city === '' ||
+      whyReject === ''
+    ) {
+      toast.warning('please fill all fields', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Slide,
+      });
+      return;
+    } else {
+      event.preventDefault();
+
+      try {
+        await UpdateSuccessStories({
+          variables: {
+            where: {
+              id: updatedIndex
+            },
+            data: {
+              freelancingProfileUrl: {
+                set: freelancingProfileUrl
+              },
+              paymentProof: {
+                set: paymentProof
+              },
+              description: {
+                set: description
+              },
+              status: {
+                set: status
+              },
+              totalEarnedAmount: {
+                set: totalEarnedAmount
+              },
+              city: {
+                set: city
+              },
+              whyReject: {
+                set: whyReject
+              },
+            }
+          },
+          onCompleted() {
+            toast.success("Story updated Successfully", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              transition: Slide,
+            });
+            setfreelancingProfileUrl('');
+            setpaymentProof('');
+            setdescription('');
+            setStatus('');
+            settotalEarnedAmount('');
+            setcity('');
+            setwhyReject('');
+            setUpdatedIndex('');
+            setFlag(false);
+          },
+          refetchQueries: [{ query: GET_SUCCESS_STORIES }],
+        })
+      } catch (error) {
+        toast.error(error.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
+      }
+    }
+  }
+
+
+
+
+
+
 
   return [
     {
@@ -209,7 +337,7 @@ export function useSuccessStory() {
       description,
       setdescription,
       status,
-      setstatus,
+      setStatus,
       totalEarnedAmount,
       settotalEarnedAmount,
       city,
@@ -219,8 +347,12 @@ export function useSuccessStory() {
       ctaButtonHandler4,
       ctaDeleteHandlerStory,
       DeleteLoading,
-      AddLoading
-
+      AddLoading,
+      ctaUpdateStory,
+      flag,
+      handleCloseUpdate,
+      ctaUpdateHandlerStory,
+      UpdateLoading
     },
   ];
 }

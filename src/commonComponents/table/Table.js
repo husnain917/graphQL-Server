@@ -100,7 +100,6 @@ export default function Table({
   setfaqQuestion,
   setfaqAnswer,
   ctaButtonHandler7,
-  
 
 
   //Delete Handlers
@@ -111,7 +110,27 @@ export default function Table({
   ctaDeleteHandlerCourse,
   ctaDeleteHandlerStory,
   ctaDeleteHandlerEvent,
-  ctaDeleteHandlerFAQ
+  ctaDeleteHandlerFAQ,
+
+  // Update Handlers
+  ctaUpdateStory,
+  flag,
+  handleCloseUpdate,
+  ctaUpdateHandlerStory,
+  ctaUpdateStaff,
+  ctaUpdateHandlerStaff,
+  ctaUpdateCourse,
+  ctaUpdateHandlerCourse,
+  ctaUpdateFaqs,
+  ctaUpdateHandlerFaqs,
+  ctaUpdateStudent,
+  ctaUpdateHandlerStudent,
+  ctaUpdateEnroll,
+  ctaUpdateHandlerEnroll,
+  ctaUpdateContact,
+  ctaUpdateHandlerContact,
+  ctaUpdateEvent,
+  ctaUpdateHandlerEvent,
 }) {
   const [
     {
@@ -135,7 +154,7 @@ export default function Table({
       {/* Drop Down menu for filter Button */}
 
       {/* Form Modal */}
-      <FormModal open={open} title={title} handleClose={handleClose}
+      <FormModal open={open ? open : flag} title={title} handleClose={handleClose}
         name={name}
         email={email}
         course={course}
@@ -204,8 +223,17 @@ export default function Table({
         setfaqQuestion={setfaqQuestion}
         setfaqAnswer={setfaqAnswer}
         ctaButtonHandler7={ctaButtonHandler7}
-
-
+        // UpdateHandler
+        handleCloseUpdate={handleCloseUpdate}
+        ctaUpdateHandlerStory={ctaUpdateHandlerStory}
+        flag={flag}
+        ctaUpdateHandlerStaff={ctaUpdateHandlerStaff}
+        ctaUpdateHandlerCourse={ctaUpdateHandlerCourse}
+        ctaUpdateHandlerFaqs={ctaUpdateHandlerFaqs}
+        ctaUpdateHandlerStudent={ctaUpdateHandlerStudent}
+        ctaUpdateHandlerEnroll={ctaUpdateHandlerEnroll}
+        ctaUpdateHandlerContact={ctaUpdateHandlerContact}
+        ctaUpdateHandlerEvent={ctaUpdateHandlerEvent}
       />
       {/* Form Modal */}
 
@@ -326,12 +354,12 @@ export default function Table({
 
                         <TableCell align='center'>
                           <Tooltip title='Delete'>
-                            <IconButton aria-label='delete'  size='small' onClick={() => ctaDeleteHandlerCourse(row)}>
+                            <IconButton aria-label='delete' size='small' onClick={() => ctaDeleteHandlerCourse(row)}>
                               <TableStyle.DeleteIcon />
                             </IconButton>
                           </Tooltip>
                           <Tooltip title='Update'>
-                            <IconButton aria-label='update' size='small'>
+                            <IconButton aria-label='update' size='small' onClick={() => ctaUpdateCourse(row)}>
                               <TableStyle.EditIcon />
                             </IconButton>
                           </Tooltip>
@@ -361,7 +389,7 @@ export default function Table({
                               </IconButton>
                             </Tooltip>
                             <Tooltip title='Update'>
-                              <IconButton aria-label='update' size='small'>
+                              <IconButton aria-label='update' size='small' onClick={() => ctaUpdateEnroll(row)}>
                                 <TableStyle.EditIcon />
                               </IconButton>
                             </Tooltip>
@@ -385,7 +413,7 @@ export default function Table({
                             </IconButton>
                           </Tooltip>
                           <Tooltip title='Update'>
-                            <IconButton aria-label='update' size='small'>
+                            <IconButton aria-label='update' size='small' onClick={() => ctaUpdateEvent(row)}>
                               <TableStyle.EditIcon />
                             </IconButton>
                           </Tooltip>
@@ -411,7 +439,7 @@ export default function Table({
                             </IconButton>
                           </Tooltip>
                           <Tooltip title='Update'>
-                            <IconButton aria-label='update' size='small'>
+                            <IconButton aria-label='update' size='small' onClick={() => ctaUpdateContact(row)}>
                               <TableStyle.EditIcon />
                             </IconButton>
                           </Tooltip>
@@ -435,7 +463,7 @@ export default function Table({
                               </IconButton>
                             </Tooltip>
                             <Tooltip title='Update'>
-                              <IconButton aria-label='update' size='small'>
+                              <IconButton aria-label='update' size='small' onClick={() => ctaUpdateFaqs(row)}>
                                 <TableStyle.EditIcon />
                               </IconButton>
                             </Tooltip>
@@ -458,7 +486,7 @@ export default function Table({
                                 </IconButton>
                               </Tooltip>
                               <Tooltip title='Update'>
-                                <IconButton aria-label='update' size='small'>
+                                <IconButton aria-label='update' size='small' onClick={() => ctaUpdateStaff(row)}>
                                   <TableStyle.EditIcon />
                                 </IconButton>
                               </Tooltip>
@@ -484,7 +512,7 @@ export default function Table({
                                   </IconButton>
                                 </Tooltip>
                                 <Tooltip title='Update'>
-                                  <IconButton aria-label='update' size='small'>
+                                  <IconButton aria-label='update' size='small' onClick={() => ctaUpdateStory(row)}>
                                     <TableStyle.EditIcon />
                                   </IconButton>
                                 </Tooltip>
@@ -505,7 +533,7 @@ export default function Table({
                                     </IconButton>
                                   </Tooltip>
                                   <Tooltip title='Update'>
-                                    <IconButton aria-label='update' size='small'>
+                                    <IconButton aria-label='update' size='small' onClick={() => ctaUpdateStudent(row)}>
                                       <TableStyle.EditIcon />
                                     </IconButton>
                                   </Tooltip>

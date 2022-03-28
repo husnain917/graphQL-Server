@@ -32,6 +32,9 @@ export default function Profile() {
                                 <P.MyLink to={`editProfile/id:${items.id}`} style={isActive => ({
                                     color: isActive ? "#00688B" : "black"
                                 })}>Edit Profile</P.MyLink>
+                                <P.MyLink to={`ChangePassword/id:${items.id}`} style={isActive => ({
+                                    color: isActive ? "#00688B" : "black"
+                                })}>Change password</P.MyLink>
 
                             </Stack>
                         </P.Mycontainer>

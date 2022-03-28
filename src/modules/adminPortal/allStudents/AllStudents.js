@@ -28,7 +28,12 @@ export default function AllStudents() {
       ctaButtonHandler3,
       ctaDeleteHandlerStudent,
       DeleteLoading,
-      AddLoading
+      AddLoading,
+      ctaUpdateStudent,
+      flag5,
+      handleCloseUpdate,
+      ctaUpdateHandlerStudent,
+      UpdateLoading
     },
   ] = UseAllStudents();
 
@@ -39,33 +44,40 @@ export default function AllStudents() {
         <CommonTableLoader />
       ) : DeleteLoading ? (
         <CommonTableLoader />
-      ) 
-      : AddLoading ? (
-      <CommonTableLoader />
-      ) : (
-      <>
-        <Table
-          title={'All Students'}
-          tableHeadings={['Name', 'Email', 'Status', 'Actions']}
-          data={filterDataArray}
-          name={name}
-          email={email}
-          status={status}
-          setName={setName}
-          setEmail={setEmail}
-          setStatus={setStatus}
-          ctaButtonHandler3={ctaButtonHandler3}
-          ctaDeleteHandlerStudent={ctaDeleteHandlerStudent}
-          handleClickOpen={handleClickOpen}
-          open={open}
-          handleClose={handleClose}
-          anchorEl={anchorEl}
-          handleAnchorClose={handleAnchorClose}
-          handleAnchorClick={handleAnchorClick}
-          openAnchor={openAnchor}
-        />
-      </>
-      )}
+      )
+        : AddLoading ? (
+          <CommonTableLoader />
+        )
+          : UpdateLoading ? (
+            <CommonTableLoader />
+          ) : (
+            <>
+              <Table
+                title={'All Students'}
+                tableHeadings={['Name', 'Email', 'Status', 'Actions']}
+                data={filterDataArray}
+                name={name}
+                email={email}
+                status={status}
+                setName={setName}
+                setEmail={setEmail}
+                setStatus={setStatus}
+                ctaButtonHandler3={ctaButtonHandler3}
+                ctaDeleteHandlerStudent={ctaDeleteHandlerStudent}
+                flag={flag5}
+                ctaUpdateStudent={ctaUpdateStudent}
+                handleCloseUpdate={handleCloseUpdate}
+                ctaUpdateHandlerStudent={ctaUpdateHandlerStudent}
+                handleClickOpen={handleClickOpen}
+                open={open}
+                handleClose={handleClose}
+                anchorEl={anchorEl}
+                handleAnchorClose={handleAnchorClose}
+                handleAnchorClick={handleAnchorClick}
+                openAnchor={openAnchor}
+              />
+            </>
+          )}
     </>
   );
 }

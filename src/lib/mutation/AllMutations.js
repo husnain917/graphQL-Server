@@ -129,3 +129,86 @@ mutation DeleteFaq($where: FaqWhereUniqueInput!) {
   }
 }
 `
+
+
+
+//UPDATE SINGLE MUTATIONS
+
+export const UPDATE_SINGLE_SUCCESS = gql`
+mutation UpdateSuccessStories($where: SuccessStoriesWhereUniqueInput!, $data: SuccessStoriesUpdateInput!) {
+  updateSuccessStories(where: $where, data: $data) {
+    id
+  }
+
+}`
+
+
+export const UPDATE_SINGLE_STAFF = gql`
+mutation UpdateStaff($data: StaffUpdateInput!, $where: StaffWhereUniqueInput!) {
+  updateStaff(data: $data, where: $where) {
+    id
+  }
+
+
+}`
+
+export const UPDATE_SINGLE_COURSE = gql`
+mutation UpdateCourses($data: CoursesUpdateInput!, $where: CoursesWhereUniqueInput!) {
+  updateCourses(data: $data, where: $where) {
+    id
+  }
+}`
+
+export const UPDATE_SINGLE_FAQ = gql`
+mutation UpdateFaq($data: FaqUpdateInput!, $where: FaqWhereUniqueInput!) {
+  updateFaq(data: $data, where: $where) {
+    id
+  }
+}`
+
+
+export const UPDATE_SINGLE_STUDENT = gql`
+mutation UpdateStudents($data: StudentsUpdateInput!, $where: StudentsWhereUniqueInput!) {
+  updateStudents(data: $data, where: $where) {
+    id
+  }
+}`
+
+export const UPDATE_USER = gql`
+mutation UpdateUser($data: UserUpdateInput!, $where: UserWhereUniqueInput!) {
+  updateUser(data: $data, where: $where) {
+    name
+  }
+}`
+
+// {  "data": {
+//   "password": {
+//     "set": null
+//   }
+// },
+// "where": {
+// "id": null
+// }
+// }
+
+
+export const UPDATE_SINGLE_ENROLLMENT = gql`
+mutation UpdateEnrollmentApproval($data: EnrollmentApprovalUpdateInput!, $where: EnrollmentApprovalWhereUniqueInput!) {
+  updateEnrollmentApproval(data: $data, where: $where) {
+    id
+  }
+}`
+
+export const UPDATE_SINGLE_CONTACT = gql`
+mutation UpdateContactUs($data: ContactUsUpdateInput!, $where: ContactUsWhereUniqueInput!) {
+  updateContactUs(data: $data, where: $where) {
+    id
+  }
+}`
+
+export const UPDATE_SINGLE_EVENT = gql`
+mutation UpdateEvents($data: EventsUpdateInput!, $where: EventsWhereUniqueInput!) {
+  updateEvents(data: $data, where: $where) {
+    id
+  }
+}`

@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { Slide, toast } from 'react-toastify';
-import { ADD_FAQS, DELETE_SINGLE_FAQ } from '../../lib/mutation/AllMutations';
+import { ADD_FAQS, DELETE_SINGLE_FAQ, UPDATE_SINGLE_FAQ } from '../../lib/mutation/AllMutations';
 import { GET_FAQS } from '../../lib/queries/AllQueries';
 
 export function useFAQS() {
@@ -18,7 +18,7 @@ export function useFAQS() {
     // ADD FAQ
     const [faqQuestion, setfaqQuestion] = useState('');
     const [faqAnswer, setfaqAnswer] = useState('');
-
+    const [flag4, setFlag4] = useState(false)
     const [close, setclose] = useState(false);
 
     const Notify = () =>
@@ -33,7 +33,7 @@ export function useFAQS() {
             theme: 'colored',
             transition: Slide,
         });
-    let [Mutation,{loading:AddLoading}] = useMutation(ADD_FAQS);
+    let [Mutation, { loading: AddLoading }] = useMutation(ADD_FAQS);
     const ctaButtonHandler7 = async (event, item) => {
         if (faqQuestion === '' || faqAnswer === '') {
             toast.warning('please fill all fields', {
@@ -150,6 +150,97 @@ export function useFAQS() {
     }
 
 
+
+
+
+    //UPDATE FAQ
+    let [updatedIndex, setUpdatedIndex] = useState('');
+
+
+    let [UpdateFaq, { loading: UpdateLoading }] = useMutation(UPDATE_SINGLE_FAQ);
+    const ctaUpdateFaqs = ({ ...props }) => {
+        setUpdatedIndex(props.id);
+        setfaqQuestion(props.faqQuestion);
+        setfaqAnswer(props.faqAnswer);
+        setFlag4(true);
+    }
+
+    const handleCloseUpdate = () => {
+        setFlag4(false);
+        setOpen(false)
+    };
+    const ctaUpdateHandlerFaqs = async (event) => {
+        if (
+            faqQuestion === '' ||
+            faqAnswer === ''
+        ) {
+            toast.warning('please fill all fields', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored',
+                transition: Slide,
+            });
+            return;
+        } else {
+            event.preventDefault();
+
+            try {
+                await UpdateFaq({
+                    variables: {
+                        where: {
+                            id: updatedIndex
+                        },
+                        data: {
+                            faqQuestion: {
+                                set: faqQuestion
+                            },
+                            faqAnswer: {
+                                set: faqAnswer
+                            }
+                        },
+                    },
+                    onCompleted() {
+                        toast.success("FAQS updated Successfully", {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                            transition: Slide,
+                        });
+                        setfaqQuestion('');
+                        setfaqAnswer('');
+                        setUpdatedIndex('');
+                        setFlag4(false);
+                    },
+                    refetchQueries: [{ query: GET_FAQS }],
+                })
+            } catch (error) {
+                toast.error(error.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    transition: Slide,
+                });
+            }
+        }
+    }
+
+
+
     return [
         {
             filterDataArray,
@@ -168,7 +259,12 @@ export function useFAQS() {
             ctaButtonHandler7,
             ctaDeleteHandlerFAQ,
             DeleteLoading,
-            AddLoading
+            AddLoading,
+            ctaUpdateFaqs,
+            flag4,
+            handleCloseUpdate,
+            ctaUpdateHandlerFaqs,
+            UpdateLoading
         },
     ];
 }

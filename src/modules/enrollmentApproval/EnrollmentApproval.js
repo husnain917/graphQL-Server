@@ -33,7 +33,12 @@ function EnrollmentApproval() {
             ctaButtonHandlerEnroll,
             ctaDeleteHandlerEnroll,
             DeleteLoading,
-            AddLoading
+            AddLoading,
+            flag6,
+            ctaUpdateEnroll,
+            handleCloseUpdate,
+            ctaUpdateHandlerEnroll,
+            UpdateLoading
         },
     ] = useEnrollmentApproval();
     return (
@@ -46,49 +51,57 @@ function EnrollmentApproval() {
                     DeleteLoading ? (
                         <CommonTableLoader />
                     ) :
-                    AddLoading ? (
-                        <CommonTableLoader />
-                    )  : (
-                        <Table
-                            title={'Enrollment Approval'}
-                            data={filterDataArray}
-                            name={name}
-                            email={email}
-                            course={course}
-                            paymentMethod={paymentMethod}
-                            amount={amount}
-                            transactionId={transactionId}
-                            status={status}
-                            setName={setName}
-                            setEmail={setEmail}
-                            setCourse={setCourse}
-                            setamount={setamount}
-                            setStatus={setStatus}
-                            settransactionId={settransactionId}
-                            ctaButtonHandlerEnroll={ctaButtonHandlerEnroll}
-                            ctaDeleteHandlerEnroll={ctaDeleteHandlerEnroll}
-                            setpaymentMethod={setpaymentMethod}
-                            loading={loading}
-                            error={error}
-                            handleClickOpen={handleClickOpen}
-                            open={open}
-                            handleClose={handleClose}
-                            anchorEl={anchorEl}
-                            handleAnchorClose={handleAnchorClose}
-                            handleAnchorClick={handleAnchorClick}
-                            openAnchor={openAnchor}
-                            tableHeadings={[
-                                'Student Name',
-                                'Email',
-                                'Course',
-                                'Payment Method',
-                                'Amount',
-                                'Transaction ID',
-                                'Status',
-                                'Actions',
-                            ]}
-                        />
-                    )}
+                        AddLoading ? (
+                            <CommonTableLoader />
+                        )
+                            :
+                            UpdateLoading ? (
+                                <CommonTableLoader />
+                            ) : (
+                                <Table
+                                    title={'Enrollment Approval'}
+                                    data={filterDataArray}
+                                    name={name}
+                                    email={email}
+                                    course={course}
+                                    paymentMethod={paymentMethod}
+                                    amount={amount}
+                                    transactionId={transactionId}
+                                    status={status}
+                                    setName={setName}
+                                    setEmail={setEmail}
+                                    setCourse={setCourse}
+                                    setamount={setamount}
+                                    setStatus={setStatus}
+                                    settransactionId={settransactionId}
+                                    ctaButtonHandlerEnroll={ctaButtonHandlerEnroll}
+                                    ctaDeleteHandlerEnroll={ctaDeleteHandlerEnroll}
+                                    setpaymentMethod={setpaymentMethod}
+                                    loading={loading}
+                                    error={error}
+                                    flag={flag6}
+                                    ctaUpdateEnroll={ctaUpdateEnroll}
+                                    handleCloseUpdate={handleCloseUpdate}
+                                    ctaUpdateHandlerEnroll={ctaUpdateHandlerEnroll}
+                                    handleClickOpen={handleClickOpen}
+                                    open={open}
+                                    handleClose={handleClose}
+                                    anchorEl={anchorEl}
+                                    handleAnchorClose={handleAnchorClose}
+                                    handleAnchorClick={handleAnchorClick}
+                                    openAnchor={openAnchor}
+                                    tableHeadings={[
+                                        'Student Name',
+                                        'Email',
+                                        'Course',
+                                        'Payment Method',
+                                        'Amount',
+                                        'Transaction ID',
+                                        'Status',
+                                        'Actions',
+                                    ]}
+                                />
+                            )}
             </>
         </div>
     );

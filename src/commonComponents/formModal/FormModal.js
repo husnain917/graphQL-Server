@@ -10,7 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { MagicSpinner } from 'react-spinners-kit';
 import { BASIC_CONTACT_ROLE, BASIC_COURSE_ROLE, BASIC_ENROLL_ROLES, BASIC_EVENTS_ROLE, BASIC_STAFF_ROLE, BASIC_STUDENT_ROLE, BASIC_SUCCESS_ROLE } from '../../constants/AllRolesStatus';
 import { MenuItem, Stack } from '@mui/material';
-export default function FormModal({ open, title, handleClose, name,
+export default function FormModal({ open, title, handleClose, name, flag,
   email,
   course,
   paymentMethod,
@@ -25,7 +25,11 @@ export default function FormModal({ open, title, handleClose, name,
   setpaymentMethod,
   setStatus,
   loading, error,
-  role, phone, setRole, setPhone, ctaButtonHandler1,
+  role,
+  phone,
+  setRole,
+  setPhone,
+  ctaButtonHandler1,
   courseDesc,
   courseStatus,
   courseCategoryId,
@@ -72,9 +76,16 @@ export default function FormModal({ open, title, handleClose, name,
   setfaqQuestion,
   setfaqAnswer,
   ctaButtonHandler7,
-  ctaButtonHandlerEnroll
-
-
+  ctaButtonHandlerEnroll,
+  handleCloseUpdate,
+  ctaUpdateHandlerStory,
+  ctaUpdateHandlerStaff,
+  ctaUpdateHandlerCourse,
+  ctaUpdateHandlerFaqs,
+  ctaUpdateHandlerStudent,
+  ctaUpdateHandlerEnroll,
+  ctaUpdateHandlerContact,
+  ctaUpdateHandlerEvent
 }) {
 
   if (loading) {
@@ -86,7 +97,7 @@ export default function FormModal({ open, title, handleClose, name,
 
   return (
     <div>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={flag ? flag : open} onClose={handleClose ? handleClose : handleCloseUpdate}>
         <DialogTitle>Form</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -192,10 +203,24 @@ export default function FormModal({ open, title, handleClose, name,
                   <br />
                 </Stack>
                 <Stack direction="row" spacing={1}>
-                  <Button type='submit' variant="outlined" onClick={ctaButtonHandlerEnroll}>Submit</Button>
-                  <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                  {
+                    flag ?
+                      <Button type='submit' variant="outlined" onClick={ctaUpdateHandlerEnroll}>Update</Button>
+                      :
+                      <Button type='submit' variant="outlined" onClick={ctaButtonHandlerEnroll}>submit</Button>
+                  }
+
+                  {
+                    flag ?
+                      <Button type='submit' variant="outlined" onClick={handleCloseUpdate}>Close</Button>
+                      :
+                      <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                  }
                 </Stack>
+
+
               </>
+
               :
               title === "All Students" ?
                 <>
@@ -245,8 +270,19 @@ export default function FormModal({ open, title, handleClose, name,
                   </Stack>
                   <br />
                   <Stack direction="row" spacing={1}>
-                    <Button type='submit' variant="outlined" onClick={ctaButtonHandler3}>Submit</Button>
-                    <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                    {
+                      flag ?
+                        <Button type='submit' variant="outlined" onClick={ctaUpdateHandlerStudent}>Update</Button>
+                        :
+                        <Button type='submit' variant="outlined" onClick={ctaButtonHandler3}>submit</Button>
+                    }
+
+                    {
+                      flag ?
+                        <Button type='submit' variant="outlined" onClick={handleCloseUpdate}>Close</Button>
+                        :
+                        <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                    }
                   </Stack>
                 </>
                 :
@@ -310,8 +346,19 @@ export default function FormModal({ open, title, handleClose, name,
                     </Stack>
                     <br />
                     <Stack direction='row' spacing={1}>
-                      <Button type='submit' variant="outlined" onClick={ctaButtonHandler1}>submit</Button>
-                      <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                      {
+                        flag ?
+                          <Button type='submit' variant="outlined" onClick={ctaUpdateHandlerStaff}>Update</Button>
+                          :
+                          <Button type='submit' variant="outlined" onClick={ctaButtonHandler1}>submit</Button>
+                      }
+
+                      {
+                        flag ?
+                          <Button type='submit' variant="outlined" onClick={handleCloseUpdate}>Close</Button>
+                          :
+                          <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                      }
                     </Stack>
 
                   </>
@@ -417,8 +464,19 @@ export default function FormModal({ open, title, handleClose, name,
                       </Stack>
                       <br />
                       <Stack direction='row' spacing={1}>
-                        <Button type='submit' variant="outlined" onClick={ctaButtonHandler4}>submit</Button>
-                        <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                        {
+                          flag ?
+                            <Button type='submit' variant="outlined" onClick={ctaUpdateHandlerStory}>Update</Button>
+                            :
+                            <Button type='submit' variant="outlined" onClick={ctaButtonHandler4}>submit</Button>
+                        }
+
+                        {
+                          flag ?
+                            <Button type='submit' variant="outlined" onClick={handleCloseUpdate}>Close</Button>
+                            :
+                            <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                        }
                       </Stack>
                     </>
                     :
@@ -465,18 +523,23 @@ export default function FormModal({ open, title, handleClose, name,
                         />
                         <br />
                         <Stack>
-                          <TextField
-                            margin='dense'
-                            id='speakerId'
-                            value={speakerId}
-                            label='Speaker Id'
-                            type='text'
-                            fullWidth
-                            variant='standard'
-                            onChange={(event) => {
-                              setspeakerId(event.target.value);
-                            }}
-                          />
+                          {
+                            flag ?
+                              ''
+                              :
+                              <TextField
+                                margin='dense'
+                                id='speakerId'
+                                value={speakerId}
+                                label='Speaker Id'
+                                type='text'
+                                fullWidth
+                                variant='standard'
+                                onChange={(event) => {
+                                  setspeakerId(event.target.value);
+                                }}
+                              />
+                          }
                           <br />
                           <TextField
                             id="standard-select-currency"
@@ -496,8 +559,19 @@ export default function FormModal({ open, title, handleClose, name,
 
                         <br />
                         <Stack direction='row' spacing={1}>
-                          <Button type='submit' variant="outlined" onClick={ctaButtonHandler5}>submit</Button>
-                          <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                          {
+                            flag ?
+                              <Button type='submit' variant="outlined" onClick={ctaUpdateHandlerEvent}>Update</Button>
+                              :
+                              <Button type='submit' variant="outlined" onClick={ctaButtonHandler5}>submit</Button>
+                          }
+
+                          {
+                            flag ?
+                              <Button type='submit' variant="outlined" onClick={handleCloseUpdate}>Close</Button>
+                              :
+                              <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                          }
                         </Stack>
                       </> :
                       title === "Courses" ?
@@ -601,8 +675,19 @@ export default function FormModal({ open, title, handleClose, name,
                           </Stack>
                           <br />
                           <Stack direction='row' spacing={1}>
-                            <Button type='submit' variant="outlined" onClick={ctaButtonHandler2}>submit</Button>
-                            <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                            {
+                              flag ?
+                                <Button type='submit' variant="outlined" onClick={ctaUpdateHandlerCourse}>Update</Button>
+                                :
+                                <Button type='submit' variant="outlined" onClick={ctaButtonHandler2}>submit</Button>
+                            }
+
+                            {
+                              flag ?
+                                <Button type='submit' variant="outlined" onClick={handleCloseUpdate}>Close</Button>
+                                :
+                                <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                            }
                           </Stack>
                         </>
                         :
@@ -681,8 +766,19 @@ export default function FormModal({ open, title, handleClose, name,
                             </Stack>
                             <br />
                             <Stack direction='row' spacing={1}>
-                              <Button type='submit' variant="outlined" onClick={ctaButtonHandler6}>submit</Button>
-                              <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                              {
+                                flag ?
+                                  <Button type='submit' variant="outlined" onClick={ctaUpdateHandlerContact}>Update</Button>
+                                  :
+                                  <Button type='submit' variant="outlined" onClick={ctaButtonHandler6}>submit</Button>
+                              }
+
+                              {
+                                flag ?
+                                  <Button type='submit' variant="outlined" onClick={handleCloseUpdate}>Close</Button>
+                                  :
+                                  <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                              }
                             </Stack>
                           </>
 
@@ -718,8 +814,19 @@ export default function FormModal({ open, title, handleClose, name,
                               <br />
 
                               <Stack direction='row' spacing={1}>
-                                <Button type='submit' variant="outlined" onClick={ctaButtonHandler7}>submit</Button>
-                                <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                                {
+                                  flag ?
+                                    <Button type='submit' variant="outlined" onClick={ctaUpdateHandlerFaqs}>Update</Button>
+                                    :
+                                    <Button type='submit' variant="outlined" onClick={ctaButtonHandler7}>submit</Button>
+                                }
+
+                                {
+                                  flag ?
+                                    <Button type='submit' variant="outlined" onClick={handleCloseUpdate}>Close</Button>
+                                    :
+                                    <Button type='submit' variant="outlined" onClick={handleClose}>Close</Button>
+                                }
                               </Stack>
                             </>
 

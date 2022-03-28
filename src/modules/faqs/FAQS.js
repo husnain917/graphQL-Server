@@ -22,7 +22,12 @@ export default function FAQS() {
             ctaButtonHandler7,
             ctaDeleteHandlerFAQ,
             DeleteLoading,
-            AddLoading
+            AddLoading,
+            flag4,
+            ctaUpdateFaqs,
+            handleCloseUpdate,
+            ctaUpdateHandlerFaqs,
+            UpdateLoading
         },
     ] = useFAQS();
     return (
@@ -34,34 +39,42 @@ export default function FAQS() {
                 DeleteLoading ? (
                     <CommonTableLoader />
                 ) :
-                AddLoading ? (
-                    <CommonTableLoader />
-                ) : (
-                    <Table
-                        title='FAQS'
-                        tableHeadings={[
-                            'Created At',
-                            'Faq Question',
-                            'Faq Answer',
-                            'Update At',
-                            'Action',
-                        ]}
-                        data={filterDataArray}
-                        faqQuestion={faqQuestion}
-                        setfaqQuestion={setfaqQuestion}
-                        faqAnswer={faqAnswer}
-                        setfaqAnswer={setfaqAnswer}
-                        ctaButtonHandler7={ctaButtonHandler7}
-                        ctaDeleteHandlerFAQ={ctaDeleteHandlerFAQ}
-                        handleClickOpen={handleClickOpen}
-                        open={open}
-                        handleClose={handleClose}
-                        anchorEl={anchorEl}
-                        handleAnchorClose={handleAnchorClose}
-                        handleAnchorClick={handleAnchorClick}
-                        openAnchor={openAnchor}
-                    />
-                )}
+                    AddLoading ? (
+                        <CommonTableLoader />
+                    )
+                        :
+                        UpdateLoading ? (
+                            <CommonTableLoader />
+                        ) : (
+                            <Table
+                                title='FAQS'
+                                tableHeadings={[
+                                    'Created At',
+                                    'Faq Question',
+                                    'Faq Answer',
+                                    'Update At',
+                                    'Action',
+                                ]}
+                                data={filterDataArray}
+                                faqQuestion={faqQuestion}
+                                setfaqQuestion={setfaqQuestion}
+                                faqAnswer={faqAnswer}
+                                setfaqAnswer={setfaqAnswer}
+                                ctaButtonHandler7={ctaButtonHandler7}
+                                ctaDeleteHandlerFAQ={ctaDeleteHandlerFAQ}
+                                flag={flag4}
+                                ctaUpdateFaqs={ctaUpdateFaqs}
+                                handleCloseUpdate={handleCloseUpdate}
+                                ctaUpdateHandlerFaqs={ctaUpdateHandlerFaqs}
+                                handleClickOpen={handleClickOpen}
+                                open={open}
+                                handleClose={handleClose}
+                                anchorEl={anchorEl}
+                                handleAnchorClose={handleAnchorClose}
+                                handleAnchorClick={handleAnchorClick}
+                                openAnchor={openAnchor}
+                            />
+                        )}
         </>
     );
 }

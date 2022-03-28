@@ -32,7 +32,12 @@ export default function Course() {
             setinstructorId,
             ctaDeleteHandlerCourse,
             Deleteloading,
-            AddLoading
+            AddLoading,
+            ctaUpdateCourse,
+            flag2,
+            handleCloseUpdate,
+            ctaUpdateHandlerCourse,
+            UpdateLoading
 
         },
     ] = UseCourses();
@@ -48,43 +53,52 @@ export default function Course() {
 
                     AddLoading ? (
                         <CommonTableLoader />
-                    ) : (
-                        <Table
-                            title={'Courses'}
-                            tableHeadings={[
-                                'Course Name',
-                                'Course Desc',
-                                'Course Intro',
-                                'Course Status',
-                                'Course Price',
-                                'Actions',
-                            ]}
-                            data={filterDataArray}
-                            name={name}
-                            courseDesc={courseDesc}
-                            courseStatus={courseStatus}
-                            courseIntro={courseIntro}
-                            coursePrice={coursePrice}
-                            instructorId={instructorId}
-                            ctaButtonHandler2={ctaButtonHandler2}
-                            courseCategoryId={courseCategoryId}
-                            setName={setName}
-                            setcourseDesc={setcourseDesc}
-                            setcourseStatus={setcourseStatus}
-                            setcourseCategoryId={setcourseCategoryId}
-                            setcoursePrice={setcoursePrice}
-                            setcourseIntro={setcourseIntro}
-                            setinstructorId={setinstructorId}
-                            handleClickOpen={handleClickOpen}
-                            ctaDeleteHandlerCourse={ctaDeleteHandlerCourse}
-                            open={open}
-                            handleClose={handleClose}
-                            anchorEl={anchorEl}
-                            handleAnchorClose={handleAnchorClose}
-                            handleAnchorClick={handleAnchorClick}
-                            openAnchor={openAnchor}
-                        />
-                    )}
+
+                    )
+                        :
+                        UpdateLoading ? (
+                            <CommonTableLoader />)
+                            : (
+                                <Table
+                                    title={'Courses'}
+                                    tableHeadings={[
+                                        'Course Name',
+                                        'Course Desc',
+                                        'Course Intro',
+                                        'Course Status',
+                                        'Course Price',
+                                        'Actions',
+                                    ]}
+                                    data={filterDataArray}
+                                    name={name}
+                                    courseDesc={courseDesc}
+                                    status={courseStatus}
+                                    courseIntro={courseIntro}
+                                    coursePrice={coursePrice}
+                                    instructorId={instructorId}
+                                    ctaButtonHandler2={ctaButtonHandler2}
+                                    courseCategoryId={courseCategoryId}
+                                    setName={setName}
+                                    setcourseDesc={setcourseDesc}
+                                    setStatus={setcourseStatus}
+                                    setcourseCategoryId={setcourseCategoryId}
+                                    setcoursePrice={setcoursePrice}
+                                    setcourseIntro={setcourseIntro}
+                                    setinstructorId={setinstructorId}
+                                    handleClickOpen={handleClickOpen}
+                                    ctaDeleteHandlerCourse={ctaDeleteHandlerCourse}
+                                    ctaUpdateCourse={ctaUpdateCourse}
+                                    flag={flag2}
+                                    handleCloseUpdate={handleCloseUpdate}
+                                    ctaUpdateHandlerCourse={ctaUpdateHandlerCourse}
+                                    open={open}
+                                    handleClose={handleClose}
+                                    anchorEl={anchorEl}
+                                    handleAnchorClose={handleAnchorClose}
+                                    handleAnchorClick={handleAnchorClick}
+                                    openAnchor={openAnchor}
+                                />
+                            )}
         </>
     );
 }

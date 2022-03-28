@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material'
 import React, { useState } from 'react'
 import { CF } from './CommonFieldStyle'
-export default function CommonField({ Name, Label, Email, Address, Role, Password, PhoneNo, passwordShown, edit }) {
+export default function CommonField({ Name, Label, Email, Address, Role, Password, PhoneNo, passwordShown, edit, currentPassword, newPassword, confirmPassword, setCurrentPassword, setNewPassword, setConfirmPassword }) {
 
     return (
         <>
@@ -12,8 +12,13 @@ export default function CommonField({ Name, Label, Email, Address, Role, Passwor
                 {
                     Password ?
                         <>
-                            <CF.ProfileField type={passwordShown ? "text" : "password"} required
-                            />
+                            {
+                                currentPassword ?
+                                    <CF.ProfileField type={passwordShown ? "text" : "password"} value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required
+                                    />
+                                    :
+                                    ''
+                            }
                         </>
                         :
                         Address ?
@@ -30,7 +35,7 @@ export default function CommonField({ Name, Label, Email, Address, Role, Passwor
                                 }} />
 
                 }
-              
+
             </Stack>
         </>
     )

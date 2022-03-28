@@ -1,9 +1,9 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { Slide, toast } from 'react-toastify';
-import { ADD_CONTACT_US, DELETE_CONTACT } from '../../lib/mutation/AllMutations';
+import { ADD_CONTACT_US, DELETE_CONTACT, UPDATE_SINGLE_CONTACT } from '../../lib/mutation/AllMutations';
 import { GET_CONTACT_US } from '../../lib/queries/AllQueries';
-import {BASIC_CONTACT_ROLE} from '../../constants/AllRolesStatus';
+import { BASIC_CONTACT_ROLE } from '../../constants/AllRolesStatus';
 export default function useContactUs() {
     const [filterValue, setFilterValue] = useState('');
     const [open, setOpen] = useState(false);
@@ -16,7 +16,7 @@ export default function useContactUs() {
         setOpen(true);
     };
 
-
+    const [flag7, setFlag7] = useState(false)
     // ADD_ROW
 
     const [name, setName] = useState('');
@@ -39,7 +39,7 @@ export default function useContactUs() {
             theme: 'colored',
             transition: Slide,
         });
-    let [Mutation,{loading:AddLoading}] = useMutation(ADD_CONTACT_US);
+    let [Mutation, { loading: AddLoading }] = useMutation(ADD_CONTACT_US);
     const ctaButtonHandler6 = async (event, item) => {
         if (
             name === '' ||
@@ -170,6 +170,111 @@ export default function useContactUs() {
             });
         }
     }
+    //UPDATE SINGLE CONTACT
+
+    let [updatedIndex, setUpdatedIndex] = useState('');
+
+
+    let [UpdateContactUs, { loading: UpdateLoading }] = useMutation(UPDATE_SINGLE_CONTACT);
+    const ctaUpdateContact = ({ ...props }) => {
+        setUpdatedIndex(props.id);
+        setName(props.name);
+        setsubject(props.subject);
+        setStatus(props.status);
+        setmessage(props.message);
+        setreply(props.reply);
+        setFlag7(true);
+    }
+
+    const handleCloseUpdate = () => {
+        setFlag7(false);
+    };
+    const ctaUpdateHandlerContact = async (event) => {
+        if (
+            name === '' ||
+            subject === '' ||
+            message === '' ||
+            status === '' ||
+            reply === ''
+        ) {
+            toast.warning('please fill all fields', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'colored',
+                transition: Slide,
+            });
+            return;
+        } else {
+            event.preventDefault();
+
+            try {
+                await UpdateContactUs({
+                    variables: {
+                        where: {
+                            id: updatedIndex
+                        },
+                        data: {
+                            name: {
+                                set: name
+                            },
+                            subject: {
+                                set: subject
+                            },
+                            message: {
+                                set: message
+                            },
+                            status: {
+                                set: status
+                            },
+                            reply: {
+                                set: reply
+                            }
+                        },
+
+                    },
+                    onCompleted() {
+                        toast.success("Story updated Successfully", {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                            transition: Slide,
+                        });
+                        setName('');
+                        setsubject('');
+                        setStatus('');
+                        setmessage('');
+                        setreply('');
+                        setUpdatedIndex('');
+                        setFlag7(false);
+                    },
+                    refetchQueries: [{ query: GET_CONTACT_US }],
+                })
+            } catch (error) {
+                toast.error(error.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    transition: Slide,
+                });
+            }
+        }
+    }
+
     return [
         {
             filterDataArray,
@@ -194,7 +299,12 @@ export default function useContactUs() {
             ctaButtonHandler6,
             ctaDeleteHandlerContact,
             DeleteLoading,
-            AddLoading
+            AddLoading,
+            ctaUpdateContact,
+            flag7,
+            handleCloseUpdate,
+            ctaUpdateHandlerContact,
+            UpdateLoading
 
         },
     ];

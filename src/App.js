@@ -13,8 +13,11 @@ function App() {
   setTimeout(function () {
     setLoading(false);
   }, 0);
- 
+  
 
+  // React.useEffect(() => {
+    // window.location.reload()
+  // }, [])
 
 
   return (

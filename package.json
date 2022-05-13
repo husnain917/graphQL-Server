@@ -29,7 +29,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "upload": "git config --global user.name “Ali338991” && git config --global user.email “ali.ansari7268@gmail.com” && git add . && git commit -m'update code' && git push origin aliBranch && git config --global user.name 'Adnan' && git config --global user.email 'connect.adnan.guru@gmail.com'"
   },
   "eslintConfig": {
     "extends": [

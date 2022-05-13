@@ -13,7 +13,6 @@ export default function UseLogin() {
   React.useEffect(() => {
     if (JSON.parse(sessionStorage.getItem('localAuthState')) === 'true') {
       navigate('/dashboard')
-      console.log('after');
     }
   }, [])
   const { data: data1 } = useQuery(GET_STUDENT)

@@ -1,11 +1,14 @@
 import { useMutation, useQuery } from '@apollo/client';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import { LOGIN } from '../../../lib/mutation/LoginMutation';
 import { toast, Slide } from 'react-toastify';
+import { AppContext } from "../../../State";
+
 import { GET_STUDENT, GET_SUCCESS_STORIES, GET_STAFF, GET_COURSES, GET_EVENTS } from '../../../lib/queries/AllQueries';
 export default function UseLogin() {
   let navigate = useNavigate();
+  const { state, dispatch } = useContext(AppContext);
 
   React.useEffect(() => {
     if (JSON.parse(sessionStorage.getItem('localAuthState')) === 'true') {
@@ -40,7 +43,7 @@ export default function UseLogin() {
 
 
   let [Login, { loading }] = useMutation(LOGIN)
-  const notifyError = () => toast.error('Incorrect email or password', {
+  const notifyError = (error) => toast.error(error, {
     position: "top-right",
     autoClose: 5000,
     hideProgressBar: false,
@@ -51,7 +54,7 @@ export default function UseLogin() {
     theme: "colored",
     transition: Slide,
   });
-  const loginHandler = async (setAuthState) => {
+  const loginHandler = async () => {
     try {
       await Login({
         variables: {
@@ -59,30 +62,23 @@ export default function UseLogin() {
           email: email
         },
         onCompleted({ login }) {
-
-
-          if (login) {
-            localStorage.setItem('user', JSON.stringify(login));
-            localStorage.setItem('localAuth', JSON.stringify(true));
-            setAuthState(true); // highlight-line
-            navigate('/dashboard')
-            localStorage.setItem('studentCount', data1 ? data1?.findManyStudents.length : 0);
-            localStorage.setItem('successCount', data2 ? data2.findManySuccessStories.length : 0);
-            localStorage.setItem('staffCount', data3 ? data3.findManyStaff.length : 0);
-            localStorage.setItem('courseCount', data4 ? data4.findManyCourses.length : 0);
-            localStorage.setItem('eventCount', data5 ? data5.findManyEvents.length : 0);
-            localStorage.setItem('adminCount', login.role === 'admin' ? 1 : 0);
-
-           
-          }
+          dispatch({
+            type: "setAuthState",
+            payload: {
+              user: login,
+              authState: true
+            },
+          });
         },
+        onError(error) {
+          notifyError(error.message)
+
+        }
       })
-
-
-
     }
     catch (error) {
-      notifyError()
+      console.log("errorerror", error);
+      notifyError(error)
 
     }
   }

@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import client from './lib/ApolloClient'
 import 'react-toastify/dist/ReactToastify.css';
+import { AppContextProvider } from "./State";
+
 import {
   ApolloProvider,
   gql
@@ -31,7 +33,9 @@ client
 ReactDOM.render(
 
   <ApolloProvider client={client} >
-    <App />
+    <AppContextProvider>
+      <App />
+    </AppContextProvider>
   </ApolloProvider>,
 
   document.getElementById('root')

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import Sidebar from '../commonComponents/sidebar/Sidebar';
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from '../modules/auth/login/Login';
@@ -15,21 +15,22 @@ import Profile from '../modules/profile/Profile';
 import ChangePassword from '../modules/profile/changePassword/ChangePassword';
 import ProfileData from '../modules/profile/profileData/ProfileData';
 import EditProfile from '../modules/profile/editProfile/EditProfile';
+import { AppContext } from "../State";
 export default function Navigation() {
-    const [authState, setAuthState] = useState(false);
+  const { state, dispatch } = useContext(AppContext);
     const items = JSON.parse(localStorage.getItem('user'));
-
+console.log("statestate",state);
     return (
         <>
-            {!authState ?
+            {!state.authState ?
                 <Routes>
-                    <Route path="/login" element={<Login setAuthState={setAuthState} authState={authState} />} />
-                    <Route path="*" element={<Login setAuthState={setAuthState} />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="*" element={<Login  />} />
                 </Routes >
                 :
                 <Sidebar>
                     <Routes>
-                        <Route path="/dashboard" element={<Dashboard authState={authState} />} />
+                        <Route path="/dashboard" element={<Dashboard authState={state.authState} />} />
                         <Route path="/staff" element={<AllStaff />} />
                         <Route path="/students" element={<AllStudents />} />
                         <Route path="*" element={<Dashboard />} />

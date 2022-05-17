@@ -5,8 +5,8 @@ import { ToastContainer } from "react-toastify";
 //Import from Files
 import CommonTableLoader from "../../../commonComponents/commonTableLoader/CommonTableLoader";
 import Table from "../../../commonComponents/table/Table";
-import { UseAllPosts } from "./UseAllPosts";
-export default function AllPosts() {
+import { UseAllStaff } from "./UseAllStaff";
+export default function AllStaff() {
   const [
     {
       loader,
@@ -19,7 +19,7 @@ export default function AllPosts() {
       ctaDeleteHandler,
       ctaUpdateHandler
     },
-  ] = UseAllPosts();
+  ] = UseAllStaff();
   if (
     GET_LOADING ||
     DELETE_LOADING ||

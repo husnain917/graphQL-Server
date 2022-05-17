@@ -14,7 +14,7 @@ import { GET_STAFF } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
 import { convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
-export function UseAllPosts() {
+export function UseAllStaff() {
   const { state, dispatch } = useContext(AppContext);
 
   let { data, loading: GET_LOADING, error } = useQuery(GET_STAFF);

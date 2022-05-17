@@ -15,7 +15,7 @@ import ChangePassword from '../modules/profile/changePassword/ChangePassword';
 import ProfileData from '../modules/profile/profileData/ProfileData';
 import EditProfile from '../modules/profile/editProfile/EditProfile';
 import { AppContext } from "../State";
-import AllPosts from '../modules/adminPortal/allPosts/AllPosts';
+import AllStaff from '../modules/adminPortal/allStaff/AllStaff';
 export default function Navigation() {
   const { state, dispatch } = useContext(AppContext);
     const items = JSON.parse(localStorage.getItem('user'));
@@ -31,7 +31,7 @@ export default function Navigation() {
                     <Routes>
                         <Route path="/dashboard" element={<Dashboard authState={state.authState} />} />
                         <Route path='/contactus' element={<ContactUs />} />
-                        <Route path="/staff" element={<AllPosts />} />
+                        <Route path="/staff" element={<AllStaff />} />
                         {/* <Route path="/students" element={<AllStudents />} />
                         <Route path="*" element={<Dashboard />} />
                         <Route path="/successStory" element={<SuccessStory />} />

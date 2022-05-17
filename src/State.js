@@ -1,17 +1,27 @@
 import React, { createContext, useReducer } from "react";
+import { EditorState } from "draft-js";
 
 let AppContext = createContext('');
 
 const initialState = {
     authState: false,
-    user:{}
+    user:{},
+    draftHtml: EditorState.createEmpty(),
+    openFormModal:false,
+    modalUpdateFlag:false,
+    editData:{}
 }
-
 let reducer = (state, action) => {
     switch(action.type) {
         case "setAuthState": {
             return { ...state, authState: action.payload.authState,user:action.payload.user }
         }
+        case "setModal": {
+            return { ...state, modalUpdateFlag:action?.payload?.modalUpdateFlag || false, openFormModal: action?.payload?.openFormModal }
+        }        
+        case "setEditData": {
+            return { ...state,editData:action.payload}
+        } 
         
     }
     return state;

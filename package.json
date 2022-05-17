@@ -11,10 +11,14 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
     "babel-plugin-transform-remove-console": "^6.9.4",
+    "draft-js": "^0.11.7",
+    "draftjs-to-html": "^0.9.1",
     "graphql": "^16.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-draft-wysiwyg": "^1.14.7",
     "react-loader-spinner": "^5.1.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
@@ -30,7 +34,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "upload": "git config --global user.name “Ali338991” && git config --global user.email “ali.ansari7268@gmail.com” && git add . && git commit -m'update code' && git push origin aliBranch && git config --global user.name 'Adnan' && git config --global user.email 'connect.adnan.guru@gmail.com'"
+    "upload": "git config --global user.name “Ali338991” && git config --global user.email “ali.ansari7268@gmail.com” && git add . && git commit -m'update code' && git push origin master && git config --global user.name 'Adnan' && git config --global user.email 'connect.adnan.guru@gmail.com'"
   },
   "eslintConfig": {
     "extends": [

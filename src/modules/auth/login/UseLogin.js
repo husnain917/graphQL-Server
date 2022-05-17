@@ -5,21 +5,9 @@ import { LOGIN } from '../../../lib/mutation/LoginMutation';
 import { toast, Slide } from 'react-toastify';
 import { AppContext } from "../../../State";
 
-import { GET_STUDENT, GET_SUCCESS_STORIES, GET_STAFF, GET_COURSES, GET_EVENTS } from '../../../lib/queries/AllQueries';
 export default function UseLogin() {
-  let navigate = useNavigate();
   const { state, dispatch } = useContext(AppContext);
 
-  React.useEffect(() => {
-    if (JSON.parse(sessionStorage.getItem('localAuthState')) === 'true') {
-      navigate('/dashboard')
-    }
-  }, [])
-  const { data: data1 } = useQuery(GET_STUDENT)
-  const { data: data2 } = useQuery(GET_SUCCESS_STORIES)
-  const { data: data3 } = useQuery(GET_STAFF)
-  const { data: data4 } = useQuery(GET_COURSES)
-  const { data: data5 } = useQuery(GET_EVENTS)
   const [email, setEmail] = useState('');
   const [values, setValues] = useState({
     amount: '',

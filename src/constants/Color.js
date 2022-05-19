@@ -5,4 +5,8 @@ export const colors = {
     blue: '#5003b7',
     lightBlue: '#00688B',
     gray:'#F5F5F5',
+    white:'white',
+    mainColor: 'black',
+    subColor:'white',
+    subColor2:'#6E675F'
 }

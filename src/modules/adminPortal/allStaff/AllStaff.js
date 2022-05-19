@@ -1,101 +1,99 @@
 //Import from Libraries
 
-import React from 'react';
-import { ToastContainer } from 'react-toastify';
+import React from "react";
+import { ToastContainer } from "react-toastify";
 //Import from Files
-import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
-import Table from '../../../commonComponents/table/Table';
-import { UseAllStaff } from './UseAllStaff';
+import CommonTableLoader from "../../../commonComponents/commonTableLoader/CommonTableLoader";
+import Table from "../../../commonComponents/table/Table";
+import { UseAllStaff } from "./UseAllStaff";
 export default function AllStaff() {
   const [
     {
-      filterDataArray,
-      loading,
-      open,
-      handleClickOpen,
-      handleClose,
-      openAnchor,
-      anchorEl,
-      handleAnchorClose,
-      handleAnchorClick,
-      error,
-      ctaButtonHandler1,
-      name,
-      email,
-      phone,
-      role,
-      setName,
-      setEmail,
-      setPhone,
-      setRole,
-      ctaDeleteHandlerStaff,
-      DeleteLoading,
-      AddLoading,
-      ctaUpdateStaff,
-      flag1,
-      handleCloseUpdate,
-      ctaUpdateHandlerStaff,
-      UpdateLoading,
-      setFlag1
+      loader,
+      ADD_LOADING,
+      GET_LOADING,
+      DELETE_LOADING,
+      UPDATE_LOADING,
+      refacteredData,
+      ctaFormHandler,
+      ctaDeleteHandler,
+      ctaUpdateHandler,
+      formInputs,
+      ctaEditButtonHandler
     },
   ] = UseAllStaff();
-
+  if (
+    GET_LOADING ||
+    DELETE_LOADING ||
+    UPDATE_LOADING ||
+    ADD_LOADING ||
+    loader
+  ) {
+    return <CommonTableLoader />;
+  }
   return (
     <>
       <ToastContainer />
-      {loading ? (
-        <CommonTableLoader />
-      ) :
-        DeleteLoading ? (
-          <CommonTableLoader />
-        ) :
-          AddLoading ? (
-            <CommonTableLoader />
-          )
-          :
-          UpdateLoading ? (
-            <CommonTableLoader />
-          ) : (
-            <>
-              <Table
-                tableHeadings={[
-                  'Name',
-                  'Email',
-                  'Role',
-                  'Phone',
-                  'Image',
-                  'Actions',
-                ]}
-                title={'All Staff'}
-                data={filterDataArray}
-                name={name}
-                email={email}
-                role={role}
-                phone={phone}
-                setName={setName}
-                setEmail={setEmail}
-                setRole={setRole}
-                setPhone={setPhone}
-                ctaButtonHandler1={ctaButtonHandler1}
-                ctaDeleteHandlerStaff={ctaDeleteHandlerStaff}
+      <Table
+        title={"All Staff"}
+        tableHeadings={["Id", "Name", "Email", "Role", "Phone","Crud"]}
+        ctaEditButtonHandler={ctaEditButtonHandler}
+        printedKeys={[
+          {
+            key: "id",
+          },
+          {
+            key: "name",
+          },
+          {
+            key: "email",
+          },
+          {
+            key: "role",
+          },
+          {
+            key: "phone",
+          },
+          {
+            type: "crud",
+          },
+          // {
+          //   key: "postUrl",
+          //   type: "image",
+          // },
+          // {
+          //   key: "postDesc",
+          //   type: "editor",
+          // },
+        ]}
+        formInputs={formInputs}
+        // {[
+          // {
+          //   type: "editor",
+          //   name: "editor",
+          // },
+         
 
-                ctaUpdateStaff={ctaUpdateStaff}
-                flag={flag1}
-                setFlag1={setFlag1}
-                handleCloseUpdate={handleCloseUpdate}
-                ctaUpdateHandlerStaff={ctaUpdateHandlerStaff}
-                loading={loading}
-                error={error}
-                handleClickOpen={handleClickOpen}
-                open={open}
-                handleClose={handleClose}
-                anchorEl={anchorEl}
-                handleAnchorClose={handleAnchorClose}
-                handleAnchorClick={handleAnchorClick}
-                openAnchor={openAnchor}
-              />
-            </>
-          )}
+          // {
+          //   label: 'CategoryName',
+          //   name: 'categoryName',
+          //   type: 'text',
+          // },
+          // {
+          //   label: 'createrName',
+          //   name: 'createrName',
+          //   type: 'text',
+          // }
+        // ]}
+        filterdata={{
+          key: "role",
+          filterTag: ['All', 'ADMIN', 'TEACHER'],
+        }}
+        data={refacteredData}
+        ctaFormHandler={ctaFormHandler}
+        ctaDeleteHandler={ctaDeleteHandler}
+        ctaUpdateHandler={ctaUpdateHandler}
+      />
     </>
   );
 }

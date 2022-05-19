@@ -1,34 +1,92 @@
-import { useMutation, useQuery } from '@apollo/client';
-import React, { useState } from 'react';
-import { Slide, toast } from 'react-toastify';
-import { BASIC_EVENTS_ROLE } from '../../constants/AllRolesStatus';
-import { ADD_EVENTS, DELETE_SINGLE_EVENT, UPDATE_SINGLE_EVENT } from '../../lib/mutation/AllMutations';
-import { GET_EVENTS } from '../../lib/queries/AllQueries';
+import { useMutation, useQuery } from "@apollo/client";
+import React, { useState, useContext } from "react";
+import Axios from "axios";
+import {
+    ToastError,
+    ToastSuccess,
+    ToastWarning,
+} from "../../commonComponents/commonFunction/CommonFunction";
+import {
+    ADD_EVENTS,
+    DELETE_SINGLE_EVENT,
+    UPDATE_SINGLE_EVENT,
+} from "../../lib/mutation/AllMutations";
+import { GET_EVENTS } from "../../lib/queries/AllQueries";
+// import { convertToRaw } from "draft-js";
+// import draftToHtml from "draftjs-to-html";
+import { Slide, toast } from "react-toastify";
+import { AppContext } from "../../State";
 
-export function useEvents() {
-    const [filterValue, setFilterValue] = useState('');
-    const [open, setOpen] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(null);
-    const openAnchor = Boolean(anchorEl);
-    const [flag8, setFlag8] = useState(false)
-    let { loading, data, error } = useQuery(GET_EVENTS);
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
 
 
-    // ADD EVENTS
-    const [name, setName] = useState('');
-    const [description, setdescription] = useState('');
-    const [status, setStatus] = useState(BASIC_EVENTS_ROLE);
-    const [eventDate, seteventDate] = useState('');
-    const [speakerId, setspeakerId] = useState('');
-    const [eventImage, seteventImage] = useState('');
 
-    const [close, setclose] = useState(false);
+
+
+
+export function UseEvents() {
+    const formInputs = [
+        {
+            label: "Name",
+            name: "eventName",
+            type: "text",
+        },
+        {
+            label: "Description",
+            name: "eventDesc",
+            type: "email",
+        },
+        {
+            label: "Speaker Id",
+            name: "speakerId",
+            type: "email",
+        },
+        {
+            label: "Image",
+            name: "eventImage",
+            type: "email",
+        },
+        {
+            label: "Status",
+            name: "eventStatus",
+            type: "select",
+            dropDownContent: ["PAST", "UPCOMING"],
+        },
+    ]
+    const { state, dispatch } = useContext(AppContext);
+
+
+
+
+
+
+    //GET STAFF 
+
+    let { data, loading: GET_LOADING, error } = useQuery(GET_EVENTS);
+    console.log("error", error);
+    const refacteredData = [];
+    data?.findManyEvents?.map((item) => {
+        refacteredData.push({
+            id: item.id,
+            eventName: item.eventName,
+            eventDesc: item.eventDesc,
+            eventImage: item.eventImage,
+            eventDate: item.eventDate,
+            speakerId: item.speakerId,
+            eventStatus: item.eventStatus,
+
+
+        });
+    });
+    console.log("refacteredData", refacteredData);
+
+    const [loader, setLoader] = useState(false);
+
+    //ADD STAFF
+
+    let [CreateManyEvents, { loading: ADD_LOADING }] = useMutation(ADD_EVENTS);
 
     const Notify = () =>
-        toast.success('Event added successfully', {
+        toast.success('Student added successfully', {
             position: 'top-right',
             autoClose: 5000,
             hideProgressBar: false,
@@ -39,107 +97,134 @@ export function useEvents() {
             theme: 'colored',
             transition: Slide,
         });
-    let [CreateManyStudents, { loading: AddLoading }] = useMutation(ADD_EVENTS);
-    const ctaButtonHandler5 = async (event, item) => {
-        if (
-            name === '' ||
-            description === '' ||
-            status === '' ||
-            eventDate === '' ||
-            speakerId === ''
-        ) {
-            toast.warning('please fill all fields', {
-                position: 'top-right',
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: 'colored',
-                transition: Slide,
+    const ctaFormHandler = async (event) => {
+        event.preventDefault();
+        try {
+            await CreateManyEvents({
+                variables: {
+                    data: {
+                        eventName: state.editData?.eventName,
+                        eventDesc: state.editData?.eventDesc,
+                        eventImage: state.editData?.eventImage,
+                        eventDate: new Date(),
+                        speakerId: state.editData?.speakerId,
+                        eventStatus: state.editData?.eventStatus,
+
+                    },
+                },
+                onCompleted(data, cache) {
+                    Notify();
+                },
+                refetchQueries: [{ query: GET_EVENTS }],
             });
-            return;
-        } else {
-            event.preventDefault();
-            try {
-                await CreateManyStudents({
-                    variables: {
-                        data: {
-                            eventName: name,
-                            eventDesc: description,
-                            eventDate: eventDate,
-                            speakerId: speakerId,
-                            eventStatus: status,
-                        },
-                    },
-                    onCompleted(data, cache) {
-                        Notify();
-                    },
-                    refetchQueries: [{ query: GET_EVENTS }],
-                });
-                setName('');
-                setdescription('');
-                seteventDate('');
-                setspeakerId('');
-                seteventImage('');
-                setStatus('');
-                setclose(true);
-                setOpen(false)
-            } catch (error) {
-                toast.warning(error.message, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                    transition: Slide,
-                });
-            }
+            console.log(state.editData);
+        } catch (error) {
+            dispatch({
+                type: "setModal",
+                payload: {
+                    openFormModal: false,
+                },
+            });
+            setLoader(false);
+            ToastError(error.message);
+
         }
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const handleAnchorClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleAnchorClose = (value) => {
-        setAnchorEl(null);
-        setFilterValue(typeof value == 'object' ? filterValue : value);
-    };
-
-
-    // GET EVENTS
-    const filterDataArray = data?.findManyEvents.filter((item) => {
-        if (filterValue === '') {
-            return item;
-        } else if (filterValue === item.eventStatus) {
-            return item;
-        } else if (filterValue === 'All') {
-            return item;
-        }
-    });
 
 
 
-    //DELETE EVENT
-    let [DeleteEvents, { loading: DeleteLoading }] = useMutation(DELETE_SINGLE_EVENT);
-    const ctaDeleteHandlerEvent = async ({ e, ...props }) => {
-        console.log(props.id);
+
+    // DELETE STAFF
+
+    let [DeleteEvents, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_EVENT);
+    const ctaDeleteHandler = async ({ ...data }) => {
         try {
             await DeleteEvents({
                 variables: {
                     where: {
-                        id: props.id
-                    }
+                        id: data.id,
+                    },
                 },
                 onCompleted(data) {
-                    toast.success("Event deleted Successfully", {
+                    toast.success('Student deleted Successfully', {
+                        position: 'top-right',
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'colored',
+                        transition: Slide,
+                    });
+                },
+                refetchQueries: [{ query: GET_EVENTS }],
+            });
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+
+
+
+
+    //Update staff
+
+    let [UpdateEvents, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_EVENT);
+    const [updatedIndex, setUpdatedIndex] = useState('')
+    const ctaEditButtonHandler = async (data) => {
+        const test = state.editData;
+        console.log(data.id);
+        setUpdatedIndex(data.id)
+        dispatch({
+            type: "setModal",
+            payload: {
+                openFormModal: true,
+                modalUpdateFlag: true,
+            },
+        });
+        formInputs.map((item) => {
+            test[item.name] = data[item.name];
+        });
+        dispatch({
+            type: "setEditData",
+            payload: test,
+        });
+    };
+    const ctaUpdateHandler = async (event) => {
+        event.preventDefault()
+
+        try {
+            await UpdateEvents({
+                variables: {
+                    where: {
+                        id: updatedIndex
+                    },
+                    data: {
+                        eventName: {
+                            set: state.editData?.eventName
+                        },
+                        eventDesc: {
+                            set: state.editData?.eventDesc
+                        },
+                        eventImage: {
+                            set: state.editData?.eventImage
+                        },
+                        eventDate: {
+                            set: new Date()
+                        },
+                        speakerId: {
+                            set: state.editData?.speakerId
+                        },
+                        eventStatus: {
+                            set: state.editData?.eventStatus
+                        }
+                    }
+                },
+                onCompleted() {
+                    toast.success("Student updated Successfully", {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -153,159 +238,24 @@ export function useEvents() {
                 },
                 refetchQueries: [{ query: GET_EVENTS }],
             })
+
         } catch (error) {
-            toast.error(error.message, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-                transition: Slide,
-            });
+            console.log(error.message);
         }
     }
-
-
-
-
-    //UPDATE SINGLE EVENT
-    let [updatedIndex, setUpdatedIndex] = useState('');
-
-
-    let [UpdateEvents, { loading: UpdateLoading }] = useMutation(UPDATE_SINGLE_EVENT);
-    const ctaUpdateEvent = ({ ...props }) => {
-        setUpdatedIndex(props.id);
-        setName(props.eventName);
-        setdescription(props.eventDesc);
-        seteventDate(props.eventDate);
-        setStatus(props.eventStatus);
-        setFlag8(true);
-    }
-
-    const handleCloseUpdate = () => {
-        setFlag8(false);
-    };
-    const ctaUpdateHandlerEvent = async (event) => {
-        if (
-            name === '' ||
-            description === '' ||
-            status === '' ||
-            eventDate === '' 
-            // eventImage === ''
-        ) {
-            toast.warning('please fill all fields', {
-                position: 'top-right',
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: 'colored',
-                transition: Slide,
-            });
-            return;
-        } else {
-            event.preventDefault();
-
-            try {
-                await UpdateEvents({
-                    variables: {
-                        where: {
-                            id: updatedIndex
-                        },
-                        data: {
-                            eventName: {
-                                set: name
-                            },
-                            eventDesc: {
-                                set: description
-                            },
-                            eventDate: {
-                                set: eventDate
-                            },
-                            eventStatus: {
-                                set: status
-                            }
-                        },
-
-                    },
-                    onCompleted() {
-                        toast.success("Story updated Successfully", {
-                            position: "top-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "colored",
-                            transition: Slide,
-                        });
-                        setName('');
-                        setdescription('');
-                        setStatus('');
-                        seteventDate('');
-                        // setspeakerId('');
-                        // seteventImage('');
-                        setUpdatedIndex('');
-                        setFlag8(false);
-                    },
-                    refetchQueries: [{ query: GET_EVENTS }],
-                })
-            } catch (error) {
-                toast.error(error.message, {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                    transition: Slide,
-                });
-            }
-        }
-    }
-
-
-
     return [
         {
-            filterDataArray,
-            loading,
-            open,
-            handleClickOpen,
-            handleClose,
-            openAnchor,
-            anchorEl,
-            handleAnchorClose,
-            handleAnchorClick,
-            name,
-            setName,
-            description,
-            setdescription,
-            status,
-            setStatus,
-            eventDate,
-            seteventDate,
-            speakerId,
-            setspeakerId,
-            eventImage,
-            seteventImage,
-            ctaButtonHandler5,
-            ctaDeleteHandlerEvent,
-            DeleteLoading,
-            AddLoading,
-            ctaUpdateEvent,
-            flag8,
-            handleCloseUpdate,
-            ctaUpdateHandlerEvent,
-            UpdateLoading
+            loader,
+            ADD_LOADING,
+            GET_LOADING,
+            DELETE_LOADING,
+            UPDATE_LOADING,
+            refacteredData,
+            ctaFormHandler,
+            ctaDeleteHandler,
+            ctaUpdateHandler,
+            formInputs,
+            ctaEditButtonHandler
         },
     ];
 }

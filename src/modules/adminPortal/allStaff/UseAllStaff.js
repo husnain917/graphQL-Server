@@ -1,32 +1,83 @@
-import { useMutation, useQuery } from '@apollo/client';
-import React, { useState } from 'react';
-import { Slide, toast } from 'react-toastify';
-import { BASIC_STAFF_ROLE } from '../../../constants/AllRolesStatus';
+import { useMutation, useQuery } from "@apollo/client";
+import React, { useState, useContext } from "react";
+import Axios from "axios";
+import {
+  ToastError,
+  ToastSuccess,
+  ToastWarning,
+} from "../../../commonComponents/commonFunction/CommonFunction";
 import {
   ADD_STAFF,
   DELETE_SINGLE_STAFF,
   UPDATE_SINGLE_STAFF,
-} from '../../../lib/mutation/AllMutations';
-import { GET_STAFF } from '../../../lib/queries/AllQueries';
+} from "../../../lib/mutation/AllMutations";
+import { GET_STAFF } from "../../../lib/queries/AllQueries";
+import { AppContext } from "../../../State";
+// import { convertToRaw } from "draft-js";
+// import draftToHtml from "draftjs-to-html";
+import { Slide, toast } from "react-toastify";
+
+
+
+
+
+
+
 export function UseAllStaff() {
-  const [filterValue, setFilterValue] = useState('');
-  const [open, setOpen] = React.useState(false);
-  const [flag1, setFlag1] = useState(false)
+  const formInputs = [
+    {
+      label: "Name",
+      name: "name",
+      type: "text",
+    },
+    {
+      label: "Email",
+      name: "email",
+      type: "email",
+    },
+    {
+      label: "Phone",
+      name: "phone",
+      type: "number",
+    },
+    {
+      label: "Role",
+      name: "role",
+      type: "select",
+      dropDownContent: ["ADMIN", "TEACHER"],
+    },
+  ]
+  const { state, dispatch } = useContext(AppContext);
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const openAnchor = Boolean(anchorEl);
-  let { data, loading, error } = useQuery(GET_STAFF);
 
-  // ADD STAFF
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [role, setRole] = useState(BASIC_STAFF_ROLE);
-  const [phone, setPhone] = useState('');
-  const [close, setclose] = useState(false);
+
+
+
+  //GET STAFF 
+  
+  let { data, loading: GET_LOADING, error } = useQuery(GET_STAFF);
+  console.log("error", error);
+  const refacteredData = [];
+  data?.findManyStaff?.map((item) => {
+    refacteredData.push({
+      id: item.id,
+      name: item.name,
+      email: item.email,
+      role: item.role,
+      phone: item.phone,
+    });
+  });
+  console.log("refacteredData", refacteredData);
+
+  const [loader, setLoader] = useState(false);
+
+  //ADD STAFF
+
+  let [CreateManyStaff, { loading: ADD_LOADING }] = useMutation(ADD_STAFF);
 
   const Notify = () =>
-    toast.success('Staff added successfully', {
+    toast.success('Student added successfully', {
       position: 'top-right',
       autoClose: 5000,
       hideProgressBar: false,
@@ -37,102 +88,53 @@ export function UseAllStaff() {
       theme: 'colored',
       transition: Slide,
     });
-  let [CreateManyStaff, { loading: AddLoading }] = useMutation(ADD_STAFF);
-  const ctaButtonHandler1 = async (event, item) => {
-    if (
-      name === '' ||
-      email === '' ||
-      email === '' ||
-      role === '' ||
-      phone === ''
-    ) {
-      toast.warning('please fill all fields', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-        transition: Slide,
+  const ctaFormHandler = async (event) => {
+    event.preventDefault();
+    try {
+      await CreateManyStaff({
+        variables: {
+          data: {
+            name: state.editData?.name,
+            email: state.editData?.email,
+            role: state.editData?.role,
+            phone: state.editData?.phone
+          },
+        },
+        onCompleted(data, cache) {
+          Notify();
+        },
+        refetchQueries: [{ query: GET_STAFF }],
       });
-      return;
-    } else {
-      event.preventDefault();
-      try {
-        await CreateManyStaff({
-          variables: {
-            data: {
-              name: name,
-              email: email,
-              role: role,
-              phone: phone,
-            },
-          },
-          onCompleted(data, cache) {
-            Notify();
-          },
-          refetchQueries: [{ query: GET_STAFF }],
-        });
-        setName('');
-        setEmail('');
-        setRole('');
-        setPhone('');
-        setOpen(false);
-        setclose(true);
-      } catch (error) {
-        toast.error(error.message, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored',
-          transition: Slide,
-        });
-      }
+    } catch (error) {
+      dispatch({
+        type: "setModal",
+        payload: {
+          openFormModal: false,
+        },
+      });
+      setLoader(false);
+      ToastError(error.message);
+
     }
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleAnchorClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleAnchorClose = (value) => {
-    setAnchorEl(null);
-    setFilterValue(typeof value == 'object' ? filterValue : value);
-  };
 
-  // GET STAFF
-  const filterDataArray = data?.findManyStaff?.filter((item) => {
-    if (filterValue === '') {
-      return item;
-    } else if (filterValue === item.role) {
-      return item;
-    } else if (filterValue === 'All') {
-      return item;
-    }
-  });
+
+
 
   // DELETE STAFF
-  let [DeleteStaff, { loading: DeleteLoading }] =
-    useMutation(DELETE_SINGLE_STAFF);
-  const ctaDeleteHandlerStaff = async ({ e, ...props }) => {
-    console.log(props.id);
+
+  let [DeleteStaff, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_STAFF);
+  const ctaDeleteHandler = async ({ ...data }) => {
     try {
       await DeleteStaff({
         variables: {
           where: {
-            id: props.id,
+            id: data.id,
           },
         },
         onCompleted(data) {
-          toast.success('Staff deleted Successfully', {
+          toast.success('Student deleted Successfully', {
             position: 'top-right',
             autoClose: 5000,
             hideProgressBar: false,
@@ -147,169 +149,94 @@ export function UseAllStaff() {
         refetchQueries: [{ query: GET_STAFF }],
       });
     } catch (error) {
-      toast.error('Bad Response', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-        transition: Slide,
-      });
+      console.log(error.message);
     }
   };
 
 
 
 
-  //UPDATE SINGLE STORY
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  //Update staff
+
+  let [UpdateStudents, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_STAFF);
+  const [updatedIndex, setUpdatedIndex] = useState('')
+  const ctaEditButtonHandler = async (data) => {
+    const test = state.editData;
+    console.log(data.id);
+    setUpdatedIndex(data.id)
+    dispatch({
+      type: "setModal",
+      payload: {
+        openFormModal: true,
+        modalUpdateFlag: true,
+      },
+    });
+    formInputs.map((item) => {
+      test[item.name] = data[item.name];
+    });
+    dispatch({
+      type: "setEditData",
+      payload: test,
+    });
   };
+  const ctaUpdateHandler = async (event) => {
+    event.preventDefault()
 
-
-
-
-  let [updatedIndex, setUpdatedIndex] = useState('');
-
-
-  let [UpdateStaff, { loading: UpdateLoading }] = useMutation(UPDATE_SINGLE_STAFF);
-  const ctaUpdateStaff = ({ ...props }) => {
-
-    console.log(props.id);
-    setUpdatedIndex(props.id);
-    setName(props.name);
-    setEmail(props.email);
-    setRole(props.role);
-    setPhone(props.phone);
-    setFlag1(true);
-  }
-
-  const handleCloseUpdate = () => {
-    setFlag1(false);
-  };
-  const ctaUpdateHandlerStaff = async (event) => {
-    if (
-      name === '' ||
-      email === '' ||
-      role === '' ||
-      phone === ''
-
-    ) {
-      toast.warning('please fill all fields', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-        transition: Slide,
-      });
-      return;
-    } else {
-      event.preventDefault();
-
-      try {
-        await UpdateStaff({
-          variables: {
-            where: {
-              id: updatedIndex
-            },
-            data: {
-              name: {
-                set: name
-              },
-              email: {
-                set: email
-              },
-              role: {
-                set: role
-              },
-              phone: {
-                set: phone
-              }
-            },
-
+    try {
+      await UpdateStudents({
+        variables: {
+          where: {
+            id: updatedIndex
           },
+          data: {
+            name: {
+              set: state.editData?.name
+            },
+            email: {
+              set: state.editData?.email
+            },
+            phone: {
+              set: state.editData?.phone
+            },
+            role: {
+              set: state.editData?.role
+            }
+          }
+        },
+        onCompleted() {
+          toast.success("Student updated Successfully", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
+        },
+        refetchQueries: [{ query: GET_STAFF }],
+      })
 
-          onCompleted() {
-            toast.success("Staff updated Successfully", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-              transition: Slide,
-            });
-            setName('');
-            setEmail('');
-            setRole('');
-            setPhone('');
-            setUpdatedIndex('');
-            setFlag1(false);
-          },
-          refetchQueries: [{ query: GET_STAFF }],
-        })
-      } catch (error) {
-        toast.error(error.message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Slide,
-        });
-      }
+    } catch (error) {
+      console.log(error.message);
     }
   }
-
-
-
-
-
-
-
-
   return [
     {
-      filterDataArray,
-      loading,
-      error,
-      open,
-      handleClickOpen,
-      handleClose,
-      openAnchor,
-      anchorEl,
-      AddLoading,
-      handleAnchorClose,
-      handleAnchorClick,
-      ctaButtonHandler1,
-      name,
-      email,
-      phone,
-      role,
-      setName,
-      setEmail,
-      setPhone,
-      setRole,
-      ctaDeleteHandlerStaff,
-      DeleteLoading,
-      ctaUpdateStaff,
-      flag1,
-      handleCloseUpdate,
-      ctaUpdateHandlerStaff,
-      UpdateLoading,
+      loader,
+      ADD_LOADING,
+      GET_LOADING,
+      DELETE_LOADING,
+      UPDATE_LOADING,
+      refacteredData,
+      ctaFormHandler,
+      ctaDeleteHandler,
+      ctaUpdateHandler,
+      formInputs,
+      ctaEditButtonHandler
     },
   ];
 }

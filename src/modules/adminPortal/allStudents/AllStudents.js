@@ -10,74 +10,69 @@ import CommonTableLoader from '../../../commonComponents/commonTableLoader/Commo
 export default function AllStudents() {
   const [
     {
-      filterDataArray,
-      loading,
-      open,
-      handleClickOpen,
-      handleClose,
-      openAnchor,
-      anchorEl,
-      handleAnchorClose,
-      handleAnchorClick,
-      name,
-      email,
-      status,
-      setName,
-      setEmail,
-      setStatus,
-      ctaButtonHandler3,
-      ctaDeleteHandlerStudent,
-      DeleteLoading,
-      AddLoading,
-      ctaUpdateStudent,
-      flag5,
-      handleCloseUpdate,
-      ctaUpdateHandlerStudent,
-      UpdateLoading
+      loader,
+      ADD_LOADING,
+      GET_LOADING,
+      DELETE_LOADING,
+      UPDATE_LOADING,
+      refacteredData,
+      ctaFormHandler,
+      ctaDeleteHandler,
+      ctaUpdateHandler,
+      formInputs,
+      ctaEditButtonHandler
     },
   ] = UseAllStudents();
-
+  if (
+    GET_LOADING ||
+    DELETE_LOADING ||
+    UPDATE_LOADING ||
+    ADD_LOADING ||
+    loader
+  ) {
+    return <CommonTableLoader />;
+  }
   return (
     <>
-      <ToastContainer />
-      {loading ? (
-        <CommonTableLoader />
-      ) : DeleteLoading ? (
-        <CommonTableLoader />
-      )
-        : AddLoading ? (
-          <CommonTableLoader />
-        )
-          : UpdateLoading ? (
-            <CommonTableLoader />
-          ) : (
-            <>
-              <Table
-                title={'All Students'}
-                tableHeadings={['Name', 'Email', 'Status', 'Actions']}
-                data={filterDataArray}
-                name={name}
-                email={email}
-                status={status}
-                setName={setName}
-                setEmail={setEmail}
-                setStatus={setStatus}
-                ctaButtonHandler3={ctaButtonHandler3}
-                ctaDeleteHandlerStudent={ctaDeleteHandlerStudent}
-                flag={flag5}
-                ctaUpdateStudent={ctaUpdateStudent}
-                handleCloseUpdate={handleCloseUpdate}
-                ctaUpdateHandlerStudent={ctaUpdateHandlerStudent}
-                handleClickOpen={handleClickOpen}
-                open={open}
-                handleClose={handleClose}
-                anchorEl={anchorEl}
-                handleAnchorClose={handleAnchorClose}
-                handleAnchorClick={handleAnchorClick}
-                openAnchor={openAnchor}
-              />
-            </>
-          )}
+      <Table
+        title={'All Students'}
+        tableHeadings={['id','Name', 'Email', 'Status', 'Actions']}
+        ctaEditButtonHandler={ctaEditButtonHandler}
+        printedKeys={[
+          {
+            key: "id",
+          },
+          {
+            key: "name",
+          },
+          {
+            key: "email",
+          },
+          {
+            key: "status",
+          },
+          {
+            type: "crud",
+          },
+          // {
+          //   key: "postUrl",
+          //   type: "image",
+          // },
+          // {
+          //   key: "postDesc",
+          //   type: "editor",
+          // },
+        ]}
+        formInputs={formInputs}
+        filterdata={{
+          key: "role",
+          filterTag: ['All', 'ACTIVE', 'OFFLINE'],
+        }}
+        data={refacteredData}
+        ctaFormHandler={ctaFormHandler}
+        ctaDeleteHandler={ctaDeleteHandler}
+        ctaUpdateHandler={ctaUpdateHandler}
+      />
     </>
   );
 }

@@ -17,13 +17,9 @@ export default function AllStaff() {
       refacteredData,
       ctaFormHandler,
       ctaDeleteHandler,
-<<<<<<< HEAD
       ctaUpdateHandler,
       formInputs,
       ctaEditButtonHandler
-=======
-      ctaUpdateHandler
->>>>>>> abf823cf673bb3ea7da57b4415caf5e42deed16a
     },
   ] = UseAllStaff();
   if (
@@ -39,14 +35,9 @@ export default function AllStaff() {
     <>
       <ToastContainer />
       <Table
-<<<<<<< HEAD
         title={"All Staff"}
         tableHeadings={["Id", "Name", "Email", "Phone", "Role", "Crud"]}
         ctaEditButtonHandler={ctaEditButtonHandler}
-=======
-        title={"All Posts"}
-        tableHeadings={["Id", "Name", "Email", "Role", "Phone","Crud"]}
->>>>>>> abf823cf673bb3ea7da57b4415caf5e42deed16a
         printedKeys={[
           {
             key: "id",
@@ -58,7 +49,6 @@ export default function AllStaff() {
             key: "email",
           },
           {
-<<<<<<< HEAD
             key: "phone",
           },
           {
@@ -69,64 +59,6 @@ export default function AllStaff() {
           },
         ]}
         formInputs={formInputs}
-=======
-            key: "role",
-          },
-          {
-            key: "phone",
-          },
-          {
-            type: "crud",
-
-          },
-          // {
-          //   key: "postUrl",
-          //   type: "image",
-          // },
-          // {
-          //   key: "postDesc",
-          //   type: "editor",
-          // },
-        ]}
-        formInputs={[
-          // {
-          //   type: "editor",
-          //   name: "editor",
-          // },
-          {
-            label: "Name",
-            name: "name",
-            type: "text",
-          },
-          {
-            label: "Email",
-            name: "email",
-            type: "email",
-          },
-          {
-            label: "Phone",
-            name: "phone",
-            type: "number",
-          },
-          {
-            label: "Role",
-            name: "role",
-            type: "select",
-            dropDownContent: ["Admin", "Teacher"],
-          },
-
-          // {
-          //   label: 'CategoryName',
-          //   name: 'categoryName',
-          //   type: 'text',
-          // },
-          // {
-          //   label: 'createrName',
-          //   name: 'createrName',
-          //   type: 'text',
-          // }
-        ]}
->>>>>>> abf823cf673bb3ea7da57b4415caf5e42deed16a
         filterdata={{
           key: "role",
           filterTag: ['All', 'ADMIN', 'TEACHER'],

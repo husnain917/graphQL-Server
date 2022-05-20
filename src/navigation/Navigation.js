@@ -39,7 +39,7 @@ export default function Navigation() {
                         <Route path="/approve-enrollment" element={<EnrollmentApproval />} />
                         <Route path="/events" element={<Events />} />
                         <Route path='/faq' element={<FAQS />} />
-                        {/* <Route path='profile' element={<Profile />}>
+                         {/* <Route path='profile' element={<Profile />}>
                             <Route path={`id:${items.id}`} element={<ProfileData />} />
                             <Route path={`editProfile/id:${items.id}`} element={<EditProfile />} />
                             <Route path={`ChangePassword/id:${items.id}`} element={<ChangePassword />} />

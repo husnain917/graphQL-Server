@@ -27,6 +27,7 @@ export default function Table({
   formInputs,
   filterdata,
   data,
+<<<<<<< HEAD
 
   // Handlers
   ctaFormHandler,
@@ -46,10 +47,27 @@ export default function Table({
     setAnchorEl(null);
     setFilterValue(typeof value == "object" ? filterValue : value);
   };
+=======
+ 
+  // Handlers
+  ctaFormHandler,
+  ctaDeleteHandler,
+  ctaUpdateHandler
+}) {
+
+  const { state, dispatch } = useContext(AppContext);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [filterValue, setFilterValue] = useState("");
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchShow, setSearchShow] = useState(false)
+
+  const openAnchor = Boolean(anchorEl);
+>>>>>>> abf823cf673bb3ea7da57b4415caf5e42deed16a
   //filter data for filters
   const filterDataArray = data?.filter((item) => {
     if (filterValue === "") {
       return item;
+<<<<<<< HEAD
     } else if (filterValue === item.role) {
       return item;
     }
@@ -63,6 +81,11 @@ export default function Table({
       return item
     }
     else if (filterValue === "All") {
+=======
+    } else if (filterValue === item[filterdata.key]) {
+      return item;
+    } else if (filterValue === "All") {
+>>>>>>> abf823cf673bb3ea7da57b4415caf5e42deed16a
       return item;
     }
   });
@@ -77,6 +100,7 @@ export default function Table({
     });
   };
   //open edit form modal
+<<<<<<< HEAD
   // const ctaEditButtonHandler = async (data) => {
   //   const test = state.editData;
   //   dispatch({
@@ -94,17 +118,47 @@ export default function Table({
   //     payload: test,
   //   });
   // };
+=======
+  const ctaEditButtonHandler = async (data) => {
+    const test = state.editData;
+    dispatch({
+      type: "setModal",
+      payload: {
+        openFormModal: true,
+        modalUpdateFlag: true,
+      },
+    });
+    formInputs.map((item) => {
+      test[item.name] = data[item.name];
+    });
+    dispatch({
+      type: "setEditData",
+      payload: test,
+    });
+  };
+>>>>>>> abf823cf673bb3ea7da57b4415caf5e42deed16a
   //open dropDown panel
   const handleAnchorClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   //close dropDown panel
+<<<<<<< HEAD
 
+=======
+  const handleAnchorClose = (value) => {
+    setAnchorEl(null);
+    setFilterValue(typeof value == "object" ? filterValue : value);
+  };
+>>>>>>> abf823cf673bb3ea7da57b4415caf5e42deed16a
 
   const searchingFor = (searchQuery) => {
     return function (data) {
       return (
+<<<<<<< HEAD
         (data?.name || data?.courseName || data?.studentName || data?.city || data?.eventName || data?.faqQuestion || data?.id).toLowerCase().includes(
+=======
+        (data?.id || data?.name || data?.email).toLowerCase().includes(
+>>>>>>> abf823cf673bb3ea7da57b4415caf5e42deed16a
           searchQuery?.toLowerCase(),
         )
       );

@@ -1,7 +1,6 @@
 import React from 'react';
 import Table from '../../commonComponents/table/Table';
 import { UseSuccessStory } from './UseSuccessStory';
-import { ToastContainer } from 'react-toastify';
 import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
 export default function SuccessStory() {
   const [
@@ -41,9 +40,9 @@ export default function SuccessStory() {
             'freelancingProfileUrl',
             'paymentProof',
             'description',
-            'status',
             'totalEarnedAmount',
             'whyReject',
+            'status',
             'Action',
           ]}
           ctaEditButtonHandler={ctaEditButtonHandler}
@@ -64,48 +63,22 @@ export default function SuccessStory() {
               key: "description",
             },
             {
-              key: "status",
-            },
-            {
               key: "totalEarnedAmount",
             },
             {
               key: "whyReject",
             },
             {
+              key: "status",
+            },
+            {
               type: "crud",
             },
-            // {
-            //   key: "postUrl",
-            //   type: "image",
-            // },
-            // {
-            //   key: "postDesc",
-            //   type: "editor",
-            // },
           ]}
           formInputs={formInputs}
-          // {[
-          // {
-          //   type: "editor",
-          //   name: "editor",
-          // },
-
-
-          // {
-          //   label: 'CategoryName',
-          //   name: 'categoryName',
-          //   type: 'text',
-          // },
-          // {
-          //   label: 'createrName',
-          //   name: 'createrName',
-          //   type: 'text',
-          // }
-          // ]}
           filterdata={{
             key: "role",
-            filterTag: ['All', 'ADMIN', 'TEACHER'],
+            filterTag: ['All', 'PUBLISH', 'UNPUBLISH'],
           }}
           data={refacteredData}
           ctaFormHandler={ctaFormHandler}

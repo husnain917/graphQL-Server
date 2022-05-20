@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
 import React, { useState, useContext } from "react";
-import Axios from "axios";
 import {
   ToastError,
   ToastSuccess,
@@ -12,9 +11,6 @@ import {
   UPDATE_SINGLE_ENROLLMENT,
 } from "../../lib/mutation/AllMutations";
 import { GET_ENROLLMENT } from "../../lib/queries/AllQueries";
-// import { convertToRaw } from "draft-js";
-// import draftToHtml from "draftjs-to-html";
-import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../State";
 
 
@@ -94,21 +90,8 @@ export function UseEnrollmentApproval() {
   //ADD STAFF
 
   let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_ENROLMMENT_APPROVAL);
-
-  const Notify = () =>
-    toast.success('Student added successfully', {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored',
-      transition: Slide,
-    });
   const ctaFormHandler = async (event) => {
-    
+
     event.preventDefault();
     try {
       await Mutation({
@@ -121,11 +104,11 @@ export function UseEnrollmentApproval() {
             amount: state.editData?.amount,
             transactionId: state.editData?.transactionId,
             status: state.editData?.status
-            // phone: state.editData?.phone
           },
         },
         onCompleted(data, cache) {
-          Notify();
+          ToastSuccess('Enrollment Added')
+
         },
         refetchQueries: [{ query: GET_ENROLLMENT }],
       });
@@ -159,17 +142,7 @@ export function UseEnrollmentApproval() {
           },
         },
         onCompleted(data) {
-          toast.success('Student deleted Successfully', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'colored',
-            transition: Slide,
-          });
+          ToastSuccess('Enrollment Deleted')
         },
         refetchQueries: [{ query: GET_ENROLLMENT }],
       });
@@ -239,17 +212,7 @@ export function UseEnrollmentApproval() {
           }
         },
         onCompleted() {
-          toast.success("Student updated Successfully", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            transition: Slide,
-          });
+          ToastSuccess('Enrollment Updated')
         },
         refetchQueries: [{ query: GET_ENROLLMENT }],
       })

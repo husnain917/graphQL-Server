@@ -76,18 +76,7 @@ export function UseAllStaff() {
 
   let [CreateManyStaff, { loading: ADD_LOADING }] = useMutation(ADD_STAFF);
 
-  const Notify = () =>
-    toast.success('Student added successfully', {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored',
-      transition: Slide,
-    });
+ 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
     try {
@@ -101,7 +90,7 @@ export function UseAllStaff() {
           },
         },
         onCompleted(data, cache) {
-          Notify();
+          ToastSuccess('Staff Added')
         },
         refetchQueries: [{ query: GET_STAFF }],
       });
@@ -134,17 +123,7 @@ export function UseAllStaff() {
           },
         },
         onCompleted(data) {
-          toast.success('Student deleted Successfully', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'colored',
-            transition: Slide,
-          });
+          ToastSuccess('Staff Deleted')
         },
         refetchQueries: [{ query: GET_STAFF }],
       });
@@ -205,17 +184,7 @@ export function UseAllStaff() {
           }
         },
         onCompleted() {
-          toast.success("Student updated Successfully", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            transition: Slide,
-          });
+          ToastSuccess('Staff Updated')
         },
         refetchQueries: [{ query: GET_STAFF }],
       })

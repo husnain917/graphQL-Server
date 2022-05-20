@@ -40,8 +40,8 @@ export default function Course() {
                     'Introduction',
                     'instructorId',
                     'CategoryId',
-                    'Status',
                     'Price',
+                    'Status',
                     'Actions',
                 ]}
                 ctaEditButtonHandler={ctaEditButtonHandler}
@@ -65,10 +65,10 @@ export default function Course() {
                     key: "courseCategoryId",
                   },
                   {
-                    key: "courseStatus",
+                    key: "coursePrice",
                   },
                   {
-                    key: "coursePrice",
+                    key: "courseStatus",
                   },
                   {
                     type: "crud",

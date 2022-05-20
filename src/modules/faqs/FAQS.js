@@ -35,9 +35,9 @@ export default function FAQS() {
                 title='FAQS'
                 tableHeadings={[
                     'id',
-                    'Created At',
                     'Faq Question',
                     'Faq Answer',
+                    'Created At',
                     'Update At',
                     'Action',
                 ]}
@@ -47,13 +47,13 @@ export default function FAQS() {
                         key: "id",
                     },
                     {
-                        key: "createdAt",
-                    },
-                    {
                         key: "faqQuestion",
                     },
                     {
                         key: "faqAnswer",
+                    },
+                    {
+                        key: "createdAt",
                     },
                     {
                         key: "updateAt",

@@ -39,8 +39,8 @@ export default function ContactUs() {
                         'Name',
                         'Subject',
                         'Message',
-                        'Status',
                         'Reply',
+                        'Status',
                         'Actions',
                     ]}
                     ctaEditButtonHandler={ctaEditButtonHandler}
@@ -58,45 +58,19 @@ export default function ContactUs() {
                             key: "message",
                         },
                         {
-                            key: "status",
+                            key: "reply",
                         },
                         {
-                            key: "reply",
+                            key: "status",
                         },
                         {
                             type: "crud",
                         },
-                        // {
-                        //   key: "postUrl",
-                        //   type: "image",
-                        // },
-                        // {
-                        //   key: "postDesc",
-                        //   type: "editor",
-                        // },
                     ]}
                     formInputs={formInputs}
-                    // {[
-                    // {
-                    //   type: "editor",
-                    //   name: "editor",
-                    // },
-
-
-                    // {
-                    //   label: 'CategoryName',
-                    //   name: 'categoryName',
-                    //   type: 'text',
-                    // },
-                    // {
-                    //   label: 'createrName',
-                    //   name: 'createrName',
-                    //   type: 'text',
-                    // }
-                    // ]}
                     filterdata={{
                         key: "role",
-                        filterTag: ['All', 'ADMIN', 'TEACHER'],
+                        filterTag: ["All", "CONTACTED", "DECLINE", "UNSEEN", "USEFUL"],
                     }}
                     data={refacteredData}
                     ctaFormHandler={ctaFormHandler}

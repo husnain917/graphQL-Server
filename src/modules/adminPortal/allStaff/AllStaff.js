@@ -36,7 +36,7 @@ export default function AllStaff() {
       <ToastContainer />
       <Table
         title={"All Staff"}
-        tableHeadings={["Id", "Name", "Email", "Role", "Phone","Crud"]}
+        tableHeadings={["Id", "Name", "Email", "Phone", "Role", "Crud"]}
         ctaEditButtonHandler={ctaEditButtonHandler}
         printedKeys={[
           {
@@ -49,42 +49,16 @@ export default function AllStaff() {
             key: "email",
           },
           {
-            key: "role",
+            key: "phone",
           },
           {
-            key: "phone",
+            key: "role",
           },
           {
             type: "crud",
           },
-          // {
-          //   key: "postUrl",
-          //   type: "image",
-          // },
-          // {
-          //   key: "postDesc",
-          //   type: "editor",
-          // },
         ]}
         formInputs={formInputs}
-        // {[
-          // {
-          //   type: "editor",
-          //   name: "editor",
-          // },
-         
-
-          // {
-          //   label: 'CategoryName',
-          //   name: 'categoryName',
-          //   type: 'text',
-          // },
-          // {
-          //   label: 'createrName',
-          //   name: 'createrName',
-          //   type: 'text',
-          // }
-        // ]}
         filterdata={{
           key: "role",
           filterTag: ['All', 'ADMIN', 'TEACHER'],

@@ -94,19 +94,6 @@ export function UseSuccessStory() {
   //ADD STAFF
 
   let [CreateManyStories, { loading: ADD_LOADING }] = useMutation(ADD_SUCCESS_STORY);
-
-  const Notify = () =>
-    toast.success('Student added successfully', {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored',
-      transition: Slide,
-    });
   const ctaFormHandler = async (event) => {
     event.preventDefault();
     try {
@@ -124,7 +111,7 @@ export function UseSuccessStory() {
           },
         },
         onCompleted(data, cache) {
-          Notify();
+          ToastSuccess('Story Added')
         },
         refetchQueries: [{ query: GET_SUCCESS_STORIES }],
       });
@@ -157,17 +144,7 @@ export function UseSuccessStory() {
           },
         },
         onCompleted(data) {
-          toast.success('Student deleted Successfully', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'colored',
-            transition: Slide,
-          });
+          ToastSuccess('Story Deleted')
         },
         refetchQueries: [{ query: GET_SUCCESS_STORIES }],
       });
@@ -237,17 +214,7 @@ export function UseSuccessStory() {
           }
         },
         onCompleted() {
-          toast.success("Student updated Successfully", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            transition: Slide,
-          });
+          ToastSuccess('Story Updated')
         },
         refetchQueries: [{ query: GET_SUCCESS_STORIES }],
       })

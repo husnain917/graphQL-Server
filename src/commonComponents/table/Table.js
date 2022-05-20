@@ -27,7 +27,7 @@ export default function Table({
   formInputs,
   filterdata,
   data,
- 
+
   // Handlers
   ctaFormHandler,
   ctaDeleteHandler,
@@ -42,13 +42,27 @@ export default function Table({
   const [searchShow, setSearchShow] = useState(false)
 
   const openAnchor = Boolean(anchorEl);
+  const handleAnchorClose = (value) => {
+    setAnchorEl(null);
+    setFilterValue(typeof value == "object" ? filterValue : value);
+  };
   //filter data for filters
   const filterDataArray = data?.filter((item) => {
     if (filterValue === "") {
       return item;
-    } else if (filterValue === item[filterdata.key]) {
+    } else if (filterValue === item.role) {
       return item;
-    } else if (filterValue === "All") {
+    }
+    else if (filterValue === item.status) {
+      return item;
+    }
+    else if (filterValue === item.courseStatus) {
+      return item
+    }
+    else if (filterValue === item.eventStatus) {
+      return item
+    }
+    else if (filterValue === "All") {
       return item;
     }
   });
@@ -85,15 +99,12 @@ export default function Table({
     setAnchorEl(event.currentTarget);
   };
   //close dropDown panel
-  const handleAnchorClose = (value) => {
-    setAnchorEl(null);
-    setFilterValue(typeof value == "object" ? filterValue : value);
-  };
+
 
   const searchingFor = (searchQuery) => {
     return function (data) {
       return (
-        (data?.id || data?.name || data?.email).toLowerCase().includes(
+        (data?.name || data?.courseName || data?.studentName || data?.city || data?.eventName || data?.faqQuestion || data?.id).toLowerCase().includes(
           searchQuery?.toLowerCase(),
         )
       );

@@ -39,8 +39,8 @@ export default function Events() {
                     'eventDesc',
                     'eventDate',
                     'speakerId',
-                    'eventStatus',
                     'eventImage',
+                    'eventStatus',
                     'Actions',
                 ]}
                 ctaEditButtonHandler={ctaEditButtonHandler}
@@ -63,45 +63,19 @@ export default function Events() {
                         key: "speakerId",
                     },
                     {
-                        key: "eventStatus",
-                    },
-                    {
                         key: "eventImage",
                     },
                     {
-                        type: "crud",
+                        key: "eventStatus",
                     },
-                    // {
-                    //   key: "postUrl",
-                    //   type: "image",
-                    // },
-                    // {
-                    //   key: "postDesc",
-                    //   type: "editor",
-                    // },
+                    {
+                        type: "crud",
+                    }
                 ]}
                 formInputs={formInputs}
-                // {[
-                // {
-                //   type: "editor",
-                //   name: "editor",
-                // },
-
-
-                // {
-                //   label: 'CategoryName',
-                //   name: 'categoryName',
-                //   type: 'text',
-                // },
-                // {
-                //   label: 'createrName',
-                //   name: 'createrName',
-                //   type: 'text',
-                // }
-                // ]}
                 filterdata={{
                     key: "role",
-                    filterTag: ['All', 'ADMIN', 'TEACHER'],
+                    filterTag: ['All', 'PAST', 'UPCOMING'],
                 }}
                 data={refacteredData}
                 ctaFormHandler={ctaFormHandler}

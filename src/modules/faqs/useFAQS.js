@@ -26,20 +26,14 @@ import { GET_FAQS } from "../../lib/queries/AllQueries";
 export function UseFaqs() {
   const formInputs = [
     {
-      label: "Name",
-      name: "name",
+      label: "Faq Question",
+      name: "faqQuestion",
       type: "text",
     },
     {
-      label: "Email",
-      name: "email",
-      type: "email",
-    },
-    {
-      label: "Status",
-      name: "status",
-      type: "select",
-      dropDownContent: ["ACTIVE", "OFFLINE"],
+      label: "Faq Answer",
+      name: "faqAnswer",
+      type: "text",
     },
   ]
   const { state, dispatch } = useContext(AppContext);
@@ -60,7 +54,7 @@ export function UseFaqs() {
       faqAnswer: item.faqAnswer,
       faqQuestion: item.faqQuestion,
       createdAt: item.createdAt,
-      updateAt:item.updateAt
+      updateAt: item.updateAt
     });
   });
   console.log("refacteredData", refacteredData);
@@ -89,9 +83,10 @@ export function UseFaqs() {
       await Mutation({
         variables: {
           data: {
-            name: state.editData?.name,
-            email: state.editData?.email,
-            status: state.editData?.status,
+            faqAnswer: state.editData?.faqAnswer,
+            faqQuestion: state.editData?.faqQuestion,
+            createdAt: new Date(),
+            updateAt: '00000000'
             // phone: state.editData?.phone
           },
         },
@@ -185,15 +180,15 @@ export function UseFaqs() {
             id: updatedIndex
           },
           data: {
-            name: {
-              set: state.editData?.name
+            faqAnswer: {
+              set: state.editData?.faqAnswer
             },
-            email: {
-              set: state.editData?.email
+            faqQuestion: {
+              set: state.editData?.faqQuestion
             },
-            status: {
-              set: state.editData?.status
-            }
+            updateAt: {
+              set: new Date()
+            },
           }
         },
         onCompleted() {

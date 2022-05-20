@@ -74,34 +74,8 @@ function EnrollmentApproval() {
                                       {
                                         type: "crud",
                                       },
-                                      // {
-                                      //   key: "postUrl",
-                                      //   type: "image",
-                                      // },
-                                      // {
-                                      //   key: "postDesc",
-                                      //   type: "editor",
-                                      // },
                                     ]}
                                     formInputs={formInputs}
-                                    // {[
-                                      // {
-                                      //   type: "editor",
-                                      //   name: "editor",
-                                      // },
-                                     
-                            
-                                      // {
-                                      //   label: 'CategoryName',
-                                      //   name: 'categoryName',
-                                      //   type: 'text',
-                                      // },
-                                      // {
-                                      //   label: 'createrName',
-                                      //   name: 'createrName',
-                                      //   type: 'text',
-                                      // }
-                                    // ]}
                                     filterdata={{
                                       key: "role",
                                       filterTag: ['All', 'PENDING', 'APPROVED','REJECT'],

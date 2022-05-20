@@ -1,7 +1,6 @@
 //Import from Libraries
 
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
 //Import from Files
 
 import Table from '../../../commonComponents/table/Table';
@@ -54,14 +53,6 @@ export default function AllStudents() {
           {
             type: "crud",
           },
-          // {
-          //   key: "postUrl",
-          //   type: "image",
-          // },
-          // {
-          //   key: "postDesc",
-          //   type: "editor",
-          // },
         ]}
         formInputs={formInputs}
         filterdata={{

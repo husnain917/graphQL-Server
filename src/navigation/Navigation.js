@@ -18,7 +18,7 @@ import { AppContext } from "../State";
 import AllStaff from '../modules/adminPortal/allStaff/AllStaff';
 export default function Navigation() {
   const { state, dispatch } = useContext(AppContext);
-    const items = JSON.parse(localStorage.getItem('user'));
+    // const items = JSON.parse(localStorage.getItem('user'));
     return (
         <>
             {!state.authState ?
@@ -32,14 +32,14 @@ export default function Navigation() {
                         <Route path="/dashboard" element={<Dashboard authState={state.authState} />} />
                         <Route path='/contactus' element={<ContactUs />} />
                         <Route path="/staff" element={<AllStaff />} />
-                        {/* <Route path="/students" element={<AllStudents />} />
+                        <Route path="/students" element={<AllStudents />} />
                         <Route path="*" element={<Dashboard />} />
                         <Route path="/successStory" element={<SuccessStory />} />
                         <Route path='/courses' element={<Courses />} />
                         <Route path="/approve-enrollment" element={<EnrollmentApproval />} />
                         <Route path="/events" element={<Events />} />
                         <Route path='/faq' element={<FAQS />} />
-                        <Route path='profile' element={<Profile />}>
+                         {/* <Route path='profile' element={<Profile />}>
                             <Route path={`id:${items.id}`} element={<ProfileData />} />
                             <Route path={`editProfile/id:${items.id}`} element={<EditProfile />} />
                             <Route path={`ChangePassword/id:${items.id}`} element={<ChangePassword />} />

@@ -2,95 +2,40 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
 import Table from '../../commonComponents/table/Table';
-import { useEnrollmentApproval } from './useEnrollmentApproval';
+import { UseEnrollmentApproval } from './UseEnrollmentApproval';
 function EnrollmentApproval() {
     const [
         {
-            filterDataArray,
-            loading,
-            open,
-            handleClickOpen,
-            handleClose,
-            error,
-            openAnchor,
-            anchorEl,
-            handleAnchorClose,
-            handleAnchorClick,
-            name,
-            setStatus,
-            email,
-            course,
-            paymentMethod,
-            amount,
-            transactionId,
-            status,
-            setName,
-            setEmail,
-            setCourse,
-            setpaymentMethod,
-            setamount,
-            settransactionId,
-            ctaButtonHandlerEnroll,
-            ctaDeleteHandlerEnroll,
-            DeleteLoading,
-            AddLoading,
-            flag6,
-            ctaUpdateEnroll,
-            handleCloseUpdate,
-            ctaUpdateHandlerEnroll,
-            UpdateLoading
+          loader,
+          ADD_LOADING,
+          GET_LOADING,
+          DELETE_LOADING,
+          UPDATE_LOADING,
+          refacteredData,
+          ctaFormHandler,
+          ctaDeleteHandler,
+          ctaUpdateHandler,
+          formInputs,
+          ctaEditButtonHandler
         },
-    ] = useEnrollmentApproval();
+      ] = UseEnrollmentApproval();
+      if (
+        GET_LOADING ||
+        DELETE_LOADING ||
+        UPDATE_LOADING ||
+        ADD_LOADING ||
+        loader
+      ) {
+        return <CommonTableLoader />;
+      }
     return (
         <div>
             <>
-                <ToastContainer />
-                {loading ? (
-                    <CommonTableLoader />
-                ) :
-                    DeleteLoading ? (
-                        <CommonTableLoader />
-                    ) :
-                        AddLoading ? (
-                            <CommonTableLoader />
-                        )
-                            :
-                            UpdateLoading ? (
-                                <CommonTableLoader />
-                            ) : (
+               
                                 <Table
                                     title={'Enrollment Approval'}
-                                    data={filterDataArray}
-                                    name={name}
-                                    email={email}
-                                    course={course}
-                                    paymentMethod={paymentMethod}
-                                    amount={amount}
-                                    transactionId={transactionId}
-                                    status={status}
-                                    setName={setName}
-                                    setEmail={setEmail}
-                                    setCourse={setCourse}
-                                    setamount={setamount}
-                                    setStatus={setStatus}
-                                    settransactionId={settransactionId}
-                                    ctaButtonHandlerEnroll={ctaButtonHandlerEnroll}
-                                    ctaDeleteHandlerEnroll={ctaDeleteHandlerEnroll}
-                                    setpaymentMethod={setpaymentMethod}
-                                    loading={loading}
-                                    error={error}
-                                    flag={flag6}
-                                    ctaUpdateEnroll={ctaUpdateEnroll}
-                                    handleCloseUpdate={handleCloseUpdate}
-                                    ctaUpdateHandlerEnroll={ctaUpdateHandlerEnroll}
-                                    handleClickOpen={handleClickOpen}
-                                    open={open}
-                                    handleClose={handleClose}
-                                    anchorEl={anchorEl}
-                                    handleAnchorClose={handleAnchorClose}
-                                    handleAnchorClick={handleAnchorClick}
-                                    openAnchor={openAnchor}
                                     tableHeadings={[
+                                        'id',
                                         'Student Name',
                                         'Email',
                                         'Course',
@@ -100,8 +45,47 @@ function EnrollmentApproval() {
                                         'Status',
                                         'Actions',
                                     ]}
+                                    ctaEditButtonHandler={ctaEditButtonHandler}
+                                    printedKeys={[
+                                      {
+                                        key: "id",
+                                      },
+                                      {
+                                        key: "studentName",
+                                      },
+                                      {
+                                        key: "email",
+                                      },
+                                      {
+                                        key: "course",
+                                      },
+                                      {
+                                          key:'amount'
+                                      },
+                                      {
+                                        key: "paymentMethod",
+                                      },
+                                      {
+                                        key: "transactionId",
+                                      },
+                                      {
+                                        key: "status",
+                                      },
+                                      {
+                                        type: "crud",
+                                      },
+                                    ]}
+                                    formInputs={formInputs}
+                                    filterdata={{
+                                      key: "role",
+                                      filterTag: ['All', 'PENDING', 'APPROVED','REJECT'],
+                                    }}
+                                    data={refacteredData}
+                                    ctaFormHandler={ctaFormHandler}
+                                    ctaDeleteHandler={ctaDeleteHandler}
+                                    ctaUpdateHandler={ctaUpdateHandler}
                                 />
-                            )}
+                       
             </>
         </div>
     );

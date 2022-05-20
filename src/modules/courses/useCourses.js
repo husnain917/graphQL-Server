@@ -1,39 +1,105 @@
-import { useQuery, useMutation } from '@apollo/client';
-import { useState } from 'react';
-import { GET_COURSES } from '../../lib/queries/AllQueries';
+import { useMutation, useQuery } from "@apollo/client";
+import React, { useState, useContext } from "react";
+import Axios from "axios";
+import {
+  ToastError,
+  ToastSuccess,
+  ToastWarning,
+} from "../../commonComponents/commonFunction/CommonFunction";
 import {
   ADD_COURSES,
-  DELETE_SINGLE_COURSE,
   UPDATE_SINGLE_COURSE,
-} from '../../lib/mutation/AllMutations';
-import { toast, Slide } from 'react-toastify';
-import { BASIC_COURSE_ROLE } from '../../constants/AllRolesStatus';
+  DELETE_SINGLE_COURSE
+} from "../../lib/mutation/AllMutations";
+import { GET_COURSES } from "../../lib/queries/AllQueries";
+// import { convertToRaw } from "draft-js";
+// import draftToHtml from "draftjs-to-html";
+import { Slide, toast } from "react-toastify";
+import { AppContext } from "../../State";
+
+
+
+
+
+
+
 export function UseCourses() {
-  // const [loading, setLoading] = useState(false)
-  const [filterValue, setFilterValue] = useState('');
-  const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openAnchor = Boolean(anchorEl);
-  const [flag2,setFlag2]=useState(false)
-  let { data, loading, error } = useQuery(GET_COURSES);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const formInputs = [
+    {
+      label: "Name",
+      name: "courseName",
+      type: "text",
+    },
+    {
+      label: "Description",
+      name: "courseDesc",
+      type: "text",
+    },
+    {
+      label: "Intro",
+      name: "courseIntro",
+      type: "text",
+    },
+    {
+      label: "Price",
+      name: "coursePrice",
+      type: "number",
+    },
+    {
+      label: "instructorId",
+      name: "instructorId",
+      type: "text",
+    },
+    {
+      label: "courseCategoryId",
+      name: "courseCategoryId",
+      type: "text",
+    },
+    {
+      label: "Status",
+      name: "courseStatus",
+      type: "select",
+      dropDownContent: ["PUBLISH", "UNPUBLISH"],
+    },
+  ]
+  const { state, dispatch } = useContext(AppContext);
 
-  //ADD COURSE
 
-  const [name, setName] = useState('');
-  const [courseDesc, setcourseDesc] = useState('');
-  const [courseStatus, setcourseStatus] = useState(BASIC_COURSE_ROLE);
-  const [courseCategoryId, setcourseCategoryId] = useState('');
-  const [coursePrice, setcoursePrice] = useState('');
-  const [courseIntro, setcourseIntro] = useState();
-  const [instructorId, setinstructorId] = useState();
 
-  const [close, setclose] = useState(false);
+
+
+
+  //GET STAFF 
+
+  let { data, loading: GET_LOADING, error } = useQuery(GET_COURSES);
+  console.log("error", error);
+  const refacteredData = [];
+  data?.findManyCourses?.map((item) => {
+    refacteredData.push({
+      id: item.id,
+      courseName: item.courseName,
+      courseDesc: item.courseDesc,
+      courseIntro: item.courseIntro,
+      courseStatus: item.courseStatus,
+      coursePrice: item.coursePrice,
+      instructorId: item.instructorId,
+      courseCategoryId: item.courseCategoryId,
+
+
+
+
+    });
+  });
+  console.log("refacteredData", refacteredData);
+
+  const [loader, setLoader] = useState(false);
+
+  //ADD STAFF
+
+  let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
 
   const Notify = () =>
-    toast.success('Course added successfully', {
+    toast.success('Student added successfully', {
       position: 'top-right',
       autoClose: 5000,
       hideProgressBar: false,
@@ -44,111 +110,58 @@ export function UseCourses() {
       theme: 'colored',
       transition: Slide,
     });
-  let [Mutation, { loading: AddLoading }] = useMutation(ADD_COURSES);
-  const ctaButtonHandler2 = async (event, item) => {
-    if (
-      name === '' ||
-      courseDesc === '' ||
-      courseStatus === '' ||
-      courseCategoryId === '' ||
-      coursePrice === '' ||
-      courseIntro === '' ||
-      instructorId === ''
-    ) {
-      toast.warning('please fill all fields', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-        transition: Slide,
-      });
-      return;
-    } else {
-      event.preventDefault();
-      try {
-        await Mutation({
-          variables: {
-            data: {
-              courseName: name,
-              courseDesc: courseDesc,
-              coursePrice: coursePrice,
-              courseStatus: courseStatus,
-              courseCategoryId: courseCategoryId,
-              instructorId: instructorId,
-              courseIntro: courseIntro,
-            },
-          },
-          onCompleted(data, cache) {
-            Notify();
-          },
-          refetchQueries: [{ query: GET_COURSES }],
-        });
-        setName('');
-        setcourseDesc('');
-        setcourseStatus('');
-        setcourseCategoryId('');
-        setcoursePrice('');
-        setcourseIntro('');
-        setinstructorId('');
-        setclose(true);
-        setOpen(false);
-      } catch (error) {
-        toast.error(error.message, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored',
-          transition: Slide,
-        });
-      }
-    }
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleAnchorClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleAnchorClose = (value) => {
-    setAnchorEl(null);
-    setFilterValue(typeof value == 'object' ? filterValue : value);
-  };
-
-  //GET COURSE
-  const filterDataArray = data?.findManyCourses.filter((item) => {
-    if (filterValue === '') {
-      return item;
-    } else if (filterValue === item.courseStatus) {
-      return item;
-    } else if (filterValue === 'All') {
-      return item;
-    }
-  });
-
-  //DELETE COURSE
-
-  let [DeleteMutation, { loading: Deleteloading }] =
-    useMutation(DELETE_SINGLE_COURSE);
-  const ctaDeleteHandlerCourse = async ({ e, ...props }) => {
-    console.log(props.id);
+  const ctaFormHandler = async (event) => {
+    event.preventDefault();
     try {
-      await DeleteMutation({
+      await Mutation({
+        variables: {
+          data: {
+            courseName: state.editData?.courseName,
+            courseDesc: state.editData?.courseDesc,
+            courseIntro: state.editData?.courseIntro,
+            courseStatus: state.editData?.courseStatus,
+            instructorId: state.editData?.instructorId,
+            courseCategoryId: state.editData?.courseCategoryId,
+            coursePrice: state.editData?.coursePrice,
+
+            // phone: state.editData?.phone
+          },
+        },
+        onCompleted(data, cache) {
+          Notify();
+        },
+        refetchQueries: [{ query: GET_COURSES }],
+      });
+    } catch (error) {
+      dispatch({
+        type: "setModal",
+        payload: {
+          openFormModal: false,
+        },
+      });
+      setLoader(false);
+      ToastError(error.message);
+
+    }
+  };
+
+
+
+
+
+  // DELETE STAFF
+
+  let [DeleteCourses, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_COURSE);
+  const ctaDeleteHandler = async ({ ...data }) => {
+    try {
+      await DeleteCourses({
         variables: {
           where: {
-            id: props.id,
+            id: data.id,
           },
         },
         onCompleted(data) {
-          toast.success('Course deleted Successfully', {
+          toast.success('Student deleted Successfully', {
             position: 'top-right',
             autoClose: 5000,
             hideProgressBar: false,
@@ -163,17 +176,7 @@ export function UseCourses() {
         refetchQueries: [{ query: GET_COURSES }],
       });
     } catch (error) {
-      toast.error(error.message, {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-        transition: Slide,
-      });
+      console.log(error.message);
     }
   };
 
@@ -181,164 +184,89 @@ export function UseCourses() {
 
 
 
+  //Update staff
 
-
-
-
-
-
-
-  //UPDATE COURSE
-
-  let [updatedIndex, setUpdatedIndex] = useState('');
-
-
-  let [UpdateCourses, { loading: UpdateLoading }] = useMutation(UPDATE_SINGLE_COURSE);
-  const ctaUpdateCourse = ({ ...props }) => {
-    console.log(props.id);
-    setUpdatedIndex(props.id);
-    setName(props.courseName);
-    setcourseDesc(props.courseDesc);
-    setcourseStatus(props.courseStatus);
-    setcourseCategoryId(props.courseCategoryId);
-    setcoursePrice(props.coursePrice);
-    setcourseIntro(props.courseIntro);
-    setinstructorId(props.instructorId);
-    setFlag2(true);
-  }
-
-  const handleCloseUpdate = () => {
-    setOpen(false);
+  let [UpdateCourses, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_COURSE);
+  const [updatedIndex, setUpdatedIndex] = useState('')
+  const ctaEditButtonHandler = async (data) => {
+    const test = state.editData;
+    console.log(data.id);
+    setUpdatedIndex(data.id)
+    dispatch({
+      type: "setModal",
+      payload: {
+        openFormModal: true,
+        modalUpdateFlag: true,
+      },
+    });
+    formInputs.map((item) => {
+      test[item.name] = data[item.name];
+    });
+    dispatch({
+      type: "setEditData",
+      payload: test,
+    });
   };
-  const ctaUpdateHandlerCourse = async (event) => {
-    if (
-      name === '' ||
-      courseDesc === '' ||
-      courseStatus === '' ||
-      courseCategoryId === '' ||
-      coursePrice === '' ||
-      courseIntro === '' ||
-      instructorId === ''
-    ) {
-      toast.warning('please fill all fields', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-        transition: Slide,
-      });
-      return;
-    } else {
-      event.preventDefault();
+  const ctaUpdateHandler = async (event) => {
+    event.preventDefault()
 
-      try {
-        await UpdateCourses({
-          variables: {
-          
-            where: {
-              id: updatedIndex
+    try {
+      await UpdateCourses({
+        variables: {
+          where: {
+            id: updatedIndex
+          },
+          data: {
+            courseName: {
+              set: state.editData?.courseName
             },
-              data: {
-                courseName: {
-                  set: name
-                },
-                courseDesc: {
-                  set: courseDesc
-                },
-                courseIntro: {
-                  set: courseIntro
-                },
-                courseStatus: {
-                  set: courseStatus
-                },
-                coursePrice: {
-                  set: coursePrice
-                }
-              },
-             
-            
-          },
-          onCompleted() {
-            toast.success("Course updated Successfully", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-              transition: Slide,
-            });
-            setName('');
-            setcourseDesc('');
-            setcourseStatus('');
-            setcourseCategoryId('');
-            setcoursePrice('');
-            setcourseIntro('');
-            setinstructorId('');
-            setUpdatedIndex('');
-            setFlag2(false);
-          },
-          refetchQueries: [{ query: GET_COURSES }],
-        })
-      } catch (error) {
-        toast.error(error.message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Slide,
-        });
-      }
+            courseDesc: {
+              set: state.editData?.courseDesc
+            },
+            courseIntro: {
+              set: state.editData?.courseIntro
+            },
+            courseStatus: {
+              set: state.editData?.courseStatus
+            },
+            coursePrice: {
+              set: state.editData?.coursePrice
+            }
+          }
+        },
+        onCompleted() {
+          toast.success("Student updated Successfully", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
+        },
+        refetchQueries: [{ query: GET_COURSES }],
+      })
+
+    } catch (error) {
+      console.log(error.message);
     }
   }
-
-
   return [
     {
-      filterDataArray,
-      loading,
-      open,
-      AddLoading,
-      handleClickOpen,
-      handleClose,
-      openAnchor,
-      anchorEl,
-      handleAnchorClose,
-      handleAnchorClick,
-      name,
-      courseDesc,
-      courseStatus,
-      courseCategoryId,
-      coursePrice,
-      courseIntro,
-      instructorId,
-      close,
-      ctaButtonHandler2,
-      setName,
-      setcourseDesc,
-      setcourseStatus,
-      setcourseCategoryId,
-      setcoursePrice,
-      setcourseIntro,
-      setinstructorId,
-      setclose,
-      ctaDeleteHandlerCourse,
-      Deleteloading,
-      ctaUpdateCourse,
-      flag2,
-      handleCloseUpdate,
-      ctaUpdateHandlerCourse,
-      UpdateLoading
+      loader,
+      ADD_LOADING,
+      GET_LOADING,
+      DELETE_LOADING,
+      UPDATE_LOADING,
+      refacteredData,
+      ctaFormHandler,
+      ctaDeleteHandler,
+      ctaUpdateHandler,
+      formInputs,
+      ctaEditButtonHandler
     },
   ];
 }

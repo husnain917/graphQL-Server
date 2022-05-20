@@ -1,99 +1,88 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import Table from '../../commonComponents/table/Table';
-import { useEvents } from './useEvents';
+import { UseEvents } from './UseEvents';
 import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
 export default function Events() {
     const [
         {
-            filterDataArray,
-            loading,
-            open,
-            handleClickOpen,
-            handleClose,
-            openAnchor,
-            anchorEl,
-            handleAnchorClose,
-            handleAnchorClick,
-            name,
-            setName,
-            description,
-            setdescription,
-            status,
-            setStatus,
-            eventDate,
-            seteventDate,
-            speakerId,
-            setspeakerId,
-            eventImage,
-            seteventImage,
-            ctaButtonHandler5,
-            ctaDeleteHandlerEvent,
-            DeleteLoading,
-            AddLoading,
-            flag8,
-            ctaUpdateEvent,
-            handleCloseUpdate,
-            ctaUpdateHandlerEvent,
-            UpdateLoading
+            loader,
+            ADD_LOADING,
+            GET_LOADING,
+            DELETE_LOADING,
+            UPDATE_LOADING,
+            refacteredData,
+            ctaFormHandler,
+            ctaDeleteHandler,
+            ctaUpdateHandler,
+            formInputs,
+            ctaEditButtonHandler
         },
-    ] = useEvents();
+    ] = UseEvents();
+    if (
+        GET_LOADING ||
+        DELETE_LOADING ||
+        UPDATE_LOADING ||
+        ADD_LOADING ||
+        loader
+    ) {
+        return <CommonTableLoader />;
+    }
     return (
         <div>
-            <ToastContainer />
-            {loading ? (
-                <CommonTableLoader />
-            ) :
-                DeleteLoading ? (
-                    <CommonTableLoader />
-                )
-                    :
-                    AddLoading ? (
-                        <CommonTableLoader />
-                    )
-                    :
-                    UpdateLoading ? (
-                        <CommonTableLoader />
-                    ) : (
-                        <Table
-                            title={'Events'}
-                            data={filterDataArray}
-                            handleClickOpen={handleClickOpen}
-                            open={open}
-                            name={name}
-                            setName={setName}
-                            description={description}
-                            setdescription={setdescription}
-                            status={status}
-                            setStatus={setStatus}
-                            eventDate={eventDate}
-                            seteventDate={seteventDate}
-                            speakerId={speakerId}
-                            setspeakerId={setspeakerId}
-                            eventImage={eventImage}
-                            seteventImage={seteventImage}
-                            ctaButtonHandler5={ctaButtonHandler5}
-                            ctaDeleteHandlerEvent={ctaDeleteHandlerEvent}
-                            flag={flag8}
-                            ctaUpdateEvent={ctaUpdateEvent}
-                            handleCloseUpdate={handleCloseUpdate}
-                            ctaUpdateHandlerEvent={ctaUpdateHandlerEvent}
-                            handleClose={handleClose}
-                            anchorEl={anchorEl}
-                            handleAnchorClose={handleAnchorClose}
-                            handleAnchorClick={handleAnchorClick}
-                            openAnchor={openAnchor}
-                            tableHeadings={[
-                                'eventName',
-                                'eventDesc',
-                                'eventDate',
-                                'speakerId',
-                                'status',
-                                'eventImage',
-                                'Actions',
-                            ]}
-                        />
-                    )}
+
+            <Table
+                title={'Events'}
+                tableHeadings={[
+                    'id',
+                    'eventName',
+                    'eventDesc',
+                    'eventDate',
+                    'speakerId',
+                    'eventImage',
+                    'eventStatus',
+                    'Actions',
+                ]}
+                ctaEditButtonHandler={ctaEditButtonHandler}
+                printedKeys={[
+                    {
+                        key: "id",
+                    },
+                    {
+                        key: "eventName",
+                    },
+                    {
+                        key: "eventDesc",
+                    },
+
+                    {
+                        key: "eventDate",
+                    },
+
+                    {
+                        key: "speakerId",
+                    },
+                    {
+                        key: "eventImage",
+                    },
+                    {
+                        key: "eventStatus",
+                    },
+                    {
+                        type: "crud",
+                    }
+                ]}
+                formInputs={formInputs}
+                filterdata={{
+                    key: "role",
+                    filterTag: ['All', 'PAST', 'UPCOMING'],
+                }}
+                data={refacteredData}
+                ctaFormHandler={ctaFormHandler}
+                ctaDeleteHandler={ctaDeleteHandler}
+                ctaUpdateHandler={ctaUpdateHandler}
+            />
+
         </div>
     );
 }

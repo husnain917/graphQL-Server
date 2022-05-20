@@ -12,7 +12,11 @@ import { MenuItem, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import { AppContext } from "../../State";
 import { EditorState } from "draft-js";
+<<<<<<< HEAD
+export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler }) {
+=======
 export default function FormModal({ formInputs, ctaFormHandler,ctaUpdateHandler }) {
+>>>>>>> abf823cf673bb3ea7da57b4415caf5e42deed16a
   const { state, dispatch } = useContext(AppContext);
   const handleCloseUpdate = () => {
     dispatch({
@@ -102,11 +106,17 @@ export default function FormModal({ formInputs, ctaFormHandler,ctaUpdateHandler 
                         item.name === "file" ? "" : state.editData[item.name]
                       }
                       onChange={(e) => {
+<<<<<<< HEAD
+                          test[item.name] = item.name === "file"
+                            ? e.target.files[0].name
+                            : e.target.value;
+=======
                         const data =
                           item.name === "file"
                             ? e.target.files[0].name
                             : e.target.value;
                         test[item.name] = e.target.files[0];
+>>>>>>> abf823cf673bb3ea7da57b4415caf5e42deed16a
                         dispatch({
                           type: "setEditData",
                           payload: test,

@@ -20,9 +20,9 @@ function Sidebar(props) {
   }] = UseDrawer()
   const navigate = useNavigate()
   const ctaLogoutHandler = () => {
-    localStorage.removeItem('user')
-    localStorage.removeItem('localAuth')
-    window.location.reload()
+    // localStorage.removeItem('user')
+    // localStorage.removeItem('localAuth')
+    // window.location.reload()
     localStorage.clear();
     navigate('/login')
 
@@ -35,7 +35,7 @@ function Sidebar(props) {
   const renderSidebarItems = (item, index) => {
     return (
       <>
-        <SidebarStyle.DomLink to={item?.path}>
+        <SidebarStyle.DomLink to={item?.path} key={index}>
           <ListItem
             key={index}
             ref={anchorRef}

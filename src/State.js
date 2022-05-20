@@ -9,9 +9,18 @@ const initialState = {
     draftHtml: EditorState.createEmpty(),
     openFormModal:false,
     modalUpdateFlag:false,
-    editData:{}
+    editData:{},
+    student:{},
+    teacher:{},
+    admins:{},
+    successStory:{},
+    events:{},
+    courses:{}
+
+
 }
 let reducer = (state, action) => {
+    // eslint-disable-next-line default-case
     switch(action.type) {
         case "setAuthState": {
             return { ...state, authState: action.payload.authState,user:action.payload.user }
@@ -22,6 +31,9 @@ let reducer = (state, action) => {
         case "setEditData": {
             return { ...state,editData:action.payload}
         } 
+        case "setStudent":{
+            return{...state,student:action.payload}
+        }
         
     }
     return state;

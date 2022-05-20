@@ -1,358 +1,241 @@
-import { useMutation, useQuery } from '@apollo/client';
-import { useState } from 'react';
-import { Slide, toast } from 'react-toastify';
-import { ADD_SUCCESS_STORY, DELETE_SINGLE_SUCCESS_STORY, UPDATE_SINGLE_SUCCESS } from '../../lib/mutation/AllMutations';
-import { GET_SUCCESS_STORIES } from '../../lib/queries/AllQueries';
-import { BASIC_SUCCESS_ROLE } from '../../constants/AllRolesStatus';
-export function useSuccessStory() {
-  const [filterValue, setFilterValue] = useState('');
-  const [open, setOpen] = useState(false);
-  const [flag, setFlag] = useState(false)
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openAnchor = Boolean(anchorEl);
-  let { data, loading } = useQuery(GET_SUCCESS_STORIES);
+import { useMutation, useQuery } from "@apollo/client";
+import React, { useState, useContext } from "react";
+import Axios from "axios";
+import {
+  ToastError,
+  ToastSuccess,
+  ToastWarning,
+} from "../../commonComponents/commonFunction/CommonFunction";
+import {
+  ADD_SUCCESS_STORY,
+  DELETE_SINGLE_SUCCESS_STORY,
+  UPDATE_SINGLE_SUCCESS,
+} from "../../lib/mutation/AllMutations";
+import { GET_SUCCESS_STORIES } from "../../lib/queries/AllQueries";
+// import { convertToRaw } from "draft-js";
+// import draftToHtml from "draftjs-to-html";
+import { Slide, toast } from "react-toastify";
+import { AppContext } from "../../State";
 
 
 
 
-  //ADD STORY
-  const [freelancingProfileUrl, setfreelancingProfileUrl] = useState('');
-  const [paymentProof, setpaymentProof] = useState('');
-  const [description, setdescription] = useState('');
-  const [status, setStatus] = useState(BASIC_SUCCESS_ROLE);
-  const [totalEarnedAmount, settotalEarnedAmount] = useState('');
-  const [city, setcity] = useState('');
-  const [whyReject, setwhyReject] = useState('');
 
 
-  const [close, setclose] = useState(false);
 
-  const Notify = () =>
-    toast.success('Enrollment added successfully', {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored',
-      transition: Slide,
+export function UseSuccessStory() {
+  const formInputs = [
+    {
+      label: "City",
+      name: "city",
+      type: "text",
+    },
+    {
+      label: "freelancingProfileUrl",
+      name: "freelancingProfileUrl",
+      type: "text",
+    },
+    {
+      label: "paymentProof",
+      name: "paymentProof",
+      type: "text",
+    },
+    {
+      label: "description",
+      name: "description",
+      type: "text",
+    },
+    {
+      label: "totalEarnedAmount",
+      name: "totalEarnedAmount",
+      type: "text",
+    },
+    {
+      label: "whyReject",
+      name: "whyReject",
+      type: "text",
+    },
+    {
+      label: "Status",
+      name: "status",
+      type: "select",
+      dropDownContent: ["PUBLISH", "UNPUBLISH"],
+    },
+  ]
+  const { state, dispatch } = useContext(AppContext);
+
+
+
+
+
+
+  //GET STAFF 
+
+  let { data, loading: GET_LOADING, error } = useQuery(GET_SUCCESS_STORIES);
+  console.log("error", error);
+  const refacteredData = [];
+  data?.findManySuccessStories?.map((item) => {
+    refacteredData.push({
+      id: item.id,
+      city: item.city,
+      freelancingProfileUrl: item.freelancingProfileUrl,
+      paymentProof: item.paymentProof,
+      description: item.description,
+      status: item.status,
+      totalEarnedAmount: item.totalEarnedAmount,
+      whyReject: item.whyReject,
+
     });
-  let [CreateManyStories, { loading: AddLoading }] = useMutation(ADD_SUCCESS_STORY);
-  const ctaButtonHandler4 = async (event, item) => {
-    if (
-      freelancingProfileUrl === '' ||
-      paymentProof === '' ||
-      description === '' ||
-      status === '' ||
-      totalEarnedAmount === '' ||
-      city === '' ||
-      whyReject === ''
-    ) {
-      toast.warning('please fill all fields', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-        transition: Slide,
-      });
-      return;
-    } else {
-      event.preventDefault();
-      try {
-        await CreateManyStories({
-          variables: {
-            data: {
-              freelancingProfileUrl: freelancingProfileUrl,
-              paymentProof: paymentProof,
-              description: description,
-              status: status,
-              totalEarnedAmount: totalEarnedAmount,
-              city: city,
-              whyReject: whyReject,
-            },
-          },
-          onCompleted(data, cache) {
-            console.log('updated cart');
-            console.log(data);
-            Notify();
-          },
-          refetchQueries: [{ query: GET_SUCCESS_STORIES }],
-        });
-        setfreelancingProfileUrl('');
-        setpaymentProof('');
-        setdescription('');
-        setStatus('');
-        settotalEarnedAmount('');
-        setcity('');
-        setwhyReject('');
-        setclose(true);
-      } catch (error) {
-        toast.warning('Status must be PUBLISH/UNPUBLISH', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Slide,
-        });
-      }
-    }
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleAnchorClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleAnchorClose = (value) => {
-    setAnchorEl(null);
-    setFilterValue(typeof value == 'object' ? filterValue : value);
-  };
-
-
-
-  // GET STORY 
-  const filterDataArray = data?.findManySuccessStories.filter((item) => {
-    if (filterValue === '') {
-      return item;
-    } else if (filterValue === item.status) {
-      return item;
-    } else if (filterValue === 'All') {
-      return item;
-    }
   });
+  console.log("refacteredData", refacteredData);
+
+  const [loader, setLoader] = useState(false);
+
+  //ADD STAFF
+
+  let [CreateManyStories, { loading: ADD_LOADING }] = useMutation(ADD_SUCCESS_STORY);
+  const ctaFormHandler = async (event) => {
+    event.preventDefault();
+    try {
+      await CreateManyStories({
+        variables: {
+          data: {
+            city: state.editData?.city,
+            freelancingProfileUrl: state.editData?.freelancingProfileUrl,
+            paymentProof: state.editData?.paymentProof,
+            description: state.editData?.description,
+            status: state.editData?.status,
+            totalEarnedAmount: state.editData?.totalEarnedAmount,
+            whyReject: state.editData?.whyReject,
+            // phone: state.editData?.phone
+          },
+        },
+        onCompleted(data, cache) {
+          ToastSuccess('Story Added')
+        },
+        refetchQueries: [{ query: GET_SUCCESS_STORIES }],
+      });
+    } catch (error) {
+      dispatch({
+        type: "setModal",
+        payload: {
+          openFormModal: false,
+        },
+      });
+      setLoader(false);
+      ToastError(error.message);
+
+    }
+  };
 
 
 
 
 
+  // DELETE STAFF
 
-
-
-
-
-
-
-  //DELETE STORY 
-
-
-  let [DeleteSuccessStories, { loading: DeleteLoading }] = useMutation(DELETE_SINGLE_SUCCESS_STORY);
-  const ctaDeleteHandlerStory = async ({ e, ...props }) => {
-    console.log(props.id);
+  let [DeleteSuccessStories, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_SUCCESS_STORY);
+  const ctaDeleteHandler = async ({ ...data }) => {
     try {
       await DeleteSuccessStories({
         variables: {
           where: {
-            id: props.id
-          }
+            id: data.id,
+          },
         },
         onCompleted(data) {
-          toast.success("Story deleted Successfully", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            transition: Slide,
-          });
+          ToastSuccess('Story Deleted')
+        },
+        refetchQueries: [{ query: GET_SUCCESS_STORIES }],
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+
+
+
+
+  //Update staff
+
+  let [UpdateSuccessStories, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_SUCCESS);
+  const [updatedIndex, setUpdatedIndex] = useState('')
+  const ctaEditButtonHandler = async (data) => {
+    const test = state.editData;
+    console.log(data.id);
+    setUpdatedIndex(data.id)
+    dispatch({
+      type: "setModal",
+      payload: {
+        openFormModal: true,
+        modalUpdateFlag: true,
+      },
+    });
+    formInputs.map((item) => {
+      test[item.name] = data[item.name];
+    });
+    dispatch({
+      type: "setEditData",
+      payload: test,
+    });
+  };
+  const ctaUpdateHandler = async (event) => {
+    event.preventDefault()
+
+    try {
+      await UpdateSuccessStories({
+        variables: {
+          where: {
+            id: updatedIndex
+          },
+          data: {
+            freelancingProfileUrl: {
+              set: state.editData?.freelancingProfileUrl
+            },
+            paymentProof: {
+              set: state.editData?.paymentProof
+            },
+            description: {
+              set: state.editData?.description
+            },
+            status: {
+              set: state.editData?.status
+            },
+            totalEarnedAmount: {
+              set: state.editData?.totalEarnedAmount
+            },
+            city: {
+              set: state.editData?.city
+            },
+            whyReject: {
+              set: state.editData?.whyReject
+            }
+          }
+        },
+        onCompleted() {
+          ToastSuccess('Story Updated')
         },
         refetchQueries: [{ query: GET_SUCCESS_STORIES }],
       })
+
     } catch (error) {
-      toast.error(error.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Slide,
-      });
+      console.log(error.message);
     }
   }
-
-
-
-
-
-  //UPDATE SINGLE STORY
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-
-
-
-  let [updatedIndex, setUpdatedIndex] = useState('');
-
- 
-  let [UpdateSuccessStories, { loading: UpdateLoading }] = useMutation(UPDATE_SINGLE_SUCCESS);
-  const ctaUpdateStory = ({ ...props }) => {
-    setUpdatedIndex(props.id);
-    setfreelancingProfileUrl(props.freelancingProfileUrl);
-    setpaymentProof(props.paymentProof);
-    setdescription(props.description);
-    setStatus(props.status);
-    settotalEarnedAmount(props.totalEarnedAmount);
-    setcity(props.city);
-    setwhyReject(props.whyReject);
-    setFlag(true);
-  }
-
-  const handleCloseUpdate = () => {
-    setFlag(false);
-  };
-  const ctaUpdateHandlerStory = async (event) => {
-    if (
-      freelancingProfileUrl === '' ||
-      paymentProof === '' ||
-      description === '' ||
-      status === '' ||
-      totalEarnedAmount === '' ||
-      city === '' ||
-      whyReject === ''
-    ) {
-      toast.warning('please fill all fields', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-        transition: Slide,
-      });
-      return;
-    } else {
-      event.preventDefault();
-
-      try {
-        await UpdateSuccessStories({
-          variables: {
-            where: {
-              id: updatedIndex
-            },
-            data: {
-              freelancingProfileUrl: {
-                set: freelancingProfileUrl
-              },
-              paymentProof: {
-                set: paymentProof
-              },
-              description: {
-                set: description
-              },
-              status: {
-                set: status
-              },
-              totalEarnedAmount: {
-                set: totalEarnedAmount
-              },
-              city: {
-                set: city
-              },
-              whyReject: {
-                set: whyReject
-              },
-            }
-          },
-          onCompleted() {
-            toast.success("Story updated Successfully", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-              transition: Slide,
-            });
-            setfreelancingProfileUrl('');
-            setpaymentProof('');
-            setdescription('');
-            setStatus('');
-            settotalEarnedAmount('');
-            setcity('');
-            setwhyReject('');
-            setUpdatedIndex('');
-            setFlag(false);
-          },
-          refetchQueries: [{ query: GET_SUCCESS_STORIES }],
-        })
-      } catch (error) {
-        toast.error(error.message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Slide,
-        });
-      }
-    }
-  }
-
-
-
-
-
-
-
   return [
     {
-      filterDataArray,
-      loading,
-      open,
-      handleClickOpen,
-      handleClose,
-      openAnchor,
-      anchorEl,
-      handleAnchorClose,
-      handleAnchorClick,
-      freelancingProfileUrl,
-      setfreelancingProfileUrl,
-      paymentProof,
-      setpaymentProof,
-      description,
-      setdescription,
-      status,
-      setStatus,
-      totalEarnedAmount,
-      settotalEarnedAmount,
-      city,
-      setcity,
-      whyReject,
-      setwhyReject,
-      ctaButtonHandler4,
-      ctaDeleteHandlerStory,
-      DeleteLoading,
-      AddLoading,
-      ctaUpdateStory,
-      flag,
-      handleCloseUpdate,
-      ctaUpdateHandlerStory,
-      UpdateLoading
+      loader,
+      ADD_LOADING,
+      GET_LOADING,
+      DELETE_LOADING,
+      UPDATE_LOADING,
+      refacteredData,
+      ctaFormHandler,
+      ctaDeleteHandler,
+      ctaUpdateHandler,
+      formInputs,
+      ctaEditButtonHandler
     },
   ];
 }

@@ -1,6 +1,10 @@
-import { Route, Navigate } from 'react-router-dom'
-export const PrivateRouting = ({ auth, children, ...rest }) => {
-    return (
-        <Route {...rest} render={() => auth ? children : <Navigate to={'/login'} />} />
-    )
+import { Navigate } from "react-router-dom"
+
+export const PrivateRouting = ({ children, isAllowed, redirectPath = '/login' }) => {
+    if (!isAllowed) {
+        return <Navigate to={redirectPath} replace />
+    }
+    else {
+        return children
+    }
 }

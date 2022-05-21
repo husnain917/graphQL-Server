@@ -4,16 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { LOGIN } from '../../../lib/mutation/LoginMutation';
 import { toast, Slide } from 'react-toastify';
 import { AppContext } from "../../../State";
-<<<<<<< HEAD
 export default function UseLogin() {
   const { state, dispatch } = useContext(AppContext);
   const navigate = useNavigate()
-=======
-
-export default function UseLogin() {
-  const { state, dispatch } = useContext(AppContext);
-
->>>>>>> abf823cf673bb3ea7da57b4415caf5e42deed16a
   const [email, setEmail] = useState('');
   const [values, setValues] = useState({
     amount: '',
@@ -55,10 +48,7 @@ export default function UseLogin() {
           email: email
         },
         onCompleted({ login }) {
-<<<<<<< HEAD
           // navigate("/dashboard")
-=======
->>>>>>> abf823cf673bb3ea7da57b4415caf5e42deed16a
           dispatch({
             type: "setAuthState",
             payload: {
@@ -66,13 +56,9 @@ export default function UseLogin() {
               authState: true
             },
           });
-<<<<<<< HEAD
 
         },
 
-=======
-        },
->>>>>>> abf823cf673bb3ea7da57b4415caf5e42deed16a
         onError(error) {
           notifyError(error.message)
 

@@ -1,8 +1,10 @@
-import React from 'react'
-import { Route, Navigate } from 'react-router-dom'
+import { Navigate } from "react-router-dom"
 
-export const PublicRouting = ({ element: Component, auth, ...rest }) => {
-    return (
-        <Route {...rest} render={(props) => auth ? <Navigate to='/' /> : <Component {...props} />} />
-    )
+export const PublicRouting = ({ children, isAllowed, redirectPath = '/' }) => {
+    if (isAllowed) {
+        return <Navigate to={redirectPath} replace />
+    }
+    else {
+        return children
+    }
 }

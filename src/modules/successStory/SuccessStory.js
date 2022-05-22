@@ -35,14 +35,14 @@ export default function SuccessStory() {
         <Table
           title={'Success Stories'}
           tableHeadings={[
-            'id',
+            'Id',
             'city',
-            'freelancingProfileUrl',
-            'paymentProof',
-            'description',
-            'totalEarnedAmount',
-            'whyReject',
-            'status',
+            'FreelancingProfileUrl',
+            'PaymentProof',
+            'Description',
+            'TotalEarnedAmount',
+            'WhyReject',
+            'Status',
             'Action',
           ]}
           ctaEditButtonHandler={ctaEditButtonHandler}

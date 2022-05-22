@@ -35,13 +35,13 @@ export default function ContactUs() {
                 <Table
                     title='Contact us'
                     tableHeadings={[
-                        'id',
+                        'Id',
                         'Name',
                         'Subject',
                         'Message',
                         'Reply',
                         'Status',
-                        'Actions',
+                        'Action',
                     ]}
                     ctaEditButtonHandler={ctaEditButtonHandler}
                     printedKeys={[

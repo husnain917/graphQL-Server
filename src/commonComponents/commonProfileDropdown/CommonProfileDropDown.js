@@ -18,7 +18,6 @@ export default function CommonProfileDropDown() {
 
   }
 
-  // const items = JSON.parse(localStorage.getItem('user'));
 
   return (
     <div>

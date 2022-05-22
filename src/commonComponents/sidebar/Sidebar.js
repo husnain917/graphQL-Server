@@ -9,7 +9,7 @@ import { UseDrawer } from './UseSidebar';
 import { SidebarStyle } from './SidebarStyle';
 import logo from '../../assets/logo.png'
 import { Divider, Grid } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import CommonProfileDropDown from '../commonProfileDropdown/CommonProfileDropDown';
 const drawerWidth = 240;
 function Sidebar(props) {
@@ -105,7 +105,8 @@ function Sidebar(props) {
 
       <SidebarStyle.MainBox component="main" >
         <Toolbar />
-        {props.children}
+        {/* {props.children} */}
+        <Outlet/>
       </SidebarStyle.MainBox>
     </SidebarStyle.Box>
   );

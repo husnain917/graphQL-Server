@@ -65,7 +65,7 @@ export const UseDrawer = () => {
         {
             text: 'Profile ',
             icon: <Face />,
-            path: `/profile`
+            path: `/profile/id`
         },
     ];
 

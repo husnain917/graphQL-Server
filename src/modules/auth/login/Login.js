@@ -28,7 +28,7 @@ export default function Login() {
                     </LoginStyle.InlineHeaderContainer>
                     {/* Below Code for Email Input Field   */}
                     <LoginStyle.InputFieldHeading>
-                        Email   : ali@gmail.com
+                        Email
                     </LoginStyle.InputFieldHeading>
                     <LoginStyle.IconAndInputField>
                         <LoginStyle.IconContainer>
@@ -39,7 +39,7 @@ export default function Login() {
                     </LoginStyle.IconAndInputField>
                     {/* Below Code for Password Input Field */}
                     <LoginStyle.InputFieldHeading>
-                        Password  : 72689910
+                        Password
                     </LoginStyle.InputFieldHeading>
                     <LoginStyle.IconAndInputField>
                         <LoginStyle.IconContainer>

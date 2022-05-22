@@ -13,7 +13,7 @@ export const CTS={
         justifyContent: 'center',
         borderRadius: 40,
         cursor: 'pointer',
-        padding:route=='login'?5:10,
+        padding:route==='login'?5:10,
     })),
     QuestionMarkIcon:styled(QuestionMarkIcon)(()=>({
         color:'white',

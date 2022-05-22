@@ -34,7 +34,7 @@ export default function FAQS() {
             <Table
                 title='FAQS'
                 tableHeadings={[
-                    'id',
+                    'Id',
                     'Faq Question',
                     'Faq Answer',
                     'Created At',

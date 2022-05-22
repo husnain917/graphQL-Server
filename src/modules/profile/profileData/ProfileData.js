@@ -1,40 +1,41 @@
 import { Grid } from '@mui/material'
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import CommonField from '../../../commonComponents/commonField/CommonField'
+import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader'
+import { AppContext } from '../../../State'
 export default function ProfileData() {
-  const [edit, setEdit] = React.useState(false)
-  const ctaEditHandler = () => {
-    setEdit(true)
-    console.log(edit);
-  }
-  // const items = JSON.parse(localStorage.getItem('user'));
+
+  const { state } = useContext(AppContext)
+  const [loading, setLoading] = useState(true)
+  setTimeout(function () {
+    setLoading(false);
+  }, 2000);
+
   return (
     <>
+      {
+        loading ?
+          <><CommonTableLoader/></>
+          :
+          <Grid container spacing={2}>
+            <Grid item xl={6} lg={6} md={6} sm={12} xs={12} >
+              <CommonField Name={state.user?.name} Label='Name' />
+            </Grid>
+            <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+              <CommonField Email={state.user?.email} Label='Email' />
+            </Grid>
+            <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+              <CommonField Role={state.user?.role} Label='Role' />
+            </Grid>
+            <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
+              <CommonField Label='Phone No' PhoneNo={state.user?.phone} />
+            </Grid>
+            <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+              <CommonField Address={state.user?.address} Label='Address' />
+            </Grid>
+          </Grid>
 
-      <Grid container spacing={2}>
-
-        <Grid item xl={6} lg={6} md={6} sm={12} xs={12} >
-          <CommonField Name={0} Label='Name' edit={edit} />
-        </Grid>
-        <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-          <CommonField Email={0} Label='Email' edit={edit} />
-        </Grid>
-        <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-          <CommonField Role={0} Label='Role' />
-        </Grid>
-        <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-          <CommonField Label='Phone No' PhoneNo={0} edit={edit} />
-        </Grid>
-        <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
-          <CommonField Address={0} Label='Address' edit={edit} />
-        </Grid>
-
-
-
-
-
-      </Grid>
-
+      }
 
     </>
   )

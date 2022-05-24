@@ -85,18 +85,7 @@ export function UseEvents() {
 
     let [CreateManyEvents, { loading: ADD_LOADING }] = useMutation(ADD_EVENTS);
 
-    const Notify = () =>
-        toast.success('Student added successfully', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'colored',
-            transition: Slide,
-        });
+
     const ctaFormHandler = async (event) => {
         event.preventDefault();
         try {
@@ -113,7 +102,14 @@ export function UseEvents() {
                     },
                 },
                 onCompleted(data, cache) {
-                    Notify();
+                    dispatch({
+                        type: "setModal",
+                        payload: {
+                            modalUpdateFlag: false,
+                            openFormModal: false,
+                        },
+                    });
+                    ToastSuccess('Event Added')
                 },
                 refetchQueries: [{ query: GET_EVENTS }],
             });
@@ -147,17 +143,7 @@ export function UseEvents() {
                     },
                 },
                 onCompleted(data) {
-                    toast.success('Student deleted Successfully', {
-                        position: 'top-right',
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: 'colored',
-                        transition: Slide,
-                    });
+                    ToastSuccess('Event Deleted')
                 },
                 refetchQueries: [{ query: GET_EVENTS }],
             });
@@ -224,17 +210,14 @@ export function UseEvents() {
                     }
                 },
                 onCompleted() {
-                    toast.success("Student updated Successfully", {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored",
-                        transition: Slide,
-                    });
+                    dispatch({
+                        type: "setModal",
+                        payload: {
+                            modalUpdateFlag: false,
+                            openFormModal: false,
+                        },
+                    }); 
+                    ToastSuccess('Event Updated')
                 },
                 refetchQueries: [{ query: GET_EVENTS }],
             })

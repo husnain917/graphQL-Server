@@ -55,7 +55,7 @@ export function UseAllStaff() {
 
 
   //GET STAFF 
-  
+
   let { data, loading: GET_LOADING, error } = useQuery(GET_STAFF);
   console.log("error", error);
   const refacteredData = [];
@@ -76,35 +76,54 @@ export function UseAllStaff() {
 
   let [CreateManyStaff, { loading: ADD_LOADING }] = useMutation(ADD_STAFF);
 
- 
+
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    try {
-      await CreateManyStaff({
-        variables: {
-          data: {
-            name: state.editData?.name,
-            email: state.editData?.email,
-            role: state.editData?.role,
-            phone: state.editData?.phone
-          },
-        },
-        onCompleted(data, cache) {
-          ToastSuccess('Staff Added')
-        },
-        refetchQueries: [{ query: GET_STAFF }],
-      });
-    } catch (error) {
-      dispatch({
-        type: "setModal",
-        payload: {
-          openFormModal: false,
-        },
-      });
-      setLoader(false);
-      ToastError(error.message);
-
+    if (state.editData?.name === '' || state.editData?.email === '' || state.editData?.role === '' || state.editData?.phone === '') {
+      ToastWarning('Fields Cannot be empty')
     }
+    else {
+      try {
+        await CreateManyStaff({
+          variables: {
+            data: {
+              name: state.editData?.name,
+              email: state.editData?.email,
+              role: state.editData?.role,
+              phone: state.editData?.phone
+            },
+          },
+          // refetchQueries: [{ query: GET_STAFF }],
+          onCompleted(data, cache) {
+
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+
+            ToastSuccess('Staff Added')
+          },
+          update(cache,{data}){
+            
+          }
+
+        });
+      } catch (error) {
+        dispatch({
+          type: "setModal",
+          payload: {
+            openFormModal: false,
+          },
+        });
+        setLoader(false);
+        ToastError(error.message);
+
+      }
+    }
+
   };
 
 
@@ -122,10 +141,11 @@ export function UseAllStaff() {
             id: data.id,
           },
         },
+        refetchQueries: [{ query: GET_STAFF }],
         onCompleted(data) {
           ToastSuccess('Staff Deleted')
         },
-        refetchQueries: [{ query: GET_STAFF }],
+
       });
     } catch (error) {
       console.log(error.message);
@@ -183,10 +203,19 @@ export function UseAllStaff() {
             }
           }
         },
-        onCompleted() {
-          ToastSuccess('Staff Updated')
-        },
         refetchQueries: [{ query: GET_STAFF }],
+        onCompleted() {
+          dispatch({
+            type: "setModal",
+            payload: {
+              modalUpdateFlag: false,
+              openFormModal: false,
+            },
+          });
+          ToastSuccess('Staff Updated')
+
+        },
+
       })
 
     } catch (error) {

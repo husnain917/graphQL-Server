@@ -98,18 +98,6 @@ export function UseCourses() {
 
   let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
 
-  const Notify = () =>
-    toast.success('Student added successfully', {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored',
-      transition: Slide,
-    });
   const ctaFormHandler = async (event) => {
     event.preventDefault();
     try {
@@ -128,7 +116,15 @@ export function UseCourses() {
           },
         },
         onCompleted(data, cache) {
-          Notify();
+          dispatch({
+            type: "setModal",
+            payload: {
+              modalUpdateFlag: false,
+              openFormModal: false,
+            },
+          });
+          ToastSuccess('Course Added')
+
         },
         refetchQueries: [{ query: GET_COURSES }],
       });
@@ -161,17 +157,7 @@ export function UseCourses() {
           },
         },
         onCompleted(data) {
-          toast.success('Student deleted Successfully', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'colored',
-            transition: Slide,
-          });
+         ToastSuccess('Course Deleted')
         },
         refetchQueries: [{ query: GET_COURSES }],
       });
@@ -235,17 +221,14 @@ export function UseCourses() {
           }
         },
         onCompleted() {
-          toast.success("Student updated Successfully", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            transition: Slide,
+          dispatch({
+            type: "setModal",
+            payload: {
+              modalUpdateFlag: false,
+              openFormModal: false,
+            },
           });
+          ToastSuccess('Course Updated')
         },
         refetchQueries: [{ query: GET_COURSES }],
       })

@@ -5,36 +5,37 @@ let AppContext = createContext('');
 
 const initialState = {
     authState: false,
-    user:{},
+    id: {},
+    user: {},
     draftHtml: EditorState.createEmpty(),
-    openFormModal:false,
-    modalUpdateFlag:false,
-    editData:{},
-    student:{},
-    teacher:{},
-    admins:{},
-    successStory:{},
-    events:{},
-    courses:{}
+    openFormModal: false,
+    modalUpdateFlag: false,
+    editData: {},
+    student: {},
+    teacher: {},
+    admins: {},
+    successStory: {},
+    events: {},
+    courses: {}
 
 
 }
 let reducer = (state, action) => {
     // eslint-disable-next-line default-case
-    switch(action.type) {
+    switch (action.type) {
         case "setAuthState": {
-            return { ...state, authState: action.payload.authState,user:action.payload.user }
+            return { ...state, authState: action.payload.authState, user: action.payload.user }
         }
         case "setModal": {
-            return { ...state, modalUpdateFlag:action?.payload?.modalUpdateFlag || false, openFormModal: action?.payload?.openFormModal }
-        }        
-        case "setEditData": {
-            return { ...state,editData:action.payload}
-        } 
-        case "setStudent":{
-            return{...state,student:action.payload}
+            return { ...state, modalUpdateFlag: action?.payload?.modalUpdateFlag || false, openFormModal: action?.payload?.openFormModal }
         }
-        
+        case "setEditData": {
+            return { ...state, editData: action.payload}
+        }
+        case "setStudent": {
+            return { ...state, student: action.payload }
+        }
+
     }
     return state;
 };

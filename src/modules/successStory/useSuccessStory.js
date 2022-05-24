@@ -111,6 +111,13 @@ export function UseSuccessStory() {
           },
         },
         onCompleted(data, cache) {
+          dispatch({
+            type: "setModal",
+            payload: {
+              modalUpdateFlag: false,
+              openFormModal: false,
+            },
+          });
           ToastSuccess('Story Added')
         },
         refetchQueries: [{ query: GET_SUCCESS_STORIES }],
@@ -214,6 +221,13 @@ export function UseSuccessStory() {
           }
         },
         onCompleted() {
+          dispatch({
+            type: "setModal",
+            payload: {
+              modalUpdateFlag: false,
+              openFormModal: false,
+            },
+          });
           ToastSuccess('Story Updated')
         },
         refetchQueries: [{ query: GET_SUCCESS_STORIES }],

@@ -65,18 +65,6 @@ export function UseFaqs() {
 
   let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_FAQS);
 
-  const Notify = () =>
-    toast.success('Student added successfully', {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored',
-      transition: Slide,
-    });
   const ctaFormHandler = async (event) => {
     event.preventDefault();
     try {
@@ -91,7 +79,14 @@ export function UseFaqs() {
           },
         },
         onCompleted(data, cache) {
-          Notify();
+          dispatch({
+            type: "setModal",
+            payload: {
+              modalUpdateFlag: false,
+              openFormModal: false,
+            },
+          });
+          ToastSuccess('FAQ Added')
         },
         refetchQueries: [{ query: GET_FAQS }],
       });
@@ -124,17 +119,7 @@ export function UseFaqs() {
           },
         },
         onCompleted(data) {
-          toast.success('Student deleted Successfully', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'colored',
-            transition: Slide,
-          });
+          ToastSuccess('FAQ Deleted')
         },
         refetchQueries: [{ query: GET_FAQS }],
       });
@@ -192,17 +177,14 @@ export function UseFaqs() {
           }
         },
         onCompleted() {
-          toast.success("Student updated Successfully", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            transition: Slide,
+          dispatch({
+            type: "setModal",
+            payload: {
+              modalUpdateFlag: false,
+              openFormModal: false,
+            },
           });
+          ToastSuccess('FAQ Updated')
         },
         refetchQueries: [{ query: GET_FAQS }],
       })

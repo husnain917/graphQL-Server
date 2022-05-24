@@ -1,9 +1,9 @@
-import { useMutation, useQuery } from '@apollo/client';
-import React, { useState, useContext } from 'react';
+import { useMutation } from '@apollo/client';
+import { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import { LOGIN } from '../../../lib/mutation/LoginMutation';
-import { toast, Slide } from 'react-toastify';
 import { AppContext } from "../../../State";
+import { ToastError } from '../../../commonComponents/commonFunction/CommonFunction';
 export default function UseLogin() {
   const { state, dispatch } = useContext(AppContext);
   const navigate = useNavigate()
@@ -29,17 +29,7 @@ export default function UseLogin() {
 
 
   let [Login, { loading }] = useMutation(LOGIN)
-  const notifyError = (error) => toast.error(error, {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored",
-    transition: Slide,
-  });
+ 
   const loginHandler = async () => {
     try {
       await Login({
@@ -48,7 +38,7 @@ export default function UseLogin() {
           email: email
         },
         onCompleted({ login }) {
-          // navigate("/dashboard")
+          navigate("/dashboard")
           dispatch({
             type: "setAuthState",
             payload: {
@@ -60,14 +50,14 @@ export default function UseLogin() {
         },
 
         onError(error) {
-          notifyError(error.message)
+          ToastError(error)
 
         }
       })
     }
     catch (error) {
-      console.log("errorerror", error);
-      notifyError(error)
+      ToastError(error)
+
 
     }
   }

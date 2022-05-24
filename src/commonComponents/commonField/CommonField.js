@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material'
-import React, { useState } from 'react'
+import React from 'react'
 import { CF } from './CommonFieldStyle'
-export default function CommonField({ Name, Label, Email, Address, Role, Password, PhoneNo, passwordShown, edit, currentPassword, newPassword, confirmPassword, setCurrentPassword, setNewPassword, setConfirmPassword }) {
+export default function CommonField({ Name, Label, Email, Address, Role, Password, PhoneNo, passwordShown, currentPassword, newPassword, confirmPassword, setCurrentPassword, setNewPassword, setConfirmPassword }) {
 
     return (
         <>

@@ -35,7 +35,7 @@ export default function AllStudents() {
     <>
       <Table
         title={'All Students'}
-        tableHeadings={['id','Name', 'Email', 'Status', 'Actions']}
+        tableHeadings={['Id','Name', 'Email', 'Status', 'Action']}
         ctaEditButtonHandler={ctaEditButtonHandler}
         printedKeys={[
           {

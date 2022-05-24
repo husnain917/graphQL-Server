@@ -13,15 +13,11 @@ export default function CommonProfileDropDown() {
     setAnchorEl(null);
   };
   const ctaLogoutHandler = () => {
-    // localStorage.removeItem('user')
-    // localStorage.removeItem('localAuth')
     window.location.reload()
-    localStorage.clear();
     navigate('/login')
 
   }
 
-  // const items = JSON.parse(localStorage.getItem('user'));
 
   return (
     <div>
@@ -42,9 +38,9 @@ export default function CommonProfileDropDown() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        {/* <CPD.DropDown >
-          <CPD.ProfileLink to={`/profile/id:`} onClick={handleClose}>Profile</CPD.ProfileLink >
-        </CPD.DropDown> */}
+        <CPD.DropDown >
+          <CPD.ProfileLink to={`/profile/id`} onClick={handleClose}>Profile</CPD.ProfileLink >
+        </CPD.DropDown>
         {/* <CPD.DropDown >
           <CPD.ProfileLink to='/profile/ChangePassword' onClick={handleClose}>Change Password</CPD.ProfileLink >
         </CPD.DropDown> */}

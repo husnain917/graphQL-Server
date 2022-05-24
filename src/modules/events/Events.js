@@ -34,14 +34,14 @@ export default function Events() {
             <Table
                 title={'Events'}
                 tableHeadings={[
-                    'id',
-                    'eventName',
-                    'eventDesc',
-                    'eventDate',
-                    'speakerId',
-                    'eventImage',
-                    'eventStatus',
-                    'Actions',
+                    'Id',
+                    'Name',
+                    'Description',
+                    'Date',
+                    'SpeakerId',
+                    'Image',
+                    'Status',
+                    'Action',
                 ]}
                 ctaEditButtonHandler={ctaEditButtonHandler}
                 printedKeys={[

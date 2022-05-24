@@ -34,7 +34,7 @@ export default function Course() {
             <Table
                 title={'Courses'}
                 tableHeadings={[
-                    "id",
+                    "Id",
                     'Name',
                     'Description',
                     'Introduction',
@@ -42,7 +42,7 @@ export default function Course() {
                     'CategoryId',
                     'Price',
                     'Status',
-                    'Actions',
+                    'Action',
                 ]}
                 ctaEditButtonHandler={ctaEditButtonHandler}
                 printedKeys={[

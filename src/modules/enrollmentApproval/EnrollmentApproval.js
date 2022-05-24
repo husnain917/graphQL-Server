@@ -35,7 +35,7 @@ function EnrollmentApproval() {
                                 <Table
                                     title={'Enrollment Approval'}
                                     tableHeadings={[
-                                        'id',
+                                        'Id',
                                         'Student Name',
                                         'Email',
                                         'Course',
@@ -43,7 +43,7 @@ function EnrollmentApproval() {
                                         'Amount',
                                         'Transaction ID',
                                         'Status',
-                                        'Actions',
+                                        'Action',
                                     ]}
                                     ctaEditButtonHandler={ctaEditButtonHandler}
                                     printedKeys={[

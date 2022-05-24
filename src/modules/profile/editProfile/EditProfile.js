@@ -1,39 +1,51 @@
 import { Grid } from '@mui/material'
-import React from 'react'
+import React, { Suspense } from 'react'
 import CommonEditField from '../../../commonComponents/commonField/CommonEditField'
+import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader'
 import PButton from '../../../commonComponents/Pbutton/Pbutton'
 import { Pd } from '../profileData/profileDataStyle'
+import { UseEditProfile } from './UseEditProfile'
 export default function EditProfile() {
-    const [edit, setEdit] = React.useState(true)
-
-    const ctaEditHandler = () => {
-
+    const [{
+        ctaUpdateHandler,
+        name,
+        email,
+        address,
+        phone,
+        setName,
+        setEmail,
+        setAddress,
+        setPhone,
+        state,
+        UPDATE_LOADING
+    }] = UseEditProfile()
+    if (UPDATE_LOADING) {
+        return <CommonTableLoader />
     }
+
     return (
         <>
+
             <Grid container spacing={2}>
                 <Grid item xl={6} lg={6} md={6} sm={12} xs={12} >
-                    <CommonEditField Label='Name' />
+                    <CommonEditField Label='Name' placeholder={state.user.name} value={name} onChange={(e) => setName(e.target.value)} />
                 </Grid>
                 <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-                    <CommonEditField Label='Email' />
+                    <CommonEditField Label='Email' placeholder={state.user.email} value={email} onChange={(e) => setEmail(e.target.value)} />
                 </Grid>
                 <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-                    <CommonEditField Label='Role' />
+                    <CommonEditField Label='Role' value={state.user.role} />
                 </Grid>
                 <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-                    <CommonEditField Label='Phone No' />
+                    <CommonEditField Label='Phone No' placeholder={state.user.phone} value={phone} onChange={(e) => setPhone(e.target.value)} />
                 </Grid>
                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
-                    <CommonEditField Label='Address' />
+                    <CommonEditField Label='Address' placeholder={state.user.address} value={address} onChange={(e) => setAddress(e.target.value)} />
                 </Grid>
                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
-                    <Pd.ProDiv ><PButton title="save changes" ctaEditHandler={ctaEditHandler} /></Pd.ProDiv>
+                    <Pd.ProDiv ><PButton title="save changes" ctaHandler={ctaUpdateHandler} /></Pd.ProDiv>
                 </Grid>
-
-
             </Grid>
-
 
         </>
     )

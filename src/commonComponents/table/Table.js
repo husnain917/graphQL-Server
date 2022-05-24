@@ -35,7 +35,7 @@ export default function Table({
   ctaEditButtonHandler
 }) {
 
-  const { state, dispatch } = useContext(AppContext);
+  const { dispatch } = useContext(AppContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [filterValue, setFilterValue] = useState("");
   const [searchQuery, setSearchQuery] = useState('')

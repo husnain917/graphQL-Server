@@ -11,9 +11,10 @@ import {
 } from '@mui/icons-material';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import { useNavigate } from 'react-router-dom';
 export const UseDrawer = () => {
     const [open, setOpen] = React.useState(false);
-    // const items = JSON.parse(localStorage.getItem('user'));
+    const navigate = useNavigate()
 
     const menuItems = [
         {
@@ -64,7 +65,7 @@ export const UseDrawer = () => {
         {
             text: 'Profile ',
             icon: <Face />,
-            path: `/profile`
+            path: `/profile/id`
         },
     ];
 
@@ -72,10 +73,15 @@ export const UseDrawer = () => {
     const handleDrawer = () => {
         setOpen(!open);
     };
+    const ctaLogoutHandler = () => {
+        window.location.reload()
+        navigate('/login')
+      }
 
     return [{
         menuItems,
         open,
-        handleDrawer
+        handleDrawer,
+        ctaLogoutHandler
     }]
 }

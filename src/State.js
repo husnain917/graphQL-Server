@@ -4,7 +4,7 @@ import { EditorState } from "draft-js";
 let AppContext = createContext('');
 
 const initialState = {
-    authState: false,
+    authState: true,
     id: {},
     user: {},
     draftHtml: EditorState.createEmpty(),
@@ -27,7 +27,7 @@ let reducer = (state, action) => {
             return { ...state, authState: action.payload.authState, user: action.payload.user }
         }
         case "setModal": {
-            return { ...state, modalUpdateFlag: action?.payload?.modalUpdateFlag || false, openFormModal: action?.payload?.openFormModal }
+            return { ...state, modalUpdateFlag: action?.payload?.modalUpdateFlag || false, openFormModal: action?.payload?.openFormModal,editData:{}}
         }
         case "setEditData": {
             return { ...state, editData: action.payload}

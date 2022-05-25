@@ -2,7 +2,7 @@ import React from 'react';
 import Table from '../../commonComponents/table/Table';
 import { ToastContainer } from 'react-toastify';
 import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
-import { UseContactUs } from './UseContactUs';
+import { UseContactUs } from './useContactUs';
 export default function ContactUs() {
     const [
         {

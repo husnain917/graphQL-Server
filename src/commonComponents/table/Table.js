@@ -33,7 +33,8 @@ export default function Table({
   ctaFormHandler,
   ctaDeleteHandler,
   ctaUpdateHandler,
-  ctaEditButtonHandler
+  ctaEditButtonHandler,
+  handleChange
 }) {
 
   const { dispatch } = useContext(AppContext);
@@ -124,7 +125,7 @@ export default function Table({
       {/* Drop Down menu for filter Button */}
 
       {/* Form Modal */}
-      <FormModal formInputs={formInputs} ctaFormHandler={ctaFormHandler} ctaUpdateHandler={ctaUpdateHandler} />
+      <FormModal formInputs={formInputs} ctaFormHandler={ctaFormHandler} ctaUpdateHandler={ctaUpdateHandler}  handleChange={handleChange}/>
       {/* Form Modal */}
 
       <Toolbar disableGutters>

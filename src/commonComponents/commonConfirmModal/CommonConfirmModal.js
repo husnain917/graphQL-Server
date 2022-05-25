@@ -1,15 +1,12 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
-import { IconButton } from '@mui/material';
-import { CM, style } from './CommonConfirmModalStyle'
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import { CM } from './CommonConfirmModalStyle'
 import UseCommonConfirmModal from './UseCommonConfirmModal';
-
-
+import { IconButton } from '@mui/material';
 export default function CommonConfirmModal({ ctaDeleteHandler, row, title }) {
   const [{ open, setOpen, handleClose, handleOpen }] = UseCommonConfirmModal()
-
   return (
     <div>
       <IconButton
@@ -19,17 +16,21 @@ export default function CommonConfirmModal({ ctaDeleteHandler, row, title }) {
       >
         <CM.DeleteIcon />
       </IconButton>
-      <Modal
+      <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        <CM.ModalBox sx={style}>
-          <p>Are you sure to delete {title} record permanently?</p>
-          <CM.DeleteButton variant='contained' color="error" onClick={() => ctaDeleteHandler(row)}>Delete</CM.DeleteButton>
-        </CM.ModalBox>
-      </Modal>
+        <DialogContent>
+            <p>Are you sure to delete {title} record permanently?</p>
+        </DialogContent>
+        <DialogActions>
+          <CM.DeleteButton variant='contained' color="error" onClick={() => ctaDeleteHandler(row)}>
+            Delete
+          </CM.DeleteButton>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

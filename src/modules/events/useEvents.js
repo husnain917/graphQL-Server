@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
-import React, { useState, useContext } from "react";
-import Axios from "axios";
+import { useState, useContext } from "react";
 import {
     ToastError,
     ToastSuccess,
@@ -12,9 +11,6 @@ import {
     UPDATE_SINGLE_EVENT,
 } from "../../lib/mutation/AllMutations";
 import { GET_EVENTS } from "../../lib/queries/AllQueries";
-// import { convertToRaw } from "draft-js";
-// import draftToHtml from "draftjs-to-html";
-import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../State";
 
 
@@ -33,17 +29,12 @@ export function UseEvents() {
         {
             label: "Description",
             name: "eventDesc",
-            type: "email",
+            type: "text",
         },
         {
             label: "Speaker Id",
             name: "speakerId",
-            type: "email",
-        },
-        {
-            label: "Image",
-            name: "eventImage",
-            type: "email",
+            type: "text",
         },
         {
             label: "Status",
@@ -51,13 +42,33 @@ export function UseEvents() {
             type: "select",
             dropDownContent: ["PAST", "UPCOMING"],
         },
+        {
+            label: "Image",
+            name: "eventImage",
+            type: "upload",
+        },
     ]
     const { state, dispatch } = useContext(AppContext);
 
 
 
+    var fileName;
+    var File;
+    const handleChange = (e) => {
+        fileName = e.target.files
+        console.log("sami", fileName);
+        var filesArray = [].slice.call(fileName);
+        filesArray.forEach(e => {
+            console.log(e.name);
+            File = e.name
+            console.log(File);
+            //   console.log(e.size);
+            //   console.log(e.type);
+            //   console.log(e.lastModifiedDate);
+        });
 
 
+    }
 
     //GET STAFF 
 
@@ -97,9 +108,6 @@ export function UseEvents() {
         else if (!state.editData?.speakerId) {
             ToastWarning('Speaker Id required')
         }
-        else if (!state.editData?.eventImage) {
-            ToastWarning('Event image required')
-        }
         else if (!state.editData?.eventStatus) {
             ToastWarning('Status required')
         }
@@ -110,7 +118,7 @@ export function UseEvents() {
                         data: {
                             eventName: state.editData?.eventName,
                             eventDesc: state.editData?.eventDesc,
-                            eventImage: state.editData?.eventImage,
+                            eventImage: File,
                             eventDate: new Date(),
                             speakerId: state.editData?.speakerId,
                             eventStatus: state.editData?.eventStatus,
@@ -207,9 +215,6 @@ export function UseEvents() {
         else if (!state.editData?.speakerId) {
             ToastWarning('Speaker Id required')
         }
-        else if (!state.editData?.eventImage) {
-            ToastWarning('Event image required')
-        }
         else if (!state.editData?.eventStatus) {
             ToastWarning('Status required')
         }
@@ -228,7 +233,7 @@ export function UseEvents() {
                                 set: state.editData?.eventDesc
                             },
                             eventImage: {
-                                set: state.editData?.eventImage
+                                set:File
                             },
                             eventDate: {
                                 set: new Date()
@@ -271,7 +276,8 @@ export function UseEvents() {
             ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
-            ctaEditButtonHandler
+            ctaEditButtonHandler,
+            handleChange
         },
     ];
 }

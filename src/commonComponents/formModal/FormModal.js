@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -13,8 +13,9 @@ import Box from "@mui/material/Box";
 import { AppContext } from "../../State";
 import { EditorState } from "draft-js";
 import { FM } from './FormModalStyle'
-export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler }) {
+export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange }) {
   const { state, dispatch } = useContext(AppContext);
+
   const handleCloseUpdate = () => {
     dispatch({
       type: "setModal",
@@ -24,6 +25,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
       },
     });
   };
+
   return (
     <div>
       <Dialog open={state.openFormModal} onClose={handleCloseUpdate}>
@@ -60,59 +62,70 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                         </MenuItem>
                       ))}
                     </TextField>
-                  ) : item.type === "editor" ? (
-                    <Editor
-                      editorState={state.editData[item.name]}
-                      onEditorStateChange={(getText) => {
-                        test[item.name] = getText;
-                        dispatch({
-                          type: "setEditData",
-                          payload: test,
-                        });
-                      }}
-                      toolbarClassName="toolbarClassName"
-                      wrapperClassName="wrapperClassName"
-                      editorClassName="editorClassName"
-                      toolbar={{
-                        inline: { inDropdown: true },
-                        list: { inDropdown: true },
-                        textAlign: { inDropdown: true },
-                        link: { inDropdown: true },
-                        history: { inDropdown: true },
-                        blockType: {
-                          className: "bordered-option-classname",
-                        },
-                        fontSize: {
-                          className: "bordered-option-classname",
-                        },
-                        fontFamily: {
-                          className: "bordered-option-classname",
-                        },
-                      }}
-                    />
-                  ) : (
-                    <TextField
-                      margin="dense"
-                      id="file"
-                      label={item.label}
-                      name={item.name}
-                      type={item.type}
-                      fullWidth
-                      variant="standard"
-                      value={
-                        item.name === "file" ? "" : state.editData[item.name]
-                      }
-                      onChange={(e) => {
-                        test[item.name] = item.name === "file"
-                          ? e.target.files[0].name
-                          : e.target.value;
-                        dispatch({
-                          type: "setEditData",
-                          payload: test,
-                        });
-                      }}
-                    />
-                  )}
+
+                  ) :
+                    item.type === "editor" ? (
+                      <Editor
+                        editorState={state.editData[item.name]}
+                        onEditorStateChange={(getText) => {
+                          test[item.name] = getText;
+                          dispatch({
+                            type: "setEditData",
+                            payload: test,
+                          });
+                        }}
+                        toolbarClassName="toolbarClassName"
+                        wrapperClassName="wrapperClassName"
+                        editorClassName="editorClassName"
+                        toolbar={{
+                          inline: { inDropdown: true },
+                          list: { inDropdown: true },
+                          textAlign: { inDropdown: true },
+                          link: { inDropdown: true },
+                          history: { inDropdown: true },
+                          blockType: {
+                            className: "bordered-option-classname",
+                          },
+                          fontSize: {
+                            className: "bordered-option-classname",
+                          },
+                          fontFamily: {
+                            className: "bordered-option-classname",
+                          },
+                        }}
+                      />
+                    ) :
+                      item.type === "upload" ?
+                        (
+                          <div style={{ marginTop: 10 }}>
+                            <input type="file" onChange={e => handleChange(e)} />
+                          </div>
+                        )
+                        :
+                        (
+                          <TextField
+                            margin="dense"
+                            id="file"
+                            label={item.label}
+                            name={item.name}
+                            type={item.type}
+                            fullWidth
+                            variant="standard"
+                            value={
+                              item.name === "file" ? "" : state.editData[item.name]
+                            }
+                            onChange={(e) => {
+                              test[item.name] = item.name === "file"
+                                ? e.target.files[0].name
+                                : e.target.value;
+                              dispatch({
+                                type: "setEditData",
+                                payload: test,
+                              });
+                            }}
+                          />
+                        )
+                  }
                   <br />
                 </>
               );

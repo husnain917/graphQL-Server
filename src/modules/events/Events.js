@@ -16,7 +16,8 @@ export default function Events() {
             ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
-            ctaEditButtonHandler
+            ctaEditButtonHandler,
+            handleChange
         },
     ] = UseEvents();
     if (
@@ -79,6 +80,7 @@ export default function Events() {
                 }}
                 data={refacteredData}
                 ctaFormHandler={ctaFormHandler}
+                handleChange={handleChange}
                 ctaDeleteHandler={ctaDeleteHandler}
                 ctaUpdateHandler={ctaUpdateHandler}
             />

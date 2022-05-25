@@ -31,27 +31,27 @@ export function UseSuccessStory() {
       type: "text",
     },
     {
-      label: "freelancingProfileUrl",
+      label: "Freelancing Profile Url",
       name: "freelancingProfileUrl",
       type: "text",
     },
     {
-      label: "paymentProof",
+      label: "Payment Proof",
       name: "paymentProof",
       type: "text",
     },
     {
-      label: "description",
+      label: "Description",
       name: "description",
       type: "text",
     },
     {
-      label: "totalEarnedAmount",
+      label: "Total Earned Amount",
       name: "totalEarnedAmount",
       type: "text",
     },
     {
-      label: "whyReject",
+      label: "Why Reject",
       name: "whyReject",
       type: "text",
     },
@@ -96,35 +96,65 @@ export function UseSuccessStory() {
   let [CreateManyStories, { loading: ADD_LOADING }] = useMutation(ADD_SUCCESS_STORY);
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    try {
-      await CreateManyStories({
-        variables: {
-          data: {
-            city: state.editData?.city,
-            freelancingProfileUrl: state.editData?.freelancingProfileUrl,
-            paymentProof: state.editData?.paymentProof,
-            description: state.editData?.description,
-            status: state.editData?.status,
-            totalEarnedAmount: state.editData?.totalEarnedAmount,
-            whyReject: state.editData?.whyReject,
-            // phone: state.editData?.phone
+    if (!state.editData?.city) {
+      ToastWarning('City name required')
+    }
+    else if (!state.editData?.freelancingProfileUrl) {
+      ToastWarning('Freelancing profile url required')
+    }
+    else if (!state.editData?.paymentProof) {
+      ToastWarning('Payment proof required')
+    }
+    else if (!state.editData?.description) {
+      ToastWarning('Description required')
+    }
+    else if (!state.editData?.totalEarnedAmount) {
+      ToastWarning('Total earned amount required')
+    }
+    else if (!state.editData?.whyReject) {
+      ToastWarning('Why rejectrequired')
+    }
+    else if (!state.editData?.status) {
+      ToastWarning('Status required')
+    }
+    else {
+      try {
+        await CreateManyStories({
+          variables: {
+            data: {
+              city: state.editData?.city,
+              freelancingProfileUrl: state.editData?.freelancingProfileUrl,
+              paymentProof: state.editData?.paymentProof,
+              description: state.editData?.description,
+              status: state.editData?.status,
+              totalEarnedAmount: state.editData?.totalEarnedAmount,
+              whyReject: state.editData?.whyReject,
+              // phone: state.editData?.phone
+            },
           },
-        },
-        onCompleted(data, cache) {
-          ToastSuccess('Story Added')
-        },
-        refetchQueries: [{ query: GET_SUCCESS_STORIES }],
-      });
-    } catch (error) {
-      dispatch({
-        type: "setModal",
-        payload: {
-          openFormModal: false,
-        },
-      });
-      setLoader(false);
-      ToastError(error.message);
+          onCompleted(data, cache) {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+            ToastSuccess('Story Added')
+          },
+          refetchQueries: [{ query: GET_SUCCESS_STORIES }],
+        });
+      } catch (error) {
+        dispatch({
+          type: "setModal",
+          payload: {
+            openFormModal: false,
+          },
+        });
+        setLoader(false);
+        ToastError(error.message);
 
+      }
     }
   };
 
@@ -182,45 +212,74 @@ export function UseSuccessStory() {
   };
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
-
-    try {
-      await UpdateSuccessStories({
-        variables: {
-          where: {
-            id: updatedIndex
-          },
-          data: {
-            freelancingProfileUrl: {
-              set: state.editData?.freelancingProfileUrl
+    if (!state.editData?.city) {
+      ToastWarning('City name required')
+    }
+    else if (!state.editData?.freelancingProfileUrl) {
+      ToastWarning('Freelancing profile url required')
+    }
+    else if (!state.editData?.paymentProof) {
+      ToastWarning('Payment proof required')
+    }
+    else if (!state.editData?.description) {
+      ToastWarning('Description required')
+    }
+    else if (!state.editData?.totalEarnedAmount) {
+      ToastWarning('Total earned amount required')
+    }
+    else if (!state.editData?.whyReject) {
+      ToastWarning('Why rejectrequired')
+    }
+    else if (!state.editData?.status) {
+      ToastWarning('Status required')
+    }
+    else {
+      try {
+        await UpdateSuccessStories({
+          variables: {
+            where: {
+              id: updatedIndex
             },
-            paymentProof: {
-              set: state.editData?.paymentProof
-            },
-            description: {
-              set: state.editData?.description
-            },
-            status: {
-              set: state.editData?.status
-            },
-            totalEarnedAmount: {
-              set: state.editData?.totalEarnedAmount
-            },
-            city: {
-              set: state.editData?.city
-            },
-            whyReject: {
-              set: state.editData?.whyReject
+            data: {
+              freelancingProfileUrl: {
+                set: state.editData?.freelancingProfileUrl
+              },
+              paymentProof: {
+                set: state.editData?.paymentProof
+              },
+              description: {
+                set: state.editData?.description
+              },
+              status: {
+                set: state.editData?.status
+              },
+              totalEarnedAmount: {
+                set: state.editData?.totalEarnedAmount
+              },
+              city: {
+                set: state.editData?.city
+              },
+              whyReject: {
+                set: state.editData?.whyReject
+              }
             }
-          }
-        },
-        onCompleted() {
-          ToastSuccess('Story Updated')
-        },
-        refetchQueries: [{ query: GET_SUCCESS_STORIES }],
-      })
+          },
+          onCompleted() {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+            ToastSuccess('Story Updated')
+          },
+          refetchQueries: [{ query: GET_SUCCESS_STORIES }],
+        })
 
-    } catch (error) {
-      console.log(error.message);
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   }
   return [

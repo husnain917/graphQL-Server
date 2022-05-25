@@ -19,6 +19,7 @@ import { TableStyle } from "./TableStyle";
 import FormModal from "../formModal/FormModal";
 import DropDownMenu from "../dropDownMenu/DropDownMenu";
 import { AppContext } from "../../State";
+import CommonConfirmModal from "../commonConfirmModal/CommonConfirmModal";
 
 export default function Table({
   title,
@@ -32,7 +33,8 @@ export default function Table({
   ctaFormHandler,
   ctaDeleteHandler,
   ctaUpdateHandler,
-  ctaEditButtonHandler
+  ctaEditButtonHandler,
+  handleChange
 }) {
 
   const { dispatch } = useContext(AppContext);
@@ -123,7 +125,7 @@ export default function Table({
       {/* Drop Down menu for filter Button */}
 
       {/* Form Modal */}
-      <FormModal formInputs={formInputs} ctaFormHandler={ctaFormHandler} ctaUpdateHandler={ctaUpdateHandler} />
+      <FormModal formInputs={formInputs} ctaFormHandler={ctaFormHandler} ctaUpdateHandler={ctaUpdateHandler}  handleChange={handleChange}/>
       {/* Form Modal */}
 
       <Toolbar disableGutters>
@@ -241,24 +243,20 @@ export default function Table({
                             ></p>
                           ) : subitem?.type === "crud" ? (
                             <>
-                              <Tooltip title="Delete">
-                                <IconButton
-                                  aria-label="delete"
-                                  size="small"
-                                  onClick={() => ctaDeleteHandler(row)}
-                                >
-                                  <TableStyle.DeleteIcon />
-                                </IconButton>
-                              </Tooltip>
-                              <Tooltip title="Update">
-                                <IconButton
-                                  aria-label="update"
-                                  size="small"
-                                  onClick={() => ctaEditButtonHandler(row)}
-                                >
-                                  <TableStyle.EditIcon />
-                                </IconButton>
-                              </Tooltip>
+                              <TableStyle.IconDiv>
+                                <Tooltip title="Delete">
+                                  <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
+                                </Tooltip>
+                                <Tooltip title="Update">
+                                  <IconButton
+                                    aria-label="update"
+                                    size="small"
+                                    onClick={() => ctaEditButtonHandler(row)}
+                                  >
+                                    <TableStyle.EditIcon />
+                                  </IconButton>
+                                </Tooltip>
+                              </TableStyle.IconDiv>
                             </>
                           ) : (
                             exactKey

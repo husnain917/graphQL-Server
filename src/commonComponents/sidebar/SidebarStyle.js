@@ -143,6 +143,11 @@ export const SidebarStyle = {
     padding: '10px',
     border: '1px solid ' + colors.lightBlue,
     textAlign: 'center',
+    transition: '0.5s',
+    '&:hover': {
+      backgroundColor: colors.lightBlue,
+      color: "white"
+    }
   }))
 
 

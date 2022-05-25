@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
-import React, { useState, useContext } from "react";
-import Axios from "axios";
+import { useState, useContext } from "react";
 import {
     ToastError,
     ToastSuccess,
@@ -12,9 +11,6 @@ import {
     UPDATE_SINGLE_EVENT,
 } from "../../lib/mutation/AllMutations";
 import { GET_EVENTS } from "../../lib/queries/AllQueries";
-// import { convertToRaw } from "draft-js";
-// import draftToHtml from "draftjs-to-html";
-import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../State";
 
 
@@ -33,17 +29,12 @@ export function UseEvents() {
         {
             label: "Description",
             name: "eventDesc",
-            type: "email",
+            type: "text",
         },
         {
             label: "Speaker Id",
             name: "speakerId",
-            type: "email",
-        },
-        {
-            label: "Image",
-            name: "eventImage",
-            type: "email",
+            type: "text",
         },
         {
             label: "Status",
@@ -51,13 +42,33 @@ export function UseEvents() {
             type: "select",
             dropDownContent: ["PAST", "UPCOMING"],
         },
+        {
+            label: "Image",
+            name: "eventImage",
+            type: "upload",
+        },
     ]
     const { state, dispatch } = useContext(AppContext);
 
 
 
+    var fileName;
+    var File;
+    const handleChange = (e) => {
+        fileName = e.target.files
+        console.log("sami", fileName);
+        var filesArray = [].slice.call(fileName);
+        filesArray.forEach(e => {
+            console.log(e.name);
+            File = e.name
+            console.log(File);
+            //   console.log(e.size);
+            //   console.log(e.type);
+            //   console.log(e.lastModifiedDate);
+        });
 
 
+    }
 
     //GET STAFF 
 
@@ -85,49 +96,59 @@ export function UseEvents() {
 
     let [CreateManyEvents, { loading: ADD_LOADING }] = useMutation(ADD_EVENTS);
 
-    const Notify = () =>
-        toast.success('Student added successfully', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'colored',
-            transition: Slide,
-        });
+
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        try {
-            await CreateManyEvents({
-                variables: {
-                    data: {
-                        eventName: state.editData?.eventName,
-                        eventDesc: state.editData?.eventDesc,
-                        eventImage: state.editData?.eventImage,
-                        eventDate: new Date(),
-                        speakerId: state.editData?.speakerId,
-                        eventStatus: state.editData?.eventStatus,
+        if (!state.editData?.eventName) {
+            ToastWarning('Event name required')
+        }
+        else if (!state.editData?.eventDesc) {
+            ToastWarning('Event description  required')
+        }
+        else if (!state.editData?.speakerId) {
+            ToastWarning('Speaker Id required')
+        }
+        else if (!state.editData?.eventStatus) {
+            ToastWarning('Status required')
+        }
+        else {
+            try {
+                await CreateManyEvents({
+                    variables: {
+                        data: {
+                            eventName: state.editData?.eventName,
+                            eventDesc: state.editData?.eventDesc,
+                            eventImage: File,
+                            eventDate: new Date(),
+                            speakerId: state.editData?.speakerId,
+                            eventStatus: state.editData?.eventStatus,
 
+                        },
                     },
-                },
-                onCompleted(data, cache) {
-                    Notify();
-                },
-                refetchQueries: [{ query: GET_EVENTS }],
-            });
-            console.log(state.editData);
-        } catch (error) {
-            dispatch({
-                type: "setModal",
-                payload: {
-                    openFormModal: false,
-                },
-            });
-            setLoader(false);
-            ToastError(error.message);
+                    onCompleted(data, cache) {
+                        dispatch({
+                            type: "setModal",
+                            payload: {
+                                modalUpdateFlag: false,
+                                openFormModal: false,
+                            },
+                        });
+                        ToastSuccess('Event Added')
+                    },
+                    refetchQueries: [{ query: GET_EVENTS }],
+                });
+                console.log(state.editData);
+            } catch (error) {
+                dispatch({
+                    type: "setModal",
+                    payload: {
+                        openFormModal: false,
+                    },
+                });
+                setLoader(false);
+                ToastError(error.message);
 
+            }
         }
     };
 
@@ -147,17 +168,7 @@ export function UseEvents() {
                     },
                 },
                 onCompleted(data) {
-                    toast.success('Student deleted Successfully', {
-                        position: 'top-right',
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: 'colored',
-                        transition: Slide,
-                    });
+                    ToastSuccess('Event Deleted')
                 },
                 refetchQueries: [{ query: GET_EVENTS }],
             });
@@ -195,52 +206,62 @@ export function UseEvents() {
     };
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-
-        try {
-            await UpdateEvents({
-                variables: {
-                    where: {
-                        id: updatedIndex
-                    },
-                    data: {
-                        eventName: {
-                            set: state.editData?.eventName
+        if (!state.editData?.eventName) {
+            ToastWarning('Event name required')
+        }
+        else if (!state.editData?.eventDesc) {
+            ToastWarning('Event description  required')
+        }
+        else if (!state.editData?.speakerId) {
+            ToastWarning('Speaker Id required')
+        }
+        else if (!state.editData?.eventStatus) {
+            ToastWarning('Status required')
+        }
+        else {
+            try {
+                await UpdateEvents({
+                    variables: {
+                        where: {
+                            id: updatedIndex
                         },
-                        eventDesc: {
-                            set: state.editData?.eventDesc
-                        },
-                        eventImage: {
-                            set: state.editData?.eventImage
-                        },
-                        eventDate: {
-                            set: new Date()
-                        },
-                        speakerId: {
-                            set: state.editData?.speakerId
-                        },
-                        eventStatus: {
-                            set: state.editData?.eventStatus
+                        data: {
+                            eventName: {
+                                set: state.editData?.eventName
+                            },
+                            eventDesc: {
+                                set: state.editData?.eventDesc
+                            },
+                            eventImage: {
+                                set:File
+                            },
+                            eventDate: {
+                                set: new Date()
+                            },
+                            speakerId: {
+                                set: state.editData?.speakerId
+                            },
+                            eventStatus: {
+                                set: state.editData?.eventStatus
+                            }
                         }
-                    }
-                },
-                onCompleted() {
-                    toast.success("Student updated Successfully", {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored",
-                        transition: Slide,
-                    });
-                },
-                refetchQueries: [{ query: GET_EVENTS }],
-            })
+                    },
+                    onCompleted() {
+                        dispatch({
+                            type: "setModal",
+                            payload: {
+                                modalUpdateFlag: false,
+                                openFormModal: false,
+                            },
+                        });
+                        ToastSuccess('Event Updated')
+                    },
+                    refetchQueries: [{ query: GET_EVENTS }],
+                })
 
-        } catch (error) {
-            console.log(error.message);
+            } catch (error) {
+                console.log(error.message);
+            }
         }
     }
     return [
@@ -255,7 +276,8 @@ export function UseEvents() {
             ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
-            ctaEditButtonHandler
+            ctaEditButtonHandler,
+            handleChange
         },
     ];
 }

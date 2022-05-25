@@ -5,8 +5,15 @@ import { LOGIN } from '../../../lib/mutation/LoginMutation';
 import { AppContext } from "../../../State";
 import { ToastError } from '../../../commonComponents/commonFunction/CommonFunction';
 export default function UseLogin() {
-  const { state, dispatch } = useContext(AppContext);
   const navigate = useNavigate()
+  // const cc = localStorage.getItem('auth')
+  // if (cc === true) {
+  //   navigate('/dashboard')
+  // }
+
+
+  const { state, dispatch } = useContext(AppContext);
+
   const [email, setEmail] = useState('');
   const [values, setValues] = useState({
     amount: '',
@@ -29,13 +36,17 @@ export default function UseLogin() {
 
 
   let [Login, { loading }] = useMutation(LOGIN)
- 
+
   const loginHandler = async () => {
+    console.log(email);
+    console.log(values.password);
+
     try {
       await Login({
         variables: {
+
+          email: email,
           password: values.password,
-          email: email
         },
         onCompleted({ login }) {
           navigate("/dashboard")
@@ -48,15 +59,11 @@ export default function UseLogin() {
           });
 
         },
-
-        onError(error) {
-          ToastError(error)
-
-        }
       })
+
     }
     catch (error) {
-      ToastError(error)
+      ToastError(error.message)
 
 
     }

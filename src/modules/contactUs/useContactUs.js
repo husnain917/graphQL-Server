@@ -82,47 +82,59 @@ export function UseContactUs() {
     //ADD STAFF
 
     let [CreateManyStudents, { loading: ADD_LOADING }] = useMutation(ADD_CONTACT_US);
-
-    const Notify = () =>
-        toast.success('Student added successfully', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'colored',
-            transition: Slide,
-        });
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        try {
-            await CreateManyStudents({
-                variables: {
-                    data: {
-                        name: state.editData?.name,
-                        subject: state.editData?.subject,
-                        message: state.editData?.message,
-                        status: state.editData?.status,
-                        reply: state.editData?.reply,
+        if (!state.editData?.name) {
+            ToastWarning('Name required')
+        }
+        else if (!state.editData?.subject) {
+            ToastWarning('Subject  required')
+        }
+        else if (!state.editData?.message) {
+            ToastWarning('Message required')
+        }
+        else if (!state.editData?.reply) {
+            ToastWarning('Reply required')
+        }
+        else if (!state.editData?.status) {
+            ToastWarning('Status required')
+        }
+        else {
+            try {
+                await CreateManyStudents({
+                    variables: {
+                        data: {
+                            name: state.editData?.name,
+                            subject: state.editData?.subject,
+                            message: state.editData?.message,
+                            status: state.editData?.status,
+                            reply: state.editData?.reply,
+                        },
                     },
-                },
-                onCompleted(data, cache) {
-                    Notify();
-                },
-                refetchQueries: [{ query: GET_CONTACT_US }],
-            });
-        } catch (error) {
-            dispatch({
-                type: "setModal",
-                payload: {
-                    openFormModal: false,
-                },
-            });
-            setLoader(false);
-            ToastError(error.message);
+                    refetchQueries: [{ query: GET_CONTACT_US }],
+                    onCompleted(data, cache) {
+                        dispatch({
+                            type: "setModal",
+                            payload: {
+                                modalUpdateFlag: false,
+                                openFormModal: false,
+                            },
+                        });
+                        ToastSuccess('Contact Added')
+                    },
 
+                });
+            } catch (error) {
+                dispatch({
+                    type: "setModal",
+                    payload: {
+                        openFormModal: false,
+                    },
+                });
+                setLoader(false);
+                ToastError(error.message);
+
+            }
         }
     };
 
@@ -142,17 +154,7 @@ export function UseContactUs() {
                     },
                 },
                 onCompleted(data) {
-                    toast.success('Student deleted Successfully', {
-                        position: 'top-right',
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: 'colored',
-                        transition: Slide,
-                    });
+                    ToastSuccess('Contact Deleted')
                 },
                 refetchQueries: [{ query: GET_CONTACT_US }],
             });
@@ -190,49 +192,63 @@ export function UseContactUs() {
     };
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-
-        try {
-            await UpdateContactUs({
-                variables: {
-                    where: {
-                        id: updatedIndex
-                    },
-                    data: {
-                        name: {
-                            set: state.editData?.name
+        if (!state.editData?.name) {
+            ToastWarning('Name required')
+        }
+        else if (!state.editData?.subject) {
+            ToastWarning('Subject  required')
+        }
+        else if (!state.editData?.message) {
+            ToastWarning('Message required')
+        }
+        else if (!state.editData?.reply) {
+            ToastWarning('Reply required')
+        }
+        else if (!state.editData?.status) {
+            ToastWarning('Status required')
+        }
+        else {
+            try {
+                await UpdateContactUs({
+                    variables: {
+                        where: {
+                            id: updatedIndex
                         },
-                        subject: {
-                            set: state.editData?.subject
-                        },
-                        message: {
-                            set: state.editData?.message
-                        },
-                        reply: {
-                            set: state.editData?.reply
-                        },
-                        status: {
-                            set: state.editData?.status
+                        data: {
+                            name: {
+                                set: state.editData?.name
+                            },
+                            subject: {
+                                set: state.editData?.subject
+                            },
+                            message: {
+                                set: state.editData?.message
+                            },
+                            reply: {
+                                set: state.editData?.reply
+                            },
+                            status: {
+                                set: state.editData?.status
+                            }
                         }
-                    }
-                },
-                onCompleted() {
-                    toast.success("Student updated Successfully", {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored",
-                        transition: Slide,
-                    });
-                },
-                refetchQueries: [{ query: GET_CONTACT_US }],
-            })
+                    },
+                    refetchQueries: [{ query: GET_CONTACT_US }],
+                    onCompleted() {
+                        dispatch({
+                            type: "setModal",
+                            payload: {
+                                modalUpdateFlag: false,
+                                openFormModal: false,
+                            },
+                        });
+                        ToastSuccess('Contact Updated')
+                    },
 
-        } catch (error) {
-            console.log(error.message);
+                })
+
+            } catch (error) {
+                console.log(error.message);
+            }
         }
     }
     return [

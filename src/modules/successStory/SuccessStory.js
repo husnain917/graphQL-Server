@@ -36,7 +36,7 @@ export default function SuccessStory() {
           title={'Success Stories'}
           tableHeadings={[
             'Id',
-            'city',
+            'City',
             'FreelancingProfileUrl',
             'PaymentProof',
             'Description',

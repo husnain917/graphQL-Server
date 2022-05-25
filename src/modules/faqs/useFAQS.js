@@ -65,46 +65,49 @@ export function UseFaqs() {
 
   let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_FAQS);
 
-  const Notify = () =>
-    toast.success('Student added successfully', {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored',
-      transition: Slide,
-    });
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    try {
-      await Mutation({
-        variables: {
-          data: {
-            faqAnswer: state.editData?.faqAnswer,
-            faqQuestion: state.editData?.faqQuestion,
-            createdAt: new Date(),
-            updateAt: '00000000'
-            // phone: state.editData?.phone
+    if (!state.editData?.faqQuestion) {
+      ToastWarning('Faq question required')
+    }
+    else if (!state.editData?.faqAnswer) {
+      ToastWarning('Faq answer required')
+    }
+    else {
+      try {
+        await Mutation({
+          variables: {
+            data: {
+              faqAnswer: state.editData?.faqAnswer,
+              faqQuestion: state.editData?.faqQuestion,
+              createdAt: new Date(),
+              updateAt: '00000000'
+              // phone: state.editData?.phone
+            },
           },
-        },
-        onCompleted(data, cache) {
-          Notify();
-        },
-        refetchQueries: [{ query: GET_FAQS }],
-      });
-    } catch (error) {
-      dispatch({
-        type: "setModal",
-        payload: {
-          openFormModal: false,
-        },
-      });
-      setLoader(false);
-      ToastError(error.message);
+          onCompleted(data, cache) {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+            ToastSuccess('FAQ Added')
+          },
+          refetchQueries: [{ query: GET_FAQS }],
+        });
+      } catch (error) {
+        dispatch({
+          type: "setModal",
+          payload: {
+            openFormModal: false,
+          },
+        });
+        setLoader(false);
+        ToastError(error.message);
 
+      }
     }
   };
 
@@ -124,17 +127,7 @@ export function UseFaqs() {
           },
         },
         onCompleted(data) {
-          toast.success('Student deleted Successfully', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'colored',
-            transition: Slide,
-          });
+          ToastSuccess('FAQ Deleted')
         },
         refetchQueries: [{ query: GET_FAQS }],
       });
@@ -172,43 +165,47 @@ export function UseFaqs() {
   };
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
-
-    try {
-      await UpdateFaq({
-        variables: {
-          where: {
-            id: updatedIndex
+    if (!state.editData?.faqQuestion) {
+      ToastWarning('Faq question required')
+    }
+    else if (!state.editData?.faqAnswer) {
+      ToastWarning('Faq answer required')
+    }
+    else {
+      try {
+        await UpdateFaq({
+          variables: {
+            where: {
+              id: updatedIndex
+            },
+            data: {
+              faqAnswer: {
+                set: state.editData?.faqAnswer
+              },
+              faqQuestion: {
+                set: state.editData?.faqQuestion
+              },
+              updateAt: {
+                set: new Date()
+              },
+            }
           },
-          data: {
-            faqAnswer: {
-              set: state.editData?.faqAnswer
-            },
-            faqQuestion: {
-              set: state.editData?.faqQuestion
-            },
-            updateAt: {
-              set: new Date()
-            },
-          }
-        },
-        onCompleted() {
-          toast.success("Student updated Successfully", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            transition: Slide,
-          });
-        },
-        refetchQueries: [{ query: GET_FAQS }],
-      })
+          onCompleted() {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+            ToastSuccess('FAQ Updated')
+          },
+          refetchQueries: [{ query: GET_FAQS }],
+        })
 
-    } catch (error) {
-      console.log(error.message);
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   }
   return [

@@ -15,7 +15,6 @@ import { GET_STAFF } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
-import { Slide, toast } from "react-toastify";
 
 
 
@@ -55,7 +54,7 @@ export function UseAllStaff() {
 
 
   //GET STAFF 
-  
+
   let { data, loading: GET_LOADING, error } = useQuery(GET_STAFF);
   console.log("error", error);
   const refacteredData = [];
@@ -76,35 +75,87 @@ export function UseAllStaff() {
 
   let [CreateManyStaff, { loading: ADD_LOADING }] = useMutation(ADD_STAFF);
 
- 
+
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    try {
-      await CreateManyStaff({
-        variables: {
-          data: {
-            name: state.editData?.name,
-            email: state.editData?.email,
-            role: state.editData?.role,
-            phone: state.editData?.phone
-          },
-        },
-        onCompleted(data, cache) {
-          ToastSuccess('Staff Added')
-        },
-        refetchQueries: [{ query: GET_STAFF }],
-      });
-    } catch (error) {
-      dispatch({
-        type: "setModal",
-        payload: {
-          openFormModal: false,
-        },
-      });
-      setLoader(false);
-      ToastError(error.message);
-
+    if (!state.editData?.name) {
+      ToastWarning('Name required')
     }
+    else if (!state.editData?.email) {
+      ToastWarning('Email required')
+    }
+    else if (!state.editData?.phone) {
+      ToastWarning('Phone required')
+    }
+    else if (!state.editData?.role) {
+      ToastWarning('Role required')
+    }
+    else {
+      try {
+        await CreateManyStaff({
+          variables: {
+            data: {
+              name: state.editData?.name,
+              email: state.editData?.email,
+              role: state.editData?.role,
+              phone: state.editData?.phone
+            },
+          },
+          refetchQueries: [{ query: GET_STAFF }],
+
+          onCompleted() {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+
+
+            ToastSuccess('Staff Added')
+          },
+          // update(cache, { data: { addItems } }) {
+          //   const { tados } = cache.readQuery({
+          //     query: GET_STAFF
+          //   })
+          //   cache.writeQuery({
+          //     query: GET_STAFF,
+          //     data: {
+          //       tados: [
+          //         data.CreateManyStaff,
+          //         ...tados
+
+          //       ]
+          //     }
+          //   })
+          // }
+
+          // update: (cache, { data: { addItem } }) => {
+          //   const data = cache.readQuery({ query: GET_STAFF });
+          //   console.log('sami',data);
+          //   data.items = [...data.items, addItem];
+          //   cache.writeQuery({ query: GET_STAFF }, data);
+          // },
+
+        });
+        // const queryResult = cache.readQuery({
+        //   query: GET_STAFF
+        // });
+        // console.log('sami', queryResult);
+      } catch (error) {
+        dispatch({
+          type: "setModal",
+          payload: {
+            openFormModal: false,
+          },
+        });
+        setLoader(false);
+        ToastError(error.message);
+
+      }
+    }
+
   };
 
 
@@ -122,10 +173,11 @@ export function UseAllStaff() {
             id: data.id,
           },
         },
+        refetchQueries: [{ query: GET_STAFF }],
         onCompleted(data) {
           ToastSuccess('Staff Deleted')
         },
-        refetchQueries: [{ query: GET_STAFF }],
+
       });
     } catch (error) {
       console.log(error.message);
@@ -142,7 +194,7 @@ export function UseAllStaff() {
   const [updatedIndex, setUpdatedIndex] = useState('')
   const ctaEditButtonHandler = async (data) => {
     const test = state.editData;
-    console.log(data.id);
+    // console.log(data.id);
     setUpdatedIndex(data.id)
     dispatch({
       type: "setModal",
@@ -161,36 +213,59 @@ export function UseAllStaff() {
   };
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
-
-    try {
-      await UpdateStudents({
-        variables: {
-          where: {
-            id: updatedIndex
-          },
-          data: {
-            name: {
-              set: state.editData?.name
+    if (!state.editData?.name) {
+      ToastWarning('Name required')
+    }
+    else if (!state.editData?.email) {
+      ToastWarning('Email required')
+    }
+    else if (!state.editData?.phone) {
+      ToastWarning('Phone required')
+    }
+    else if (!state.editData?.role) {
+      ToastWarning('Role required')
+    }
+    else {
+      try {
+        await UpdateStudents({
+          variables: {
+            where: {
+              id: updatedIndex
             },
-            email: {
-              set: state.editData?.email
-            },
-            phone: {
-              set: state.editData?.phone
-            },
-            role: {
-              set: state.editData?.role
+            data: {
+              name: {
+                set: state.editData?.name
+              },
+              email: {
+                set: state.editData?.email
+              },
+              phone: {
+                set: state.editData?.phone
+              },
+              role: {
+                set: state.editData?.role
+              }
             }
-          }
-        },
-        onCompleted() {
-          ToastSuccess('Staff Updated')
-        },
-        refetchQueries: [{ query: GET_STAFF }],
-      })
+          },
+          refetchQueries: [{ query: GET_STAFF }],
+          onCompleted() {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+            ToastSuccess('Staff Updated')
 
-    } catch (error) {
-      console.log(error.message);
+          },
+
+        })
+
+
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   }
   return [

@@ -12,7 +12,6 @@ import {
   gql
 
 } from "@apollo/client";
-// const client = ...
 
 client
   .query({
@@ -22,7 +21,6 @@ client
     title
     id
     checkbox
-    
   }
 }
 

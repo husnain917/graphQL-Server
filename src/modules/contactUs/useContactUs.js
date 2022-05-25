@@ -82,19 +82,6 @@ export function UseContactUs() {
     //ADD STAFF
 
     let [CreateManyStudents, { loading: ADD_LOADING }] = useMutation(ADD_CONTACT_US);
-
-    const Notify = () =>
-        toast.success('Student added successfully', {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'colored',
-            transition: Slide,
-        });
     const ctaFormHandler = async (event) => {
         event.preventDefault();
         try {
@@ -109,7 +96,14 @@ export function UseContactUs() {
                     },
                 },
                 onCompleted(data, cache) {
-                    Notify();
+                    dispatch({
+                        type: "setModal",
+                        payload: {
+                            modalUpdateFlag: false,
+                            openFormModal: false,
+                        },
+                    });
+                    ToastSuccess('Contact Added')
                 },
                 refetchQueries: [{ query: GET_CONTACT_US }],
             });
@@ -142,17 +136,7 @@ export function UseContactUs() {
                     },
                 },
                 onCompleted(data) {
-                    toast.success('Student deleted Successfully', {
-                        position: 'top-right',
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: 'colored',
-                        transition: Slide,
-                    });
+                    ToastSuccess('Contact Deleted')
                 },
                 refetchQueries: [{ query: GET_CONTACT_US }],
             });
@@ -216,17 +200,14 @@ export function UseContactUs() {
                     }
                 },
                 onCompleted() {
-                    toast.success("Student updated Successfully", {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored",
-                        transition: Slide,
+                    dispatch({
+                        type: "setModal",
+                        payload: {
+                            modalUpdateFlag: false,
+                            openFormModal: false,
+                        },
                     });
+                    ToastSuccess('Contact Updated')
                 },
                 refetchQueries: [{ query: GET_CONTACT_US }],
             })

@@ -19,11 +19,12 @@ function Sidebar(props) {
     ctaLogoutHandler,
     handleDrawer
   }] = UseDrawer()
- 
+
   const { window } = props;
   const location = useLocation();
   const anchorRef = React.useRef(null);
   const container = window !== undefined ? () => window().document.body : undefined;
+  // window.location.reload()
   //List Item 
   const renderSidebarItems = (item, index) => {
     return (
@@ -106,7 +107,7 @@ function Sidebar(props) {
       <SidebarStyle.MainBox component="main" >
         <Toolbar />
         {/* {props.children} */}
-        <Outlet/>
+        <Outlet />
       </SidebarStyle.MainBox>
     </SidebarStyle.Box>
   );

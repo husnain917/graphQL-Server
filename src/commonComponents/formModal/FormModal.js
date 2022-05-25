@@ -102,9 +102,9 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                         item.name === "file" ? "" : state.editData[item.name]
                       }
                       onChange={(e) => {
-                          test[item.name] = item.name === "file"
-                            ? e.target.files[0].name
-                            : e.target.value;
+                        test[item.name] = item.name === "file"
+                          ? e.target.files[0].name
+                          : e.target.value;
                         dispatch({
                           type: "setEditData",
                           payload: test,

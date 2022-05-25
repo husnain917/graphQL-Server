@@ -107,6 +107,13 @@ export function UseEnrollmentApproval() {
           },
         },
         onCompleted(data, cache) {
+          dispatch({
+            type: "setModal",
+            payload: {
+              modalUpdateFlag: false,
+              openFormModal: false,
+            },
+          });
           ToastSuccess('Enrollment Added')
 
         },
@@ -212,6 +219,13 @@ export function UseEnrollmentApproval() {
           }
         },
         onCompleted() {
+          dispatch({
+            type: "setModal",
+            payload: {
+              modalUpdateFlag: false,
+              openFormModal: false,
+            },
+          });
           ToastSuccess('Enrollment Updated')
         },
         refetchQueries: [{ query: GET_ENROLLMENT }],

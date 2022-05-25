@@ -2,7 +2,7 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
 import Table from '../../commonComponents/table/Table';
-import { UseEnrollmentApproval } from './UseEnrollmentApproval';
+import { UseEnrollmentApproval } from './useEnrollmentApproval';
 function EnrollmentApproval() {
     const [
         {

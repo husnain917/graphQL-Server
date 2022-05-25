@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ToastSuccess } from '../../../commonComponents/commonFunction/CommonFunction'
+import { ToastSuccess, ToastWarning } from '../../../commonComponents/commonFunction/CommonFunction'
 import { UPDATE_USER } from '../../../lib/mutation/AllMutations'
 import { GET_USERS } from '../../../lib/queries/AllQueries'
 import { AppContext } from '../../../State'
@@ -28,37 +28,48 @@ export function UseEditProfile() {
 
     const ctaUpdateHandler = async (e) => {
         e.preventDefault()
-        let index = state.user?.id
-        try {
+        let index = state.user?.id;
+        if (!name) {
+            ToastWarning('Name required')
+        }
+        else if (!phone) {
+            ToastWarning('Phone Number required')
+        }
+        else if (!address) {
+            ToastWarning('Address required')
+        }
+        else {
+            try {
 
-            await UpdateUser({
-                variables: {
-                    where: {
-                        id: index
-                    },
-                    data: {
-                        name: {
-                            set: name
+                await UpdateUser({
+                    variables: {
+                        where: {
+                            id: index
                         },
-                        email: {
-                            set: email
-                        },
-                        address: {
-                            set: address
-                        },
-                        phone: {
-                            set: phone
+                        data: {
+                            name: {
+                                set: name
+                            },
+                            email: {
+                                set: email
+                            },
+                            address: {
+                                set: address
+                            },
+                            phone: {
+                                set: phone
+                            }
                         }
-                    }
-                },
-                onCompleted() {
-                    ToastSuccess('User Updated')
-                    // navigate('/profile/id')
-                },
-                refetchQueries: [{ query: GET_USERS }],
-            });
-        } catch (error) {
-            console.log(error.message);
+                    },
+                    onCompleted() {
+                        ToastSuccess('User Updated')
+                        // navigate('/profile/id')
+                    },
+                    refetchQueries: [{ query: GET_USERS }],
+                });
+            } catch (error) {
+                console.log(error.message);
+            }
         }
     }
     return [{

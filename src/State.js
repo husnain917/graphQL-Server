@@ -11,13 +11,6 @@ const initialState = {
     openFormModal: false,
     modalUpdateFlag: false,
     editData: {},
-    student: {},
-    teacher: {},
-    admins: {},
-    successStory: {},
-    events: {},
-    courses: {}
-
 
 }
 let reducer = (state, action) => {
@@ -31,9 +24,6 @@ let reducer = (state, action) => {
         }
         case "setEditData": {
             return { ...state, editData: action.payload}
-        }
-        case "setStudent": {
-            return { ...state, student: action.payload }
         }
 
     }

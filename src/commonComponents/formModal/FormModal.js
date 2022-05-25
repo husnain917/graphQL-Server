@@ -97,7 +97,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                     ) :
                       item.type === "upload" ?
                         (
-                          <div style={{ marginTop: 10 }}>
+                          <div style={{ marginTop: 13 ,marginBottom:-30}}>
                             <input type="file" onChange={e => handleChange(e)} />
                           </div>
                         )

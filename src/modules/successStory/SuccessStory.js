@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from '../../commonComponents/table/Table';
-import { UseSuccessStory } from './useSuccessStory';
+import { UseSuccessStory } from './UseSuccessStory';
 import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
 export default function SuccessStory() {
   const [

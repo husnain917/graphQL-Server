@@ -1,5 +1,5 @@
 import React from 'react';
-import { UseCourses } from './useCourses';
+import { UseCourses } from './UseCourses';
 import Table from '../../commonComponents/table/Table';
 import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
 export default function Course() {

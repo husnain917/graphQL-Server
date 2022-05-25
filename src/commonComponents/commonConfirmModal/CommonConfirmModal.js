@@ -7,7 +7,7 @@ import { CM, style } from './CommonConfirmModalStyle'
 import UseCommonConfirmModal from './UseCommonConfirmModal';
 
 
-export default function CommonConfirmModal({ ctaDeleteHandler, row }) {
+export default function CommonConfirmModal({ ctaDeleteHandler, row, title }) {
   const [{ open, setOpen, handleClose, handleOpen }] = UseCommonConfirmModal()
 
   return (
@@ -26,7 +26,7 @@ export default function CommonConfirmModal({ ctaDeleteHandler, row }) {
         aria-describedby="modal-modal-description"
       >
         <CM.ModalBox sx={style}>
-          <p>Are you sure to delete record permanently?</p>
+          <p>Are you sure to delete {title} record permanently?</p>
           <CM.DeleteButton variant='contained' color="error" onClick={() => ctaDeleteHandler(row)}>Delete</CM.DeleteButton>
         </CM.ModalBox>
       </Modal>

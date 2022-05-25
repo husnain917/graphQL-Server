@@ -1,7 +1,7 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import Table from '../../commonComponents/table/Table';
-import { UseEvents } from './useEvents';
+import { UseEvents } from './UseEvents';
 import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
 export default function Events() {
     const [

@@ -95,6 +95,7 @@ export function UseContactUs() {
                         reply: state.editData?.reply,
                     },
                 },
+                refetchQueries: [{ query: GET_CONTACT_US }],
                 onCompleted(data, cache) {
                     dispatch({
                         type: "setModal",
@@ -105,7 +106,7 @@ export function UseContactUs() {
                     });
                     ToastSuccess('Contact Added')
                 },
-                refetchQueries: [{ query: GET_CONTACT_US }],
+               
             });
         } catch (error) {
             dispatch({
@@ -199,6 +200,7 @@ export function UseContactUs() {
                         }
                     }
                 },
+                refetchQueries: [{ query: GET_CONTACT_US }],
                 onCompleted() {
                     dispatch({
                         type: "setModal",
@@ -209,7 +211,7 @@ export function UseContactUs() {
                     });
                     ToastSuccess('Contact Updated')
                 },
-                refetchQueries: [{ query: GET_CONTACT_US }],
+               
             })
 
         } catch (error) {

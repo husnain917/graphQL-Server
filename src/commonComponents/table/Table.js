@@ -244,7 +244,7 @@ export default function Table({
                             <>
                               <TableStyle.IconDiv>
                                 <Tooltip title="Delete">
-                                  <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} />
+                                  <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
                                 </Tooltip>
                                 <Tooltip title="Update">
                                   <IconButton

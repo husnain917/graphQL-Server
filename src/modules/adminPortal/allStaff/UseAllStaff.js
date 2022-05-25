@@ -202,7 +202,7 @@ export function UseAllStaff() {
       payload: test,
     });
   };
-  const ctaUpdateHandler = async (event, cache, { itemData }) => {
+  const ctaUpdateHandler = async (event) => {
     event.preventDefault()
 
     try {

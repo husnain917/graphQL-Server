@@ -206,13 +206,10 @@ export function UseEvents() {
                             set: state.editData?.eventDesc
                         },
                         eventImage: {
-                            set: File
+                            set:File
                         },
                         eventDate: {
                             set: new Date()
-                        },
-                        speakerId: {
-                            set: state.editData?.speakerId
                         },
                         eventStatus: {
                             set: state.editData?.eventStatus

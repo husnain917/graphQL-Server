@@ -19,6 +19,7 @@ import { TableStyle } from "./TableStyle";
 import FormModal from "../formModal/FormModal";
 import DropDownMenu from "../dropDownMenu/DropDownMenu";
 import { AppContext } from "../../State";
+import CommonConfirmModal from "../commonConfirmModal/CommonConfirmModal";
 
 export default function Table({
   title,
@@ -241,24 +242,20 @@ export default function Table({
                             ></p>
                           ) : subitem?.type === "crud" ? (
                             <>
-                              <Tooltip title="Delete">
-                                <IconButton
-                                  aria-label="delete"
-                                  size="small"
-                                  onClick={() => ctaDeleteHandler(row)}
-                                >
-                                  <TableStyle.DeleteIcon />
-                                </IconButton>
-                              </Tooltip>
-                              <Tooltip title="Update">
-                                <IconButton
-                                  aria-label="update"
-                                  size="small"
-                                  onClick={() => ctaEditButtonHandler(row)}
-                                >
-                                  <TableStyle.EditIcon />
-                                </IconButton>
-                              </Tooltip>
+                              <TableStyle.IconDiv>
+                                <Tooltip title="Delete">
+                                  <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} />
+                                </Tooltip>
+                                <Tooltip title="Update">
+                                  <IconButton
+                                    aria-label="update"
+                                    size="small"
+                                    onClick={() => ctaEditButtonHandler(row)}
+                                  >
+                                    <TableStyle.EditIcon />
+                                  </IconButton>
+                                </Tooltip>
+                              </TableStyle.IconDiv>
                             </>
                           ) : (
                             exactKey

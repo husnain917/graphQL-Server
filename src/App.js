@@ -10,13 +10,15 @@ function App() {
 
 
   const [loading, setLoading] = useState(true)
+ 
   setTimeout(function () {
     setLoading(false);
   }, 0);
-  
+
+
 
   // React.useEffect(() => {
-    // window.location.reload()
+  // window.location.reload()
   // }, [])
 
 

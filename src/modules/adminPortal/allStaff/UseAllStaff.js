@@ -15,7 +15,6 @@ import { GET_STAFF } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
-import { Slide, toast } from "react-toastify";
 
 
 
@@ -93,9 +92,9 @@ export function UseAllStaff() {
               phone: state.editData?.phone
             },
           },
-          // refetchQueries: [{ query: GET_STAFF }],
-          onCompleted(data, cache) {
+          refetchQueries: [{ query: GET_STAFF }],
 
+          onCompleted() {
             dispatch({
               type: "setModal",
               payload: {
@@ -104,13 +103,37 @@ export function UseAllStaff() {
               },
             });
 
+
             ToastSuccess('Staff Added')
           },
-          update(cache,{data}){
-            
-          }
+          // update(cache, { data: { addItems } }) {
+          //   const { tados } = cache.readQuery({
+          //     query: GET_STAFF
+          //   })
+          //   cache.writeQuery({
+          //     query: GET_STAFF,
+          //     data: {
+          //       tados: [
+          //         data.CreateManyStaff,
+          //         ...tados
+
+          //       ]
+          //     }
+          //   })
+          // }
+
+          // update: (cache, { data: { addItem } }) => {
+          //   const data = cache.readQuery({ query: GET_STAFF });
+          //   console.log('sami',data);
+          //   data.items = [...data.items, addItem];
+          //   cache.writeQuery({ query: GET_STAFF }, data);
+          // },
 
         });
+        // const queryResult = cache.readQuery({
+        //   query: GET_STAFF
+        // });
+        // console.log('sami', queryResult);
       } catch (error) {
         dispatch({
           type: "setModal",
@@ -162,7 +185,7 @@ export function UseAllStaff() {
   const [updatedIndex, setUpdatedIndex] = useState('')
   const ctaEditButtonHandler = async (data) => {
     const test = state.editData;
-    console.log(data.id);
+    // console.log(data.id);
     setUpdatedIndex(data.id)
     dispatch({
       type: "setModal",
@@ -179,7 +202,7 @@ export function UseAllStaff() {
       payload: test,
     });
   };
-  const ctaUpdateHandler = async (event) => {
+  const ctaUpdateHandler = async (event, cache, { itemData }) => {
     event.preventDefault()
 
     try {
@@ -217,6 +240,7 @@ export function UseAllStaff() {
         },
 
       })
+
 
     } catch (error) {
       console.log(error.message);

@@ -12,6 +12,7 @@ import { MenuItem, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import { AppContext } from "../../State";
 import { EditorState } from "draft-js";
+import { FM } from './FormModalStyle'
 export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler }) {
   const { state, dispatch } = useContext(AppContext);
   const handleCloseUpdate = () => {
@@ -119,18 +120,18 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
             <br />
             <Stack direction="row" spacing={1}>
               {state.modalUpdateFlag ? (
-                <Button type="submit" variant="outlined" onClick={ctaUpdateHandler}>
+                <FM.FormButton type="submit" variant="outlined" onClick={ctaUpdateHandler}>
                   Update
-                </Button>
+                </FM.FormButton>
               ) : (
-                <Button type="submit" variant="outlined" onClick={ctaFormHandler}>
+                <FM.FormButton type="submit" variant="outlined" onClick={ctaFormHandler}>
                   submit
-                </Button>
+                </FM.FormButton>
               )}
 
-              <Button variant="outlined" onClick={handleCloseUpdate}>
+              <FM.FormButton variant="outlined" onClick={handleCloseUpdate}>
                 Close
-              </Button>
+              </FM.FormButton>
             </Stack>
           </Box>
           <br />

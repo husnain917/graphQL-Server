@@ -31,27 +31,27 @@ export function UseSuccessStory() {
       type: "text",
     },
     {
-      label: "freelancingProfileUrl",
+      label: "Freelancing Profile Url",
       name: "freelancingProfileUrl",
       type: "text",
     },
     {
-      label: "paymentProof",
+      label: "Payment Proof",
       name: "paymentProof",
       type: "text",
     },
     {
-      label: "description",
+      label: "Description",
       name: "description",
       type: "text",
     },
     {
-      label: "totalEarnedAmount",
+      label: "Total Earned Amount",
       name: "totalEarnedAmount",
       type: "text",
     },
     {
-      label: "whyReject",
+      label: "Why Reject",
       name: "whyReject",
       type: "text",
     },

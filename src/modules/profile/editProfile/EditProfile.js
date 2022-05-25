@@ -17,6 +17,7 @@ export default function EditProfile() {
         setAddress,
         setPhone,
         state,
+        // handleChange,
         UPDATE_LOADING
     }] = UseEditProfile()
     if (UPDATE_LOADING) {
@@ -41,6 +42,9 @@ export default function EditProfile() {
                 </Grid>
                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                     <CommonEditField Label='Address' placeholder={state.user.address} value={address} onChange={(e) => setAddress(e.target.value)} />
+                </Grid>
+                <Grid item xl={12} lg={12} md={12} sm={12} xs={12} >
+                    <Pd.ProDiv > <input type='file' /></Pd.ProDiv >
                 </Grid>
                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                     <Pd.ProDiv ><PButton title="save changes" ctaHandler={ctaUpdateHandler} /></Pd.ProDiv>

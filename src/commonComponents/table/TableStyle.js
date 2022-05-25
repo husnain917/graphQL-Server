@@ -2,7 +2,7 @@
 import { styled, alpha } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { Close, Delete, Edit } from '@mui/icons-material'
-import { TableRow, Table,TableCell } from '@mui/material';
+import { TableRow, Table, TableCell } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { colors } from '../../constants/Color';
 import SearchIcon from '@mui/icons-material/Search';
@@ -85,6 +85,7 @@ export const TableStyle = {
 
     CustomTable: styled(Table)(({ theme }) => ({
         minWidth: 650,
+        overflowX: "auto",
         [theme.breakpoints.up('sm')]: {
             marginLeft: theme.spacing(1),
             marginRight: theme.spacing(1)
@@ -94,12 +95,12 @@ export const TableStyle = {
         '&:last-child td, &:last-child th': { border: 0 }
     })),
     CustomTableCell: styled(TableCell)(({ theme }) => ({
-       
+
     })),
     Image: styled('img')(({ theme }) => ({
         height: "50px",
         width: "50px",
-      })),
+    })),
 
     // Icons
     FilterListIcon: styled(FilterListIcon)(() => ({
@@ -124,7 +125,12 @@ export const TableStyle = {
     EditIcon: styled(Edit)(({ theme }) => ({
         color: '#ffeb3b'
     })),
-    
+    IconDiv: styled('div')(() => ({
+        display: "flex",
+        justifyContent: "center",
+        flexWrap: "wrap"
+    }))
+
 }
 
 

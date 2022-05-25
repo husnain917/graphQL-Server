@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Sidebar from '../commonComponents/sidebar/Sidebar';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Login from '../modules/auth/login/Login';
 import Dashboard from '../modules/dashboard/Dashboard';
 import AllStudents from '../modules/adminPortal/allStudents/AllStudents';
@@ -21,9 +21,12 @@ import { PrivateRouting } from './PrivateRouting';
 import PageNotFound from '../commonComponents/PageNotFound';
 export default function Navigation() {
     const { state } = useContext(AppContext);
+
     return (
         <>
+           
             <Routes>
+                
                 <Route
                     path='/login'
                     element={

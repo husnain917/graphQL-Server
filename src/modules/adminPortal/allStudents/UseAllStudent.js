@@ -72,38 +72,49 @@ export function UseAllStudents() {
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    try {
-      await CreateManyStudents({
-        variables: {
-          data: {
-            name: state.editData?.name,
-            email: state.editData?.email,
-            status: state.editData?.status,
-            // phone: state.editData?.phone
-          },
-        },
-        onCompleted(data, cache) {
-          dispatch({
-            type: "setModal",
-            payload: {
-              modalUpdateFlag: false,
-              openFormModal: false,
+    if (!state.editData?.name) {
+      ToastWarning('Name required')
+    }
+    else if (!state.editData?.email) {
+      ToastWarning('Email required')
+    }
+    else if (!state.editData?.status) {
+      ToastWarning('Status required')
+    }
+    else {
+      try {
+        await CreateManyStudents({
+          variables: {
+            data: {
+              name: state.editData?.name,
+              email: state.editData?.email,
+              status: state.editData?.status,
+              // phone: state.editData?.phone
             },
-          });
-          ToastSuccess('Student Added')
-        },
-        refetchQueries: [{ query: GET_STUDENT }],
-      });
-    } catch (error) {
-      dispatch({
-        type: "setModal",
-        payload: {
-          openFormModal: false,
-        },
-      });
-      setLoader(false);
-      ToastError(error.message);
+          },
+          onCompleted(data, cache) {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+            ToastSuccess('Student Added')
+          },
+          refetchQueries: [{ query: GET_STUDENT }],
+        });
+      } catch (error) {
+        dispatch({
+          type: "setModal",
+          payload: {
+            openFormModal: false,
+          },
+        });
+        setLoader(false);
+        ToastError(error.message);
 
+      }
     }
   };
 
@@ -161,40 +172,50 @@ export function UseAllStudents() {
   };
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
-
-    try {
-      await UpdateStudents({
-        variables: {
-          where: {
-            id: updatedIndex
-          },
-          data: {
-            name: {
-              set: state.editData?.name
+    if (!state.editData?.name) {
+      ToastWarning('Name required')
+    }
+    else if (!state.editData?.email) {
+      ToastWarning('Email required')
+    }
+    else if (!state.editData?.status) {
+      ToastWarning('Status required')
+    }
+    else {
+      try {
+        await UpdateStudents({
+          variables: {
+            where: {
+              id: updatedIndex
             },
-            email: {
-              set: state.editData?.email
-            },
-            status: {
-              set: state.editData?.status
+            data: {
+              name: {
+                set: state.editData?.name
+              },
+              email: {
+                set: state.editData?.email
+              },
+              status: {
+                set: state.editData?.status
+              }
             }
-          }
-        },
-        onCompleted() {
-          dispatch({
-            type: "setModal",
-            payload: {
-              modalUpdateFlag: false,
-              openFormModal: false,
-            },
-          });
-          ToastSuccess('Student Updated')
-        },
-        refetchQueries: [{ query: GET_STUDENT }],
-      })
+          },
+          onCompleted() {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+            ToastSuccess('Student Updated')
+          },
+          refetchQueries: [{ query: GET_STUDENT }],
+        })
 
-    } catch (error) {
-      console.log(error.message);
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   }
   return [

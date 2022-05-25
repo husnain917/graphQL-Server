@@ -88,42 +88,59 @@ export function UseEvents() {
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        try {
-            await CreateManyEvents({
-                variables: {
-                    data: {
-                        eventName: state.editData?.eventName,
-                        eventDesc: state.editData?.eventDesc,
-                        eventImage: state.editData?.eventImage,
-                        eventDate: new Date(),
-                        speakerId: state.editData?.speakerId,
-                        eventStatus: state.editData?.eventStatus,
+        if (!state.editData?.eventName) {
+            ToastWarning('Event name required')
+        }
+        else if (!state.editData?.eventDesc) {
+            ToastWarning('Event description  required')
+        }
+        else if (!state.editData?.speakerId) {
+            ToastWarning('Speaker Id required')
+        }
+        else if (!state.editData?.eventImage) {
+            ToastWarning('Event image required')
+        }
+        else if (!state.editData?.eventStatus) {
+            ToastWarning('Status required')
+        }
+        else {
+            try {
+                await CreateManyEvents({
+                    variables: {
+                        data: {
+                            eventName: state.editData?.eventName,
+                            eventDesc: state.editData?.eventDesc,
+                            eventImage: state.editData?.eventImage,
+                            eventDate: new Date(),
+                            speakerId: state.editData?.speakerId,
+                            eventStatus: state.editData?.eventStatus,
 
-                    },
-                },
-                onCompleted(data, cache) {
-                    dispatch({
-                        type: "setModal",
-                        payload: {
-                            modalUpdateFlag: false,
-                            openFormModal: false,
                         },
-                    });
-                    ToastSuccess('Event Added')
-                },
-                refetchQueries: [{ query: GET_EVENTS }],
-            });
-            console.log(state.editData);
-        } catch (error) {
-            dispatch({
-                type: "setModal",
-                payload: {
-                    openFormModal: false,
-                },
-            });
-            setLoader(false);
-            ToastError(error.message);
+                    },
+                    onCompleted(data, cache) {
+                        dispatch({
+                            type: "setModal",
+                            payload: {
+                                modalUpdateFlag: false,
+                                openFormModal: false,
+                            },
+                        });
+                        ToastSuccess('Event Added')
+                    },
+                    refetchQueries: [{ query: GET_EVENTS }],
+                });
+                console.log(state.editData);
+            } catch (error) {
+                dispatch({
+                    type: "setModal",
+                    payload: {
+                        openFormModal: false,
+                    },
+                });
+                setLoader(false);
+                ToastError(error.message);
 
+            }
         }
     };
 
@@ -181,49 +198,65 @@ export function UseEvents() {
     };
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-
-        try {
-            await UpdateEvents({
-                variables: {
-                    where: {
-                        id: updatedIndex
-                    },
-                    data: {
-                        eventName: {
-                            set: state.editData?.eventName
+        if (!state.editData?.eventName) {
+            ToastWarning('Event name required')
+        }
+        else if (!state.editData?.eventDesc) {
+            ToastWarning('Event description  required')
+        }
+        else if (!state.editData?.speakerId) {
+            ToastWarning('Speaker Id required')
+        }
+        else if (!state.editData?.eventImage) {
+            ToastWarning('Event image required')
+        }
+        else if (!state.editData?.eventStatus) {
+            ToastWarning('Status required')
+        }
+        else {
+            try {
+                await UpdateEvents({
+                    variables: {
+                        where: {
+                            id: updatedIndex
                         },
-                        eventDesc: {
-                            set: state.editData?.eventDesc
-                        },
-                        eventImage: {
-                            set: state.editData?.eventImage
-                        },
-                        eventDate: {
-                            set: new Date()
-                        },
-                        speakerId: {
-                            set: state.editData?.speakerId
-                        },
-                        eventStatus: {
-                            set: state.editData?.eventStatus
+                        data: {
+                            eventName: {
+                                set: state.editData?.eventName
+                            },
+                            eventDesc: {
+                                set: state.editData?.eventDesc
+                            },
+                            eventImage: {
+                                set: state.editData?.eventImage
+                            },
+                            eventDate: {
+                                set: new Date()
+                            },
+                            speakerId: {
+                                set: state.editData?.speakerId
+                            },
+                            eventStatus: {
+                                set: state.editData?.eventStatus
+                            }
                         }
-                    }
-                },
-                onCompleted() {
-                    dispatch({
-                        type: "setModal",
-                        payload: {
-                            modalUpdateFlag: false,
-                            openFormModal: false,
-                        },
-                    }); 
-                    ToastSuccess('Event Updated')
-                },
-                refetchQueries: [{ query: GET_EVENTS }],
-            })
+                    },
+                    onCompleted() {
+                        dispatch({
+                            type: "setModal",
+                            payload: {
+                                modalUpdateFlag: false,
+                                openFormModal: false,
+                            },
+                        });
+                        ToastSuccess('Event Updated')
+                    },
+                    refetchQueries: [{ query: GET_EVENTS }],
+                })
 
-        } catch (error) {
-            console.log(error.message);
+            } catch (error) {
+                console.log(error.message);
+            }
         }
     }
     return [

@@ -67,39 +67,47 @@ export function UseFaqs() {
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    try {
-      await Mutation({
-        variables: {
-          data: {
-            faqAnswer: state.editData?.faqAnswer,
-            faqQuestion: state.editData?.faqQuestion,
-            createdAt: new Date(),
-            updateAt: '00000000'
-            // phone: state.editData?.phone
-          },
-        },
-        onCompleted(data, cache) {
-          dispatch({
-            type: "setModal",
-            payload: {
-              modalUpdateFlag: false,
-              openFormModal: false,
+    if (!state.editData?.faqQuestion) {
+      ToastWarning('Faq question required')
+    }
+    else if (!state.editData?.faqAnswer) {
+      ToastWarning('Faq answer required')
+    }
+    else {
+      try {
+        await Mutation({
+          variables: {
+            data: {
+              faqAnswer: state.editData?.faqAnswer,
+              faqQuestion: state.editData?.faqQuestion,
+              createdAt: new Date(),
+              updateAt: '00000000'
+              // phone: state.editData?.phone
             },
-          });
-          ToastSuccess('FAQ Added')
-        },
-        refetchQueries: [{ query: GET_FAQS }],
-      });
-    } catch (error) {
-      dispatch({
-        type: "setModal",
-        payload: {
-          openFormModal: false,
-        },
-      });
-      setLoader(false);
-      ToastError(error.message);
+          },
+          onCompleted(data, cache) {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+            ToastSuccess('FAQ Added')
+          },
+          refetchQueries: [{ query: GET_FAQS }],
+        });
+      } catch (error) {
+        dispatch({
+          type: "setModal",
+          payload: {
+            openFormModal: false,
+          },
+        });
+        setLoader(false);
+        ToastError(error.message);
 
+      }
     }
   };
 
@@ -157,40 +165,47 @@ export function UseFaqs() {
   };
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
-
-    try {
-      await UpdateFaq({
-        variables: {
-          where: {
-            id: updatedIndex
+    if (!state.editData?.faqQuestion) {
+      ToastWarning('Faq question required')
+    }
+    else if (!state.editData?.faqAnswer) {
+      ToastWarning('Faq answer required')
+    }
+    else {
+      try {
+        await UpdateFaq({
+          variables: {
+            where: {
+              id: updatedIndex
+            },
+            data: {
+              faqAnswer: {
+                set: state.editData?.faqAnswer
+              },
+              faqQuestion: {
+                set: state.editData?.faqQuestion
+              },
+              updateAt: {
+                set: new Date()
+              },
+            }
           },
-          data: {
-            faqAnswer: {
-              set: state.editData?.faqAnswer
-            },
-            faqQuestion: {
-              set: state.editData?.faqQuestion
-            },
-            updateAt: {
-              set: new Date()
-            },
-          }
-        },
-        onCompleted() {
-          dispatch({
-            type: "setModal",
-            payload: {
-              modalUpdateFlag: false,
-              openFormModal: false,
-            },
-          });
-          ToastSuccess('FAQ Updated')
-        },
-        refetchQueries: [{ query: GET_FAQS }],
-      })
+          onCompleted() {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+            ToastSuccess('FAQ Updated')
+          },
+          refetchQueries: [{ query: GET_FAQS }],
+        })
 
-    } catch (error) {
-      console.log(error.message);
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   }
   return [

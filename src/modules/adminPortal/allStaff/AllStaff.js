@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 //Import from Files
 import CommonTableLoader from "../../../commonComponents/commonTableLoader/CommonTableLoader";
 import Table from "../../../commonComponents/table/Table";
-import { UseAllStaff } from "./useAllStaff";
+import { UseAllStaff } from "./UseAllStaff";
 export default function AllStaff() {
   const [
     {

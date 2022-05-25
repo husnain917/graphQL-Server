@@ -78,8 +78,17 @@ export function UseAllStaff() {
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    if (state.editData?.name === '' || state.editData?.email === '' || state.editData?.role === '' || state.editData?.phone === '') {
-      ToastWarning('Fields Cannot be empty')
+    if (!state.editData?.name) {
+      ToastWarning('Name required')
+    }
+    else if (!state.editData?.email) {
+      ToastWarning('Email required')
+    }
+    else if (!state.editData?.phone) {
+      ToastWarning('Phone required')
+    }
+    else if (!state.editData?.role) {
+      ToastWarning('Role required')
     }
     else {
       try {
@@ -202,48 +211,61 @@ export function UseAllStaff() {
       payload: test,
     });
   };
-  const ctaUpdateHandler = async (event, cache, { itemData }) => {
+  const ctaUpdateHandler = async (event) => {
     event.preventDefault()
-
-    try {
-      await UpdateStudents({
-        variables: {
-          where: {
-            id: updatedIndex
-          },
-          data: {
-            name: {
-              set: state.editData?.name
+    if (!state.editData?.name) {
+      ToastWarning('Name required')
+    }
+    else if (!state.editData?.email) {
+      ToastWarning('Email required')
+    }
+    else if (!state.editData?.phone) {
+      ToastWarning('Phone required')
+    }
+    else if (!state.editData?.role) {
+      ToastWarning('Role required')
+    }
+    else {
+      try {
+        await UpdateStudents({
+          variables: {
+            where: {
+              id: updatedIndex
             },
-            email: {
-              set: state.editData?.email
-            },
-            phone: {
-              set: state.editData?.phone
-            },
-            role: {
-              set: state.editData?.role
+            data: {
+              name: {
+                set: state.editData?.name
+              },
+              email: {
+                set: state.editData?.email
+              },
+              phone: {
+                set: state.editData?.phone
+              },
+              role: {
+                set: state.editData?.role
+              }
             }
-          }
-        },
-        refetchQueries: [{ query: GET_STAFF }],
-        onCompleted() {
-          dispatch({
-            type: "setModal",
-            payload: {
-              modalUpdateFlag: false,
-              openFormModal: false,
-            },
-          });
-          ToastSuccess('Staff Updated')
+          },
+          refetchQueries: [{ query: GET_STAFF }],
+          onCompleted() {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+            ToastSuccess('Staff Updated')
 
-        },
+          },
 
-      })
+        })
 
 
-    } catch (error) {
-      console.log(error.message);
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   }
   return [

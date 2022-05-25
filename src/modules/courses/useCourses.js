@@ -100,44 +100,67 @@ export function UseCourses() {
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    try {
-      await Mutation({
-        variables: {
-          data: {
-            courseName: state.editData?.courseName,
-            courseDesc: state.editData?.courseDesc,
-            courseIntro: state.editData?.courseIntro,
-            courseStatus: state.editData?.courseStatus,
-            instructorId: state.editData?.instructorId,
-            courseCategoryId: state.editData?.courseCategoryId,
-            coursePrice: state.editData?.coursePrice,
+    if (!state.editData?.courseName) {
+      ToastWarning('Course name required')
+    }
+    else if (!state.editData?.courseDesc) {
+      ToastWarning('Course description required')
+    }
+    else if (!state.editData?.courseIntro) {
+      ToastWarning('Intro required')
+    }
+    else if (!state.editData?.coursePrice) {
+      ToastWarning('Price required')
+    }
+    else if (!state.editData?.instructorId) {
+      ToastWarning('Instructor Id required')
+    }
+    else if (!state.editData?.courseCategoryId) {
+      ToastWarning('Course category Id required')
+    }
+    else if (!state.editData?.courseStatus) {
+      ToastWarning('Status required')
+    }
+    else {
+      try {
+        await Mutation({
+          variables: {
+            data: {
+              courseName: state.editData?.courseName,
+              courseDesc: state.editData?.courseDesc,
+              courseIntro: state.editData?.courseIntro,
+              courseStatus: state.editData?.courseStatus,
+              instructorId: state.editData?.instructorId,
+              courseCategoryId: state.editData?.courseCategoryId,
+              coursePrice: state.editData?.coursePrice,
 
-            // phone: state.editData?.phone
-          },
-        },
-        onCompleted(data, cache) {
-          dispatch({
-            type: "setModal",
-            payload: {
-              modalUpdateFlag: false,
-              openFormModal: false,
+              // phone: state.editData?.phone
             },
-          });
-          ToastSuccess('Course Added')
+          },
+          onCompleted(data, cache) {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+            ToastSuccess('Course Added')
 
-        },
-        refetchQueries: [{ query: GET_COURSES }],
-      });
-    } catch (error) {
-      dispatch({
-        type: "setModal",
-        payload: {
-          openFormModal: false,
-        },
-      });
-      setLoader(false);
-      ToastError(error.message);
+          },
+          refetchQueries: [{ query: GET_COURSES }],
+        });
+      } catch (error) {
+        dispatch({
+          type: "setModal",
+          payload: {
+            openFormModal: false,
+          },
+        });
+        setLoader(false);
+        ToastError(error.message);
 
+      }
     }
   };
 
@@ -157,7 +180,7 @@ export function UseCourses() {
           },
         },
         onCompleted(data) {
-         ToastSuccess('Course Deleted')
+          ToastSuccess('Course Deleted')
         },
         refetchQueries: [{ query: GET_COURSES }],
       });
@@ -195,46 +218,68 @@ export function UseCourses() {
   };
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
-
-    try {
-      await UpdateCourses({
-        variables: {
-          where: {
-            id: updatedIndex
-          },
-          data: {
-            courseName: {
-              set: state.editData?.courseName
+    if (!state.editData?.courseName) {
+      ToastWarning('Course name required')
+    }
+    else if (!state.editData?.courseDesc) {
+      ToastWarning('Course description required')
+    }
+    else if (!state.editData?.courseIntro) {
+      ToastWarning('Intro required')
+    }
+    else if (!state.editData?.coursePrice) {
+      ToastWarning('Price required')
+    }
+    else if (!state.editData?.instructorId) {
+      ToastWarning('Instructor Id required')
+    }
+    else if (!state.editData?.courseCategoryId) {
+      ToastWarning('Course category Id required')
+    }
+    else if (!state.editData?.courseStatus) {
+      ToastWarning('Status required')
+    }
+    else {
+      try {
+        await UpdateCourses({
+          variables: {
+            where: {
+              id: updatedIndex
             },
-            courseDesc: {
-              set: state.editData?.courseDesc
-            },
-            courseIntro: {
-              set: state.editData?.courseIntro
-            },
-            courseStatus: {
-              set: state.editData?.courseStatus
-            },
-            coursePrice: {
-              set: state.editData?.coursePrice
+            data: {
+              courseName: {
+                set: state.editData?.courseName
+              },
+              courseDesc: {
+                set: state.editData?.courseDesc
+              },
+              courseIntro: {
+                set: state.editData?.courseIntro
+              },
+              courseStatus: {
+                set: state.editData?.courseStatus
+              },
+              coursePrice: {
+                set: state.editData?.coursePrice
+              }
             }
-          }
-        },
-        onCompleted() {
-          dispatch({
-            type: "setModal",
-            payload: {
-              modalUpdateFlag: false,
-              openFormModal: false,
-            },
-          });
-          ToastSuccess('Course Updated')
-        },
-        refetchQueries: [{ query: GET_COURSES }],
-      })
+          },
+          onCompleted() {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+            ToastSuccess('Course Updated')
+          },
+          refetchQueries: [{ query: GET_COURSES }],
+        })
 
-    } catch (error) {
-      console.log(error.message);
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   }
   return [

@@ -84,40 +84,57 @@ export function UseContactUs() {
     let [CreateManyStudents, { loading: ADD_LOADING }] = useMutation(ADD_CONTACT_US);
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        try {
-            await CreateManyStudents({
-                variables: {
-                    data: {
-                        name: state.editData?.name,
-                        subject: state.editData?.subject,
-                        message: state.editData?.message,
-                        status: state.editData?.status,
-                        reply: state.editData?.reply,
-                    },
-                },
-                refetchQueries: [{ query: GET_CONTACT_US }],
-                onCompleted(data, cache) {
-                    dispatch({
-                        type: "setModal",
-                        payload: {
-                            modalUpdateFlag: false,
-                            openFormModal: false,
+        if (!state.editData?.name) {
+            ToastWarning('Name required')
+        }
+        else if (!state.editData?.subject) {
+            ToastWarning('Subject  required')
+        }
+        else if (!state.editData?.message) {
+            ToastWarning('Message required')
+        }
+        else if (!state.editData?.reply) {
+            ToastWarning('Reply required')
+        }
+        else if (!state.editData?.status) {
+            ToastWarning('Status required')
+        }
+        else {
+            try {
+                await CreateManyStudents({
+                    variables: {
+                        data: {
+                            name: state.editData?.name,
+                            subject: state.editData?.subject,
+                            message: state.editData?.message,
+                            status: state.editData?.status,
+                            reply: state.editData?.reply,
                         },
-                    });
-                    ToastSuccess('Contact Added')
-                },
-               
-            });
-        } catch (error) {
-            dispatch({
-                type: "setModal",
-                payload: {
-                    openFormModal: false,
-                },
-            });
-            setLoader(false);
-            ToastError(error.message);
+                    },
+                    refetchQueries: [{ query: GET_CONTACT_US }],
+                    onCompleted(data, cache) {
+                        dispatch({
+                            type: "setModal",
+                            payload: {
+                                modalUpdateFlag: false,
+                                openFormModal: false,
+                            },
+                        });
+                        ToastSuccess('Contact Added')
+                    },
 
+                });
+            } catch (error) {
+                dispatch({
+                    type: "setModal",
+                    payload: {
+                        openFormModal: false,
+                    },
+                });
+                setLoader(false);
+                ToastError(error.message);
+
+            }
         }
     };
 
@@ -175,47 +192,63 @@ export function UseContactUs() {
     };
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-
-        try {
-            await UpdateContactUs({
-                variables: {
-                    where: {
-                        id: updatedIndex
-                    },
-                    data: {
-                        name: {
-                            set: state.editData?.name
+        if (!state.editData?.name) {
+            ToastWarning('Name required')
+        }
+        else if (!state.editData?.subject) {
+            ToastWarning('Subject  required')
+        }
+        else if (!state.editData?.message) {
+            ToastWarning('Message required')
+        }
+        else if (!state.editData?.reply) {
+            ToastWarning('Reply required')
+        }
+        else if (!state.editData?.status) {
+            ToastWarning('Status required')
+        }
+        else {
+            try {
+                await UpdateContactUs({
+                    variables: {
+                        where: {
+                            id: updatedIndex
                         },
-                        subject: {
-                            set: state.editData?.subject
-                        },
-                        message: {
-                            set: state.editData?.message
-                        },
-                        reply: {
-                            set: state.editData?.reply
-                        },
-                        status: {
-                            set: state.editData?.status
+                        data: {
+                            name: {
+                                set: state.editData?.name
+                            },
+                            subject: {
+                                set: state.editData?.subject
+                            },
+                            message: {
+                                set: state.editData?.message
+                            },
+                            reply: {
+                                set: state.editData?.reply
+                            },
+                            status: {
+                                set: state.editData?.status
+                            }
                         }
-                    }
-                },
-                refetchQueries: [{ query: GET_CONTACT_US }],
-                onCompleted() {
-                    dispatch({
-                        type: "setModal",
-                        payload: {
-                            modalUpdateFlag: false,
-                            openFormModal: false,
-                        },
-                    });
-                    ToastSuccess('Contact Updated')
-                },
-               
-            })
+                    },
+                    refetchQueries: [{ query: GET_CONTACT_US }],
+                    onCompleted() {
+                        dispatch({
+                            type: "setModal",
+                            payload: {
+                                modalUpdateFlag: false,
+                                openFormModal: false,
+                            },
+                        });
+                        ToastSuccess('Contact Updated')
+                    },
 
-        } catch (error) {
-            console.log(error.message);
+                })
+
+            } catch (error) {
+                console.log(error.message);
+            }
         }
     }
     return [

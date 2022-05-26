@@ -16,7 +16,6 @@ export default function ContactUs() {
             ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
-            ctaEditButtonHandler
         },
     ] = UseContactUs();
     if (
@@ -43,7 +42,6 @@ export default function ContactUs() {
                         'Status',
                         'Action',
                     ]}
-                    ctaEditButtonHandler={ctaEditButtonHandler}
                     printedKeys={[
                         {
                             key: "id",

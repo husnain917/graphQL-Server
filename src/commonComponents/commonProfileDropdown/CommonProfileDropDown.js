@@ -2,20 +2,27 @@ import * as React from 'react';
 import { CPD } from './CommonProfileDropDownStyle'
 import img from '../../assets/profile.jpg'
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../../State';
 export default function CommonProfileDropDown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate()
+  const { state, dispatch } = React.useContext(AppContext);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
   const ctaLogoutHandler = () => {
-    window.location.reload()
-    navigate('/login')
+    dispatch({
+      type: "setAuthState",
+      payload: state.authState === false
 
+    })
+    navigate('/login')
   }
 
 

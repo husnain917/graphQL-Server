@@ -16,7 +16,6 @@ export default function Events() {
             ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
-            ctaEditButtonHandler,
             handleChange
         },
     ] = UseEvents();
@@ -44,7 +43,6 @@ export default function Events() {
                     'Status',
                     'Action',
                 ]}
-                ctaEditButtonHandler={ctaEditButtonHandler}
                 printedKeys={[
                     {
                         key: "id",

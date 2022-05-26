@@ -15,7 +15,6 @@ export default function Course() {
           ctaDeleteHandler,
           ctaUpdateHandler,
           formInputs,
-          ctaEditButtonHandler
         },
       ] = UseCourses();
       if (
@@ -43,7 +42,6 @@ export default function Course() {
                     'Status',
                     'Action',
                 ]}
-                ctaEditButtonHandler={ctaEditButtonHandler}
                 printedKeys={[
                   {
                     key: "id",

@@ -19,7 +19,7 @@ export default function AllStaff() {
       ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
-      ctaEditButtonHandler
+      // ctaEditButtonHandler
     },
   ] = UseAllStaff();
   if (
@@ -37,7 +37,7 @@ export default function AllStaff() {
       <Table
         title={"All Staff"}
         tableHeadings={["Id", "Name", "Email", "Phone", "Role", "Action"]}
-        ctaEditButtonHandler={ctaEditButtonHandler}
+        // ctaEditButtonHandler={ctaEditButtonHandler}
         printedKeys={[
           {
             key: "id",

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
     Subscriptions,
     PeopleOutline,
@@ -12,8 +12,11 @@ import {
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../../State';
 export const UseDrawer = () => {
     const [open, setOpen] = React.useState(false);
+    const { state, dispatch } = useContext(AppContext);
+
     const navigate = useNavigate()
 
     const menuItems = [
@@ -74,9 +77,13 @@ export const UseDrawer = () => {
         setOpen(!open);
     };
     const ctaLogoutHandler = () => {
-        window.location.reload()
+        dispatch({
+            type: "setAuthState",
+            payload: state.authState === false
+
+        })
         navigate('/login')
-      }
+    }
 
     return [{
         menuItems,

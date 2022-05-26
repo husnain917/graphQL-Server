@@ -150,26 +150,7 @@ export function UseAllStudents() {
   //Update staff
 
   let [UpdateStudents, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_STUDENT);
-  const [updatedIndex, setUpdatedIndex] = useState('')
-  const ctaEditButtonHandler = async (data) => {
-    const test = state.editData;
-    console.log(data.id);
-    setUpdatedIndex(data.id)
-    dispatch({
-      type: "setModal",
-      payload: {
-        openFormModal: true,
-        modalUpdateFlag: true,
-      },
-    });
-    formInputs.map((item) => {
-      test[item.name] = data[item.name];
-    });
-    dispatch({
-      type: "setEditData",
-      payload: test,
-    });
-  };
+
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
     if (!state.editData?.name) {
@@ -186,7 +167,7 @@ export function UseAllStudents() {
         await UpdateStudents({
           variables: {
             where: {
-              id: updatedIndex
+              id: state.editId
             },
             data: {
               name: {
@@ -229,8 +210,7 @@ export function UseAllStudents() {
       ctaFormHandler,
       ctaDeleteHandler,
       ctaUpdateHandler,
-      formInputs,
-      ctaEditButtonHandler
+      formInputs
     },
   ];
 }

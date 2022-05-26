@@ -184,26 +184,7 @@ export function UseEvents() {
     //Update staff
 
     let [UpdateEvents, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_EVENT);
-    const [updatedIndex, setUpdatedIndex] = useState('')
-    const ctaEditButtonHandler = async (data) => {
-        const test = state.editData;
-        console.log(data.id);
-        setUpdatedIndex(data.id)
-        dispatch({
-            type: "setModal",
-            payload: {
-                openFormModal: true,
-                modalUpdateFlag: true,
-            },
-        });
-        formInputs.map((item) => {
-            test[item.name] = data[item.name];
-        });
-        dispatch({
-            type: "setEditData",
-            payload: test,
-        });
-    };
+  
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
         if (!state.editData?.eventName) {
@@ -223,7 +204,7 @@ export function UseEvents() {
                 await UpdateEvents({
                     variables: {
                         where: {
-                            id: updatedIndex
+                            id: state.editId
                         },
                         data: {
                             eventName: {
@@ -237,9 +218,6 @@ export function UseEvents() {
                             },
                             eventDate: {
                                 set: new Date()
-                            },
-                            speakerId: {
-                                set: state.editData?.speakerId
                             },
                             eventStatus: {
                                 set: state.editData?.eventStatus
@@ -276,7 +254,6 @@ export function UseEvents() {
             ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
-            ctaEditButtonHandler,
             handleChange
         },
     ];

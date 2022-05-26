@@ -3,8 +3,8 @@ import { LoginStyle } from "./LoginStyle";
 import loginPageLogo from '../../../assets/loginPageLogo.png';
 import UseLogin from './UseLogin';
 import CommonTooltip from '../../../commonComponents/commonTooltip/CommonTooltip';
-import { ThreeDots } from "react-loader-spinner";
 import { ToastContainer } from 'react-toastify';
+import { StageSpinner } from 'react-spinners-kit'
 export default function Login() {
     const [{ values, handleChange, handleClickShowPassword, email, setEmail, loginHandler, loading }] = UseLogin();
     // if (error) {
@@ -61,7 +61,7 @@ export default function Login() {
                     {/* Below Code for login Button   */}
                     {loading ?
                         <LoginStyle.LoaderContainer>
-                            <ThreeDots color="#0D4cb5" height={50} width={50} />
+                            <StageSpinner color="#0D4cb5" height={50} width={50} />
                         </LoginStyle.LoaderContainer>
                         :
                         <LoginStyle.ButtonContainer>

@@ -19,14 +19,18 @@ import AllStaff from '../modules/adminPortal/allStaff/AllStaff';
 import { PublicRouting } from './PublicRouting';
 import { PrivateRouting } from './PrivateRouting';
 import PageNotFound from '../commonComponents/PageNotFound';
+import MyCourses from '../modules/studentPortal/myCourses/MyCourses';
+import Assignment from '../modules/studentPortal/assignment/Assignment';
+import Quiz from '../modules/studentPortal/quiz/Quiz';
+import MyAttandance from '../modules/studentPortal/attandance/Attandance';
 export default function Navigation() {
     const { state } = useContext(AppContext);
 
     return (
         <>
-           
+
             <Routes>
-                
+
                 <Route
                     path='/login'
                     element={
@@ -133,9 +137,34 @@ export default function Navigation() {
                         }
                     >
                         <Route path={`id`} element={<ProfileData />} />
-                        <Route path={`editProfile/id`} element={<EditProfile />} />
+                        <Route path={`editProfile/id/`} element={<EditProfile />} />
                         <Route path={`ChangePassword/id`} element={<ChangePassword />} />
                     </Route>
+                    {/* students routes */}
+                    <Route path='/myCourses'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <MyCourses />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/assignments'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <Assignment />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/quiz'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <Quiz />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/attandance'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <MyAttandance />
+                            </PrivateRouting>}
+                    />
                 </Route>
             </Routes>
         </>

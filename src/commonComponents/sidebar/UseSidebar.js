@@ -76,9 +76,9 @@ export const UseDrawer = () => {
     ];
     const studentMenuItems = [
         {
-            text: 'My Course',
+            text: 'My Courses',
             icon: <Subscriptions />,
-            path: '/myCourse',
+            path: '/myCourses',
         },
         {
             text: 'Assignments',

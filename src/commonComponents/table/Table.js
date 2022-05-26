@@ -71,6 +71,9 @@ export default function Table({
     else if (filterValue === item.feeStatus) {
       return item
     }
+    else if (filterValue === item.attendance) {
+      return item
+    }
   });
 
   //open add form model

@@ -13,7 +13,7 @@ function App() {
  
   setTimeout(function () {
     setLoading(false);
-  }, 0);
+  }, 5000);
 
 
 

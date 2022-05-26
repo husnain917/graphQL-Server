@@ -92,7 +92,7 @@ function Sidebar(props) {
       <SidebarStyle.MobileDrawer
         drawerWidth={drawerWidth}
         container={container}
-        variant="permanent"
+        variant="temporary"
         open={open}
         onClose={handleDrawer}
         ModalProps={{

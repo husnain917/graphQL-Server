@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { DS } from "./DashboardStyle";
 import Card from './card/Card';
 import UseDashboard from "./UseDashboard";
 
 export default function Dashboard() {
     const [{ AdminLength, TeacherLength, studentLength, successLength, eventLength, courseLength, adminLength, teacherLength, STAFF_LOADING, COURSE_LOADING, STUDENT_LOADING, EVENTS_LOADING, SUCCESS_LOADING }] = UseDashboard();
-
 
     return (
 

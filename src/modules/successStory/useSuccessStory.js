@@ -190,26 +190,7 @@ export function UseSuccessStory() {
   //Update staff
 
   let [UpdateSuccessStories, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_SUCCESS);
-  const [updatedIndex, setUpdatedIndex] = useState('')
-  const ctaEditButtonHandler = async (data) => {
-    const test = state.editData;
-    console.log(data.id);
-    setUpdatedIndex(data.id)
-    dispatch({
-      type: "setModal",
-      payload: {
-        openFormModal: true,
-        modalUpdateFlag: true,
-      },
-    });
-    formInputs.map((item) => {
-      test[item.name] = data[item.name];
-    });
-    dispatch({
-      type: "setEditData",
-      payload: test,
-    });
-  };
+
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
     if (!state.editData?.city) {
@@ -238,7 +219,7 @@ export function UseSuccessStory() {
         await UpdateSuccessStories({
           variables: {
             where: {
-              id: updatedIndex
+              id: state.editId
             },
             data: {
               freelancingProfileUrl: {
@@ -294,7 +275,6 @@ export function UseSuccessStory() {
       ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
-      ctaEditButtonHandler
     },
   ];
 }

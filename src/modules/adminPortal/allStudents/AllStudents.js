@@ -19,7 +19,6 @@ export default function AllStudents() {
       ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
-      ctaEditButtonHandler
     },
   ] = UseAllStudents();
   if (
@@ -36,7 +35,6 @@ export default function AllStudents() {
       <Table
         title={'All Students'}
         tableHeadings={['Id','Name', 'Email', 'Status', 'Action']}
-        ctaEditButtonHandler={ctaEditButtonHandler}
         printedKeys={[
           {
             key: "id",

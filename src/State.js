@@ -4,9 +4,10 @@ import { EditorState } from "draft-js";
 let AppContext = createContext('');
 
 const initialState = {
-    authState: true,
+    authState: false,
     id: {},
     user: {},
+    editId: {},
     draftHtml: EditorState.createEmpty(),
     openFormModal: false,
     modalUpdateFlag: false,
@@ -20,10 +21,14 @@ let reducer = (state, action) => {
             return { ...state, authState: action.payload.authState, user: action.payload.user }
         }
         case "setModal": {
-            return { ...state, modalUpdateFlag: action?.payload?.modalUpdateFlag || false, openFormModal: action?.payload?.openFormModal,editData:{}}
+            return { ...state, modalUpdateFlag: action?.payload?.modalUpdateFlag || false, openFormModal: action?.payload?.openFormModal, editData: {} }
         }
         case "setEditData": {
-            return { ...state, editData: action.payload}
+            return { ...state, editData: action.payload }
+        }
+        case "setEditId": {
+            console.log("sami", action.payload);
+            return { ...state, editId: action.payload, }
         }
 
     }

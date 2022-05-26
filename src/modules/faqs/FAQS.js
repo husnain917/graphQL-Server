@@ -16,7 +16,6 @@ export default function FAQS() {
             ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
-            ctaEditButtonHandler
         },
     ] = UseFaqs();
     if (
@@ -41,7 +40,6 @@ export default function FAQS() {
                     'Update At',
                     'Action',
                 ]}
-                ctaEditButtonHandler={ctaEditButtonHandler}
                 printedKeys={[
                     {
                         key: "id",

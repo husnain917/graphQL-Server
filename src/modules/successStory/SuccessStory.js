@@ -15,7 +15,6 @@ export default function SuccessStory() {
       ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
-      ctaEditButtonHandler
     },
   ] = UseSuccessStory();
   if (
@@ -45,7 +44,6 @@ export default function SuccessStory() {
             'Status',
             'Action',
           ]}
-          ctaEditButtonHandler={ctaEditButtonHandler}
           printedKeys={[
             {
               key: "id",

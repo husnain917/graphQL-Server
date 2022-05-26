@@ -170,26 +170,7 @@ export function UseContactUs() {
     //Update staff
 
     let [UpdateContactUs, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_CONTACT);
-    const [updatedIndex, setUpdatedIndex] = useState('')
-    const ctaEditButtonHandler = async (data) => {
-        const test = state.editData;
-        console.log(data.id);
-        setUpdatedIndex(data.id)
-        dispatch({
-            type: "setModal",
-            payload: {
-                openFormModal: true,
-                modalUpdateFlag: true,
-            },
-        });
-        formInputs.map((item) => {
-            test[item.name] = data[item.name];
-        });
-        dispatch({
-            type: "setEditData",
-            payload: test,
-        });
-    };
+   
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
         if (!state.editData?.name) {
@@ -212,7 +193,7 @@ export function UseContactUs() {
                 await UpdateContactUs({
                     variables: {
                         where: {
-                            id: updatedIndex
+                            id: state.editId
                         },
                         data: {
                             name: {
@@ -263,7 +244,6 @@ export function UseContactUs() {
             ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
-            ctaEditButtonHandler
         },
     ];
 }

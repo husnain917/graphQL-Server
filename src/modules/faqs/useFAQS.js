@@ -143,26 +143,7 @@ export function UseFaqs() {
   //Update staff
 
   let [UpdateFaq, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_FAQ);
-  const [updatedIndex, setUpdatedIndex] = useState('')
-  const ctaEditButtonHandler = async (data) => {
-    const test = state.editData;
-    console.log(data.id);
-    setUpdatedIndex(data.id)
-    dispatch({
-      type: "setModal",
-      payload: {
-        openFormModal: true,
-        modalUpdateFlag: true,
-      },
-    });
-    formInputs.map((item) => {
-      test[item.name] = data[item.name];
-    });
-    dispatch({
-      type: "setEditData",
-      payload: test,
-    });
-  };
+ 
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
     if (!state.editData?.faqQuestion) {
@@ -176,7 +157,7 @@ export function UseFaqs() {
         await UpdateFaq({
           variables: {
             where: {
-              id: updatedIndex
+              id: state.editId
             },
             data: {
               faqAnswer: {
@@ -220,7 +201,6 @@ export function UseFaqs() {
       ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
-      ctaEditButtonHandler
     },
   ];
 }

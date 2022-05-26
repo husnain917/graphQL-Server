@@ -20,6 +20,7 @@ import FormModal from "../formModal/FormModal";
 import DropDownMenu from "../dropDownMenu/DropDownMenu";
 import { AppContext } from "../../State";
 import CommonConfirmModal from "../commonConfirmModal/CommonConfirmModal";
+import { logDOM } from "@testing-library/react";
 
 export default function Table({
   title,
@@ -33,11 +34,10 @@ export default function Table({
   ctaFormHandler,
   ctaDeleteHandler,
   ctaUpdateHandler,
-  ctaEditButtonHandler,
   handleChange
 }) {
 
-  const { dispatch } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [filterValue, setFilterValue] = useState("");
   const [searchQuery, setSearchQuery] = useState('')
@@ -79,23 +79,29 @@ export default function Table({
     });
   };
   //open edit form modal
-  // const ctaEditButtonHandler = async (data) => {
-  //   const test = state.editData;
-  //   dispatch({
-  //     type: "setModal",
-  //     payload: {
-  //       openFormModal: true,
-  //       modalUpdateFlag: true,
-  //     },
-  //   });
-  //   formInputs.map((item) => {
-  //     test[item.name] = data[item.name];
-  //   });
-  //   dispatch({
-  //     type: "setEditData",
-  //     payload: test,
-  //   });
-  // };
+  const ctaEditButtonHandler = async (data) => {
+    const test = state.editData;
+    dispatch({
+      type: "setEditId",
+      payload:data.id
+    })
+    dispatch({
+      type: "setModal",
+      payload: {
+        openFormModal: true,
+        modalUpdateFlag: true,
+      },
+    });
+    formInputs.map((item) => {
+      test[item.name] = data[item.name];
+    });
+    dispatch({
+      type: "setEditData",
+      payload: test,
+    });
+    console.log(state.editId);
+
+  };
   //open dropDown panel
   const handleAnchorClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -125,7 +131,7 @@ export default function Table({
       {/* Drop Down menu for filter Button */}
 
       {/* Form Modal */}
-      <FormModal formInputs={formInputs} ctaFormHandler={ctaFormHandler} ctaUpdateHandler={ctaUpdateHandler}  handleChange={handleChange}/>
+      <FormModal formInputs={formInputs} ctaFormHandler={ctaFormHandler} ctaUpdateHandler={ctaUpdateHandler} handleChange={handleChange} />
       {/* Form Modal */}
 
       <Toolbar disableGutters>

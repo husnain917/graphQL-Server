@@ -21,7 +21,7 @@ import DropDownMenu from "../dropDownMenu/DropDownMenu";
 import { AppContext } from "../../State";
 import CommonConfirmModal from "../commonConfirmModal/CommonConfirmModal";
 import { logDOM } from "@testing-library/react";
-
+import CommonModal from '../commonModal/CommonModal'
 export default function Table({
   title,
   tableHeadings,
@@ -83,7 +83,7 @@ export default function Table({
     const test = state.editData;
     dispatch({
       type: "setEditId",
-      payload:data.id
+      payload: data.id
     })
     dispatch({
       type: "setModal",
@@ -241,32 +241,35 @@ export default function Table({
                           align="center"
                           key={subIndex + 10}
                         >
-                          {subitem?.type === "image" ? (
-                            <TableStyle.Image src={exactKey} />
-                          ) : subitem?.type === "editor" ? (
-                            <p
-                              dangerouslySetInnerHTML={{ __html: exactKey }}
-                            ></p>
-                          ) : subitem?.type === "crud" ? (
-                            <>
-                              <TableStyle.IconDiv>
-                                <Tooltip title="Delete">
-                                  <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
-                                </Tooltip>
-                                <Tooltip title="Update">
-                                  <IconButton
-                                    aria-label="update"
-                                    size="small"
-                                    onClick={() => ctaEditButtonHandler(row)}
-                                  >
-                                    <TableStyle.EditIcon />
-                                  </IconButton>
-                                </Tooltip>
-                              </TableStyle.IconDiv>
-                            </>
-                          ) : (
-                            exactKey
-                          )}
+                          {
+                              subitem?.type === "image" ? (
+                                <TableStyle.Image src={exactKey} />
+                              ) :
+                                subitem?.type === "editor" ? (
+                                  <p
+                                    dangerouslySetInnerHTML={{ __html: exactKey }}
+                                  ></p>
+                                ) : subitem?.type === "crud" ? (
+                                  <>
+                                    <TableStyle.IconDiv>
+                                      <Tooltip title="Delete">
+                                        <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
+                                      </Tooltip>
+                                      <Tooltip title="Update">
+                                        <IconButton
+                                          aria-label="update"
+                                          size="small"
+                                          onClick={() => ctaEditButtonHandler(row)}
+                                        >
+                                          <TableStyle.EditIcon />
+                                        </IconButton>
+                                      </Tooltip>
+                                    </TableStyle.IconDiv>
+                                  </>
+                                ) : (
+                                  exactKey
+                                  
+                                )}
                         </TableStyle.CustomTableCell>
                       );
                     })}

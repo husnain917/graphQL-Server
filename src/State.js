@@ -7,7 +7,7 @@ const initialState = {
     authState: false,
     id: {},
     user: {},
-    editId: {},
+    editId: '',
     draftHtml: EditorState.createEmpty(),
     openFormModal: false,
     modalUpdateFlag: false,

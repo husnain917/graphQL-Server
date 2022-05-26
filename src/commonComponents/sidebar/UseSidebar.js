@@ -9,6 +9,9 @@ import {
     QuestionAnswerRounded,
     ContactMail,
 } from '@mui/icons-material';
+import QuizIcon from '@mui/icons-material/Quiz';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import CoPresentIcon from '@mui/icons-material/CoPresent';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import { useNavigate } from 'react-router-dom';
@@ -71,6 +74,38 @@ export const UseDrawer = () => {
             path: `/profile/id`
         },
     ];
+    const studentMenuItems = [
+        {
+            text: 'My Course',
+            icon: <Subscriptions />,
+            path: '/myCourse',
+        },
+        {
+            text: 'Assignments',
+            icon: <AssignmentIcon />,
+            path: '/assignments'
+        },
+        {
+            text: 'Quiz',
+            icon: <QuizIcon />,
+            path: '/quiz'
+        },
+        {
+            text: 'Attandance',
+            icon: <CoPresentIcon />,
+            path: '/attandance'
+        },
+        {
+            text: 'Success Stories',
+            icon: <LocalActivity />,
+            path: '/successStory'
+        },
+        {
+            text: 'Profile ',
+            icon: <Face />,
+            path: `/profile/id`
+        },
+    ];
 
 
     const handleDrawer = () => {
@@ -87,6 +122,7 @@ export const UseDrawer = () => {
 
     return [{
         menuItems,
+        studentMenuItems,
         open,
         handleDrawer,
         ctaLogoutHandler

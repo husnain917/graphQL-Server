@@ -46,6 +46,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                       label={item.label}
                       name={item.name}
                       select
+                      required
                       fullWidth
                       variant="standard"
                       onChange={(e) => {
@@ -109,6 +110,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                             label={item.label}
                             name={item.name}
                             type={item.type}
+                            required
                             fullWidth
                             variant="standard"
                             value={

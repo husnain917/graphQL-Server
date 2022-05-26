@@ -11,10 +11,12 @@ import logo from '../../assets/logo.png'
 import { Divider, Grid } from '@mui/material';
 import { Outlet, useLocation } from 'react-router-dom';
 import CommonProfileDropDown from '../commonProfileDropdown/CommonProfileDropDown';
+import { AppContext } from '../../State';
 const drawerWidth = 240;
 function Sidebar(props) {
   const [{
     menuItems,
+    studentMenuItems,
     open,
     ctaLogoutHandler,
     handleDrawer
@@ -23,6 +25,7 @@ function Sidebar(props) {
   const { window } = props;
   const location = useLocation();
   const anchorRef = React.useRef(null);
+  const { state } = React.useContext(AppContext)
   const container = window !== undefined ? () => window().document.body : undefined;
   // window.location.reload()
   //List Item 
@@ -49,7 +52,15 @@ function Sidebar(props) {
   const drawer = (
     <div>
       <List>
-        {menuItems.map((item, index) => renderSidebarItems(item, index))}
+        {
+          state.user?.role === "STUDENT" ?
+            studentMenuItems.map((item, index) => renderSidebarItems(item, index))
+            :
+            state.user?.role === "ADMIN" ?
+              menuItems.map((item, index) => renderSidebarItems(item, index))
+              :
+              ''
+        }
       </List>
     </div>
   );

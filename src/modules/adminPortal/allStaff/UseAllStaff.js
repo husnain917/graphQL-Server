@@ -37,7 +37,7 @@ export function UseAllStaff() {
     {
       label: "Phone",
       name: "phone",
-      type: "number",
+      type: "tel",
     },
     {
       label: "Role",
@@ -70,7 +70,8 @@ export function UseAllStaff() {
   console.log("refacteredData", refacteredData);
 
   const [loader, setLoader] = useState(false);
-
+  const [errormessage, setError] = useState('')
+  
   //ADD STAFF
 
   let [CreateManyStaff, { loading: ADD_LOADING }] = useMutation(ADD_STAFF);
@@ -90,6 +91,12 @@ export function UseAllStaff() {
     else if (!state.editData?.role) {
       ToastWarning('Role required')
     }
+    else if (state.editData?.phone.length > 10) {
+      ToastWarning('Phone No Must be 10 digits')
+      // setError('Phone Number Must be 10 digits')
+    }
+
+
     else {
       try {
         await CreateManyStaff({

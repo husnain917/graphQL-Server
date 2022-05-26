@@ -28,12 +28,12 @@ export function UseFaqs() {
     {
       label: "Faq Question",
       name: "faqQuestion",
-      type: "text",
+      type: "modal",
     },
     {
       label: "Faq Answer",
       name: "faqAnswer",
-      type: "text",
+      type: "modal",
     },
   ]
   const { state, dispatch } = useContext(AppContext);

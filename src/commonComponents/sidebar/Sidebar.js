@@ -53,13 +53,13 @@ function Sidebar(props) {
     <div>
       <List>
         {
-          state.user?.role === "STUDENT" ?
+          // state.user?.role === "STUDENT" ?
             studentMenuItems.map((item, index) => renderSidebarItems(item, index))
-            :
-            state.user?.role === "ADMIN" ?
-              menuItems.map((item, index) => renderSidebarItems(item, index))
-              :
-              ''
+            // :
+            // state.user?.role === "ADMIN" ?
+            //   menuItems.map((item, index) => renderSidebarItems(item, index))
+            //   :
+            //   ''
         }
       </List>
     </div>

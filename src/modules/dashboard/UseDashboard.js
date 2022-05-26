@@ -1,8 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { useContext } from 'react';
-import { Slide, toast } from 'react-toastify';
 import { GET_COURSES, GET_EVENTS, GET_STAFF, GET_STUDENT, GET_SUCCESS_STORIES } from '../../lib/queries/AllQueries';
-import { AppContext } from '../../State';
 export default function UseDashboard() {
     let { data: STAFF_DATA, loading: STAFF_LOADING, error: STAFF_ERROR } = useQuery(GET_STAFF);
     let { data: COURSE_DATA, loading: COURSE_LOADING, error: COURSE_ERROR } = useQuery(GET_COURSES);

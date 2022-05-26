@@ -12,7 +12,6 @@ const initialState = {
     openFormModal: false,
     modalUpdateFlag: false,
     editData: {},
-
 }
 let reducer = (state, action) => {
     // eslint-disable-next-line default-case
@@ -30,7 +29,6 @@ let reducer = (state, action) => {
             console.log("sami", action.payload);
             return { ...state, editId: action.payload, }
         }
-
     }
     return state;
 };

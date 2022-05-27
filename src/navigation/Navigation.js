@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Sidebar from '../commonComponents/sidebar/Sidebar';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import Login from '../modules/auth/login/Login';
 import Dashboard from '../modules/dashboard/Dashboard';
 import AllStudents from '../modules/adminPortal/allStudents/AllStudents';
@@ -27,10 +27,11 @@ import StudentList from '../modules/teacherPortal/studentList/StudentList'
 import CourseAssigned from '../modules/teacherPortal/courseAssigned/CourseAssigned'
 import Lecture from '../modules/teacherPortal/lecture/Lecture'
 import FilesOrAssignment from '../modules/teacherPortal/filesOrAssignment/FilesOrAssignment'
+import { useMutation } from '@apollo/client';
+import { ACTIVE_USER } from '../lib/mutation/AllMutations';
 
 export default function Navigation() {
-    const { state } = useContext(AppContext);
-
+    const { state, dispatch } = useContext(AppContext);
     return (
         <>
 
@@ -91,7 +92,7 @@ export default function Navigation() {
                         }
                     />
                     {
-                        state.user?.role === "ADMIN" ?
+                        state.user?.role === "ADMIN" || state.user.getActiveUser?.role === "ADMIN" ?
                             <Route
                                 path='/'
                                 element={
@@ -101,7 +102,7 @@ export default function Navigation() {
                                 }
                             />
                             :
-                            state.user?.role === "STUDENT" ?
+                            state.user?.role === "STUDENT" || state.user.getActiveUser?.role === "STUDENT" ?
                                 <Route
                                     path='/'
                                     element={
@@ -111,7 +112,7 @@ export default function Navigation() {
                                     }
                                 />
                                 :
-                                state.user?.role === "TEACHER" ?
+                                state.user?.role === "TEACHER" || state.user.getActiveUser?.role === "TEACHER" ?
                                     <Route
                                         path='/'
                                         element={

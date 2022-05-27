@@ -181,6 +181,7 @@ mutation UpdateUser($data: UserUpdateInput!, $where: UserWhereUniqueInput!) {
   }
 }`
 
+
 // {  "data": {
 //   "password": {
 //     "set": null
@@ -211,4 +212,24 @@ mutation UpdateEvents($data: EventsUpdateInput!, $where: EventsWhereUniqueInput!
   updateEvents(data: $data, where: $where) {
     id
   }
+}`
+
+
+
+
+
+
+export const ACTIVE_USER = gql`
+mutation GetActiveUser($token: String!) {
+  getActiveUser(token: $token) {
+    id
+    name
+    email
+    address
+    contact
+    secretKeyId
+    token
+    role
+  }
+
 }`

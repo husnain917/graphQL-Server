@@ -28,7 +28,6 @@ function Sidebar(props) {
   const anchorRef = React.useRef(null);
   const { state } = React.useContext(AppContext)
   const container = window !== undefined ? () => window().document.body : undefined;
-  // window.location.reload()
   //List Item 
   const renderSidebarItems = (item, index) => {
     return (
@@ -53,16 +52,24 @@ function Sidebar(props) {
   const drawer = (
     <div>
       <List>
+        <>
+          {
+            console.log("aa", state.user.getActiveUser?.role)
+          }
+        </>
         {
-          state.user?.role === "STUDENT" ?
+
+          state.user?.role === "STUDENT" || state.user.getActiveUser?.role === "STUDENT" ?
+
             studentMenuItems.map((item, index) => renderSidebarItems(item, index))
             :
-            state.user?.role === "ADMIN" ?
+            state.user?.role === "ADMIN" || state.user.getActiveUser?.role === "ADMIN" ?
               menuItems.map((item, index) => renderSidebarItems(item, index))
               :
-              state.user?.role === "TEACHER" ?
+              state.user?.role === "TEACHER" || state.user.getActiveUser?.role === "TEACHER" ?
                 teacherMenuItems.map((item, index) => renderSidebarItems(item, index))
-                : ''
+                :
+                ''
         }
       </List>
     </div>

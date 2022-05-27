@@ -1,9 +1,9 @@
 import { useMutation } from '@apollo/client';
-import { useState, useContext } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useState, useContext, useEffect } from 'react';
 import { LOGIN } from '../../../lib/mutation/LoginMutation';
 import { AppContext } from "../../../State";
 import { ToastError } from '../../../commonComponents/commonFunction/CommonFunction';
+import { ACTIVE_USER } from '../../../lib/mutation/AllMutations';
 export default function UseLogin() {
 
   const { state, dispatch } = useContext(AppContext);
@@ -38,7 +38,6 @@ export default function UseLogin() {
           email: email,
         },
         onCompleted({ login }) {
-
           dispatch({
             type: "setAuthState",
             payload: {
@@ -46,7 +45,8 @@ export default function UseLogin() {
               authState: true
             },
           });
-
+          localStorage.setItem("token", login.token)
+          
         },
       })
     }
@@ -56,6 +56,7 @@ export default function UseLogin() {
 
     }
   }
+
 
 
   return [{ values, handleChange, handleClickShowPassword, email, setEmail, loginHandler, loading }]

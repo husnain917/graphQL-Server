@@ -29,22 +29,22 @@ export default function EditProfile() {
 
             <Grid container spacing={2}>
                 <Grid item xl={6} lg={6} md={6} sm={12} xs={12} >
-                    <CommonEditField Label='Name' type='text' placeholder={state.user.name} value={name} onChange={(e) => setName(e.target.value)} />
+                    <CommonEditField Label='Name' type='text' placeholder={state.user.name || state.user.getActiveUser?.name} value={name} onChange={(e) => setName(e.target.value)} />
                 </Grid>
                 <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-                    <CommonEditField Label='Email' type='email' value={state.user.email}  />
+                    <CommonEditField Label='Email' type='email' value={state.user.email || state.user.getActiveUser?.email} />
                 </Grid>
                 <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-                    <CommonEditField Label='Role'  value={state.user.role} />
+                    <CommonEditField Label='Role' value={state.user.role || state.user.getActiveUser?.role} />
                 </Grid>
                 <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-                    <CommonEditField Label='Phone No' type='number' placeholder={state.user.contact} value={phone} onChange={(e) => setPhone(e.target.value)} />
+                    <CommonEditField Label='Phone No' type='number' placeholder={state.user.contact || state.user.getActiveUser?.contact} value={phone} onChange={(e) => setPhone(e.target.value)} />
                 </Grid>
                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
-                    <CommonEditField Label='Address' type='text' placeholder={state.user.address} value={address} onChange={(e) => setAddress(e.target.value)} />
+                    <CommonEditField Label='Address' type='text' placeholder={state.user.address || state.user.getActiveUser?.address} value={address} onChange={(e) => setAddress(e.target.value)} />
                 </Grid>
                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12} >
-               <CommonEditField type='file'  />
+                    <CommonEditField type='file' />
                 </Grid>
                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                     <Pd.ProDiv ><PButton title="save changes" ctaHandler={ctaUpdateHandler} /></Pd.ProDiv>

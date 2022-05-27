@@ -146,10 +146,15 @@ export const UseDrawer = () => {
     const ctaLogoutHandler = () => {
         dispatch({
             type: "setAuthState",
-            payload: state.authState === false
-
+            payload: {
+                user: null,
+                authState: false
+            }
         })
+        localStorage.removeItem('token')
         navigate('/login')
+        window.reload()
+
     }
 
     return [{

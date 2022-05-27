@@ -1,10 +1,11 @@
 import React, { createContext, useReducer } from "react";
 import { EditorState } from "draft-js";
+import { logDOM } from "@testing-library/react";
 
 let AppContext = createContext('');
 
 const initialState = {
-    authState: true,
+    authState: false,
     id: {},
     user: {},
     editId: '',
@@ -17,6 +18,7 @@ let reducer = (state, action) => {
     // eslint-disable-next-line default-case
     switch (action.type) {
         case "setAuthState": {
+            console.log("action", action.payload);
             return { ...state, authState: action.payload.authState, user: action.payload.user }
         }
         case "setModal": {
@@ -26,7 +28,6 @@ let reducer = (state, action) => {
             return { ...state, editData: action.payload }
         }
         case "setEditId": {
-            console.log("sami", action.payload);
             return { ...state, editId: action.payload, }
         }
     }

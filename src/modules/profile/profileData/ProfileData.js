@@ -15,7 +15,7 @@ export default function ProfileData() {
     <>
       {
         loading ?
-          <><CommonTableLoader/></>
+          <><CommonTableLoader /></>
           :
           <Grid container spacing={2}>
             <Grid item xl={6} lg={6} md={6} sm={12} xs={12} >

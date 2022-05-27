@@ -141,6 +141,9 @@ export default function Navigation() {
                         <Route path={`ChangePassword/id`} element={<ChangePassword />} />
                     </Route>
                     {/* students routes */}
+
+                </Route>
+                <Route path='/' element={<Sidebar />} >
                     <Route path='/myCourse'
                         element={
                             <PrivateRouting isAllowed={state.authState}>

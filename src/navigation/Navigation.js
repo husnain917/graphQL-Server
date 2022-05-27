@@ -6,10 +6,10 @@ import Dashboard from '../modules/dashboard/Dashboard';
 import AllStudents from '../modules/adminPortal/allStudents/AllStudents';
 import SuccessStory from '../modules/successStory/SuccessStory';
 import Courses from '../modules/courses/Course';
-import EnrollmentApproval from '../modules/enrollmentApproval/EnrollmentApproval';
-import Events from '../modules/events/Events';
-import FAQS from '../modules/faqs/FAQS';
-import ContactUs from '../modules/contactUs/ContactUs';
+import EnrollmentApproval from '../modules/adminPortal/enrollmentApproval/EnrollmentApproval';
+import Events from '../modules/adminPortal/events/Events';
+import FAQS from '../modules/adminPortal/faqs/FAQS';
+import ContactUs from '../modules/adminPortal/contactUs/ContactUs';
 import Profile from '../modules/profile/Profile';
 import ChangePassword from '../modules/profile/changePassword/ChangePassword';
 import ProfileData from '../modules/profile/profileData/ProfileData';
@@ -19,10 +19,15 @@ import AllStaff from '../modules/adminPortal/allStaff/AllStaff';
 import { PublicRouting } from './PublicRouting';
 import { PrivateRouting } from './PrivateRouting';
 import PageNotFound from '../commonComponents/PageNotFound';
-import MyCourse from '../modules/studentPortal/myCourse/MyCourse';
+import MyCourse from '../modules/studentPortal/myCourses/MyCourses';
 import Assignment from '../modules/studentPortal/assignment/Assignment';
 import Quiz from '../modules/studentPortal/quiz/Quiz';
 import MyAttandance from '../modules/studentPortal/attandance/Attandance';
+import StudentList from '../modules/teacherPortal/studentList/StudentList'
+import CourseAssigned from '../modules/teacherPortal/courseAssigned/CourseAssigned'
+import Lecture from '../modules/teacherPortal/lecture/Lecture'
+import FilesOrAssignment from '../modules/teacherPortal/filesOrAssignment/FilesOrAssignment'
+
 export default function Navigation() {
     const { state } = useContext(AppContext);
 
@@ -47,86 +52,31 @@ export default function Navigation() {
                         // </PublicRouting>
                     }
                 />
+                {/* teacher Navigation */}
                 <Route path='/' element={<Sidebar />} >
-                    <Route
-                        path='/dashboard'
+                    <Route path='/studentList'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
-                                <Dashboard />
-                            </PrivateRouting>
-                        }
+                                <StudentList />
+                            </PrivateRouting>}
                     />
-                    <Route
-                        path='/contactus'
+                    <Route path='/courseAssigned'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
-                                <ContactUs />
-                            </PrivateRouting>
-                        }
+                                <CourseAssigned />
+                            </PrivateRouting>}
                     />
-                    <Route
-                        path='/staff'
+                    <Route path='/lecture'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
-                                <AllStaff />
-                            </PrivateRouting>
-                        }
+                                <Lecture />
+                            </PrivateRouting>}
                     />
-                    <Route
-                        path='/students'
+                    <Route path='/fileOrAssignment'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
-                                <AllStudents />
-                            </PrivateRouting>
-                        }
-                    />
-                    <Route
-                        path='/'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <Dashboard />
-                            </PrivateRouting>
-                        }
-                    />
-                    <Route
-                        path='/successStory'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <SuccessStory />
-                            </PrivateRouting>
-                        }
-                    />
-                    <Route
-                        path='/courses'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <Courses />
-                            </PrivateRouting>
-                        }
-                    />
-                    <Route
-                        path='/approve-enrollment'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <EnrollmentApproval />
-                            </PrivateRouting>
-                        }
-                    />
-                    <Route
-                        path='/events'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <Events />
-                            </PrivateRouting>
-                        }
-                    />
-                    <Route
-                        path='/faq'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <FAQS />
-                            </PrivateRouting>
-                        }
+                                <FilesOrAssignment />
+                            </PrivateRouting>}
                     />
                     <Route
                         path='/profile'
@@ -140,35 +90,167 @@ export default function Navigation() {
                         <Route path={`editProfile/id/`} element={<EditProfile />} />
                         <Route path={`ChangePassword/id`} element={<ChangePassword />} />
                     </Route>
-                    {/* students routes */}
+                </Route>
 
-                </Route>
-                <Route path='/' element={<Sidebar />} >
-                    <Route path='/myCourse'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <MyCourse />
-                            </PrivateRouting>}
-                    />
-                    <Route path='/assignments'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <Assignment />
-                            </PrivateRouting>}
-                    />
-                    <Route path='/quiz'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <Quiz />
-                            </PrivateRouting>}
-                    />
-                    <Route path='/attandance'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <MyAttandance />
-                            </PrivateRouting>}
-                    />
-                </Route>
+                {/* {
+                    state.user?.role === "ADMIN" ?
+                        <>
+                            <Route path='/' element={<Sidebar />} >
+                                <Route
+                                    path='/dashboard'
+                                    element={
+                                        <PrivateRouting isAllowed={state.authState}>
+                                            <Dashboard />
+                                        </PrivateRouting>
+                                    }
+                                />
+                                <Route
+                                    path='/contactus'
+                                    element={
+                                        <PrivateRouting isAllowed={state.authState}>
+                                            <ContactUs />
+                                        </PrivateRouting>
+                                    }
+                                />
+                                <Route
+                                    path='/staff'
+                                    element={
+                                        <PrivateRouting isAllowed={state.authState}>
+                                            <AllStaff />
+                                        </PrivateRouting>
+                                    }
+                                />
+                                <Route
+                                    path='/students'
+                                    element={
+                                        <PrivateRouting isAllowed={state.authState}>
+                                            <AllStudents />
+                                        </PrivateRouting>
+                                    }
+                                />
+                                <Route
+                                    path='/'
+                                    element={
+                                        <PrivateRouting isAllowed={state.authState}>
+                                            <Dashboard />
+                                        </PrivateRouting>
+                                    }
+                                />
+                                <Route
+                                    path='/successStory'
+                                    element={
+                                        <PrivateRouting isAllowed={state.authState}>
+                                            <SuccessStory />
+                                        </PrivateRouting>
+                                    }
+                                />
+                                <Route
+                                    path='/courses'
+                                    element={
+                                        <PrivateRouting isAllowed={state.authState}>
+                                            <Courses />
+                                        </PrivateRouting>
+                                    }
+                                />
+                                <Route
+                                    path='/approve-enrollment'
+                                    element={
+                                        <PrivateRouting isAllowed={state.authState}>
+                                            <EnrollmentApproval />
+                                        </PrivateRouting>
+                                    }
+                                />
+                                <Route
+                                    path='/events'
+                                    element={
+                                        <PrivateRouting isAllowed={state.authState}>
+                                            <Events />
+                                        </PrivateRouting>
+                                    }
+                                />
+                                <Route
+                                    path='/faq'
+                                    element={
+                                        <PrivateRouting isAllowed={state.authState}>
+                                            <FAQS />
+                                        </PrivateRouting>
+                                    }
+                                />
+                                <Route
+                                    path='/profile'
+                                    element={
+                                        <PrivateRouting isAllowed={state.authState}>
+                                            <Profile />
+                                        </PrivateRouting>
+                                    }
+                                >
+                                    <Route path={`id`} element={<ProfileData />} />
+                                    <Route path={`editProfile/id/`} element={<EditProfile />} />
+                                    <Route path={`ChangePassword/id`} element={<ChangePassword />} />
+                                </Route>
+                                {/* students routes */}
+
+                {/* </Route>
+                        </>
+                        :
+                        state.user?.role === "TEACHER" ?
+                            <></>
+                            :
+                            state.user?.role === "STUDENT" ?
+                                <>
+
+                                    <Route path='/' element={<Sidebar />} >
+                                        <Route path='/myCourse'
+                                            element={
+                                                <PrivateRouting isAllowed={state.authState}>
+                                                    <MyCourse />
+                                                </PrivateRouting>}
+                                        />
+                                        <Route path='/assignments'
+                                            element={
+                                                <PrivateRouting isAllowed={state.authState}>
+                                                    <Assignment />
+                                                </PrivateRouting>}
+                                        />
+                                        <Route path='/quiz'
+                                            element={
+                                                <PrivateRouting isAllowed={state.authState}>
+                                                    <Quiz />
+                                                </PrivateRouting>}
+                                        />
+                                        <Route path='/attandance'
+                                            element={
+                                                <PrivateRouting isAllowed={state.authState}>
+                                                    <MyAttandance />
+                                                </PrivateRouting>}
+                                        />
+                                        <Route
+                                            path='/successStory'
+                                            element={
+                                                <PrivateRouting isAllowed={state.authState}>
+                                                    <SuccessStory />
+                                                </PrivateRouting>
+                                            }
+                                        />
+                                        <Route
+                                            path='/profile'
+                                            element={
+                                                <PrivateRouting isAllowed={state.authState}>
+                                                    <Profile />
+                                                </PrivateRouting>
+                                            }
+                                        >
+                                            <Route path={`id`} element={<ProfileData />} />
+                                            <Route path={`editProfile/id/`} element={<EditProfile />} />
+                                            <Route path={`ChangePassword/id`} element={<ChangePassword />} />
+                                        </Route>
+                                    </Route>
+                                </>
+                                :
+                                '' */}
+
+                {/* // } */}
+
             </Routes>
         </>
     );

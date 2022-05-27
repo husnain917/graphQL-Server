@@ -34,7 +34,8 @@ export default function Table({
   ctaFormHandler,
   ctaDeleteHandler,
   ctaUpdateHandler,
-  handleChange
+  handleChange,
+  disableAddIcon,
 }) {
 
   const { state, dispatch } = useContext(AppContext);
@@ -66,6 +67,12 @@ export default function Table({
     }
     else if (filterValue === "All") {
       return item;
+    }
+    else if (filterValue === item.feeStatus) {
+      return item
+    }
+    else if (filterValue === item.attendance) {
+      return item
     }
   });
 
@@ -154,8 +161,10 @@ export default function Table({
                 ) : (
                   <TableStyle.FilterListIcon onClick={handleAnchorClick} />
                 )}
-
-                <TableStyle.AddIcon onClick={handleClickOpen} />
+                {
+                  !disableAddIcon &&
+                  <TableStyle.AddIcon onClick={handleClickOpen} />
+                }
               </TableStyle.SearchAndBtnsContainer>
             </TableStyle.SeachContainer>
           </Hidden>
@@ -194,7 +203,10 @@ export default function Table({
                       <TableStyle.CloseIcon />
                     </TableStyle.CloseIconBox>
                   </IconButton>
-                  <TableStyle.AddIcon onClick={handleClickOpen} />
+                  {
+                    !disableAddIcon &&
+                    <TableStyle.AddIcon onClick={handleClickOpen} />
+                  }
                 </TableStyle.SearchBox>
               )}
               {!searchShow && (
@@ -210,7 +222,10 @@ export default function Table({
                   >
                     <TableStyle.SearchIcon />
                   </IconButton>
-                  <TableStyle.AddIcon onClick={handleClickOpen} />
+                  {
+                    !disableAddIcon &&
+                    <TableStyle.AddIcon onClick={handleClickOpen} />
+                  }
                 </TableStyle.HeaderIconsContainer>
               )}
             </TableStyle.MobileViewTableHeader>
@@ -242,34 +257,34 @@ export default function Table({
                           key={subIndex + 10}
                         >
                           {
-                              subitem?.type === "image" ? (
-                                <TableStyle.Image src={exactKey} />
-                              ) :
-                                subitem?.type === "editor" ? (
-                                  <p
-                                    dangerouslySetInnerHTML={{ __html: exactKey }}
-                                  ></p>
-                                ) : subitem?.type === "crud" ? (
-                                  <>
-                                    <TableStyle.IconDiv>
-                                      <Tooltip title="Delete">
-                                        <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
-                                      </Tooltip>
-                                      <Tooltip title="Update">
-                                        <IconButton
-                                          aria-label="update"
-                                          size="small"
-                                          onClick={() => ctaEditButtonHandler(row)}
-                                        >
-                                          <TableStyle.EditIcon />
-                                        </IconButton>
-                                      </Tooltip>
-                                    </TableStyle.IconDiv>
-                                  </>
-                                ) : (
-                                  exactKey
-                                  
-                                )}
+                            subitem?.type === "image" ? (
+                              <TableStyle.Image src={exactKey} />
+                            ) :
+                              subitem?.type === "editor" ? (
+                                <p
+                                  dangerouslySetInnerHTML={{ __html: exactKey }}
+                                ></p>
+                              ) : subitem?.type === "crud" ? (
+                                <>
+                                  <TableStyle.IconDiv>
+                                    <Tooltip title="Delete">
+                                      <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
+                                    </Tooltip>
+                                    <Tooltip title="Update">
+                                      <IconButton
+                                        aria-label="update"
+                                        size="small"
+                                        onClick={() => ctaEditButtonHandler(row)}
+                                      >
+                                        <TableStyle.EditIcon />
+                                      </IconButton>
+                                    </Tooltip>
+                                  </TableStyle.IconDiv>
+                                </>
+                              ) : (
+                                exactKey
+
+                              )}
                         </TableStyle.CustomTableCell>
                       );
                     })}

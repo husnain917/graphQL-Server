@@ -28,7 +28,7 @@ export default function ProfileData() {
               <CommonField Role={state.user?.role} Label='Role' />
             </Grid>
             <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-              <CommonField Label='Phone No' PhoneNo={state.user?.phone} />
+              <CommonField Label='Phone No' PhoneNo={state.user?.contact} />
             </Grid>
             <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
               <CommonField Address={state.user?.address} Label='Address' />

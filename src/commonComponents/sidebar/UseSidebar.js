@@ -9,6 +9,10 @@ import {
     QuestionAnswerRounded,
     ContactMail,
 } from '@mui/icons-material';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import LaptopChromebookIcon from '@mui/icons-material/LaptopChromebook';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 import QuizIcon from '@mui/icons-material/Quiz';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import CoPresentIcon from '@mui/icons-material/CoPresent';
@@ -76,7 +80,7 @@ export const UseDrawer = () => {
     ];
     const studentMenuItems = [
         {
-            text: 'My Course',
+            text: 'My Courses',
             icon: <Subscriptions />,
             path: '/myCourse',
         },
@@ -107,6 +111,34 @@ export const UseDrawer = () => {
         },
     ];
 
+    const teacherMenuItems = [
+        {
+            text: 'Student List',
+            icon: <ListAltIcon />,
+            path: '/studentList',
+        },
+        {
+            text: 'Course Assigned',
+            icon: <FactCheckIcon />,
+            path: '/courseAssigned'
+        },
+        {
+            text: 'Lecture',
+            icon: <LaptopChromebookIcon />,
+            path: '/lecture'
+        },
+        {
+            text: 'Files and Assignment',
+            icon: <UploadFileIcon />,
+            path: '/fileOrAssignment'
+        },
+        {
+            text: 'Profile ',
+            icon: <Face />,
+            path: `/profile/id`
+        },
+    ];
+
 
     const handleDrawer = () => {
         setOpen(!open);
@@ -123,6 +155,7 @@ export const UseDrawer = () => {
     return [{
         menuItems,
         studentMenuItems,
+        teacherMenuItems,
         open,
         handleDrawer,
         ctaLogoutHandler

@@ -11,10 +11,12 @@ mutation Login($password: String!, $email: String!) {
     cnic
     address
     role
-    phone
+    contact
     permission
     emailApproval
     successStoriesId
   }
 }
 `
+
+

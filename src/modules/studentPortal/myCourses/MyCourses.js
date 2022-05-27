@@ -1,8 +1,8 @@
 import React from 'react';
 import Table from '../../../commonComponents/table/Table';
-import UseAssignment from './UseAssignment';
+import UseMyCourses from './UseMyCourses';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
-export default function Assignment() {
+export default function MyCourse() {
   const [
     {
       loader,
@@ -16,7 +16,7 @@ export default function Assignment() {
       ctaUpdateHandler,
       formInputs,
     },
-  ] = UseAssignment();
+  ] = UseMyCourses();
   if (
     GET_LOADING ||
     DELETE_LOADING ||
@@ -28,21 +28,41 @@ export default function Assignment() {
   }
   return (
     <Table
-      title={'Assignments'}
+      title={'My Courses'}
       tableHeadings={[
         "Id",
-        'Name',
+        'Student Name',
+        'Course Name',
+        'Course Id',
+        'Student Id',
+        'Fee Status',
         'Course Batch',
         'Course Batch Id',
-        'Course',
-        'Course Id',
+        'Course Approval',
+        'Why Reject',
+       
       ]}
       printedKeys={[
         {
           key: "id",
         },
         {
-          key: "name",
+          key: "studentName",
+        },
+        {
+          key: "courseName",
+        },
+
+        {
+          key: "courseId",
+        },
+
+        {
+          key: "studentId",
+        },
+
+        {
+          key: "feeStatus",
         },
         {
           key: "courseBatch",
@@ -51,10 +71,13 @@ export default function Assignment() {
           key: 'courseBatchId',
         },
         {
-          key: 'course'
+          key: "courseApproval",
         },
         {
-          key: 'courseId'
+          key: "whyReject",
+        },
+        {
+          key:'crud'
         }
       ]}
       formInputs={formInputs}

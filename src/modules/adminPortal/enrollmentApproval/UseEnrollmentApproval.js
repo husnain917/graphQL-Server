@@ -4,14 +4,14 @@ import {
   ToastError,
   ToastSuccess,
   ToastWarning,
-} from "../../commonComponents/commonFunction/CommonFunction";
+} from "../../../commonComponents/commonFunction/CommonFunction";
 import {
   ADD_ENROLMMENT_APPROVAL,
   DELETE_ENROLMMENT_APPROVAL,
   UPDATE_SINGLE_ENROLLMENT,
-} from "../../lib/mutation/AllMutations";
-import { GET_ENROLLMENT } from "../../lib/queries/AllQueries";
-import { AppContext } from "../../State";
+} from "../../../lib/mutation/AllMutations";
+import { GET_ENROLLMENT } from "../../../lib/queries/AllQueries";
+import { AppContext } from "../../../State";
 
 
 

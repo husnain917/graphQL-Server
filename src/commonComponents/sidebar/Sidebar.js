@@ -17,6 +17,7 @@ function Sidebar(props) {
   const [{
     menuItems,
     studentMenuItems,
+    teacherMenuItems,
     open,
     ctaLogoutHandler,
     handleDrawer
@@ -53,13 +54,15 @@ function Sidebar(props) {
     <div>
       <List>
         {
-          state.user?.role === "STUDENT" ?
-            studentMenuItems.map((item, index) => renderSidebarItems(item, index))
-            :
-            state.user?.role === "ADMIN" ?
-              menuItems.map((item, index) => renderSidebarItems(item, index))
-              :
-              ''
+          // state.user?.role === "STUDENT" ?
+          // studentMenuItems.map((item, index) => renderSidebarItems(item, index))
+          // :
+          // state.user?.role === "ADMIN" ?
+          //   menuItems.map((item, index) => renderSidebarItems(item, index))
+          //   :
+          //   ''
+          teacherMenuItems.map((item, index) => renderSidebarItems(item, index))
+
         }
       </List>
     </div>

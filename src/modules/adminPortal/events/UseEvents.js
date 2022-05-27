@@ -4,14 +4,14 @@ import {
     ToastError,
     ToastSuccess,
     ToastWarning,
-} from "../../commonComponents/commonFunction/CommonFunction";
+} from "../../../commonComponents/commonFunction/CommonFunction";
 import {
     ADD_EVENTS,
     DELETE_SINGLE_EVENT,
     UPDATE_SINGLE_EVENT,
-} from "../../lib/mutation/AllMutations";
-import { GET_EVENTS } from "../../lib/queries/AllQueries";
-import { AppContext } from "../../State";
+} from "../../../lib/mutation/AllMutations";
+import { GET_EVENTS } from "../../../lib/queries/AllQueries";
+import { AppContext } from "../../../State";
 
 
 

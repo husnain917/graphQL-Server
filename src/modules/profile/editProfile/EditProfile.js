@@ -38,7 +38,7 @@ export default function EditProfile() {
                     <CommonEditField Label='Role'  value={state.user.role} />
                 </Grid>
                 <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-                    <CommonEditField Label='Phone No' type='number' placeholder={state.user.phone} value={phone} onChange={(e) => setPhone(e.target.value)} />
+                    <CommonEditField Label='Phone No' type='number' placeholder={state.user.contact} value={phone} onChange={(e) => setPhone(e.target.value)} />
                 </Grid>
                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                     <CommonEditField Label='Address' type='text' placeholder={state.user.address} value={address} onChange={(e) => setAddress(e.target.value)} />

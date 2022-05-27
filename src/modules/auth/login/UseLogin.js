@@ -38,6 +38,7 @@ export default function UseLogin() {
   let [Login, { loading }] = useMutation(LOGIN)
 
   const loginHandler = async () => {
+    console.log(email, values.password);
     try {
       await Login({
         variables: {

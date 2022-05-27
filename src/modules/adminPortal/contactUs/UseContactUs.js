@@ -5,17 +5,17 @@ import {
     ToastError,
     ToastSuccess,
     ToastWarning,
-} from "../../commonComponents/commonFunction/CommonFunction";
+} from "../../../commonComponents/commonFunction/CommonFunction";
 import {
     ADD_CONTACT_US,
     DELETE_CONTACT,
     UPDATE_SINGLE_CONTACT,
-} from "../../lib/mutation/AllMutations";
-import { GET_CONTACT_US } from "../../lib/queries/AllQueries";
+} from "../../../lib/mutation/AllMutations";
+import { GET_CONTACT_US } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../State";
+import { AppContext } from "../../../State";
 
 
 

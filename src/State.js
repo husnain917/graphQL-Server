@@ -4,7 +4,7 @@ import { EditorState } from "draft-js";
 let AppContext = createContext('');
 
 const initialState = {
-    authState: true,
+    authState: false,
     id: {},
     user: {},
     editId: '',

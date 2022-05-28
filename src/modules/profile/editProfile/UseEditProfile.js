@@ -11,7 +11,7 @@ export function UseEditProfile() {
     const { state } = useContext(AppContext)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
-    const [phone, setPhone] = useState('')
+    const [contact, setContact] = useState('')
     const [address, setAddress] = useState('')
     const [file, setFile] = useState('')
     let [UpdateUser, { loading: UPDATE_LOADING }] = useMutation(UPDATE_USER)
@@ -22,7 +22,7 @@ export function UseEditProfile() {
     useEffect(() => {
         setName(state.user?.name)
         setEmail(state.user?.email)
-        setPhone(state.user?.phone)
+        setContact(state.user?.contact)
         setAddress(state.user?.address)
     }, [])
 
@@ -32,7 +32,7 @@ export function UseEditProfile() {
         if (!name) {
             ToastWarning('Name required')
         }
-        else if (!phone) {
+        else if (!contact) {
             ToastWarning('Phone Number required')
         }
         else if (!address) {
@@ -57,7 +57,7 @@ export function UseEditProfile() {
                                 set: address
                             },
                             phone: {
-                                set: phone
+                                set: contact
                             }
                         }
                     },
@@ -77,11 +77,11 @@ export function UseEditProfile() {
         name,
         email,
         address,
-        phone,
+        contact,
         setName,
         setEmail,
         setAddress,
-        setPhone,
+        setContact,
         // handleChange,
         state,
         UPDATE_LOADING

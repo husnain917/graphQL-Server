@@ -29,7 +29,7 @@ function App() {
           dispatch({
             type: "setAuthState",
             payload: {
-              user: login,
+              user: login.getActiveUser,
               authState: true
             },
           });

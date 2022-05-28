@@ -92,7 +92,7 @@ export default function Navigation() {
                         }
                     />
                     {
-                        state.user?.role === "ADMIN" || state.user.getActiveUser?.role === "ADMIN" ?
+                        state.user?.role === "ADMIN" ?
                             <Route
                                 path='/'
                                 element={
@@ -102,7 +102,7 @@ export default function Navigation() {
                                 }
                             />
                             :
-                            state.user?.role === "STUDENT" || state.user.getActiveUser?.role === "STUDENT" ?
+                            state.user?.role === "STUDENT" ?
                                 <Route
                                     path='/'
                                     element={
@@ -112,7 +112,7 @@ export default function Navigation() {
                                     }
                                 />
                                 :
-                                state.user?.role === "TEACHER" || state.user.getActiveUser?.role === "TEACHER" ?
+                                state.user?.role === "TEACHER" ?
                                     <Route
                                         path='/'
                                         element={

@@ -59,14 +59,14 @@ function Sidebar(props) {
         </>
         {
 
-          state.user?.role === "STUDENT" || state.user.getActiveUser?.role === "STUDENT" ?
+          state.user?.role === "STUDENT" ?
 
             studentMenuItems.map((item, index) => renderSidebarItems(item, index))
             :
-            state.user?.role === "ADMIN" || state.user.getActiveUser?.role === "ADMIN" ?
+            state.user?.role === "ADMIN" ?
               menuItems.map((item, index) => renderSidebarItems(item, index))
               :
-              state.user?.role === "TEACHER" || state.user.getActiveUser?.role === "TEACHER" ?
+              state.user?.role === "TEACHER" ?
                 teacherMenuItems.map((item, index) => renderSidebarItems(item, index))
                 :
                 ''
@@ -101,7 +101,7 @@ function Sidebar(props) {
         </Toolbar>
       </SidebarStyle.AppBar>
 
-      <SidebarStyle.WebDrawer variant="permanent" open={open}>
+      <SidebarStyle.WebDrawer variant="permanent" container={container} open={open}>
         <SidebarStyle.DrawerHeader>
           <SidebarStyle.Image src={logo} />
         </SidebarStyle.DrawerHeader>

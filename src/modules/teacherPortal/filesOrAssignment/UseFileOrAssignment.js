@@ -12,9 +12,6 @@ import {
     DELETE_SINGLE_COURSE
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSES } from "../../../lib/queries/AllQueries";
-// import { convertToRaw } from "draft-js";
-// import draftToHtml from "draftjs-to-html";
-import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
 
 

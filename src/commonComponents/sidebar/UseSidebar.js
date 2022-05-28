@@ -9,6 +9,13 @@ import {
     QuestionAnswerRounded,
     ContactMail,
 } from '@mui/icons-material';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import LaptopChromebookIcon from '@mui/icons-material/LaptopChromebook';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
+import QuizIcon from '@mui/icons-material/Quiz';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import CoPresentIcon from '@mui/icons-material/CoPresent';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import { useNavigate } from 'react-router-dom';
@@ -71,6 +78,66 @@ export const UseDrawer = () => {
             path: `/profile/id`
         },
     ];
+    const studentMenuItems = [
+        {
+            text: 'My Courses',
+            icon: <Subscriptions />,
+            path: '/myCourse',
+        },
+        {
+            text: 'Assignments',
+            icon: <AssignmentIcon />,
+            path: '/assignments'
+        },
+        {
+            text: 'Quiz',
+            icon: <QuizIcon />,
+            path: '/quiz'
+        },
+        {
+            text: 'Attandance',
+            icon: <CoPresentIcon />,
+            path: '/attandance'
+        },
+        {
+            text: 'Success Stories',
+            icon: <LocalActivity />,
+            path: '/successStory'
+        },
+        {
+            text: 'Profile ',
+            icon: <Face />,
+            path: `/profile/id`
+        },
+    ];
+
+    const teacherMenuItems = [
+        {
+            text: 'Student List',
+            icon: <ListAltIcon />,
+            path: '/studentList',
+        },
+        {
+            text: 'Course Assigned',
+            icon: <FactCheckIcon />,
+            path: '/courseAssigned'
+        },
+        {
+            text: 'Lecture',
+            icon: <LaptopChromebookIcon />,
+            path: '/lecture'
+        },
+        {
+            text: 'Files and Assignment',
+            icon: <UploadFileIcon />,
+            path: '/fileOrAssignment'
+        },
+        {
+            text: 'Profile ',
+            icon: <Face />,
+            path: `/profile/id`
+        },
+    ];
 
 
     const handleDrawer = () => {
@@ -79,14 +146,21 @@ export const UseDrawer = () => {
     const ctaLogoutHandler = () => {
         dispatch({
             type: "setAuthState",
-            payload: state.authState === false
-
+            payload: {
+                user: null,
+                authState: false
+            }
         })
+        localStorage.removeItem('token')
         navigate('/login')
+        window.reload()
+
     }
 
     return [{
         menuItems,
+        studentMenuItems,
+        teacherMenuItems,
         open,
         handleDrawer,
         ctaLogoutHandler

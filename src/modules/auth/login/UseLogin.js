@@ -1,16 +1,10 @@
 import { useMutation } from '@apollo/client';
-import { useState, useContext } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useState, useContext, useEffect } from 'react';
 import { LOGIN } from '../../../lib/mutation/LoginMutation';
 import { AppContext } from "../../../State";
 import { ToastError } from '../../../commonComponents/commonFunction/CommonFunction';
+import { ACTIVE_USER } from '../../../lib/mutation/AllMutations';
 export default function UseLogin() {
-  const navigate = useNavigate()
-  // const cc = localStorage.getItem('auth')
-  // if (cc === true) {
-  //   navigate('/dashboard')
-  // }
-
 
   const { state, dispatch } = useContext(AppContext);
 
@@ -35,18 +29,15 @@ export default function UseLogin() {
 
 
 
-  let [Login, { loading }] = useMutation(LOGIN)
-
+  let [Mutation, { loading }] = useMutation(LOGIN)
   const loginHandler = async () => {
     try {
-      await Login({
+      await Mutation({
         variables: {
-
-          email: email,
           password: values.password,
+          email: email,
         },
         onCompleted({ login }) {
-          navigate("/dashboard")
           dispatch({
             type: "setAuthState",
             payload: {
@@ -54,10 +45,10 @@ export default function UseLogin() {
               authState: true
             },
           });
-
+          localStorage.setItem("token", login.token)
+          
         },
       })
-
     }
     catch (error) {
       ToastError(error.message)
@@ -65,6 +56,7 @@ export default function UseLogin() {
 
     }
   }
+
 
 
   return [{ values, handleChange, handleClickShowPassword, email, setEmail, loginHandler, loading }]

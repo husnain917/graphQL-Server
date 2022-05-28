@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Sidebar from '../commonComponents/sidebar/Sidebar';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import Login from '../modules/auth/login/Login';
 import Dashboard from '../modules/dashboard/Dashboard';
 import AllStudents from '../modules/adminPortal/allStudents/AllStudents';
 import SuccessStory from '../modules/successStory/SuccessStory';
 import Courses from '../modules/courses/Course';
-import EnrollmentApproval from '../modules/enrollmentApproval/EnrollmentApproval';
-import Events from '../modules/events/Events';
-import FAQS from '../modules/faqs/FAQS';
-import ContactUs from '../modules/contactUs/ContactUs';
+import EnrollmentApproval from '../modules/adminPortal/enrollmentApproval/EnrollmentApproval';
+import Events from '../modules/adminPortal/events/Events';
+import FAQS from '../modules/adminPortal/faqs/FAQS';
+import ContactUs from '../modules/adminPortal/contactUs/ContactUs';
 import Profile from '../modules/profile/Profile';
 import ChangePassword from '../modules/profile/changePassword/ChangePassword';
 import ProfileData from '../modules/profile/profileData/ProfileData';
@@ -19,14 +19,24 @@ import AllStaff from '../modules/adminPortal/allStaff/AllStaff';
 import { PublicRouting } from './PublicRouting';
 import { PrivateRouting } from './PrivateRouting';
 import PageNotFound from '../commonComponents/PageNotFound';
-export default function Navigation() {
-    const { state } = useContext(AppContext);
+import MyCourse from '../modules/studentPortal/myCourses/MyCourses';
+import Assignment from '../modules/studentPortal/assignment/Assignment';
+import Quiz from '../modules/studentPortal/quiz/Quiz';
+import MyAttandance from '../modules/studentPortal/attandance/Attandance';
+import StudentList from '../modules/teacherPortal/studentList/StudentList'
+import CourseAssigned from '../modules/teacherPortal/courseAssigned/CourseAssigned'
+import Lecture from '../modules/teacherPortal/lecture/Lecture'
+import FilesOrAssignment from '../modules/teacherPortal/filesOrAssignment/FilesOrAssignment'
+import { useMutation } from '@apollo/client';
+import { ACTIVE_USER } from '../lib/mutation/AllMutations';
 
+export default function Navigation() {
+    const { state, dispatch } = useContext(AppContext);
     return (
         <>
-           
+
             <Routes>
-                
+
                 <Route
                     path='/login'
                     element={
@@ -43,6 +53,11 @@ export default function Navigation() {
                         // </PublicRouting>
                     }
                 />
+
+
+                {/* {
+                    state.user?.role === "ADMIN" ? */}
+
                 <Route path='/' element={<Sidebar />} >
                     <Route
                         path='/dashboard'
@@ -76,14 +91,37 @@ export default function Navigation() {
                             </PrivateRouting>
                         }
                     />
-                    <Route
-                        path='/'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <Dashboard />
-                            </PrivateRouting>
-                        }
-                    />
+                    {
+                        state.user?.role === "ADMIN" ?
+                            <Route
+                                path='/'
+                                element={
+                                    <PrivateRouting isAllowed={state.authState}>
+                                        <Dashboard />
+                                    </PrivateRouting>
+                                }
+                            />
+                            :
+                            state.user?.role === "STUDENT" ?
+                                <Route
+                                    path='/'
+                                    element={
+                                        <PrivateRouting isAllowed={state.authState}>
+                                            <MyCourse />
+                                        </PrivateRouting>
+                                    }
+                                />
+                                :
+                                state.user?.role === "TEACHER" ?
+                                    <Route
+                                        path='/'
+                                        element={
+                                            <PrivateRouting isAllowed={state.authState}>
+                                                <StudentList />
+                                            </PrivateRouting>
+                                        }
+                                    /> : ''
+                    }
                     <Route
                         path='/successStory'
                         element={
@@ -133,10 +171,69 @@ export default function Navigation() {
                         }
                     >
                         <Route path={`id`} element={<ProfileData />} />
-                        <Route path={`editProfile/id`} element={<EditProfile />} />
+                        <Route path={`editProfile/id/`} element={<EditProfile />} />
                         <Route path={`ChangePassword/id`} element={<ChangePassword />} />
                     </Route>
+
+
+
+                    {/* students routes */}
+                    <Route path='/myCourse'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <MyCourse />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/assignments'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <Assignment />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/quiz'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <Quiz />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/attandance'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <MyAttandance />
+                            </PrivateRouting>}
+                    />
+
+
+
+                    {/*Teacher routes*/}
+                    <Route path='/studentList'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <StudentList />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/courseAssigned'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <CourseAssigned />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/lecture'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <Lecture />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/fileOrAssignment'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <FilesOrAssignment />
+                            </PrivateRouting>}
+                    />
+
                 </Route>
+
+
             </Routes>
         </>
     );

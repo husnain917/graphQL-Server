@@ -5,17 +5,17 @@ import {
   ToastError,
   ToastSuccess,
   ToastWarning,
-} from "../../commonComponents/commonFunction/CommonFunction";
+} from "../../../commonComponents/commonFunction/CommonFunction";
 import {
   ADD_FAQS,
   DELETE_SINGLE_FAQ,
   UPDATE_SINGLE_FAQ,
-} from "../../lib/mutation/AllMutations";
+} from "../../../lib/mutation/AllMutations";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../State";
-import { GET_FAQS } from "../../lib/queries/AllQueries";
+import { AppContext } from "../../../State";
+import { GET_FAQS } from "../../../lib/queries/AllQueries";
 
 
 
@@ -28,12 +28,12 @@ export function UseFaqs() {
     {
       label: "Faq Question",
       name: "faqQuestion",
-      type: "text",
+      type: "modal",
     },
     {
       label: "Faq Answer",
       name: "faqAnswer",
-      type: "text",
+      type: "modal",
     },
   ]
   const { state, dispatch } = useContext(AppContext);

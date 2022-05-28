@@ -11,10 +11,13 @@ import logo from '../../assets/logo.png'
 import { Divider, Grid } from '@mui/material';
 import { Outlet, useLocation } from 'react-router-dom';
 import CommonProfileDropDown from '../commonProfileDropdown/CommonProfileDropDown';
+import { AppContext } from '../../State';
 const drawerWidth = 240;
 function Sidebar(props) {
   const [{
     menuItems,
+    studentMenuItems,
+    teacherMenuItems,
     open,
     ctaLogoutHandler,
     handleDrawer
@@ -23,8 +26,8 @@ function Sidebar(props) {
   const { window } = props;
   const location = useLocation();
   const anchorRef = React.useRef(null);
+  const { state } = React.useContext(AppContext)
   const container = window !== undefined ? () => window().document.body : undefined;
-  // window.location.reload()
   //List Item 
   const renderSidebarItems = (item, index) => {
     return (
@@ -49,7 +52,25 @@ function Sidebar(props) {
   const drawer = (
     <div>
       <List>
-        {menuItems.map((item, index) => renderSidebarItems(item, index))}
+        <>
+          {
+            console.log("aa", state.user.getActiveUser?.role)
+          }
+        </>
+        {
+
+          state.user?.role === "STUDENT" ?
+
+            studentMenuItems.map((item, index) => renderSidebarItems(item, index))
+            :
+            state.user?.role === "ADMIN" ?
+              menuItems.map((item, index) => renderSidebarItems(item, index))
+              :
+              state.user?.role === "TEACHER" ?
+                teacherMenuItems.map((item, index) => renderSidebarItems(item, index))
+                :
+                ''
+        }
       </List>
     </div>
   );
@@ -80,7 +101,7 @@ function Sidebar(props) {
         </Toolbar>
       </SidebarStyle.AppBar>
 
-      <SidebarStyle.WebDrawer variant="permanent" open={open}>
+      <SidebarStyle.WebDrawer variant="permanent" container={container} open={open}>
         <SidebarStyle.DrawerHeader>
           <SidebarStyle.Image src={logo} />
         </SidebarStyle.DrawerHeader>

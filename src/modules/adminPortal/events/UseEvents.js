@@ -4,14 +4,14 @@ import {
     ToastError,
     ToastSuccess,
     ToastWarning,
-} from "../../commonComponents/commonFunction/CommonFunction";
+} from "../../../commonComponents/commonFunction/CommonFunction";
 import {
     ADD_EVENTS,
     DELETE_SINGLE_EVENT,
     UPDATE_SINGLE_EVENT,
-} from "../../lib/mutation/AllMutations";
-import { GET_EVENTS } from "../../lib/queries/AllQueries";
-import { AppContext } from "../../State";
+} from "../../../lib/mutation/AllMutations";
+import { GET_EVENTS } from "../../../lib/queries/AllQueries";
+import { AppContext } from "../../../State";
 
 
 
@@ -118,9 +118,9 @@ export function UseEvents() {
                         data: {
                             eventName: state.editData?.eventName,
                             eventDesc: state.editData?.eventDesc,
-                            eventImage: File,
+                            eventImage:  File ? File : 'no file',
                             eventDate: new Date(),
-                            speakerId: state.editData?.speakerId,
+                            // speakerId: state.editData?.speakerId,
                             eventStatus: state.editData?.eventStatus,
 
                         },
@@ -184,7 +184,7 @@ export function UseEvents() {
     //Update staff
 
     let [UpdateEvents, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_EVENT);
-  
+
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
         if (!state.editData?.eventName) {
@@ -214,7 +214,7 @@ export function UseEvents() {
                                 set: state.editData?.eventDesc
                             },
                             eventImage: {
-                                set:File
+                                set: File ? File : 'no file'
                             },
                             eventDate: {
                                 set: new Date()

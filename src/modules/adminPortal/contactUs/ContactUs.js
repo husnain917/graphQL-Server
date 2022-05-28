@@ -1,7 +1,7 @@
 import React from 'react';
-import Table from '../../commonComponents/table/Table';
+import Table from '../../../commonComponents/table/Table';
 import { ToastContainer } from 'react-toastify';
-import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
+import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
 import { UseContactUs } from './UseContactUs';
 export default function ContactUs() {
     const [

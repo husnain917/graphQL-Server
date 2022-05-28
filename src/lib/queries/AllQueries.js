@@ -84,7 +84,7 @@ query Query {
     name
     email
     address
-    phone
+    contact
     role
     cnic
     token

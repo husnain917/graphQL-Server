@@ -1,8 +1,8 @@
 import React from 'react';
-import Table from '../../commonComponents/table/Table';
+import Table from '../../../commonComponents/table/Table';
 import { UseFaqs } from './UseFAQS';
 import { ToastContainer } from 'react-toastify';
-import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
+import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
 export default function FAQS() {
     const [
         {

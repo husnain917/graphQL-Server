@@ -56,10 +56,16 @@ mutation Mutation($data: [ContactUsCreateManyInput!]!) {
 }`
 
 export const ADD_FAQS = gql`
-mutation Mutation($data: [FaqCreateManyInput!]!) {
-  createManyFaq(data: $data) {
-    count
-  }
+mutation Mutation($data: FaqCreateInput!) {
+  createFaq(data: $data) {
+    id
+    faqQuestion
+    faqAnswer
+    courseId
+    createdAt
+    updateAt
+  
+}
 }`
 
 

@@ -15,9 +15,7 @@ import { AppContext } from '../../State';
 const drawerWidth = 240;
 function Sidebar(props) {
   const [{
-    menuItems,
-    studentMenuItems,
-    teacherMenuItems,
+    SideBarListItems,
     open,
     ctaLogoutHandler,
     handleDrawer
@@ -54,23 +52,12 @@ function Sidebar(props) {
       <List>
         <>
           {
-            console.log("aa", state.user.getActiveUser?.role)
+            SideBarListItems.map((item, index) => {
+              return renderSidebarItems(item, index)
+            })
           }
         </>
-        {
 
-          state.user?.role === "STUDENT" ?
-
-            studentMenuItems.map((item, index) => renderSidebarItems(item, index))
-            :
-            state.user?.role === "ADMIN" ?
-              menuItems.map((item, index) => renderSidebarItems(item, index))
-              :
-              state.user?.role === "TEACHER" ?
-                teacherMenuItems.map((item, index) => renderSidebarItems(item, index))
-                :
-                ''
-        }
       </List>
     </div>
   );

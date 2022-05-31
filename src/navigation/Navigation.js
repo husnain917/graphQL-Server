@@ -27,8 +27,6 @@ import StudentList from '../modules/teacherPortal/studentList/StudentList'
 import CourseAssigned from '../modules/teacherPortal/courseAssigned/CourseAssigned'
 import Lecture from '../modules/teacherPortal/lecture/Lecture'
 import FilesOrAssignment from '../modules/teacherPortal/filesOrAssignment/FilesOrAssignment'
-import { useMutation } from '@apollo/client';
-import { ACTIVE_USER } from '../lib/mutation/AllMutations';
 
 export default function Navigation() {
     const { state, dispatch } = useContext(AppContext);
@@ -53,12 +51,11 @@ export default function Navigation() {
                         // </PublicRouting>
                     }
                 />
-
-
-                {/* {
-                    state.user?.role === "ADMIN" ? */}
-
-                <Route path='/' element={<Sidebar />} >
+                <Route path='/' element={
+                    <PrivateRouting isAllowed={state.authState}>
+                        <Sidebar />
+                    </PrivateRouting>
+                } >
                     <Route
                         path='/dashboard'
                         element={
@@ -92,7 +89,7 @@ export default function Navigation() {
                         }
                     />
                     {
-                        state.user?.role === "ADMIN" ?
+                        state.user?.role === "ORGANIZATION" ?
                             <Route
                                 path='/'
                                 element={
@@ -102,25 +99,35 @@ export default function Navigation() {
                                 }
                             />
                             :
-                            state.user?.role === "STUDENT" ?
+                            state.user?.role === "ADMIN" ?
                                 <Route
                                     path='/'
                                     element={
                                         <PrivateRouting isAllowed={state.authState}>
-                                            <MyCourse />
+                                            <Dashboard />
                                         </PrivateRouting>
                                     }
                                 />
                                 :
-                                state.user?.role === "TEACHER" ?
+                                state.user?.role === "STUDENT" ?
                                     <Route
                                         path='/'
                                         element={
                                             <PrivateRouting isAllowed={state.authState}>
-                                                <StudentList />
+                                                <MyCourse />
                                             </PrivateRouting>
                                         }
-                                    /> : ''
+                                    />
+                                    :
+                                    state.user?.role === "TEACHER" ?
+                                        <Route
+                                            path='/'
+                                            element={
+                                                <PrivateRouting isAllowed={state.authState}>
+                                                    <StudentList />
+                                                </PrivateRouting>
+                                            }
+                                        /> : ''
                     }
                     <Route
                         path='/successStory'

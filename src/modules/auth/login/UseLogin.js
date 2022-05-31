@@ -3,7 +3,6 @@ import { useState, useContext, useEffect } from 'react';
 import { LOGIN } from '../../../lib/mutation/LoginMutation';
 import { AppContext } from "../../../State";
 import { ToastError } from '../../../commonComponents/commonFunction/CommonFunction';
-import { ACTIVE_USER } from '../../../lib/mutation/AllMutations';
 export default function UseLogin() {
 
   const { state, dispatch } = useContext(AppContext);

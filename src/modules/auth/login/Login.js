@@ -5,8 +5,11 @@ import UseLogin from './UseLogin';
 import CommonTooltip from '../../../commonComponents/commonTooltip/CommonTooltip';
 import { ToastContainer } from 'react-toastify';
 import { StageSpinner } from 'react-spinners-kit'
+import { Checkbox, FormControlLabel } from "@mui/material";
+import { pink } from '@mui/material/colors';
+import { colors } from "../../../constants/Color";
 export default function Login() {
-    const [{ values, handleChange, handleClickShowPassword, email, setEmail, loginHandler, loading }] = UseLogin();
+    const [{ values, handleChange, handleClickShowPassword, email, setEmail, loginHandler, ORG_LOADING, organizationLoginHandler, loading, organizationLogin, setorganizationLogin }] = UseLogin();
     // if (error) {
     //     notify()
     // }
@@ -58,14 +61,30 @@ export default function Login() {
                         }
                         <CommonTooltip route='login' title='Enter your password' />
                     </LoginStyle.IconAndInputField>
+                    <LoginStyle.OrgCheckbox>
+                        <FormControlLabel
+                            control={<Checkbox
+                                sx={{
+                                    color: colors.lightBlue,
+                                    '&.Mui-checked': {
+                                        color: colors.lightBlue,
+                                    },
+                                }}
+                                onChange={() => setorganizationLogin(true)}
+                            />
+                            }
+                            label="Organization Member?"
+
+                        />
+                    </LoginStyle.OrgCheckbox>
                     {/* Below Code for login Button   */}
-                    {loading ?
+                    {loading || ORG_LOADING ?
                         <LoginStyle.LoaderContainer>
                             <StageSpinner color="#0D4cb5" height={50} width={50} />
                         </LoginStyle.LoaderContainer>
                         :
                         <LoginStyle.ButtonContainer>
-                            <LoginStyle.LoginButton onClick={loginHandler}>Login</LoginStyle.LoginButton>
+                            <LoginStyle.LoginButton onClick={organizationLogin ? organizationLoginHandler : loginHandler}>Login</LoginStyle.LoginButton>
                         </LoginStyle.ButtonContainer>
                     }
                 </LoginStyle.LoginContainer>

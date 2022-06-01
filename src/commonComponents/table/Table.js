@@ -22,6 +22,7 @@ import { AppContext } from "../../State";
 import CommonConfirmModal from "../commonConfirmModal/CommonConfirmModal";
 import { logDOM } from "@testing-library/react";
 import CommonModal from '../commonModal/CommonModal'
+import { isNullableType } from "graphql";
 export default function Table({
   title,
   tableHeadings,
@@ -161,10 +162,24 @@ export default function Table({
                 ) : (
                   <TableStyle.FilterListIcon onClick={handleAnchorClick} />
                 )}
+
                 {
-                  !disableAddIcon &&
-                  <TableStyle.AddIcon onClick={handleClickOpen} />
+                  state.user?.role === 'OWNER' ?
+                    <TableStyle.AddIcon onClick={handleClickOpen} />
+
+                    :
+                    state.user?.role === 'ADMIN' ?
+                      title === "Courses" || title === "All Students" ?
+                        <></>
+                        :
+                        <TableStyle.AddIcon onClick={handleClickOpen} />
+                      :
+                      <TableStyle.AddIcon onClick={handleClickOpen} />
+
+
                 }
+
+
               </TableStyle.SearchAndBtnsContainer>
             </TableStyle.SeachContainer>
           </Hidden>

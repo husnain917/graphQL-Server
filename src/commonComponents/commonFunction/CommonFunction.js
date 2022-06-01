@@ -38,3 +38,16 @@ export const ToastWarning = (message) => {
         transition: Slide,
       });
 }
+export const ToastInfo = (message) => {
+    return toast.info(message, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Slide,
+      });
+}

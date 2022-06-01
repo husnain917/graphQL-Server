@@ -89,7 +89,7 @@ export default function Navigation() {
                         }
                     />
                     {
-                        state.user?.role === "ORGANIZATION" ?
+                        state.user?.role === "OWNER" ?
                             <Route
                                 path='/'
                                 element={

@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import { useMutation } from '@apollo/client';
 import { ACTIVE_USER } from './lib/mutation/AllMutations';
 import { AppContext } from './State';
-
+import { ToastInfo } from './commonComponents/commonFunction/CommonFunction'
 function App() {
   const [loading, setLoading] = useState(true)
   setTimeout(function () {
@@ -38,6 +38,8 @@ function App() {
 
     } catch (error) {
       console.log(error.message);
+      localStorage.clear()
+      ToastInfo('Session Expired')
     }
   }
   React.useEffect(() => {

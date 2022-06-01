@@ -28,13 +28,13 @@ export var MENU_ITEMS = [
         text: 'Dashboard',
         icon: <Dashboard />,
         path: '/dashboard',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Staff',
         icon: <PeopleAltIcon />,
         path: '/staff',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Courses',
@@ -46,7 +46,7 @@ export var MENU_ITEMS = [
         text: 'Courses',
         icon: <Subscriptions />,
         path: '/courses',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Students',
@@ -58,7 +58,7 @@ export var MENU_ITEMS = [
         text: 'Students',
         icon: <PeopleOutline />,
         path: '/students',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Enrollment Approval',
@@ -70,7 +70,7 @@ export var MENU_ITEMS = [
         text: 'Enrollment Approval',
         icon: <LibraryAddCheck />,
         path: '/approve-enrollment',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Success Stories',
@@ -82,7 +82,7 @@ export var MENU_ITEMS = [
         text: 'Success Stories',
         icon: <LocalActivity />,
         path: '/successStory',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Events',
@@ -94,7 +94,7 @@ export var MENU_ITEMS = [
         text: 'Events',
         icon: <EventAvailableIcon />,
         path: '/events',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Contact',
@@ -106,13 +106,13 @@ export var MENU_ITEMS = [
         text: 'Contact',
         icon: <ContactMail />,
         path: '/contactus',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'FAQs',
         icon: <QuestionAnswerRounded />,
         path: '/faq',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'FAQs',
@@ -131,7 +131,7 @@ export var MENU_ITEMS = [
         text: 'My Courses',
         icon: <Subscriptions />,
         path: '/myCourse',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Assignments',
@@ -143,7 +143,7 @@ export var MENU_ITEMS = [
         text: 'Assignments',
         icon: <AssignmentIcon />,
         path: '/assignments',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Quiz',
@@ -155,13 +155,13 @@ export var MENU_ITEMS = [
         text: 'Quiz',
         icon: <QuizIcon />,
         path: '/quiz',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Attandance',
         icon: <CoPresentIcon />,
         path: '/attandance',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Attandance',
@@ -173,7 +173,7 @@ export var MENU_ITEMS = [
         text: 'Student List',
         icon: <ListAltIcon />,
         path: '/studentList',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Student List',
@@ -191,7 +191,7 @@ export var MENU_ITEMS = [
         text: 'Course Assigned',
         icon: <FactCheckIcon />,
         path: '/courseAssigned',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Lecture',
@@ -203,7 +203,7 @@ export var MENU_ITEMS = [
         text: 'Lecture',
         icon: <LaptopChromebookIcon />,
         path: '/lecture',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Files and Assignment',
@@ -215,13 +215,13 @@ export var MENU_ITEMS = [
         text: 'Files and Assignment',
         icon: <UploadFileIcon />,
         path: '/fileOrAssignment',
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Profile ',
         icon: <Face />,
         path: `/profile/id`,
-        role: 'ORGANIZATION'
+        role: 'OWNER'
     },
     {
         text: 'Profile ',

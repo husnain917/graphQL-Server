@@ -2,6 +2,7 @@ import React from "react";
 import { DS } from "./DashboardStyle";
 import Card from './card/Card';
 import UseDashboard from "./UseDashboard";
+import { ToastContainer } from "react-toastify";
 
 export default function Dashboard() {
     const [{ AdminLength, TeacherLength, studentLength, successLength, eventLength, courseLength, adminLength, teacherLength, STAFF_LOADING, COURSE_LOADING, STUDENT_LOADING, EVENTS_LOADING, SUCCESS_LOADING }] = UseDashboard();
@@ -9,6 +10,7 @@ export default function Dashboard() {
     return (
 
         <>
+       
             <DS.MainPageContainer>
                 <DS.CardsRow>
                     <DS.CardContainer>

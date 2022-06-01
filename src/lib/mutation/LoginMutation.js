@@ -23,3 +23,19 @@ mutation Mutation($password: String!, $email: String!) {
 `
 
 
+export const ORG_LOGIN = gql`
+mutation OrganizationLogin($password: String!, $email: String!) {
+  organizationLogin(password: $password, email: $email) {
+    id
+    name
+    email
+    address
+    contact
+    secretKeyId
+    token
+    role
+    
+  }
+}`
+
+

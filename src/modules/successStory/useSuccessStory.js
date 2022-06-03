@@ -93,7 +93,7 @@ export function UseSuccessStory() {
 
   //ADD STAFF
 
-  let [CreateManyStories, { loading: ADD_LOADING }] = useMutation(ADD_SUCCESS_STORY);
+  let [CreateSuccessStories, { loading: ADD_LOADING }] = useMutation(ADD_SUCCESS_STORY);
   const ctaFormHandler = async (event) => {
     event.preventDefault();
     if (!state.editData?.city) {
@@ -119,18 +119,35 @@ export function UseSuccessStory() {
     }
     else {
       try {
-        await CreateManyStories({
+        await CreateSuccessStories({
           variables: {
+            // data: {
+            //   city: state.editData?.city,
+            //   freelancingProfileUrl: state.editData?.freelancingProfileUrl,
+            //   paymentProof: state.editData?.paymentProof,
+            //   description: state.editData?.description,
+            //   status: state.editData?.status,
+            //   totalEarnedAmount: state.editData?.totalEarnedAmount,
+            //   whyReject: state.editData?.whyReject,
+            // },
+
             data: {
-              city: state.editData?.city,
               freelancingProfileUrl: state.editData?.freelancingProfileUrl,
               paymentProof: state.editData?.paymentProof,
               description: state.editData?.description,
               status: state.editData?.status,
               totalEarnedAmount: state.editData?.totalEarnedAmount,
+              city: state.editData?.city,
               whyReject: state.editData?.whyReject,
-              // phone: state.editData?.phone
-            },
+              user: {
+                connect: [
+                  {
+                    id: null
+                  }
+                ]
+              }
+            }
+
           },
           onCompleted(data, cache) {
             dispatch({
@@ -221,12 +238,35 @@ export function UseSuccessStory() {
             where: {
               id: state.editId
             },
+            // data: {
+            //   freelancingProfileUrl: {
+            //     set: state.editData?.freelancingProfileUrl
+            //   },
+            //   paymentProof: {
+            //     set: state.editData?.paymentProof
+            //   },
+            //   description: {
+            //     set: state.editData?.description
+            //   },
+            //   status: {
+            //     set: state.editData?.status
+            //   },
+            //   totalEarnedAmount: {
+            //     set: state.editData?.totalEarnedAmount
+            //   },
+            //   city: {
+            //     set: state.editData?.city
+            //   },
+            //   whyReject: {
+            //     set: state.editData?.whyReject
+            //   }
+            // }
             data: {
               freelancingProfileUrl: {
                 set: state.editData?.freelancingProfileUrl
               },
               paymentProof: {
-                set: state.editData?.paymentProof
+                set:  state.editData?.paymentProof
               },
               description: {
                 set: state.editData?.description
@@ -238,12 +278,26 @@ export function UseSuccessStory() {
                 set: state.editData?.totalEarnedAmount
               },
               city: {
-                set: state.editData?.city
+                set:  state.editData?.city
               },
               whyReject: {
                 set: state.editData?.whyReject
+              },
+              user: {
+                update: [
+                  {
+                    where: {
+                      id: null
+                    },
+                    data: {
+                      name: {
+                        set: null
+                      }
+                    }
+                  }
+                ]
               }
-            }
+            },
           },
           onCompleted() {
             dispatch({

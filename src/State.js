@@ -6,6 +6,7 @@ let AppContext = createContext('');
 
 const initialState = {
     authState: false,
+    orgState: false,
     id: {},
     user: {},
     editId: '',
@@ -29,6 +30,9 @@ let reducer = (state, action) => {
         }
         case "setEditId": {
             return { ...state, editId: action.payload, }
+        }
+        case "setORG": {
+            return { ...state, orgState: action.payload }
         }
     }
     return state;

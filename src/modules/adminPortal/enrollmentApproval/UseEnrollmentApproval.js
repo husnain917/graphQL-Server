@@ -89,7 +89,7 @@ export function UseEnrollmentApproval() {
 
   //ADD STAFF
 
-  let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_ENROLMMENT_APPROVAL);
+  let [CreateEnrollmentApproval, { loading: ADD_LOADING }] = useMutation(ADD_ENROLMMENT_APPROVAL);
   const ctaFormHandler = async (event) => {
 
     event.preventDefault();
@@ -116,16 +116,32 @@ export function UseEnrollmentApproval() {
     }
     else {
       try {
-        await Mutation({
+        await CreateEnrollmentApproval({
           variables: {
+            // studentName: state.editData?.studentName,
+            // email: state.editData?.email,
+            // course: state.editData?.course,
+            // paymentMethod: state.editData?.paymentMethod,
+            // amount: state.editData?.amount,
+            // transactionId: state.editData?.transactionId,
+            // status: state.editData?.status
+
             data: {
-              studentName: state.editData?.studentName,
-              email: state.editData?.email,
-              course: state.editData?.course,
+              user: {
+                connect: {
+                  id: null
+                }
+              },
+              courses: {
+                connect: {
+                  id: null
+                }
+              },
+              status: state.editData?.status,
               paymentMethod: state.editData?.paymentMethod,
               amount: state.editData?.amount,
               transactionId: state.editData?.transactionId,
-              status: state.editData?.status
+
             },
           },
           onCompleted(data, cache) {
@@ -188,7 +204,7 @@ export function UseEnrollmentApproval() {
   //Update staff
 
   let [UpdateEnrollmentApproval, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_ENROLLMENT);
- 
+
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
     if (!state.editData?.studentName) {
@@ -219,15 +235,51 @@ export function UseEnrollmentApproval() {
             where: {
               id: state.editId
             },
+            // data: {
+            //   studentName: {
+            //     set: state.editData?.studentName
+            //   },
+            //   email: {
+            //     set: state.editData?.email
+            //   },
+            //   course: {
+            //     set: state.editData?.course
+            //   },
+            //   paymentMethod: {
+            //     set: state.editData?.paymentMethod
+            //   },
+            //   amount: {
+            //     set: state.editData?.amount
+            //   },
+            //   transactionId: {
+            //     set: state.editData?.transactionId
+            //   },
+            //   status: {
+            //     set: state.editData?.status
+            //   },
+
             data: {
-              studentName: {
-                set: state.editData?.studentName
+              user: {
+                update: null
               },
-              email: {
-                set: state.editData?.email
+              courses: {
+                update: {
+                  courseName: {
+                    set: null
+                  },
+                  courseDesc: null,
+                  courseIntro: null,
+                  instructor: {
+                    update: {
+                      name: {
+                        set: null
+                      }
+                    }
+                  }
+                }
               },
-              course: {
-                set: state.editData?.course
+              status: {
+                set: state.editData?.status
               },
               paymentMethod: {
                 set: state.editData?.paymentMethod
@@ -237,10 +289,7 @@ export function UseEnrollmentApproval() {
               },
               transactionId: {
                 set: state.editData?.transactionId
-              },
-              status: {
-                set: state.editData?.status
-              },
+              }
             }
           },
           onCompleted() {

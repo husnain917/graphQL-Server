@@ -96,7 +96,7 @@ export function UseCourses() {
 
   //ADD STAFF
 
-  let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
+  let [CreateCourses, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
@@ -123,19 +123,41 @@ export function UseCourses() {
     }
     else {
       try {
-        await Mutation({
+        await CreateCourses({
           variables: {
+            // data: {
+            //   courseName: state.editData?.courseName,
+            //   courseDesc: state.editData?.courseDesc,
+            //   courseIntro: state.editData?.courseIntro,
+            //   courseStatus: state.editData?.courseStatus,
+            //   instructorId: state.editData?.instructorId,
+            //   courseCategoryId: state.editData?.courseCategoryId,
+            //   coursePrice: state.editData?.coursePrice,
+            // },
+
             data: {
               courseName: state.editData?.courseName,
               courseDesc: state.editData?.courseDesc,
+              instructor: {
+                connect: {
+                  id: null
+                }
+              },
               courseIntro: state.editData?.courseIntro,
-              courseStatus: state.editData?.courseStatus,
-              instructorId: state.editData?.instructorId,
-              courseCategoryId: state.editData?.courseCategoryId,
+              courseCategory: {
+                connect: {
+                  id: null
+                }
+              },
+              organization: {
+                connect: {
+                  id: null,
+                  secretKeyId: null
+                }
+              },
               coursePrice: state.editData?.coursePrice,
+            }
 
-              // phone: state.editData?.phone
-            },
           },
           onCompleted(data, cache) {
             dispatch({
@@ -196,7 +218,7 @@ export function UseCourses() {
   //Update staff
 
   let [UpdateCourses, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_COURSE);
-  
+
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
     if (!state.editData?.courseName) {
@@ -227,6 +249,24 @@ export function UseCourses() {
             where: {
               id: state.editId
             },
+            // data: {
+            //   courseName: {
+            //     set: state.editData?.courseName
+            //   },
+            //   courseDesc: {
+            //     set: state.editData?.courseDesc
+            //   },
+            //   courseIntro: {
+            //     set: state.editData?.courseIntro
+            //   },
+            //   courseStatus: {
+            //     set: state.editData?.courseStatus
+            //   },
+            //   coursePrice: {
+            //     set: state.editData?.coursePrice
+            //   }
+            // }
+
             data: {
               courseName: {
                 set: state.editData?.courseName
@@ -237,13 +277,24 @@ export function UseCourses() {
               courseIntro: {
                 set: state.editData?.courseIntro
               },
-              courseStatus: {
-                set: state.editData?.courseStatus
+              instructor: {
+                update: {
+                  name: {
+                    set: null
+                  }
+                }
+              },
+              courseCategory: {
+                update: {
+                  categoryName: {
+                    set: null
+                  }
+                }
               },
               coursePrice: {
                 set: state.editData?.coursePrice
               }
-            }
+            },
           },
           onCompleted() {
             dispatch({

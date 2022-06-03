@@ -3,9 +3,15 @@ import { gql } from "@apollo/client";
 
 
 export const ADD_ENROLMMENT_APPROVAL = gql`
-mutation Mutation($data: [EnrollmentApprovalCreateManyInput!]!) {
-  createManyEnrollmentApproval(data: $data) {
-    count
+mutation CreateEnrollmentApproval($data: EnrollmentApprovalCreateInput!) {
+  createEnrollmentApproval(data: $data) {
+    id
+    userId
+    coursesId
+    status
+    paymentMethod
+    amount
+    transactionId
   }
 }
 `;
@@ -21,11 +27,26 @@ mutation CreateManyStaff($data: [StaffCreateManyInput!]!) {
 
 
 export const ADD_COURSES = gql`
-mutation Mutation($data: [CoursesCreateManyInput!]!) {
-  createManyCourses(data: $data) {
-    count
+mutation CreateCourses($data: CoursesCreateInput!) {
+  createCourses(data: $data) {
+    id
+    courseName
+    courseDesc
+    courseIntro
+    instructorId
+    courseCategoryId
+    coursePrice
+    whatYouLearn
+    courseStatus
+    createdAt
+    updateAt
+    instructor {
+      id
+      name
+    }
   }
-}`
+}
+`
 export const ADD_STUDENT = gql`
 mutation CreateManyStudents($data: [StudentsCreateManyInput!]!) {
   createManyStudents(data: $data) {
@@ -34,17 +55,32 @@ mutation CreateManyStudents($data: [StudentsCreateManyInput!]!) {
 }`
 
 export const ADD_SUCCESS_STORY = gql`
-mutation CreateManyStories($data: [SuccessStoriesCreateManyInput!]!) {
-  createManySuccessStories(data: $data) {
-    count
+mutation CreateSuccessStories($data: SuccessStoriesCreateInput!) {
+  createSuccessStories(data: $data) {
+    id
+    freelancingProfileUrl
+    paymentProof
+    description
+    status
+    totalEarnedAmount
+    city
+    whyReject
   }
-}`
+}
+`
 
 export const ADD_EVENTS = gql`
-mutation CreateManyEvents($data: [EventsCreateManyInput!]!) {
-  createManyEvents(data: $data) {
-    count
-    }
+mutation CreateEvents($data: EventsCreateInput!) {
+  createEvents(data: $data) {
+    eventName
+    eventDesc
+    eventImage
+    eventDate
+    speakerId
+    eventStatus
+  }
+
+
 }`
 
 
@@ -56,16 +92,23 @@ mutation Mutation($data: [ContactUsCreateManyInput!]!) {
 }`
 
 export const ADD_FAQS = gql`
-mutation Mutation($data: FaqCreateInput!) {
+mutation CreateFaq($data: FaqCreateInput!) {
   createFaq(data: $data) {
-    id
     faqQuestion
     faqAnswer
     courseId
     createdAt
     updateAt
-  
-}
+    course {
+      courseName
+      courseDesc
+      courseIntro
+      instructorId
+      courseCategoryId
+      coursePrice
+    }
+  }
+
 }`
 
 
@@ -93,14 +136,32 @@ mutation DeleteStudents($where: StudentsWhereUniqueInput!) {
 export const DELETE_SINGLE_COURSE = gql`
 mutation DeleteCourses($where: CoursesWhereUniqueInput!) {
   deleteCourses(where: $where) {
+    id
+    courseDesc
     courseName
+    courseIntro
+    instructorId
+    courseCategoryId
+    organizationId
+    coursePrice
+    whatYouLearn
+    courseStatus
+    createdAt
+    updateAt
   }
-}`
+}
+`
 
 export const DELETE_ENROLMMENT_APPROVAL = gql`
 mutation DeleteEnrollmentApproval($where: EnrollmentApprovalWhereUniqueInput!) {
   deleteEnrollmentApproval(where: $where) {
-    studentName
+    id
+    userId
+    coursesId
+    status
+    paymentMethod
+    amount
+    transactionId
   }
 }
 `
@@ -118,20 +179,45 @@ export const DELETE_SINGLE_SUCCESS_STORY = gql`
 mutation DeleteSuccessStories($where: SuccessStoriesWhereUniqueInput!) {
   deleteSuccessStories(where: $where) {
     id
+    freelancingProfileUrl
+    paymentProof
+    description
+    totalEarnedAmount
+    status
+    city
+    whyReject
   }
-}`
+}
+`
 
 export const DELETE_SINGLE_EVENT = gql`
 mutation DeleteEvents($where: EventsWhereUniqueInput!) {
   deleteEvents(where: $where) {
     id
+    eventName
+    eventImage
+    eventDesc
+    eventDate
+    speakerId
+    eventStatus
   }
-}`
+}
+`
 
 export const DELETE_SINGLE_FAQ = gql`
 mutation DeleteFaq($where: FaqWhereUniqueInput!) {
   deleteFaq(where: $where) {
     id
+    faqQuestion
+    faqAnswer
+    courseId
+    createdAt
+    updateAt
+    course {
+      courseName
+      id
+      courseDesc
+    }
   }
 }
 `
@@ -162,15 +248,39 @@ export const UPDATE_SINGLE_COURSE = gql`
 mutation UpdateCourses($data: CoursesUpdateInput!, $where: CoursesWhereUniqueInput!) {
   updateCourses(data: $data, where: $where) {
     id
+    courseName
+    courseDesc
+    courseIntro
+    instructorId
+    courseCategoryId
+    organizationId
+    whatYouLearn
+    coursePrice
+    courseStatus
+    createdAt
+    updateAt
   }
-}`
+}
+`
 
 export const UPDATE_SINGLE_FAQ = gql`
 mutation UpdateFaq($data: FaqUpdateInput!, $where: FaqWhereUniqueInput!) {
   updateFaq(data: $data, where: $where) {
     id
+    faqQuestion
+    faqAnswer
+    courseId
+    createdAt
+    updateAt
+    course {
+      id
+      courseName
+      courseIntro
+      courseDesc
+    }
   }
-}`
+}
+`
 
 
 export const UPDATE_SINGLE_STUDENT = gql`
@@ -203,7 +313,14 @@ export const UPDATE_SINGLE_ENROLLMENT = gql`
 mutation UpdateEnrollmentApproval($data: EnrollmentApprovalUpdateInput!, $where: EnrollmentApprovalWhereUniqueInput!) {
   updateEnrollmentApproval(data: $data, where: $where) {
     id
+    userId
+    coursesId
+    status
+    paymentMethod
+    amount
+    transactionId
   }
+
 }`
 
 export const UPDATE_SINGLE_CONTACT = gql`

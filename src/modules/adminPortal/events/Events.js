@@ -15,8 +15,10 @@ export default function Events() {
             ctaFormHandler,
             ctaDeleteHandler,
             ctaUpdateHandler,
+            onDateChange,
             formInputs,
-            handleChange
+            handleChange,
+            date
         },
     ] = UseEvents();
     if (
@@ -43,6 +45,8 @@ export default function Events() {
                     'Status',
                     'Action',
                 ]}
+                date={date}
+                onDateChange={onDateChange}
                 printedKeys={[
                     {
                         key: "id",

@@ -9,7 +9,7 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 import { pink } from '@mui/material/colors';
 import { colors } from "../../../constants/Color";
 export default function Login() {
-    const [{ values, handleChange, handleClickShowPassword, email, setEmail, loginHandler, ORG_LOADING, organizationLoginHandler, loading, organizationLogin, setorganizationLogin }] = UseLogin();
+    const [{ values, handleChange, handleClickShowPassword, state, email, setEmail, loginHandler, ORG_LOADING, organizationLoginHandler, loading, ctaOrgHandler }] = UseLogin();
     // if (error) {
     //     notify()
     // }
@@ -70,7 +70,7 @@ export default function Login() {
                                         color: colors.lightBlue,
                                     },
                                 }}
-                                onChange={() => setorganizationLogin(true)}
+                                onChange={() => ctaOrgHandler()}
                             />
                             }
                             label="Organization Member?"
@@ -84,7 +84,7 @@ export default function Login() {
                         </LoginStyle.LoaderContainer>
                         :
                         <LoginStyle.ButtonContainer>
-                            <LoginStyle.LoginButton onClick={organizationLogin ? organizationLoginHandler : loginHandler}>Login</LoginStyle.LoginButton>
+                            <LoginStyle.LoginButton onClick={state.orgState ? organizationLoginHandler : loginHandler}>Login</LoginStyle.LoginButton>
                         </LoginStyle.ButtonContainer>
                     }
                 </LoginStyle.LoginContainer>

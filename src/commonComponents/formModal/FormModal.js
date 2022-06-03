@@ -12,10 +12,12 @@ import { MenuItem, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import { AppContext } from "../../State";
 import { EditorState } from "draft-js";
-import { FM } from './FormModalStyle'
-export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange }) {
-  const { state, dispatch } = useContext(AppContext);
+import { Calendar } from 'react-calendar';
 
+import { FM } from './FormModalStyle'
+export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date }) {
+  const { state, dispatch } = useContext(AppContext);
+  const [open, setOpen] = useState(false)
   const handleCloseUpdate = () => {
     dispatch({
       type: "setModal",
@@ -98,35 +100,62 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                     ) :
                       item.type === "upload" ?
                         (
-                          <div style={{ marginTop: 13 ,marginBottom:-30}}>
+                          <div style={{ marginTop: 13, marginBottom: -30 }}>
                             <input type="file" onChange={e => handleChange(e)} />
                           </div>
                         )
                         :
+                      item.type === "selectMember" ?
                         (
-                          <TextField
-                            margin="dense"
-                            id="file"
-                            label={item.label}
-                            name={item.name}
-                            type={item.type}
-                            required
-                            fullWidth
-                            variant="standard"
-                            value={
-                              item.name === "file" ? "" : state.editData[item.name]
-                            }
-                            onChange={(e) => {
-                              test[item.name] = item.name === "file"
-                                ? e.target.files[0].name
-                                : e.target.value;
-                              dispatch({
-                                type: "setEditData",
-                                payload: test,
-                              });
-                            }}
-                          />
+                          <div style={{ marginTop: 13, marginBottom: -30 }}>
+                            <input type="file" onChange={e => handleChange(e)} />
+                          </div>
                         )
+                        :
+                        item.type === "calender" ?
+                          (
+                            <>
+                              <button onClick={() => setOpen(true)}>Select Date</button>
+                              <>
+                                {
+                                  open ?
+                                    <Calendar
+                                      onChange={onDateChange}
+                                      value={date}
+                                      showNeighboringMonth={false}
+                                      locale={"en-US"}
+                                    />
+                                    :
+                                    ''
+                                }
+                              </>
+                            </>
+                          )
+                          :
+                          (
+                            <TextField
+                              margin="dense"
+                              id="file"
+                              label={item.label}
+                              name={item.name}
+                              type={item.type}
+                              required
+                              fullWidth
+                              variant="standard"
+                              value={
+                                item.name === "file" ? "" : state.editData[item.name]
+                              }
+                              onChange={(e) => {
+                                test[item.name] = item.name === "file"
+                                  ? e.target.files[0].name
+                                  : e.target.value;
+                                dispatch({
+                                  type: "setEditData",
+                                  payload: test,
+                                });
+                              }}
+                            />
+                          )
                   }
                   <br />
                 </>

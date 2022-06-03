@@ -8,7 +8,6 @@ export default function UseLogin() {
   const { state, dispatch } = useContext(AppContext);
 
   const [email, setEmail] = useState('');
-  const [organizationLogin, setorganizationLogin] = useState(false)
   const [values, setValues] = useState({
     amount: '',
     password: '',
@@ -81,9 +80,14 @@ export default function UseLogin() {
       ToastError(error.message)
     }
   }
+  const ctaOrgHandler = () => {
+    dispatch({
+      type: "setORG",
+      payload: true
+    })
+  }
 
-  console.log(organizationLogin);
 
 
-  return [{ values, handleChange, handleClickShowPassword, organizationLoginHandler, email, setEmail, loginHandler, loading, ORG_LOADING, organizationLogin, setorganizationLogin }]
+  return [{ values, handleChange, handleClickShowPassword, organizationLoginHandler,state, email, setEmail, loginHandler, loading, ORG_LOADING,ctaOrgHandler }]
 }

@@ -63,7 +63,7 @@ export function UseFaqs() {
 
   //ADD STAFF
 
-  let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_FAQS);
+  let [CreateFaq, { loading: ADD_LOADING }] = useMutation(ADD_FAQS);
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
@@ -75,15 +75,27 @@ export function UseFaqs() {
     }
     else {
       try {
-        await Mutation({
+        await CreateFaq({
           variables: {
+            // data: {
+            //   faqAnswer: state.editData?.faqAnswer,
+            //   faqQuestion: state.editData?.faqQuestion,
+            //   createdAt: new Date(),
+            //   updateAt: '00000000'
+            // },
+
             data: {
-              faqAnswer: state.editData?.faqAnswer,
-              faqQuestion: state.editData?.faqQuestion,
+              faqQuestion: state.editData?.faqAnswer,
+              faqAnswer: state.editData?.faqQuestion,
+              course: {
+                connect: {
+                  id: null
+                }
+              },
               createdAt: new Date(),
               updateAt: '00000000'
-              // phone: state.editData?.phone
-            },
+            }
+
           },
           onCompleted(data, cache) {
             dispatch({
@@ -143,7 +155,7 @@ export function UseFaqs() {
   //Update staff
 
   let [UpdateFaq, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_FAQ);
- 
+
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
     if (!state.editData?.faqQuestion) {
@@ -159,17 +171,40 @@ export function UseFaqs() {
             where: {
               id: state.editId
             },
+            // data: {
+            //   faqAnswer: {
+            //     set: state.editData?.faqAnswer
+            //   },
+            //   faqQuestion: {
+            //     set: state.editData?.faqQuestion
+            //   },
+            //   updateAt: {
+            //     set: new Date()
+            //   },
+            // }
+
             data: {
-              faqAnswer: {
-                set: state.editData?.faqAnswer
-              },
               faqQuestion: {
                 set: state.editData?.faqQuestion
               },
+              faqAnswer: {
+                set: state.editData?.faqAnswer
+              },
+              course: {
+                update: {
+                  courseName: {
+                    set: null
+                  },
+                  courseDesc: {
+                    set: null
+                  }
+                }
+              },
               updateAt: {
                 set: new Date()
-              },
+              }
             }
+
           },
           onCompleted() {
             dispatch({

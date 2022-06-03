@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import { useMutation } from '@apollo/client';
 import { ACTIVE_USER } from './lib/mutation/AllMutations';
 import { AppContext } from './State';
-import { ToastInfo } from './commonComponents/commonFunction/CommonFunction'
+import { ToastInfo, ToastSuccess } from './commonComponents/commonFunction/CommonFunction'
 function App() {
   const [loading, setLoading] = useState(true)
   setTimeout(function () {
@@ -32,7 +32,9 @@ function App() {
               user: login.getActiveUser,
               authState: true
             },
+            
           });
+          ToastSuccess(`Welcome ${login.getActiveUser?.name}`)
         }
       })
 
@@ -47,6 +49,7 @@ function App() {
       const tokenId1 = await localStorage.getItem('token');
       if (tokenId1) {
         user()
+       
       }
     }
     token()

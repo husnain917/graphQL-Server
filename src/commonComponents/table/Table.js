@@ -30,6 +30,7 @@ export default function Table({
   formInputs,
   filterdata,
   data,
+  date,
 
   // Handlers
   ctaFormHandler,
@@ -37,6 +38,7 @@ export default function Table({
   ctaUpdateHandler,
   handleChange,
   disableAddIcon,
+  onDateChange,
 }) {
 
   const { state, dispatch } = useContext(AppContext);
@@ -139,7 +141,7 @@ export default function Table({
       {/* Drop Down menu for filter Button */}
 
       {/* Form Modal */}
-      <FormModal formInputs={formInputs} ctaFormHandler={ctaFormHandler} ctaUpdateHandler={ctaUpdateHandler} handleChange={handleChange} />
+      <FormModal formInputs={formInputs} ctaFormHandler={ctaFormHandler} ctaUpdateHandler={ctaUpdateHandler} handleChange={handleChange} onDateChange={onDateChange} date={date}/>
       {/* Form Modal */}
 
       <Toolbar disableGutters>
@@ -174,7 +176,7 @@ export default function Table({
                         :
                         <TableStyle.AddIcon onClick={handleClickOpen} />
                       :
-                      <TableStyle.AddIcon onClick={handleClickOpen} />
+                      <TableStyle.AddIcon onClick={handleClickOpen}  />
 
 
                 }

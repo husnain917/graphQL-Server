@@ -20,6 +20,12 @@ import { AppContext } from "../../../State";
 
 
 export function UseEvents() {
+    const [date, setDate] = useState(new Date());
+
+    const onDateChange = (newDate) => {
+        setDate(newDate);
+        console.log(newDate);
+    }
     const formInputs = [
         {
             label: "Name",
@@ -34,13 +40,18 @@ export function UseEvents() {
         {
             label: "Speaker Id",
             name: "speakerId",
-            type: "text",
+            type: "selectMember",
         },
         {
             label: "Status",
             name: "eventStatus",
             type: "select",
             dropDownContent: ["PAST", "UPCOMING"],
+        },
+        {
+            label: "Event Date",
+            name: "eventDate",
+            type: "calender",
         },
         {
             label: "Image",
@@ -94,7 +105,7 @@ export function UseEvents() {
 
     //ADD STAFF
 
-    let [CreateManyEvents, { loading: ADD_LOADING }] = useMutation(ADD_EVENTS);
+    let [CreateEvents, { loading: ADD_LOADING }] = useMutation(ADD_EVENTS);
 
 
     const ctaFormHandler = async (event) => {
@@ -105,25 +116,29 @@ export function UseEvents() {
         else if (!state.editData?.eventDesc) {
             ToastWarning('Event description  required')
         }
-        else if (!state.editData?.speakerId) {
-            ToastWarning('Speaker Id required')
-        }
+        // else if (!state.editData?.speakerId) {
+        //     ToastWarning('Speaker Id required')
+        // }
         else if (!state.editData?.eventStatus) {
             ToastWarning('Status required')
         }
         else {
             try {
-                await CreateManyEvents({
+                await CreateEvents({
                     variables: {
+
                         data: {
                             eventName: state.editData?.eventName,
                             eventDesc: state.editData?.eventDesc,
-                            eventImage:  File ? File : 'no file',
-                            eventDate: new Date(),
-                            // speakerId: state.editData?.speakerId,
-                            eventStatus: state.editData?.eventStatus,
-
-                        },
+                            eventImage: File ? File : 'no file',
+                            eventDate: date,
+                            Speaker: {
+                                connect: {
+                                    id: ''
+                                }
+                            },
+                            eventStatus: state.editData?.eventStatus
+                        }
                     },
                     onCompleted(data, cache) {
                         dispatch({
@@ -206,23 +221,52 @@ export function UseEvents() {
                         where: {
                             id: state.editId
                         },
+                        // data: {
+                        //     eventName: {
+                        //         set: state.editData?.eventName
+                        //     },
+                        //     eventDesc: {
+                        //         set: state.editData?.eventDesc
+                        //     },
+                        //     eventImage: {
+                        //         set: File ? File : 'no file'
+                        //     },
+                        //     eventDate: {
+                        //         set: new Date()
+                        //     },
+                        //     eventStatus: {
+                        //         set: state.editData?.eventStatus
+                        //     }
+                        // }
+
                         data: {
                             eventName: {
-                                set: state.editData?.eventName
+                                set: null
                             },
                             eventDesc: {
-                                set: state.editData?.eventDesc
+                                set: null
                             },
                             eventImage: {
-                                set: File ? File : 'no file'
+                                set: null
                             },
                             eventDate: {
-                                set: new Date()
+                                set: null
+                            },
+                            Speaker: {
+                                update: {
+                                    speakerName: {
+                                        set: null
+                                    },
+                                    spkearDesc: {
+                                        set: null
+                                    }
+                                }
                             },
                             eventStatus: {
-                                set: state.editData?.eventStatus
+                                set: null
                             }
                         }
+
                     },
                     onCompleted() {
                         dispatch({
@@ -253,8 +297,10 @@ export function UseEvents() {
             ctaFormHandler,
             ctaDeleteHandler,
             ctaUpdateHandler,
+            onDateChange,
             formInputs,
-            handleChange
+            handleChange,
+            date
         },
     ];
 }

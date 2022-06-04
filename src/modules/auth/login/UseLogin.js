@@ -53,6 +53,7 @@ export default function UseLogin() {
       ToastError(error.message)
     }
   }
+  const [orgLogin, setOrgLogin] = useState(false)
 
   let [OrganizationLogin, { loading: ORG_LOADING }] = useMutation(ORG_LOGIN)
   const organizationLoginHandler = async () => {
@@ -80,14 +81,13 @@ export default function UseLogin() {
       ToastError(error.message)
     }
   }
-  const ctaOrgHandler = () => {
-    dispatch({
-      type: "setORG",
-      payload: true
-    })
+  const ctaOrgHandler = (e) => {
+  
+    setOrgLogin(!orgLogin)
   }
 
+console.log(orgLogin);
 
 
-  return [{ values, handleChange, handleClickShowPassword, organizationLoginHandler,state, email, setEmail, loginHandler, loading, ORG_LOADING,ctaOrgHandler }]
+  return [{ values, handleChange, handleClickShowPassword, organizationLoginHandler, state, email,orgLogin, setEmail, loginHandler, loading, ORG_LOADING, ctaOrgHandler }]
 }

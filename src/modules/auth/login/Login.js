@@ -6,10 +6,9 @@ import CommonTooltip from '../../../commonComponents/commonTooltip/CommonTooltip
 import { ToastContainer } from 'react-toastify';
 import { StageSpinner } from 'react-spinners-kit'
 import { Checkbox, FormControlLabel } from "@mui/material";
-import { pink } from '@mui/material/colors';
 import { colors } from "../../../constants/Color";
 export default function Login() {
-    const [{ values, handleChange, handleClickShowPassword, state, email, setEmail, loginHandler, ORG_LOADING, organizationLoginHandler, loading, ctaOrgHandler }] = UseLogin();
+    const [{ values, handleChange, handleClickShowPassword, state, orgLogin, email, setEmail, loginHandler, ORG_LOADING, organizationLoginHandler, loading, ctaOrgHandler }] = UseLogin();
     // if (error) {
     //     notify()
     // }
@@ -84,7 +83,7 @@ export default function Login() {
                         </LoginStyle.LoaderContainer>
                         :
                         <LoginStyle.ButtonContainer>
-                            <LoginStyle.LoginButton onClick={state.orgState ? organizationLoginHandler : loginHandler}>Login</LoginStyle.LoginButton>
+                            <LoginStyle.LoginButton onClick={orgLogin ? organizationLoginHandler : loginHandler}>Login</LoginStyle.LoginButton>
                         </LoginStyle.ButtonContainer>
                     }
                 </LoginStyle.LoginContainer>

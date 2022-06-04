@@ -14,21 +14,6 @@ import {
 
 } from "@apollo/client";
 
-client
-  .query({
-    query: gql`
-     query {
-  studentsList{
-    title
-    id
-    checkbox
-  }
-}
-
-    `
-  })
-  .then(result => console.log(result));
-
 ReactDOM.render(
 
   <ApolloProvider client={client} >

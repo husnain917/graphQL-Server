@@ -15,7 +15,7 @@ import {
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
-import { GET_FAQS } from "../../../lib/queries/AllQueries";
+import { GET_COURSES, GET_FAQS } from "../../../lib/queries/AllQueries";
 
 
 
@@ -24,6 +24,7 @@ import { GET_FAQS } from "../../../lib/queries/AllQueries";
 
 
 export function UseFaqs() {
+  const { data: COURSE_LIST } = useQuery(GET_COURSES)
   const formInputs = [
     {
       label: "Faq Question",
@@ -34,6 +35,12 @@ export function UseFaqs() {
       label: "Faq Answer",
       name: "faqAnswer",
       type: "modal",
+    },
+    {
+      label: "Course",
+      name: "courseId",
+      type: "selectCourse",
+      dropDown: COURSE_LIST
     },
   ]
   const { state, dispatch } = useContext(AppContext);
@@ -53,6 +60,7 @@ export function UseFaqs() {
       id: item.id,
       faqAnswer: item.faqAnswer,
       faqQuestion: item.faqQuestion,
+      courseId: item.courseId,
       createdAt: item.createdAt,
       updateAt: item.updateAt
     });
@@ -77,19 +85,12 @@ export function UseFaqs() {
       try {
         await CreateFaq({
           variables: {
-            // data: {
-            //   faqAnswer: state.editData?.faqAnswer,
-            //   faqQuestion: state.editData?.faqQuestion,
-            //   createdAt: new Date(),
-            //   updateAt: '00000000'
-            // },
-
             data: {
               faqQuestion: state.editData?.faqAnswer,
               faqAnswer: state.editData?.faqQuestion,
               course: {
                 connect: {
-                  id: null
+                  id: state.editData?.courseId
                 }
               },
               createdAt: new Date(),
@@ -171,18 +172,6 @@ export function UseFaqs() {
             where: {
               id: state.editId
             },
-            // data: {
-            //   faqAnswer: {
-            //     set: state.editData?.faqAnswer
-            //   },
-            //   faqQuestion: {
-            //     set: state.editData?.faqQuestion
-            //   },
-            //   updateAt: {
-            //     set: new Date()
-            //   },
-            // }
-
             data: {
               faqQuestion: {
                 set: state.editData?.faqQuestion
@@ -193,11 +182,8 @@ export function UseFaqs() {
               course: {
                 update: {
                   courseName: {
-                    set: null
+                    set: state.editData?.courseId
                   },
-                  courseDesc: {
-                    set: null
-                  }
                 }
               },
               updateAt: {

@@ -33,11 +33,11 @@ export default function Course() {
                 title={'Courses'}
                 tableHeadings={[
                     "Id",
-                    'Name',
+                    'Course Name',
                     'Description',
                     'Introduction',
-                    'instructorId',
-                    'CategoryId',
+                    'instructor Id',
+                    'Category Id',
                     'Price',
                     'Status',
                     'Action',

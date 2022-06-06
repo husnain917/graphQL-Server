@@ -11,11 +11,12 @@ import {
   UPDATE_SINGLE_COURSE,
   DELETE_SINGLE_COURSE
 } from "../../lib/mutation/AllMutations";
-import { GET_COURSES } from "../../lib/queries/AllQueries";
+import { GET_COURSES, GET_COURSE_CATEGORY } from "../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../State";
+import FiltredData from "../../constants/FiltredRoles";
 
 
 
@@ -24,6 +25,15 @@ import { AppContext } from "../../State";
 
 
 export function UseCourses() {
+
+
+
+  //GET_CATEGORIES
+  const [{ teacher, CATEGORY_DATA }] = FiltredData()
+  const { state, dispatch } = useContext(AppContext);
+
+
+
   const formInputs = [
     {
       label: "Name",
@@ -46,14 +56,16 @@ export function UseCourses() {
       type: "number",
     },
     {
-      label: "instructorId",
-      name: "instructorId",
-      type: "text",
+      label: "Course Category Id",
+      name: "courseCategoryId",
+      type: "selectCategory",
+      dropDown: CATEGORY_DATA
     },
     {
-      label: "courseCategoryId",
-      name: "courseCategoryId",
-      type: "text",
+      label: "Select Instructor",
+      name: "instructorId",
+      type: "selectInstructor",
+      dropDown2: teacher
     },
     {
       label: "Status",
@@ -62,8 +74,6 @@ export function UseCourses() {
       dropDownContent: ["PUBLISH", "UNPUBLISH"],
     },
   ]
-  const { state, dispatch } = useContext(AppContext);
-
 
 
 
@@ -125,34 +135,23 @@ export function UseCourses() {
       try {
         await CreateCourses({
           variables: {
-            // data: {
-            //   courseName: state.editData?.courseName,
-            //   courseDesc: state.editData?.courseDesc,
-            //   courseIntro: state.editData?.courseIntro,
-            //   courseStatus: state.editData?.courseStatus,
-            //   instructorId: state.editData?.instructorId,
-            //   courseCategoryId: state.editData?.courseCategoryId,
-            //   coursePrice: state.editData?.coursePrice,
-            // },
-
             data: {
               courseName: state.editData?.courseName,
               courseDesc: state.editData?.courseDesc,
               instructor: {
                 connect: {
-                  id: null
+                  id: state.editData?.instructorId,
                 }
               },
               courseIntro: state.editData?.courseIntro,
               courseCategory: {
                 connect: {
-                  id: null
+                  id: state.editData?.courseCategoryId,
                 }
               },
               organization: {
                 connect: {
-                  id: null,
-                  secretKeyId: null
+                  id: state.user?.id,
                 }
               },
               coursePrice: state.editData?.coursePrice,

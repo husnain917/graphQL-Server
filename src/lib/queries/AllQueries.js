@@ -5,14 +5,13 @@ import { gql } from '@apollo/client';
 export const GET_ENROLLMENT = gql`
 query EnrollmentApprovals {
   enrollmentApprovals {
-    studentName
     id
-    email
-    course
+    userId
+    coursesId
+    status
     paymentMethod
     amount
     transactionId
-    status
   }
 }
 `;
@@ -135,3 +134,12 @@ query Query {
     reply
   }
 }`
+
+export const GET_COURSE_CATEGORY = gql`
+query Categories {
+  categories {
+    id
+    categoryName
+  }
+}
+`

@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Sidebar from '../commonComponents/sidebar/Sidebar';
-import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Login from '../modules/auth/login/Login';
 import Dashboard from '../modules/dashboard/Dashboard';
 import AllStudents from '../modules/adminPortal/allStudents/AllStudents';
@@ -55,7 +55,7 @@ export default function Navigation() {
                     <PrivateRouting isAllowed={state.authState}>
                         <Sidebar />
                     </PrivateRouting>
-                } >
+                }>
                     <Route
                         path='/dashboard'
                         element={

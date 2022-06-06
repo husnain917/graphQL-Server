@@ -37,6 +37,7 @@ export default function UseLogin() {
           email: email,
         },
         onCompleted({ login }) {
+          localStorage.setItem("token", login.token)
           dispatch({
             type: "setAuthState",
             payload: {
@@ -45,7 +46,7 @@ export default function UseLogin() {
             },
           });
           ToastSuccess(`Welcome ${login.name}`)
-          localStorage.setItem("token", login.token)
+
         },
       })
     }
@@ -65,6 +66,7 @@ export default function UseLogin() {
 
         },
         onCompleted(login) {
+          localStorage.setItem("token", login.organizationLogin.token)
           dispatch({
             type: "setAuthState",
             payload: {
@@ -72,8 +74,9 @@ export default function UseLogin() {
               authState: true
             },
           });
+
           ToastSuccess(`Welcome ${login.organizationLogin.name}`)
-          localStorage.setItem("token", login.organizationLogin.token)
+
 
         },
       })
@@ -82,12 +85,12 @@ export default function UseLogin() {
     }
   }
   const ctaOrgHandler = (e) => {
-  
+
     setOrgLogin(!orgLogin)
   }
 
-console.log(orgLogin);
+  console.log(orgLogin);
 
 
-  return [{ values, handleChange, handleClickShowPassword, organizationLoginHandler, state, email,orgLogin, setEmail, loginHandler, loading, ORG_LOADING, ctaOrgHandler }]
+  return [{ values, handleChange, handleClickShowPassword, organizationLoginHandler, state, email, orgLogin, setEmail, loginHandler, loading, ORG_LOADING, ctaOrgHandler }]
 }

@@ -81,7 +81,7 @@ export function UseContactUs() {
 
     //ADD STAFF
 
-    let [CreateManyStudents, { loading: ADD_LOADING }] = useMutation(ADD_CONTACT_US);
+    let [CreateContactUs, { loading: ADD_LOADING }] = useMutation(ADD_CONTACT_US);
     const ctaFormHandler = async (event) => {
         event.preventDefault();
         if (!state.editData?.name) {
@@ -101,7 +101,7 @@ export function UseContactUs() {
         }
         else {
             try {
-                await CreateManyStudents({
+                await CreateContactUs({
                     variables: {
                         data: {
                             name: state.editData?.name,
@@ -132,7 +132,7 @@ export function UseContactUs() {
                     },
                 });
                 setLoader(false);
-                ToastError(error.message);
+                ToastError("sami");
 
             }
         }
@@ -170,7 +170,7 @@ export function UseContactUs() {
     //Update staff
 
     let [UpdateContactUs, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_CONTACT);
-   
+
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
         if (!state.editData?.name) {

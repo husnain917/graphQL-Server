@@ -36,6 +36,7 @@ export default function FAQS() {
                     'Id',
                     'Faq Question',
                     'Faq Answer',
+                    'Course Id',
                     'Created At',
                     'Update At',
                     'Action',
@@ -51,11 +52,15 @@ export default function FAQS() {
                         key: "faqAnswer",
                     },
                     {
+                        key: "courseId",
+                    },
+                    {
                         key: "createdAt",
                     },
                     {
                         key: "updateAt",
                     },
+
                     {
                         type: "crud",
                     },

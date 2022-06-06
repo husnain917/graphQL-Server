@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/client';
 import React from 'react'
-import { GET_ENROLLMENT } from './AllQueries';
+import { GET_USERS } from './AllQueries';
 
 export default function SampleDataFetch() {
 
-    const { loading, error, data } = useQuery(GET_ENROLLMENT);
+    const { loading, error, data } = useQuery(GET_USERS);
 
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
@@ -26,10 +26,10 @@ export default function SampleDataFetch() {
         <div>
             {data && (
                 <ul>
-                    {data.enrollmentApprovals.map((users) => (
+                    {data.users.map((users) => (
                         <>
                             <div key={users.id}>
-                                <li>{users.studentName}</li>
+                                <li>{users.name}</li>
                                 <li>{users.id}</li>
                             </div>
                         </>

@@ -5,6 +5,7 @@ import {
   ToastSuccess,
   ToastWarning,
 } from "../../../commonComponents/commonFunction/CommonFunction";
+import FiltredRoles from "../../../constants/FiltredRoles";
 import {
   ADD_ENROLMMENT_APPROVAL,
   DELETE_ENROLMMENT_APPROVAL,
@@ -20,20 +21,17 @@ import { AppContext } from "../../../State";
 
 
 export function UseEnrollmentApproval() {
+  const [{ student }] = FiltredRoles()
   const formInputs = [
     {
-      label: "Name",
-      name: "studentName",
-      type: "text",
+      label: "User Id",
+      name: "userId",
+      type: "selectUser",
+      dropDown: student
     },
     {
-      label: "Email",
-      name: "email",
-      type: "email",
-    },
-    {
-      label: "Course",
-      name: "course",
+      label: "Courses Id",
+      name: "coursesId",
       type: "text",
     },
     {
@@ -74,13 +72,12 @@ export function UseEnrollmentApproval() {
 
     refacteredData.push({
       id: item.id,
-      studentName: item.studentName,
-      email: item.email,
-      course: item.course,
+      userId: item.userId,
+      coursesId: item.coursesId,
+      status: item.status,
       paymentMethod: item.paymentMethod,
       amount: item.amount,
       transactionId: item.transactionId,
-      status: item.status
     });
   });
   console.log("refacteredData", refacteredData);
@@ -93,14 +90,11 @@ export function UseEnrollmentApproval() {
   const ctaFormHandler = async (event) => {
 
     event.preventDefault();
-    if (!state.editData?.studentName) {
-      ToastWarning('Name required')
+    if (!state.editData?.userId) {
+      ToastWarning('User Id required')
     }
-    else if (!state.editData?.email) {
-      ToastWarning('email required')
-    }
-    else if (!state.editData?.course) {
-      ToastWarning('Course name required')
+    else if (!state.editData?.coursesId) {
+      ToastWarning('Courses Id required')
     }
     else if (!state.editData?.paymentMethod) {
       ToastWarning('Payment method required')

@@ -2,24 +2,34 @@ import React from "react";
 import { DS } from "./DashboardStyle";
 import Card from './card/Card';
 import UseDashboard from "./UseDashboard";
-import { ToastContainer } from "react-toastify";
 
 export default function Dashboard() {
-    const [{ AdminLength, TeacherLength, studentLength, successLength, eventLength, courseLength, adminLength, teacherLength, STAFF_LOADING, COURSE_LOADING, STUDENT_LOADING, EVENTS_LOADING, SUCCESS_LOADING }] = UseDashboard();
+    const [{
+        AdminLength,
+        TeacherLength,
+        studentLength,
+        successLength,
+        eventLength,
+        courseLength,
+        COURSE_LOADING,
+        USERS_LOADING,
+        EVENTS_LOADING,
+        SUCCESS_LOADING
+    }] = UseDashboard();
 
     return (
 
         <>
-       
+
             <DS.MainPageContainer>
                 <DS.CardsRow>
                     <DS.CardContainer>
-                        <Card value={studentLength ? studentLength : 0} STUDENT_LOADING={STUDENT_LOADING} heading='STUDENTS' icon={<DS.PeopleOutline />} />
+                        <Card value={studentLength ? studentLength : 0} USERS_LOADING={USERS_LOADING} heading='STUDENTS' icon={<DS.PeopleOutline />} />
                     </DS.CardContainer>
                     <DS.CardContainer>
-                        <Card value={TeacherLength ? TeacherLength : 0} STAFF_LOADING={STAFF_LOADING} heading='TEACHERS' icon={<DS.RecordVoiceOver />} />
+                        <Card value={TeacherLength ? TeacherLength : 0} USERS_LOADING={USERS_LOADING} heading='TEACHERS' icon={<DS.RecordVoiceOver />} />
                     </DS.CardContainer><DS.CardContainer>
-                        <Card value={AdminLength ? AdminLength : 0} STAFF_LOADING={STAFF_LOADING} heading='ADMINS' icon={<DS.PersonIcon />} />
+                        <Card value={AdminLength ? AdminLength : 0} USERS_LOADING={USERS_LOADING} heading='ADMINS' icon={<DS.PersonIcon />} />
                     </DS.CardContainer>
                 </DS.CardsRow>
                 <DS.CardsRow>

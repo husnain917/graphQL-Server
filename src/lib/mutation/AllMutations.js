@@ -85,11 +85,16 @@ mutation CreateEvents($data: EventsCreateInput!) {
 
 
 export const ADD_CONTACT_US = gql`
-mutation Mutation($data: [ContactUsCreateManyInput!]!) {
-  createManyContactUs(data: $data) {
-    count
+mutation CreateContactUs($data: ContactUsCreateInput!) {
+  createContactUs(data: $data) {
+    name
+    subject
+    message
+    status
+    reply
   }
-}`
+}
+`
 
 export const ADD_FAQS = gql`
 mutation CreateFaq($data: FaqCreateInput!) {
@@ -97,17 +102,11 @@ mutation CreateFaq($data: FaqCreateInput!) {
     faqQuestion
     faqAnswer
     courseId
+    id
     createdAt
     updateAt
-    course {
-      courseName
-      courseDesc
-      courseIntro
-      instructorId
-      courseCategoryId
-      coursePrice
-    }
   }
+
 
 }`
 
@@ -326,9 +325,15 @@ mutation UpdateEnrollmentApproval($data: EnrollmentApprovalUpdateInput!, $where:
 export const UPDATE_SINGLE_CONTACT = gql`
 mutation UpdateContactUs($data: ContactUsUpdateInput!, $where: ContactUsWhereUniqueInput!) {
   updateContactUs(data: $data, where: $where) {
+    name
     id
+    subject
+    message
+    reply
+    status
   }
-}`
+}
+`
 
 export const UPDATE_SINGLE_EVENT = gql`
 mutation UpdateEvents($data: EventsUpdateInput!, $where: EventsWhereUniqueInput!) {

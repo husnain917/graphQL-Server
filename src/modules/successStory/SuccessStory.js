@@ -35,8 +35,8 @@ export default function SuccessStory() {
           title={'Success Stories'}
           tableHeadings={[
             'Id',
-            'City',
             'FreelancingProfileUrl',
+            'City',
             'PaymentProof',
             'Description',
             'TotalEarnedAmount',
@@ -49,10 +49,10 @@ export default function SuccessStory() {
               key: "id",
             },
             {
-              key: "city",
+              key: "freelancingProfileUrl",
             },
             {
-              key: "freelancingProfileUrl",
+              key: "city",
             },
             {
               key: "paymentProof",

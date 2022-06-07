@@ -34,7 +34,7 @@ export default function AllStudents() {
     <>
       <Table
         title={'All Students'}
-        tableHeadings={['Id','Name', 'Email', 'Status', 'Action']}
+        tableHeadings={['Id', 'Name', 'Email', 'contact', 'cnic', 'address', 'Status', 'Action']}
         printedKeys={[
           {
             key: "id",
@@ -46,7 +46,16 @@ export default function AllStudents() {
             key: "email",
           },
           {
-            key: "status",
+            key: "contact",
+          },
+          {
+            key: "cnic",
+          },
+          {
+            key: "address",
+          },
+          {
+            key: "role",
           },
           {
             type: "crud",

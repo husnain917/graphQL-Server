@@ -9,9 +9,11 @@ import {
 import {
   ADD_STUDENT,
   DELETE_SINGLE_STUDENT,
+  DELETE_USER,
   UPDATE_SINGLE_STUDENT,
+  UPDATE_USER,
 } from "../../../lib/mutation/AllMutations";
-import { GET_STUDENT } from "../../../lib/queries/AllQueries";
+import { GET_STUDENT, GET_USERS } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
@@ -35,11 +37,32 @@ export function UseAllStudents() {
       name: "email",
       type: "email",
     },
+
     {
-      label: "Status",
-      name: "status",
+      label: "Password",
+      name: "password",
+      type: "password",
+    },
+    {
+      label: "Cnic",
+      name: "cnic",
+      type: "number",
+    },
+    {
+      label: "Contact",
+      name: "contact",
+      type: "tel",
+    },
+    {
+      label: "Address",
+      name: "address",
+      type: "text",
+    },
+    {
+      label: "Role",
+      name: "role",
       type: "select",
-      dropDownContent: ["ACTIVE", "OFFLINE"],
+      dropDownContent: ["STUDENT"],
     },
   ]
   const { state, dispatch } = useContext(AppContext);
@@ -51,16 +74,21 @@ export function UseAllStudents() {
 
   //GET STAFF 
 
-  let { data, loading: GET_LOADING, error } = useQuery(GET_STUDENT);
+  let { data, loading: GET_LOADING, error } = useQuery(GET_USERS);
   console.log("error", error);
   const refacteredData = [];
-  data?.findManyStudents?.map((item) => {
-    refacteredData.push({
-      id: item.id,
-      name: item.name,
-      email: item.email,
-      status: item.status
-    });
+  data?.users?.map((item) => {
+    if (item.role === "STUDENT") {
+      refacteredData.push({
+        id: item.id,
+        name: item.name,
+        email: item.email,
+        cnic: item.cnic,
+        address: item.address,
+        contact: item.contact,
+        role: item.role
+      });
+    }
   });
   console.log("refacteredData", refacteredData);
 
@@ -78,9 +106,23 @@ export function UseAllStudents() {
     else if (!state.editData?.email) {
       ToastWarning('Email required')
     }
-    else if (!state.editData?.status) {
-      ToastWarning('Status required')
+    else if (!state.editData?.contact) {
+      ToastWarning('Contact required')
     }
+    else if (!state.editData?.cnic) {
+      ToastWarning('cnic required')
+    }
+    else if (!state.editData?.address) {
+      ToastWarning('address required')
+    }
+    else if (!state.editData?.role) {
+      ToastWarning('Role required')
+    }
+    else if (state.editData?.contact.length > 10) {
+      ToastWarning('Phone No Must be 10 digits')
+      // setError('Phone Number Must be 10 digits')
+    }
+
     else {
       try {
         await CreateManyStudents({
@@ -88,9 +130,12 @@ export function UseAllStudents() {
             data: {
               name: state.editData?.name,
               email: state.editData?.email,
-              status: state.editData?.status,
-              // phone: state.editData?.phone
-            },
+              password: state.editData?.password,
+              cnic: state.editData?.cnic,
+              contact: state.editData?.contact,
+              address: state.editData?.address,
+              role: state.editData?.role,
+            }
           },
           onCompleted(data, cache) {
             dispatch({
@@ -102,7 +147,7 @@ export function UseAllStudents() {
             });
             ToastSuccess('Student Added')
           },
-          refetchQueries: [{ query: GET_STUDENT }],
+          refetchQueries: [{ query: GET_USERS }],
         });
       } catch (error) {
         dispatch({
@@ -124,10 +169,10 @@ export function UseAllStudents() {
 
   // DELETE STAFF
 
-  let [DeleteStudents, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_STUDENT);
+  let [DeleteUser, { loading: DELETE_LOADING }] = useMutation(DELETE_USER);
   const ctaDeleteHandler = async ({ ...data }) => {
     try {
-      await DeleteStudents({
+      await DeleteUser({
         variables: {
           where: {
             id: data.id,
@@ -149,7 +194,7 @@ export function UseAllStudents() {
 
   //Update staff
 
-  let [UpdateStudents, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_STUDENT);
+  let [UpdateStudents, { loading: UPDATE_LOADING }] = useMutation(UPDATE_USER);
 
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
@@ -159,8 +204,17 @@ export function UseAllStudents() {
     else if (!state.editData?.email) {
       ToastWarning('Email required')
     }
-    else if (!state.editData?.status) {
-      ToastWarning('Status required')
+    else if (!state.editData?.contact) {
+      ToastWarning('contact required')
+    }
+    else if (!state.editData?.cnic) {
+      ToastWarning('cnic required')
+    }
+    else if (!state.editData?.address) {
+      ToastWarning('address required')
+    }
+    else if (!state.editData?.role) {
+      ToastWarning('Role required')
     }
     else {
       try {
@@ -169,17 +223,30 @@ export function UseAllStudents() {
             where: {
               id: state.editId
             },
+
             data: {
               name: {
-                set: state.editData?.name
+                set: state.editData?.name,
               },
               email: {
-                set: state.editData?.email
+                set: state.editData?.email,
               },
-              status: {
-                set: state.editData?.status
+              password: {
+                set: state.editData?.password,
+              },
+              cnic: {
+                set: state.editData?.cnic,
+              },
+              address: {
+                set: state.editData?.address,
+              },
+              contact: {
+                set: state.editData?.contact,
+              },
+              role: {
+                set: state.editData?.role,
               }
-            }
+            },
           },
           onCompleted() {
             dispatch({

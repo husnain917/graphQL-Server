@@ -178,9 +178,9 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                     });
                                   }}
                                 >
-                                  {item?.dropDown?.findManyCourses?.map((option) => (
+                                  {item?.dropDownCourse?.findManyCourses?.map((option) => (
                                     <MenuItem key={option.id} value={option.id}>
-                                      {option.name}
+                                      {option.courseName}
                                     </MenuItem>
                                   ))}
                                 </TextField>

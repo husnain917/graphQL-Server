@@ -9,9 +9,9 @@ query EnrollmentApprovals {
     userId
     coursesId
     status
-    paymentMethod
     amount
     transactionId
+    paymentMethod
   }
 }
 `;
@@ -26,7 +26,8 @@ query FindManyEvents {
     speakerId
     eventStatus
   }
-}`
+}
+`
 
 export const GET_FAQS = gql`
 query FindManyEvents {
@@ -62,10 +63,10 @@ query FindManyEvents {
 }`
 
 export const GET_SUCCESS_STORIES = gql`
-query FindManyEvents {
+query FindManySuccessStories {
   findManySuccessStories {
-    id
     freelancingProfileUrl
+    id
     paymentProof
     description
     status
@@ -73,7 +74,8 @@ query FindManyEvents {
     city
     whyReject
   }
-}`
+}
+`
 
 
 export const GET_USERS = gql`
@@ -82,11 +84,10 @@ query Query {
     id
     name
     email
+    cnic
     address
     contact
     role
-    cnic
-    token
   }
 }
 `
@@ -106,7 +107,7 @@ query Query {
 
 
 export const GET_COURSES = gql`
-query Query {
+query Query{
   findManyCourses {
     id
     courseName
@@ -114,13 +115,15 @@ query Query {
     courseIntro
     instructorId
     courseCategoryId
+    organizationId
+    coursePrice
+    whatYouLearn
+    courseStatus
     createdAt
     updateAt
-    courseStatus
-    whatYouLearn
-    coursePrice
   }
-}`
+}
+`
 
 
 export const GET_CONTACT_US = gql`

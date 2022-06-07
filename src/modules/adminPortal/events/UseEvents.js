@@ -5,6 +5,7 @@ import {
     ToastSuccess,
     ToastWarning,
 } from "../../../commonComponents/commonFunction/CommonFunction";
+import FiltredData from "../../../constants/FiltredRoles";
 import {
     ADD_EVENTS,
     DELETE_SINGLE_EVENT,
@@ -21,7 +22,7 @@ import { AppContext } from "../../../State";
 
 export function UseEvents() {
     const [date, setDate] = useState(new Date());
-
+    const [{ teacher }] = FiltredData()
     const onDateChange = (newDate) => {
         setDate(newDate);
         console.log(newDate);
@@ -38,9 +39,10 @@ export function UseEvents() {
             type: "text",
         },
         {
-            label: "Speaker Id",
+            label: "Select speaker",
             name: "speakerId",
-            type: "selectMember",
+            type: "selectInstructor",
+            dropDown: teacher
         },
         {
             label: "Status",
@@ -116,9 +118,9 @@ export function UseEvents() {
         else if (!state.editData?.eventDesc) {
             ToastWarning('Event description  required')
         }
-        // else if (!state.editData?.speakerId) {
-        //     ToastWarning('Speaker Id required')
-        // }
+        else if (!state.editData?.speakerId) {
+            ToastWarning('Speaker Id required')
+        }
         else if (!state.editData?.eventStatus) {
             ToastWarning('Status required')
         }
@@ -134,7 +136,7 @@ export function UseEvents() {
                             eventDate: date,
                             Speaker: {
                                 connect: {
-                                    id: ''
+                                    id: state.editData?.speakerId
                                 }
                             },
                             eventStatus: state.editData?.eventStatus

@@ -36,7 +36,7 @@ export default function AllStaff() {
       <ToastContainer />
       <Table
         title={"All Staff"}
-        tableHeadings={["Id", "Name", "Email", "Phone", "Role", "Action"]}
+        tableHeadings={["Id", "Name", "Email", "Cnic", "contact", "address", "Role", "Action"]}
         // ctaEditButtonHandler={ctaEditButtonHandler}
         printedKeys={[
           {
@@ -49,7 +49,13 @@ export default function AllStaff() {
             key: "email",
           },
           {
-            key: "phone",
+            key: "cnic",
+          },
+          {
+            key: "contact",
+          },
+          {
+            key: "address",
           },
           {
             key: "role",

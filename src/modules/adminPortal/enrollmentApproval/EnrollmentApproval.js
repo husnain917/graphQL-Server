@@ -36,9 +36,8 @@ function EnrollmentApproval() {
           title={'Enrollment Approval'}
           tableHeadings={[
             'Id',
-            'Student Name',
-            'Email',
-            'Course',
+            'User Id',
+            'Course Id',
             'Payment Method',
             'Amount',
             'Transaction ID',
@@ -50,13 +49,10 @@ function EnrollmentApproval() {
               key: "id",
             },
             {
-              key: "studentName",
+              key: "userId",
             },
             {
-              key: "email",
-            },
-            {
-              key: "course",
+              key: "coursesId",
             },
             {
               key: 'amount'

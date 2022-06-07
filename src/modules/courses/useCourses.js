@@ -65,7 +65,7 @@ export function UseCourses() {
       label: "Select Instructor",
       name: "instructorId",
       type: "selectInstructor",
-      dropDown2: teacher
+      dropDown: teacher
     },
     {
       label: "Status",
@@ -279,14 +279,14 @@ export function UseCourses() {
               instructor: {
                 update: {
                   name: {
-                    set: null
+                    set: state.editData?.instructorId,
                   }
                 }
               },
               courseCategory: {
                 update: {
                   categoryName: {
-                    set: null
+                    set: state.editData?.courseCategoryId,
                   }
                 }
               },

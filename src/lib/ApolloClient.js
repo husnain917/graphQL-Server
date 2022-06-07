@@ -12,7 +12,7 @@ const authLink = setContext(async (_, { headers }) => {
         headers: {
             ...headers,
             authorization: token,
-            "organizationKey": '85c2019f55a5ad758a3fe6ea07d29a962cea72f1e408a107586e9dde1ece7c58'
+            "organizationKey": '5d84d7320f41d5f9e8394f02e4d9e32cdb86a94ebd1e13c45aa2c30f946e4fe7'
         },
     };
 });

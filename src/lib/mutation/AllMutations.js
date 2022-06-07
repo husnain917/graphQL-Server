@@ -18,12 +18,7 @@ mutation CreateEnrollmentApproval($data: EnrollmentApprovalCreateInput!) {
 
 
 
-export const ADD_STAFF = gql`
-mutation CreateManyStaff($data: [StaffCreateManyInput!]!) {
-  createManyStaff(data: $data) {
-    count
-  }
-}`
+
 
 
 export const ADD_COURSES = gql`
@@ -72,16 +67,16 @@ mutation CreateSuccessStories($data: SuccessStoriesCreateInput!) {
 export const ADD_EVENTS = gql`
 mutation CreateEvents($data: EventsCreateInput!) {
   createEvents(data: $data) {
+    id
     eventName
-    eventDesc
     eventImage
+    eventDesc
     eventDate
     speakerId
     eventStatus
   }
-
-
-}`
+}
+`
 
 
 export const ADD_CONTACT_US = gql`
@@ -110,6 +105,20 @@ mutation CreateFaq($data: FaqCreateInput!) {
 
 }`
 
+export const ADD_USER = gql`
+mutation CreateUser($data: UserCreateInput!) {
+  createUser(data: $data) {
+    name
+    email
+    cnic
+    address
+    contact
+    role
+    permission
+    id
+  }
+}
+`
 
 
 
@@ -220,6 +229,19 @@ mutation DeleteFaq($where: FaqWhereUniqueInput!) {
   }
 }
 `
+export const DELETE_USER = gql`
+mutation DeleteUser($where: UserWhereUniqueInput!) {
+  deleteUser(where: $where) {
+    id
+    name
+    email
+    cnic
+    address
+    contact
+    role
+  }
+}
+`
 
 
 
@@ -231,7 +253,7 @@ mutation UpdateSuccessStories($where: SuccessStoriesWhereUniqueInput!, $data: Su
     id
   }
 
-}`
+} `
 
 
 export const UPDATE_SINGLE_STAFF = gql`
@@ -241,7 +263,7 @@ mutation UpdateStaff($data: StaffUpdateInput!, $where: StaffWhereUniqueInput!) {
   }
 
 
-}`
+} `
 
 export const UPDATE_SINGLE_COURSE = gql`
 mutation UpdateCourses($data: CoursesUpdateInput!, $where: CoursesWhereUniqueInput!) {
@@ -287,25 +309,7 @@ mutation UpdateStudents($data: StudentsUpdateInput!, $where: StudentsWhereUnique
   updateStudents(data: $data, where: $where) {
     id
   }
-}`
-
-export const UPDATE_USER = gql`
-mutation UpdateUser($data: UserUpdateInput!, $where: UserWhereUniqueInput!) {
-  updateUser(data: $data, where: $where) {
-    name
-  }
-}`
-
-
-// {  "data": {
-//   "password": {
-//     "set": null
-//   }
-// },
-// "where": {
-// "id": null
-// }
-// }
+} `
 
 
 export const UPDATE_SINGLE_ENROLLMENT = gql`
@@ -320,7 +324,7 @@ mutation UpdateEnrollmentApproval($data: EnrollmentApprovalUpdateInput!, $where:
     transactionId
   }
 
-}`
+} `
 
 export const UPDATE_SINGLE_CONTACT = gql`
 mutation UpdateContactUs($data: ContactUsUpdateInput!, $where: ContactUsWhereUniqueInput!) {
@@ -340,7 +344,20 @@ mutation UpdateEvents($data: EventsUpdateInput!, $where: EventsWhereUniqueInput!
   updateEvents(data: $data, where: $where) {
     id
   }
-}`
+} `
+export const UPDATE_USER = gql`
+mutation UpdateUser($data: UserUpdateInput!, $where: UserWhereUniqueInput!) {
+  updateUser(data: $data, where: $where) {
+    id
+    name
+    email
+    address
+    cnic
+    contact
+    role
+  }
+}
+`
 
 
 
@@ -360,4 +377,4 @@ mutation GetActiveUser($token: String!) {
     role
   }
 
-}`
+} `

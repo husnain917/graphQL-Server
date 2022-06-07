@@ -8,10 +8,13 @@ import {
 } from "../../../commonComponents/commonFunction/CommonFunction";
 import {
   ADD_STAFF,
+  ADD_USER,
   DELETE_SINGLE_STAFF,
+  DELETE_USER,
   UPDATE_SINGLE_STAFF,
+  UPDATE_USER,
 } from "../../../lib/mutation/AllMutations";
-import { GET_STAFF } from "../../../lib/queries/AllQueries";
+import { GET_STAFF, GET_USERS } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
@@ -34,10 +37,26 @@ export function UseAllStaff() {
       name: "email",
       type: "email",
     },
+
     {
-      label: "Phone",
-      name: "phone",
+      label: "Password",
+      name: "password",
+      type: "password",
+    },
+    {
+      label: "Cnic",
+      name: "cnic",
+      type: "number",
+    },
+    {
+      label: "Contact",
+      name: "contact",
       type: "tel",
+    },
+    {
+      label: "Address",
+      name: "address",
+      type: "text",
     },
     {
       label: "Role",
@@ -55,26 +74,41 @@ export function UseAllStaff() {
 
   //GET STAFF 
 
-  let { data, loading: GET_LOADING, error } = useQuery(GET_STAFF);
+  let { data, loading: GET_LOADING, error } = useQuery(GET_USERS);
   console.log("error", error);
   const refacteredData = [];
-  data?.findManyStaff?.map((item) => {
-    refacteredData.push({
-      id: item.id,
-      name: item.name,
-      email: item.email,
-      role: item.role,
-      phone: item.phone,
-    });
+  data?.users?.map((item) => {
+    if (item.role === "ADMIN") {
+      refacteredData.push({
+        id: item.id,
+        name: item.name,
+        email: item.email,
+        contact: item.contact,
+        address: item.address,
+        cnic: item.cnic,
+        role: item.role,
+      })
+    }
+    else if (item.role === "TEACHER") {
+      refacteredData.push({
+        id: item.id,
+        name: item.name,
+        email: item.email,
+        contact: item.contact,
+        address: item.address,
+        cnic: item.cnic,
+        role: item.role,
+      })
+    }
   });
   console.log("refacteredData", refacteredData);
 
   const [loader, setLoader] = useState(false);
   const [errormessage, setError] = useState('')
-  
+
   //ADD STAFF
 
-  let [CreateManyStaff, { loading: ADD_LOADING }] = useMutation(ADD_STAFF);
+  let [CreateUser, { loading: ADD_LOADING }] = useMutation(ADD_USER);
 
 
   const ctaFormHandler = async (event) => {
@@ -85,13 +119,19 @@ export function UseAllStaff() {
     else if (!state.editData?.email) {
       ToastWarning('Email required')
     }
-    else if (!state.editData?.phone) {
-      ToastWarning('Phone required')
+    else if (!state.editData?.contact) {
+      ToastWarning('Contact required')
+    }
+    else if (!state.editData?.cnic) {
+      ToastWarning('cnic required')
+    }
+    else if (!state.editData?.address) {
+      ToastWarning('address required')
     }
     else if (!state.editData?.role) {
       ToastWarning('Role required')
     }
-    else if (state.editData?.phone.length > 10) {
+    else if (state.editData?.contact.length > 10) {
       ToastWarning('Phone No Must be 10 digits')
       // setError('Phone Number Must be 10 digits')
     }
@@ -99,16 +139,21 @@ export function UseAllStaff() {
 
     else {
       try {
-        await CreateManyStaff({
+        await CreateUser({
           variables: {
+
             data: {
               name: state.editData?.name,
               email: state.editData?.email,
+              password: state.editData?.password,
+              cnic: state.editData?.cnic,
+              contact: state.editData?.contact,
+              address: state.editData?.address,
               role: state.editData?.role,
-              phone: state.editData?.phone
-            },
+            }
+
           },
-          refetchQueries: [{ query: GET_STAFF }],
+          refetchQueries: [{ query: GET_USERS }],
 
           onCompleted() {
             dispatch({
@@ -171,16 +216,16 @@ export function UseAllStaff() {
 
   // DELETE STAFF
 
-  let [DeleteStaff, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_STAFF);
+  let [DeleteUser, { loading: DELETE_LOADING }] = useMutation(DELETE_USER);
   const ctaDeleteHandler = async ({ ...data }) => {
     try {
-      await DeleteStaff({
+      await DeleteUser({
         variables: {
           where: {
             id: data.id,
           },
         },
-        refetchQueries: [{ query: GET_STAFF }],
+        refetchQueries: [{ query: GET_USERS }],
         onCompleted(data) {
           ToastSuccess('Staff Deleted')
         },
@@ -197,7 +242,7 @@ export function UseAllStaff() {
 
   //Update staff
 
-  let [UpdateStudents, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_STAFF);
+  let [UpdateStudents, { loading: UPDATE_LOADING }] = useMutation(UPDATE_USER);
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
     if (!state.editData?.name) {
@@ -206,8 +251,14 @@ export function UseAllStaff() {
     else if (!state.editData?.email) {
       ToastWarning('Email required')
     }
-    else if (!state.editData?.phone) {
-      ToastWarning('Phone required')
+    else if (!state.editData?.contact) {
+      ToastWarning('contact required')
+    }
+    else if (!state.editData?.cnic) {
+      ToastWarning('cnic required')
+    }
+    else if (!state.editData?.address) {
+      ToastWarning('address required')
     }
     else if (!state.editData?.role) {
       ToastWarning('Role required')
@@ -219,22 +270,32 @@ export function UseAllStaff() {
             where: {
               id: state.editId
             },
+
             data: {
               name: {
-                set: state.editData?.name
+                set: state.editData?.name,
               },
               email: {
-                set: state.editData?.email
+                set: state.editData?.email,
               },
-              phone: {
-                set: state.editData?.phone
+              password: {
+                set: state.editData?.password,
+              },
+              cnic: {
+                set: state.editData?.cnic,
+              },
+              address: {
+                set: state.editData?.address,
+              },
+              contact: {
+                set: state.editData?.contact,
               },
               role: {
-                set: state.editData?.role
+                set: state.editData?.role,
               }
-            }
+            },
           },
-          refetchQueries: [{ query: GET_STAFF }],
+          refetchQueries: [{ query: GET_USERS }],
           onCompleted() {
             dispatch({
               type: "setModal",

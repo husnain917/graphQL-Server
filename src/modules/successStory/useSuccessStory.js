@@ -18,12 +18,13 @@ import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../State";
 
 
-
+import FiltredRoles from '../../constants/FiltredRoles'
 
 
 
 
 export function UseSuccessStory() {
+  const [{ student }] = FiltredRoles()
   const formInputs = [
     {
       label: "City",
@@ -56,11 +57,18 @@ export function UseSuccessStory() {
       type: "text",
     },
     {
+      label: "Select User",
+      name: "selectUser",
+      type: "selectUser",
+      dropDown: student,
+    },
+    {
       label: "Status",
       name: "status",
       type: "select",
       dropDownContent: ["PUBLISH", "UNPUBLISH"],
     },
+
   ]
   const { state, dispatch } = useContext(AppContext);
 
@@ -84,7 +92,7 @@ export function UseSuccessStory() {
       status: item.status,
       totalEarnedAmount: item.totalEarnedAmount,
       whyReject: item.whyReject,
-
+      // user: item.user
     });
   });
   console.log("refacteredData", refacteredData);
@@ -142,7 +150,7 @@ export function UseSuccessStory() {
               user: {
                 connect: [
                   {
-                    id: null
+                    id: state.editData?.selectUser
                   }
                 ]
               }
@@ -266,7 +274,7 @@ export function UseSuccessStory() {
                 set: state.editData?.freelancingProfileUrl
               },
               paymentProof: {
-                set:  state.editData?.paymentProof
+                set: state.editData?.paymentProof
               },
               description: {
                 set: state.editData?.description
@@ -278,7 +286,7 @@ export function UseSuccessStory() {
                 set: state.editData?.totalEarnedAmount
               },
               city: {
-                set:  state.editData?.city
+                set: state.editData?.city
               },
               whyReject: {
                 set: state.editData?.whyReject

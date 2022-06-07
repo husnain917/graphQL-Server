@@ -11,7 +11,7 @@ import {
   DELETE_ENROLMMENT_APPROVAL,
   UPDATE_SINGLE_ENROLLMENT,
 } from "../../../lib/mutation/AllMutations";
-import { GET_ENROLLMENT } from "../../../lib/queries/AllQueries";
+import { GET_COURSES, GET_ENROLLMENT } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
 
 
@@ -22,17 +22,19 @@ import { AppContext } from "../../../State";
 
 export function UseEnrollmentApproval() {
   const [{ student }] = FiltredRoles()
+  const { data: Courses } = useQuery(GET_COURSES)
   const formInputs = [
     {
-      label: "User Id",
+      label: "User",
       name: "userId",
       type: "selectUser",
       dropDown: student
     },
     {
-      label: "Courses Id",
+      label: "Courses",
       name: "coursesId",
-      type: "text",
+      type: "selectCourse",
+      dropDown: Courses
     },
     {
       label: "Payment Method",
@@ -112,23 +114,15 @@ export function UseEnrollmentApproval() {
       try {
         await CreateEnrollmentApproval({
           variables: {
-            // studentName: state.editData?.studentName,
-            // email: state.editData?.email,
-            // course: state.editData?.course,
-            // paymentMethod: state.editData?.paymentMethod,
-            // amount: state.editData?.amount,
-            // transactionId: state.editData?.transactionId,
-            // status: state.editData?.status
-
             data: {
               user: {
                 connect: {
-                  id: null
+                  id: state.editData?.userId
                 }
               },
               courses: {
                 connect: {
-                  id: null
+                  id: state.editData?.coursesId
                 }
               },
               status: state.editData?.status,
@@ -201,14 +195,11 @@ export function UseEnrollmentApproval() {
 
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
-    if (!state.editData?.studentName) {
-      ToastWarning('Name required')
+    if (!state.editData?.userId) {
+      ToastWarning('user required')
     }
-    else if (!state.editData?.email) {
-      ToastWarning('email required')
-    }
-    else if (!state.editData?.course) {
-      ToastWarning('Course name required')
+    else if (!state.editData?.coursesId) {
+      ToastWarning('courses required')
     }
     else if (!state.editData?.paymentMethod) {
       ToastWarning('Payment method required')
@@ -254,37 +245,32 @@ export function UseEnrollmentApproval() {
 
             data: {
               user: {
-                update: null
+                update: {
+                  name: {
+                    set: state.editData?.userId
+                  }
+                }
               },
               courses: {
                 update: {
                   courseName: {
-                    set: null
-                  },
-                  courseDesc: null,
-                  courseIntro: null,
-                  instructor: {
-                    update: {
-                      name: {
-                        set: null
-                      }
-                    }
+                    set: state.editData?.coursesId
                   }
                 }
               },
               status: {
-                set: state.editData?.status
+                set: state.editData?.status,
               },
               paymentMethod: {
-                set: state.editData?.paymentMethod
+                set: state.editData?.paymentMethod,
               },
               amount: {
-                set: state.editData?.amount
+                set: state.editData?.amount,
               },
               transactionId: {
-                set: state.editData?.transactionId
+                set: state.editData?.transactionId,
               }
-            }
+            },
           },
           onCompleted() {
             dispatch({

@@ -72,8 +72,8 @@ mutation CreateEvents($data: EventsCreateInput!) {
     eventImage
     eventDesc
     eventDate
-    speakerId
     eventStatus
+    speakerId
   }
 }
 `

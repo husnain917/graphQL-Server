@@ -30,11 +30,12 @@ query FindManyEvents {
 `
 
 export const GET_FAQS = gql`
-query FindManyEvents {
+query Faqs {
   faqs {
     id
-    faqAnswer
     faqQuestion
+    faqAnswer
+    courseId
     createdAt
     updateAt
   }

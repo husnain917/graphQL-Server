@@ -243,19 +243,44 @@ export function UseEnrollmentApproval() {
             //     set: state.editData?.status
             //   },
 
+            // data: {
+            //   user: {
+            //     update: {
+            //       name: {
+            //         set: state.editData?.userId
+            //       }
+            //     }
+            //   },
+            //   courses: {
+            //     update: {
+            //       courseName: {
+            //         set: state.editData?.coursesId
+            //       }
+            //     }
+            //   },
+            //   status: {
+            //     set: state.editData?.status,
+            //   },
+            //   paymentMethod: {
+            //     set: state.editData?.paymentMethod,
+            //   },
+            //   amount: {
+            //     set: state.editData?.amount,
+            //   },
+            //   transactionId: {
+            //     set: state.editData?.transactionId,
+            //   }
+            // },
+
             data: {
               user: {
-                update: {
-                  name: {
-                    set: state.editData?.userId
-                  }
+                connect: {
+                  id: state.editData?.userId
                 }
               },
               courses: {
-                update: {
-                  courseName: {
-                    set: state.editData?.coursesId
-                  }
+                connect: {
+                  id: state.editData?.coursesId
                 }
               },
               status: {

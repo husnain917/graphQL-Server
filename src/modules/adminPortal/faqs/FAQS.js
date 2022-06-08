@@ -47,9 +47,11 @@ export default function FAQS() {
                     },
                     {
                         key: "faqQuestion",
+                        type:"modalQuestion"
                     },
                     {
                         key: "faqAnswer",
+                        type:"modalAnswer"
                     },
                     {
                         key: "courseId",

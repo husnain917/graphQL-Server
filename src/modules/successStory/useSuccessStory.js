@@ -58,7 +58,7 @@ export function UseSuccessStory() {
     },
     {
       label: "Select User",
-      name: "selectUser",
+      name: "user",
       type: "selectUser",
       dropDown: student,
     },
@@ -150,7 +150,7 @@ export function UseSuccessStory() {
               user: {
                 connect: [
                   {
-                    id: state.editData?.selectUser
+                    id: state.editData?.user
                   }
                 ]
               }
@@ -269,6 +269,43 @@ export function UseSuccessStory() {
             //     set: state.editData?.whyReject
             //   }
             // }
+            // data: {
+            //   freelancingProfileUrl: {
+            //     set: state.editData?.freelancingProfileUrl
+            //   },
+            //   paymentProof: {
+            //     set: state.editData?.paymentProof
+            //   },
+            //   description: {
+            //     set: state.editData?.description
+            //   },
+            //   status: {
+            //     set: state.editData?.status
+            //   },
+            //   totalEarnedAmount: {
+            //     set: state.editData?.totalEarnedAmount
+            //   },
+            //   city: {
+            //     set: state.editData?.city
+            //   },
+            //   whyReject: {
+            //     set: state.editData?.whyReject
+            //   },
+            //   user: {
+            //     update: [
+            //       {
+            //         where: {
+            //           id: null
+            //         },
+            //         data: {
+            //           name: {
+            //             set: null
+            //           }
+            //         }
+            //       }
+            //     ]
+            //   }
+            // },
             data: {
               freelancingProfileUrl: {
                 set: state.editData?.freelancingProfileUrl
@@ -292,16 +329,9 @@ export function UseSuccessStory() {
                 set: state.editData?.whyReject
               },
               user: {
-                update: [
+                connect: [
                   {
-                    where: {
-                      id: null
-                    },
-                    data: {
-                      name: {
-                        set: null
-                      }
-                    }
+                    id: state.editData?.user
                   }
                 ]
               }

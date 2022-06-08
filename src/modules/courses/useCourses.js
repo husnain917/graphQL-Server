@@ -248,24 +248,6 @@ export function UseCourses() {
             where: {
               id: state.editId
             },
-            // data: {
-            //   courseName: {
-            //     set: state.editData?.courseName
-            //   },
-            //   courseDesc: {
-            //     set: state.editData?.courseDesc
-            //   },
-            //   courseIntro: {
-            //     set: state.editData?.courseIntro
-            //   },
-            //   courseStatus: {
-            //     set: state.editData?.courseStatus
-            //   },
-            //   coursePrice: {
-            //     set: state.editData?.coursePrice
-            //   }
-            // }
-
             data: {
               courseName: {
                 set: state.editData?.courseName
@@ -277,24 +259,29 @@ export function UseCourses() {
                 set: state.editData?.courseIntro
               },
               instructor: {
-                update: {
-                  name: {
-                    set: state.editData?.instructorId,
-                  }
+                connect: {
+                  id: state.editData?.instructorId,
                 }
               },
               courseCategory: {
-                update: {
-                  categoryName: {
-                    set: state.editData?.courseCategoryId,
-                  }
+                connect: {
+                  id: state.editData?.courseCategoryId,
+                }
+              },
+              organization: {
+                connect: {
+                  id: state.user?.id
                 }
               },
               coursePrice: {
                 set: state.editData?.coursePrice
-              }
+              },
+              courseStatus: {
+                set: state.editData?.courseStatus
+              },
             },
           },
+
           onCompleted() {
             dispatch({
               type: "setModal",

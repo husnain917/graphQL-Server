@@ -29,12 +29,12 @@ export function UseFaqs() {
     {
       label: "Faq Question",
       name: "faqQuestion",
-      type: "modal",
+      type: "text"
     },
     {
       label: "Faq Answer",
       name: "faqAnswer",
-      type: "modal",
+      type: "text"
     },
     {
       label: "Course",
@@ -180,10 +180,8 @@ export function UseFaqs() {
                 set: state.editData?.faqAnswer
               },
               course: {
-                update: {
-                  courseName: {
-                    set: state.editData?.courseId
-                  },
+                connect: {
+                  id: state.editData?.courseId
                 }
               },
               updateAt: {

@@ -50,16 +50,16 @@ export function UseEvents() {
             type: "select",
             dropDownContent: ["PAST", "UPCOMING"],
         },
-        {
-            label: "Event Date",
-            name: "eventDate",
-            type: "calender",
-        },
-        {
-            label: "Image",
-            name: "eventImage",
-            type: "upload",
-        },
+        // {
+        //     label: "Event Date",
+        //     name: "eventDate",
+        //     type: "calender",
+        // },
+        // {
+        //     label: "Image",
+        //     name: "eventImage",
+        //     type: "upload",
+        // },
     ]
     const { state, dispatch } = useContext(AppContext);
 
@@ -132,8 +132,8 @@ export function UseEvents() {
                         data: {
                             eventName: state.editData?.eventName,
                             eventDesc: state.editData?.eventDesc,
-                            eventImage: File ? File : 'no file',
-                            eventDate: date,
+                            // eventImage: File,
+                            eventDate: new Date(),
                             Speaker: {
                                 connect: {
                                     id: state.editData?.speakerId

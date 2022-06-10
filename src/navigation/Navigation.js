@@ -27,6 +27,7 @@ import StudentList from '../modules/teacherPortal/studentList/StudentList'
 import CourseAssigned from '../modules/teacherPortal/courseAssigned/CourseAssigned'
 import Lecture from '../modules/teacherPortal/lecture/Lecture'
 import FilesOrAssignment from '../modules/teacherPortal/filesOrAssignment/FilesOrAssignment'
+import CourseBatch from '../modules/adminPortal/courseBatch/CourseBatch';
 
 export default function Navigation() {
     const { state, dispatch } = useContext(AppContext);
@@ -237,7 +238,12 @@ export default function Navigation() {
                                 <FilesOrAssignment />
                             </PrivateRouting>}
                     />
-
+                    <Route path='/courseBatch'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <CourseBatch />
+                            </PrivateRouting>}
+                    />
                 </Route>
 
 

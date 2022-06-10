@@ -39,8 +39,12 @@ export default function MyCourse() {
         'course Batch id',
         'Created At',
         'Updated At',
+        'Actions'
 
       ]}
+      ctaFormHandler={ctaFormHandler}
+      ctaDeleteHandler={ctaDeleteHandler}
+      ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
         {
           key: "id",
@@ -85,13 +89,13 @@ export default function MyCourse() {
           key: 'Updated At'
         },
         {
-          key: 'crud'
+          type: 'crud'
         }
       ]}
       formInputs={formInputs}
       filterdata={{
         key: "feeStatus",
-        filterTag: ['All', 'Pending', 'Paid'],
+        filterTag: ['All', 'PENDING', 'PAID','HALFPAID'],
       }}
       data={refacteredData}
       disableAddIcon={true}

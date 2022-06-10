@@ -49,6 +49,12 @@ export var MENU_ITEMS = [
         role: 'OWNER'
     },
     {
+        text: 'Course Batch',
+        icon: <Subscriptions />,
+        path: '/courseBatch',
+        role: 'OWNER'
+    },
+    {
         text: 'Students',
         icon: <PeopleOutline />,
         path: '/students',

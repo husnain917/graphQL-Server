@@ -22,11 +22,12 @@ import { AppContext } from "../../../State";
 
 export function UseEvents() {
     const [date, setDate] = useState(new Date());
-    const [{ teacher }] = FiltredData()
+    const [{ speakerList }] = FiltredData()
     const onDateChange = (newDate) => {
         setDate(newDate);
         console.log(newDate);
     }
+    console.log(speakerList)
     const formInputs = [
         {
             label: "Name",
@@ -41,8 +42,8 @@ export function UseEvents() {
         {
             label: "Select speaker",
             name: "speakerId",
-            type: "selectInstructor",
-            dropDown: teacher
+            type: "selectSpeaker",
+            dropDown: speakerList
         },
         {
             label: "Status",
@@ -243,29 +244,24 @@ export function UseEvents() {
 
                         data: {
                             eventName: {
-                                set: null
+                                set: state.editData?.eventName
                             },
                             eventDesc: {
-                                set: null
+                                set: state.editData?.eventDesc
                             },
                             eventImage: {
                                 set: null
                             },
                             eventDate: {
-                                set: null
+                                set: new Date()
                             },
                             Speaker: {
-                                update: {
-                                    speakerName: {
-                                        set: null
-                                    },
-                                    spkearDesc: {
-                                        set: null
-                                    }
+                                connect: {
+                                    id: state.editData?.speakerId
                                 }
                             },
                             eventStatus: {
-                                set: null
+                                set: state.editData?.eventStatus
                             }
                         }
 

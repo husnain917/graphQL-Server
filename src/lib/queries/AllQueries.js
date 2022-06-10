@@ -132,29 +132,15 @@ query Categories {
 export const GET_MY_COURSES = gql`
 query MyCourses {
   myCourses {
-    id
     coursesId
+    id
     studentId
-    updateAt
     createdAt
+    updateAt
     courseApproval
     whyReject
     feeStatus
     courseBatchesId
-    courseBatches {
-      name
-      id
-    }
-    courses {
-      courseName
-      courseDesc
-      id
-    }
-    student {
-      id
-      email
-      name
-    }
   }
 }
 `
@@ -205,3 +191,29 @@ query FindManyLectures {
     updateAt
   }
 }`
+
+export const GET_COURSE_BATCH = gql`
+query FindManyCourseBatches {
+  findManyCourseBatches {
+    id
+    name
+    coursesId
+    courseName
+    createdAt
+    updateAt
+  }
+}
+`
+
+export const GET_SPEAKERS = gql`
+query FindManyCourseBatches {
+  speakers {
+    id
+    speakerName
+    spkearDesc
+    spekaerImage
+    createdAt
+    updateAt
+  }
+}
+`

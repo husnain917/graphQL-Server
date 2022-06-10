@@ -179,6 +179,18 @@ mutation CreateLectures($data: LecturesCreateInput!) {
   }
 }
 `
+export const ADD_COURSE_BATCH = gql`
+mutation CreateCourseBatches($data: CourseBatchesCreateInput!) {
+  createCourseBatches(data: $data) {
+    id
+    name
+    coursesId
+    courseName
+    createdAt
+    updateAt
+  }
+}
+`
 
 //SINGLE DELETE MUTATIONS
 
@@ -327,6 +339,34 @@ mutation DeleteLectures($where: LecturesWhereUniqueInput!) {
     coursesId
     createdAt
     updateAt
+  }
+}
+`
+export const DELETE_COURSE_BATCH = gql`
+mutation DeleteCourseBatches($where: CourseBatchesWhereUniqueInput!) {
+  deleteCourseBatches(where: $where) {
+    id
+    name
+    coursesId
+    courseName
+    createdAt
+    updateAt
+  }
+}
+`
+
+export const DELETE_MY_COURSE = gql`
+mutation DeleteMyCourse($where: MyCourseWhereUniqueInput!) {
+  deleteMyCourse(where: $where) {
+    id
+    coursesId
+    studentId
+    createdAt
+    updateAt
+    courseApproval
+    whyReject
+    feeStatus
+    courseBatchesId
   }
 }
 `
@@ -484,6 +524,34 @@ mutation UpdateLectures($data: LecturesUpdateInput!, $where: LecturesWhereUnique
 }
 `
 
+export const UPDATE_COURSE_BATCH = gql`
+mutation UpdateCourseBatches($data: CourseBatchesUpdateInput!, $where: CourseBatchesWhereUniqueInput!) {
+  updateCourseBatches(data: $data, where: $where) {
+    id
+    name
+    coursesId
+    courseName
+    createdAt
+    updateAt
+  }
+}
+`
+
+export const UPDATE_MY_COURSE = gql`
+mutation UpdateMyCourse($data: MyCourseUpdateInput!, $where: MyCourseWhereUniqueInput!) {
+  updateMyCourse(data: $data, where: $where) {
+    id
+    coursesId
+    studentId
+    createdAt
+    updateAt
+    courseApproval
+    whyReject
+    feeStatus
+    courseBatchesId
+  }
+}
+`
 
 
 

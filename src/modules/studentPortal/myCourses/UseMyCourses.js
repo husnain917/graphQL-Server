@@ -10,13 +10,16 @@ import {
     ADD_COURSES,
     UPDATE_SINGLE_COURSE,
     DELETE_SINGLE_COURSE,
-    ADD_MY_COURSES
+    ADD_MY_COURSES,
+    DELETE_MY_COURSE,
+    UPDATE_MY_COURSE
 } from "../../../lib/mutation/AllMutations";
 import { GET_MY_COURSES } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
+import FiltredData from "../../../constants/FiltredRoles";
 
 
 
@@ -25,47 +28,31 @@ import { AppContext } from "../../../State";
 
 
 export default function UseMyCourses() {
+    const [{ student, COURSE_DATA, courseBatch }] = FiltredData()
     const formInputs = [
         {
-            label: "coursesId",
+            label: "Course",
             name: "coursesId",
-            type: "text",
+            type: "selectCourse",
+            dropDown: COURSE_DATA
         },
         {
-            label: "studentId",
+            label: "Student",
             name: "studentId",
-            type: "text",
-        },
-        {
-            label: "updateAt",
-            name: "updateAt",
-            type: "text",
-        },
-        {
-            label: "createdAt",
-            name: "createdAt",
-            type: "text",
-        },
-        {
-            label: "courseApproval",
-            name: "courseApproval",
-            type: "text",
-        },
-        {
-            label: "whyReject",
-            name: "whyReject",
-            type: "text",
+            type: "selectUser",
+            dropDown: student
         },
         {
             label: "course Batche",
-            name: "courseBatches",
-            type: "text",
+            name: "courseBatchesId",
+            type: "selectBatch",
+            dropDown: courseBatch
         },
         {
             label: "Status",
             name: "feeStatus",
             type: "select",
-            dropDownContent: ["PAID", "PENDING","HALFPAID"],
+            dropDownContent: ["PAID", "PENDING", "HALFPAID"],
         },
     ]
     const { state, dispatch } = useContext(AppContext);
@@ -80,20 +67,17 @@ export default function UseMyCourses() {
     let { data, loading: GET_LOADING, error } = useQuery(GET_MY_COURSES);
     console.log("error", error);
     const refacteredData = [];
-    data?.findManyCourses?.map((item) => {
+    data?.myCourses?.map((item) => {
         refacteredData.push({
             id: item.id,
             coursesId: item.coursesId,
             studentId: item.studentId,
-            updateAt: item.updateAt,
-            createdAt: item.createdAt,
             courseApproval: item.courseApproval,
             whyReject: item.whyReject,
             feeStatus: item.feeStatus,
             courseBatchesId: item.courseBatchesId,
-            courseBatches: item.courseBatches.name,
-            courses: item.courses.name,
-            student: item.student.name,
+            updateAt: item.updateAt,
+            createdAt: item.createdAt,
         });
     });
     console.log("refacteredData", refacteredData);
@@ -106,55 +90,41 @@ export default function UseMyCourses() {
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.courseName) {
-            ToastWarning('Course name required')
+        if (!state.editData?.coursesId) {
+            ToastWarning('Course required')
         }
-        else if (!state.editData?.courseDesc) {
-            ToastWarning('Course description required')
+        else if (!state.editData?.studentId) {
+            ToastWarning('Student  required')
         }
-        else if (!state.editData?.courseIntro) {
-            ToastWarning('Intro required')
+        else if (!state.editData?.courseBatchesId) {
+            ToastWarning('Course Batches required')
         }
-        else if (!state.editData?.coursePrice) {
-            ToastWarning('Price required')
-        }
-        else if (!state.editData?.instructorId) {
-            ToastWarning('Instructor Id required')
-        }
-        else if (!state.editData?.courseCategoryId) {
-            ToastWarning('Course category Id required')
-        }
-        else if (!state.editData?.courseStatus) {
-            ToastWarning('Status required')
+        else if (!state.editData?.feeStatus) {
+            ToastWarning('FeeStatus required')
         }
         else {
             try {
                 await Mutation({
                     variables: {
-
                         data: {
-                            id: null,
                             courses: {
                                 connect: {
-                                    id: null
+                                    id: state.editData?.coursesId
                                 }
                             },
                             student: {
                                 connect: {
-                                    id: null
+                                    id: state.editData?.studentId
                                 }
                             },
-                            createdAt: null,
-                            updateAt: null,
-                            courseApproval: null,
-                            whyReject: null,
-                            feeStatus: null,
                             courseBatches: {
                                 connect: {
-                                    id: null
+                                    id: state.editData?.courseBatchesId
                                 }
-                            }
+                            },
+                            feeStatus: state?.editData?.feeStatus
                         }
+
 
                     },
                     onCompleted(data, cache) {
@@ -190,10 +160,10 @@ export default function UseMyCourses() {
 
     // DELETE STAFF
 
-    let [DeleteCourses, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_COURSE);
+    let [DeleteMyCourse, { loading: DELETE_LOADING }] = useMutation(DELETE_MY_COURSE);
     const ctaDeleteHandler = async ({ ...data }) => {
         try {
-            await DeleteCourses({
+            await DeleteMyCourse({
                 variables: {
                     where: {
                         id: data.id,
@@ -215,55 +185,51 @@ export default function UseMyCourses() {
 
     //Update staff
 
-    let [UpdateCourses, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_COURSE);
+    let [UpdateMyCourse, { loading: UPDATE_LOADING }] = useMutation(UPDATE_MY_COURSE);
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.courseName) {
-            ToastWarning('Course name required')
+        if (!state.editData?.coursesId) {
+            ToastWarning('Course required')
         }
-        else if (!state.editData?.courseDesc) {
-            ToastWarning('Course description required')
+        else if (!state.editData?.studentId) {
+            ToastWarning('Student  required')
         }
-        else if (!state.editData?.courseIntro) {
-            ToastWarning('Intro required')
+        else if (!state.editData?.courseBatchesId) {
+            ToastWarning('Course Batches required')
         }
-        else if (!state.editData?.coursePrice) {
-            ToastWarning('Price required')
-        }
-        else if (!state.editData?.instructorId) {
-            ToastWarning('Instructor Id required')
-        }
-        else if (!state.editData?.courseCategoryId) {
-            ToastWarning('Course category Id required')
-        }
-        else if (!state.editData?.courseStatus) {
-            ToastWarning('Status required')
+        else if (!state.editData?.feeStatus) {
+            ToastWarning('FeeStatus required')
         }
         else {
             try {
-                await UpdateCourses({
+                await UpdateMyCourse({
                     variables: {
                         where: {
                             id: state.editId
                         },
+
                         data: {
-                            courseName: {
-                                set: state.editData?.courseName
+                            courses: {
+                                connect: {
+                                    id: state.editData?.coursesId
+                                }
                             },
-                            courseDesc: {
-                                set: state.editData?.courseDesc
+                            student: {
+                                connect: {
+                                    id: state.editData?.studentId
+                                }
                             },
-                            courseIntro: {
-                                set: state.editData?.courseIntro
+                            courseBatches: {
+                                connect: {
+                                    id: state.editData?.courseBatchesId
+                                }
                             },
-                            courseStatus: {
-                                set: state.editData?.courseStatus
-                            },
-                            coursePrice: {
-                                set: state.editData?.coursePrice
+                            feeStatus: {
+                                set: state.editData?.feeStatus
                             }
                         }
+
                     },
                     onCompleted() {
                         dispatch({

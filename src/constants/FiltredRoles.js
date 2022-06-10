@@ -1,38 +1,34 @@
 import { useQuery } from '@apollo/client'
-import { GET_COURSE_CATEGORY, GET_USERS } from '../lib/queries/AllQueries'
+import { GET_COURSES, GET_COURSE_BATCH, GET_COURSE_CATEGORY, GET_SPEAKERS, GET_USERS } from '../lib/queries/AllQueries'
 
 export default function FiltredData() {
     //ROLES OF STAFF AND STUDENTS
-    const { data, loading: LOADING } = useQuery(GET_USERS)
-    const filtredRoles = []
-    const roles = data?.users?.filter((role) => {
-        return filtredRoles.push(role)
-    })
-    console.log(filtredRoles);
+    const { data: USER_DATA, loading: LOADING } = useQuery(GET_USERS)
+    const { data: COURSE_DATA, loading: COURSE_LOADING } = useQuery(GET_COURSES)
+    const { data: CATEGORY_DATA } = useQuery(GET_COURSE_CATEGORY)
+    const { data: SPEAKERS } = useQuery(GET_SPEAKERS)
 
-    filtredRoles.map((item) => {
-        console.log(item.id);
-    })
-
-
-
-
-
-
-    const student = data?.users?.filter((role) => {
+    const { data: COURSE_BATCH } = useQuery(GET_COURSE_BATCH)
+    const student = USER_DATA?.users?.filter((role) => {
         return role?.role === 'STUDENT'
     })
-    console.log("1122", student);
-    const teacher = data?.users?.filter((role) => {
+    const teacher = USER_DATA?.users?.filter((role) => {
         return role?.role === 'TEACHER'
     })
-    const admin = data?.users?.filter((role) => {
+    const admin = USER_DATA?.users?.filter((role) => {
         return role?.role === 'ADMIN'
     })
 
+    const speakerList = SPEAKERS?.speakers?.filter((item) => {
+        return item
+    })
+    console.log("dpeaekr", speakerList);
+
+    const courseBatch = COURSE_BATCH?.findManyCourseBatches?.filter((item) => {
+        return item
+    })
+    console.log("bathc", courseBatch);
 
 
-    const { data: CATEGORY_DATA } = useQuery(GET_COURSE_CATEGORY)
-
-    return [{ filtredRoles, student, teacher, admin, LOADING, CATEGORY_DATA }]
+    return [{ student, teacher, admin, speakerList, courseBatch, LOADING, CATEGORY_DATA, COURSE_DATA }]
 }

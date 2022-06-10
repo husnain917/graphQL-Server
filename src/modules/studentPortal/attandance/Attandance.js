@@ -31,32 +31,35 @@ export default function Attandance() {
       title={'Attandance'}
       tableHeadings={[
         "Id",
-        'User',
-        'Attendence',
+        'attendence',
         'Date',
         'User Id',
+        'Actions'
       ]}
+      ctaDeleteHandler={ctaDeleteHandler}
+      ctaFormHandler={ctaFormHandler}
+      ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
         {
           key: "id",
         },
         {
-          key: "attendance",
+          key: "attendence",
         },
         {
           key: 'date',
         },
         {
-          key: 'user'
+          key: 'userId'
         },
         {
-          key: 'userId'
-        }
+          type: "crud",
+        },
       ]}
       formInputs={formInputs}
       filterdata={{
         key: "attendance",
-        filterTag: ['All', 'true', 'false'],
+        filterTag: ['All', 'PRESENT', 'ABSENT'],
       }}
       data={refacteredData}
       disableAddIcon={true}

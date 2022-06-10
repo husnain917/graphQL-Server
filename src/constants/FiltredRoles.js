@@ -22,6 +22,7 @@ export default function FiltredData() {
     const student = data?.users?.filter((role) => {
         return role?.role === 'STUDENT'
     })
+    console.log("1122", student);
     const teacher = data?.users?.filter((role) => {
         return role?.role === 'TEACHER'
     })

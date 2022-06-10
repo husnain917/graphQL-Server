@@ -31,53 +31,61 @@ export default function MyCourse() {
       title={'My Courses'}
       tableHeadings={[
         "Id",
-        'Student Name',
-        'Course Name',
         'Course Id',
-        'Student Id',
-        'Fee Status',
-        'Course Batch',
-        'Course Batch Id',
+        'StudentId',
         'Course Approval',
         'Why Reject',
-       
+        'Fee status',
+        'course Batch id',
+        'Created At',
+        'Updated At',
+
       ]}
       printedKeys={[
         {
           key: "id",
         },
         {
-          key: "studentName",
+          key: "coursesId",
         },
-        {
-          key: "courseName",
-        },
-
-        {
-          key: "courseId",
-        },
-
         {
           key: "studentId",
+        },
+
+        {
+          key: "courseApproval",
+        },
+
+        {
+          key: "whyReject",
         },
 
         {
           key: "feeStatus",
         },
         {
-          key: "courseBatch",
+          key: "courseBatchesId",
+        },
+        // {
+        //   key: 'courseBatches',
+        // },
+        // {
+        //   key: "courseApproval",
+        // },
+        // {
+        //   key: "courses",
+        // },
+        // {
+        //   key: 'student'
+        // },
+        {
+          key: 'Created At'
         },
         {
-          key: 'courseBatchId',
+          key: 'Updated At'
         },
         {
-          key: "courseApproval",
-        },
-        {
-          key: "whyReject",
-        },
-        {
-          key:'crud'
+          key: 'crud'
         }
       ]}
       formInputs={formInputs}

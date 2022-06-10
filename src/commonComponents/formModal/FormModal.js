@@ -213,50 +213,77 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                   </TextField>
                                 )
                                 :
-                                item.type === "calender" ?
-                                  (
-                                    <>
-                                      <button onClick={() => setOpen(true)}>Select Date</button>
-                                      <>
-                                        {
-                                          open ?
-                                            <Calendar
-                                              onChange={onDateChange}
-                                              value={date}
-                                              showNeighboringMonth={false}
-                                              locale={"en-US"}
-                                            />
-                                            :
-                                            ''
-                                        }
-                                      </>
-                                    </>
-                                  )
-                                  :
+                                item.type === "booleanSelection" ?
                                   (
                                     <TextField
                                       margin="dense"
                                       id="file"
                                       label={item.label}
                                       name={item.name}
-                                      type={item.type}
+                                      select
                                       required
                                       fullWidth
                                       variant="standard"
-                                      value={
-                                        item.name === "file" ? "" : state.editData[item.name]
-                                      }
                                       onChange={(e) => {
-                                        test[item.name] = item.name === "file"
-                                          ? e.target.files[0].name
-                                          : e.target.value;
+                                        test[item.name] = e.target.value;
                                         dispatch({
                                           type: "setEditData",
                                           payload: test,
                                         });
                                       }}
-                                    />
+                                    >
+                                      {item?.dropDown?.map((option) => (
+                                        <MenuItem key={option} value={option}>
+                                          {option}
+                                        </MenuItem>
+                                      ))}
+                                    </TextField>
                                   )
+                                  :
+                                  item.type === "calender" ?
+                                    (
+                                      <>
+                                        <button onClick={() => setOpen(true)}>Select Date</button>
+                                        <>
+                                          {
+                                            open ?
+                                              <Calendar
+                                                onChange={onDateChange}
+                                                value={date}
+                                                showNeighboringMonth={false}
+                                                locale={"en-US"}
+                                              />
+                                              :
+                                              ''
+                                          }
+                                        </>
+                                      </>
+                                    )
+                                    :
+                                    (
+                                      <TextField
+                                        margin="dense"
+                                        id="file"
+                                        label={item.label}
+                                        name={item.name}
+                                        type={item.type}
+                                        required
+                                        fullWidth
+                                        variant="standard"
+                                        value={
+                                          item.name === "file" ? "" : state.editData[item.name]
+                                        }
+                                        onChange={(e) => {
+                                          test[item.name] = item.name === "file"
+                                            ? e.target.files[0].name
+                                            : e.target.value;
+                                          dispatch({
+                                            type: "setEditData",
+                                            payload: test,
+                                          });
+                                        }}
+                                      />
+                                    )
                   }
                   <br />
                 </>

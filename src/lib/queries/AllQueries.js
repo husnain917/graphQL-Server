@@ -42,26 +42,7 @@ query Faqs {
 }
 `
 
-export const GET_STAFF = gql`
-query FindManyEvents {
-  findManyStaff {
-    id
-    name
-    email
-    role
-    phone
-  }
-}`
 
-export const GET_STUDENT = gql`
-query FindManyEvents {
-  findManyStudents {
-    id
-    name
-    status
-    email
-  }
-}`
 
 export const GET_SUCCESS_STORIES = gql`
 query FindManySuccessStories {
@@ -147,3 +128,80 @@ query Categories {
   }
 }
 `
+
+export const GET_MY_COURSES = gql`
+query MyCourses {
+  myCourses {
+    id
+    coursesId
+    studentId
+    updateAt
+    createdAt
+    courseApproval
+    whyReject
+    feeStatus
+    courseBatchesId
+    courseBatches {
+      name
+      id
+    }
+    courses {
+      courseName
+      courseDesc
+      id
+    }
+    student {
+      id
+      email
+      name
+    }
+  }
+}
+`
+
+export const GET_ATTANDANCE = gql`
+query Query {
+  attendences {
+    id
+    attendence
+    date
+    userId
+  }
+}
+`
+
+export const GET_QUIZ = gql`
+query Query {
+  courseQuizs {
+    id
+    courseBatchesId
+    createdAt
+    coursesId
+    updateAt
+  }
+}
+`
+
+export const GET_ASSIGNMENT = gql`
+query Query {
+  courseAssignments {
+    id
+    name
+    courseBatchesId
+    coursesId
+    createdAt
+    updateAt
+  }
+}
+`
+export const GET_LECTURES = gql`
+query FindManyLectures {
+  findManyLectures {
+    id
+    lectureTitle
+    lectureVideo
+    coursesId
+    createdAt
+    updateAt
+  }
+}`

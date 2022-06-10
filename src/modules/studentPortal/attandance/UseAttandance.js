@@ -7,15 +7,18 @@ import {
     ToastWarning,
 } from "../../../commonComponents/commonFunction/CommonFunction";
 import {
-    ADD_COURSES,
     UPDATE_SINGLE_COURSE,
-    DELETE_SINGLE_COURSE
+    DELETE_SINGLE_COURSE,
+    ADD_ATTANDANCE,
+    DELETE_ATTANDANCE,
+    UPDATE_ATTANDANCE
 } from "../../../lib/mutation/AllMutations";
-import { GET_COURSES } from "../../../lib/queries/AllQueries";
+import { GET_ATTANDANCE } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
+import FiltredData from "../../../constants/FiltredRoles";
 
 
 
@@ -24,44 +27,23 @@ import { AppContext } from "../../../State";
 
 
 export default function UseAttandance() {
+    const [{ student }] = FiltredData()
     const formInputs = [
         {
-            label: "Name",
-            name: "courseName",
-            type: "text",
+            label: "attendence",
+            name: "attendence",
+            type: "booleanSelection",
+            dropDown: ["PRESENT", "ABSENT"]
         },
         {
-            label: "Description",
-            name: "courseDesc",
-            type: "text",
+            label: "user",
+            name: "user",
+            type: "selectUser",
+            dropDown: student
         },
-        {
-            label: "Intro",
-            name: "courseIntro",
-            type: "text",
-        },
-        {
-            label: "Price",
-            name: "coursePrice",
-            type: "number",
-        },
-        {
-            label: "instructorId",
-            name: "instructorId",
-            type: "text",
-        },
-        {
-            label: "courseCategoryId",
-            name: "courseCategoryId",
-            type: "text",
-        },
-        {
-            label: "Status",
-            name: "courseStatus",
-            type: "select",
-            dropDownContent: ["PUBLISH", "UNPUBLISH"],
-        },
+
     ]
+    console.log("sami", student);
     const { state, dispatch } = useContext(AppContext);
 
 
@@ -71,93 +53,47 @@ export default function UseAttandance() {
 
     //GET STAFF 
 
-    let { data, loading: GET_LOADING, error } = useQuery(GET_COURSES);
+    let { data, loading: GET_LOADING, error } = useQuery(GET_ATTANDANCE);
     console.log("error", error);
-    const refacteredData = [
-        {
-            id: '92739237293729793',
-            attendance: 'true',
-            date: new Date().toString(),
-            user: 'Sami',
-            userId: '32329121',
-        },
-        {
-            id: '92739237293729793',
-            attendance: 'false',
-            date: new Date().toString(),
-            user: 'Muneeb',
-            userId: '32329121',
-        },
-        {
-            id: '92739237293729793',
-            attendance: 'true',
-            date: new Date().toString(),
-            user: 'Sami',
-            userId: '32329121',
-        },
-    ];
-    //   data?.findManyCourses?.map((item) => {
-    //     refacteredData.push({
-    //       id: item.id,
-    //       courseName: item.courseName,
-    //       courseDesc: item.courseDesc,
-    //       courseIntro: item.courseIntro,
-    //       courseStatus: item.courseStatus,
-    //       coursePrice: item.coursePrice,
-    //       instructorId: item.instructorId,
-    //       courseCategoryId: item.courseCategoryId,
-
-
-
-
-    //     });
-    //   });
-    //   console.log("refacteredData", refacteredData);
+    const refacteredData = [];
+    data?.attendences?.map((item) => {
+        refacteredData.push({
+            id: item.id,
+            attendence: item.attendence,
+            date: item.date,
+            userId: item.userId
+        });
+    });
+    console.log("refacteredDatanew", refacteredData);
 
     const [loader, setLoader] = useState(false);
 
     //ADD STAFF
 
-    let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
+    let [CreateAttendence, { loading: ADD_LOADING }] = useMutation(ADD_ATTANDANCE);
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.courseName) {
-            ToastWarning('Course name required')
+        if (!state.editData?.attendence) {
+            ToastWarning('attendence required')
         }
-        else if (!state.editData?.courseDesc) {
-            ToastWarning('Course description required')
-        }
-        else if (!state.editData?.courseIntro) {
-            ToastWarning('Intro required')
-        }
-        else if (!state.editData?.coursePrice) {
-            ToastWarning('Price required')
-        }
-        else if (!state.editData?.instructorId) {
-            ToastWarning('Instructor Id required')
-        }
-        else if (!state.editData?.courseCategoryId) {
-            ToastWarning('Course category Id required')
-        }
-        else if (!state.editData?.courseStatus) {
-            ToastWarning('Status required')
+        else if (!state.editData?.user) {
+            ToastWarning('user required')
         }
         else {
             try {
-                await Mutation({
+                await CreateAttendence({
                     variables: {
-                        data: {
-                            courseName: state.editData?.courseName,
-                            courseDesc: state.editData?.courseDesc,
-                            courseIntro: state.editData?.courseIntro,
-                            courseStatus: state.editData?.courseStatus,
-                            instructorId: state.editData?.instructorId,
-                            courseCategoryId: state.editData?.courseCategoryId,
-                            coursePrice: state.editData?.coursePrice,
 
-                            // phone: state.editData?.phone
-                        },
+                        data: {
+                            attendence: state.editData?.attendence,
+                            date: new Date().toDateString(),
+                            user: {
+                                connect: {
+                                    id: state.editData?.user
+                                }
+                            }
+                        }
                     },
                     onCompleted(data, cache) {
                         dispatch({
@@ -167,10 +103,10 @@ export default function UseAttandance() {
                                 openFormModal: false,
                             },
                         });
-                        ToastSuccess('Course Added')
+                        ToastSuccess('Attandance marked')
 
                     },
-                    refetchQueries: [{ query: GET_COURSES }],
+                    refetchQueries: [{ query: GET_ATTANDANCE }],
                 });
             } catch (error) {
                 dispatch({
@@ -192,19 +128,19 @@ export default function UseAttandance() {
 
     // DELETE STAFF
 
-    let [DeleteCourses, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_COURSE);
+    let [Mutation, { loading: DELETE_LOADING }] = useMutation(DELETE_ATTANDANCE);
     const ctaDeleteHandler = async ({ ...data }) => {
         try {
-            await DeleteCourses({
+            await Mutation({
                 variables: {
                     where: {
                         id: data.id,
                     },
                 },
                 onCompleted(data) {
-                    ToastSuccess('Course Deleted')
+                    ToastSuccess('Attandance Deleted')
                 },
-                refetchQueries: [{ query: GET_COURSES }],
+                refetchQueries: [{ query: GET_ATTANDANCE }],
             });
         } catch (error) {
             console.log(error.message);
@@ -217,55 +153,38 @@ export default function UseAttandance() {
 
     //Update staff
 
-    let [UpdateCourses, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_COURSE);
+    let [UpdateAttendence, { loading: UPDATE_LOADING }] = useMutation(UPDATE_ATTANDANCE);
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.courseName) {
-            ToastWarning('Course name required')
+        if (!state.editData?.attendence) {
+            ToastWarning('attendence required')
         }
-        else if (!state.editData?.courseDesc) {
-            ToastWarning('Course description required')
-        }
-        else if (!state.editData?.courseIntro) {
-            ToastWarning('Intro required')
-        }
-        else if (!state.editData?.coursePrice) {
-            ToastWarning('Price required')
-        }
-        else if (!state.editData?.instructorId) {
-            ToastWarning('Instructor Id required')
-        }
-        else if (!state.editData?.courseCategoryId) {
-            ToastWarning('Course category Id required')
-        }
-        else if (!state.editData?.courseStatus) {
-            ToastWarning('Status required')
+        else if (!state.editData?.user) {
+            ToastWarning('user required')
         }
         else {
             try {
-                await UpdateCourses({
+                await UpdateAttendence({
                     variables: {
                         where: {
                             id: state.editId
                         },
+
                         data: {
-                            courseName: {
-                                set: state.editData?.courseName
+                            attendence: {
+                                set: state.editData?.attendence
                             },
-                            courseDesc: {
-                                set: state.editData?.courseDesc
+                            date: {
+                                set: new Date().toDateString()
                             },
-                            courseIntro: {
-                                set: state.editData?.courseIntro
-                            },
-                            courseStatus: {
-                                set: state.editData?.courseStatus
-                            },
-                            coursePrice: {
-                                set: state.editData?.coursePrice
+                            user: {
+                                connect: {
+                                    id: state.editData?.user
+                                }
                             }
-                        }
+                        },
+
                     },
                     onCompleted() {
                         dispatch({
@@ -275,9 +194,9 @@ export default function UseAttandance() {
                                 openFormModal: false,
                             },
                         });
-                        ToastSuccess('Course Updated')
+                        ToastSuccess('Attandance Updated')
                     },
-                    refetchQueries: [{ query: GET_COURSES }],
+                    refetchQueries: [{ query: GET_ATTANDANCE }],
                 })
 
             } catch (error) {

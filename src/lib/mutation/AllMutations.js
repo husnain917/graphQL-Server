@@ -42,12 +42,7 @@ mutation CreateCourses($data: CoursesCreateInput!) {
   }
 }
 `
-export const ADD_STUDENT = gql`
-mutation CreateManyStudents($data: [StudentsCreateManyInput!]!) {
-  createManyStudents(data: $data) {
-    count
-  }
-}`
+
 
 export const ADD_SUCCESS_STORY = gql`
 mutation CreateSuccessStories($data: SuccessStoriesCreateInput!) {
@@ -120,25 +115,75 @@ mutation CreateUser($data: UserCreateInput!) {
 }
 `
 
+export const ADD_MY_COURSES = gql`
+mutation Mutation($data: MyCourseCreateInput!) {
+  createMyCourse(data: $data) {
+    id
+    coursesId
+    studentId
+    createdAt
+    updateAt
+    courseApproval
+    whyReject
+    feeStatus
+    courseBatchesId
+  }
+}
+`
 
+export const ADD_ATTANDANCE = gql`
+mutation CreateAttendence($data: AttendenceCreateInput!) {
+  createAttendence(data: $data) {
+    attendence
+    id
+    date
+    userId
+  }
+}
+`
 
+export const ADD_QUIZ = gql`
+mutation CreateCourseQuiz($data: CourseQuizCreateInput!) {
+  createCourseQuiz(data: $data) {
+    id
+    courseBatchesId
+    coursesId
+    createdAt
+    updateAt
+  }
+}
+`
+
+export const ADD_ASSIGNMENT = gql`
+mutation CreateCourseAssignment($data: CourseAssignmentCreateInput!) {
+  createCourseAssignment(data: $data) {
+    id
+    name
+    courseBatchesId
+    coursesId
+    createdAt
+    updateAt
+  }
+}
+`
+
+export const ADD_LECTURES = gql`
+mutation CreateLectures($data: LecturesCreateInput!) {
+  createLectures(data: $data) {
+    id
+    lectureTitle
+    lectureVideo
+    coursesId
+    createdAt
+    updateAt
+  }
+}
+`
 
 //SINGLE DELETE MUTATIONS
 
-export const DELETE_SINGLE_STAFF = gql`
 
-mutation DeleteStaff($where: StaffWhereUniqueInput!) {
-  deleteStaff(where: $where) {
-    name
-  }
-}`
 
-export const DELETE_SINGLE_STUDENT = gql`
-mutation DeleteStudents($where: StudentsWhereUniqueInput!) {
-  deleteStudents(where: $where) {
-    name
-  }
-}`
 
 
 export const DELETE_SINGLE_COURSE = gql`
@@ -243,7 +288,48 @@ mutation DeleteUser($where: UserWhereUniqueInput!) {
 }
 `
 
+export const DELETE_ATTANDANCE = gql`
+mutation Mutation($where: AttendenceWhereUniqueInput!) {
+  deleteAttendence(where: $where) {
+    id
+  }
+}
+`
+export const DELETE_QUIZ = gql`
+mutation DeleteCourseQuiz($where: CourseQuizWhereUniqueInput!) {
+  deleteCourseQuiz(where: $where) {
+    id
+    courseBatchesId
+    coursesId
+    createdAt
+    updateAt
+  }
+}
+`
+export const DELETE_ASSIGNMENT = gql`
+mutation DeleteCourseAssignment($where: CourseAssignmentWhereUniqueInput!) {
+  deleteCourseAssignment(where: $where) {
+    id
+    name
+    courseBatchesId
+    coursesId
+    createdAt
+    updateAt
+  }
+}`
 
+export const DELETE_LECTURE = gql`
+mutation DeleteLectures($where: LecturesWhereUniqueInput!) {
+  deleteLectures(where: $where) {
+    id
+    lectureTitle
+    lectureVideo
+    coursesId
+    createdAt
+    updateAt
+  }
+}
+`
 
 //UPDATE SINGLE MUTATIONS
 
@@ -256,14 +342,6 @@ mutation UpdateSuccessStories($where: SuccessStoriesWhereUniqueInput!, $data: Su
 } `
 
 
-export const UPDATE_SINGLE_STAFF = gql`
-mutation UpdateStaff($data: StaffUpdateInput!, $where: StaffWhereUniqueInput!) {
-  updateStaff(data: $data, where: $where) {
-    id
-  }
-
-
-} `
 
 export const UPDATE_SINGLE_COURSE = gql`
 mutation UpdateCourses($data: CoursesUpdateInput!, $where: CoursesWhereUniqueInput!) {
@@ -304,12 +382,7 @@ mutation UpdateFaq($data: FaqUpdateInput!, $where: FaqWhereUniqueInput!) {
 `
 
 
-export const UPDATE_SINGLE_STUDENT = gql`
-mutation UpdateStudents($data: StudentsUpdateInput!, $where: StudentsWhereUniqueInput!) {
-  updateStudents(data: $data, where: $where) {
-    id
-  }
-} `
+
 
 
 export const UPDATE_SINGLE_ENROLLMENT = gql`
@@ -358,6 +431,111 @@ mutation UpdateUser($data: UserUpdateInput!, $where: UserWhereUniqueInput!) {
   }
 }
 `
+
+export const UPDATE_ATTANDANCE = gql`
+mutation UpdateAttendence($data: AttendenceUpdateInput!, $where: AttendenceWhereUniqueInput!) {
+  updateAttendence(data: $data, where: $where) {
+    id
+    attendence
+    date
+    userId
+  }
+}
+`
+
+
+export const UPDATE_QUIZ = gql`
+mutation UpdateCourseQuiz($data: CourseQuizUpdateInput!, $where: CourseQuizWhereUniqueInput!) {
+  updateCourseQuiz(data: $data, where: $where) {
+    id
+    courseBatchesId
+    coursesId
+    createdAt
+    updateAt
+  }
+}
+`
+
+
+export const UPDATE_ASSIGNMENT = gql`
+mutation UpdateCourseAssignment($data: CourseAssignmentUpdateInput!, $where: CourseAssignmentWhereUniqueInput!) {
+  updateCourseAssignment(data: $data, where: $where) {
+    id
+    name
+    courseBatchesId
+    coursesId
+    createdAt
+    updateAt
+  }
+}
+`
+
+
+export const UPDATE_LECTURES = gql`
+mutation UpdateLectures($data: LecturesUpdateInput!, $where: LecturesWhereUniqueInput!) {
+  updateLectures(data: $data, where: $where) {
+    id
+    lectureTitle
+    lectureVideo
+    coursesId
+    createdAt
+    updateAt
+  }
+}
+`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

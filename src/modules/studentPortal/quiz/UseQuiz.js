@@ -9,9 +9,12 @@ import {
 import {
     ADD_COURSES,
     UPDATE_SINGLE_COURSE,
-    DELETE_SINGLE_COURSE
+    DELETE_SINGLE_COURSE,
+    ADD_QUIZ,
+    DELETE_QUIZ,
+    UPDATE_QUIZ
 } from "../../../lib/mutation/AllMutations";
-import { GET_COURSES } from "../../../lib/queries/AllQueries";
+import { GET_COURSES, GET_QUIZ } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
@@ -71,93 +74,52 @@ export default function UseQuiz() {
 
     //GET STAFF 
 
-    let { data, loading: GET_LOADING, error } = useQuery(GET_COURSES);
+    let { data, loading: GET_LOADING, error } = useQuery(GET_QUIZ);
     console.log("error", error);
-    const refacteredData = [
-        {
-            id: '92739237293729793',
-            courseBatch: '2',
-            courseBatchId: 1,
-            course:'ddd',
-            courseId: '32329121',
-        },
-        {
-            id: '92739237293729793',
-            courseBatch: '2',
-            courseBatchId: 1,
-            course:'ddd',
-            courseId: '32329121',
-        },
-        {
-            id: '92739237293729793',
-            courseBatch: '2',
-            courseBatchId: 1,
-            course:'ddd',
-            courseId: '32329121',
-        },
-    ];
-    //   data?.findManyCourses?.map((item) => {
-    //     refacteredData.push({
-    //       id: item.id,
-    //       courseName: item.courseName,
-    //       courseDesc: item.courseDesc,
-    //       courseIntro: item.courseIntro,
-    //       courseStatus: item.courseStatus,
-    //       coursePrice: item.coursePrice,
-    //       instructorId: item.instructorId,
-    //       courseCategoryId: item.courseCategoryId,
-
-
-
-
-    //     });
-    //   });
-    //   console.log("refacteredData", refacteredData);
+    const refacteredData = [];
+    data?.courseQuizs?.map((item) => {
+        refacteredData.push({
+            id: item.id,
+            courseBatchesId: item.courseBatchesId,
+            coursesId: item.coursesId,
+            createdAt: item.createdAt,
+            updateAt: item.updateAt
+        });
+    });
+    console.log("refacteredData", refacteredData);
 
     const [loader, setLoader] = useState(false);
 
     //ADD STAFF
 
-    let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
+    let [CreateCourseQuiz, { loading: ADD_LOADING }] = useMutation(ADD_QUIZ);
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.courseName) {
-            ToastWarning('Course name required')
+        if (!state.editData?.courseBatchesId) {
+            ToastWarning('Course Batches required')
         }
-        else if (!state.editData?.courseDesc) {
-            ToastWarning('Course description required')
-        }
-        else if (!state.editData?.courseIntro) {
-            ToastWarning('Intro required')
-        }
-        else if (!state.editData?.coursePrice) {
-            ToastWarning('Price required')
-        }
-        else if (!state.editData?.instructorId) {
-            ToastWarning('Instructor Id required')
-        }
-        else if (!state.editData?.courseCategoryId) {
-            ToastWarning('Course category Id required')
-        }
-        else if (!state.editData?.courseStatus) {
-            ToastWarning('Status required')
+        else if (!state.editData?.coursesId) {
+            ToastWarning('Courses required')
         }
         else {
             try {
-                await Mutation({
+                await CreateCourseQuiz({
                     variables: {
-                        data: {
-                            courseName: state.editData?.courseName,
-                            courseDesc: state.editData?.courseDesc,
-                            courseIntro: state.editData?.courseIntro,
-                            courseStatus: state.editData?.courseStatus,
-                            instructorId: state.editData?.instructorId,
-                            courseCategoryId: state.editData?.courseCategoryId,
-                            coursePrice: state.editData?.coursePrice,
 
-                            // phone: state.editData?.phone
-                        },
+                        data: {
+                            courseBatches: {
+                                connect: {
+                                    id: null
+                                }
+                            },
+                            courses: {
+                                connect: {
+                                    id: null
+                                }
+                            },
+                        }
+
                     },
                     onCompleted(data, cache) {
                         dispatch({
@@ -167,10 +129,10 @@ export default function UseQuiz() {
                                 openFormModal: false,
                             },
                         });
-                        ToastSuccess('Course Added')
+                        ToastSuccess('Quiz Added')
 
                     },
-                    refetchQueries: [{ query: GET_COURSES }],
+                    refetchQueries: [{ query: GET_QUIZ }],
                 });
             } catch (error) {
                 dispatch({
@@ -192,19 +154,19 @@ export default function UseQuiz() {
 
     // DELETE STAFF
 
-    let [DeleteCourses, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_COURSE);
+    let [DeleteCourseQuiz, { loading: DELETE_LOADING }] = useMutation(DELETE_QUIZ);
     const ctaDeleteHandler = async ({ ...data }) => {
         try {
-            await DeleteCourses({
+            await DeleteCourseQuiz({
                 variables: {
                     where: {
                         id: data.id,
                     },
                 },
                 onCompleted(data) {
-                    ToastSuccess('Course Deleted')
+                    ToastSuccess('Quiz Deleted')
                 },
-                refetchQueries: [{ query: GET_COURSES }],
+                refetchQueries: [{ query: GET_QUIZ }],
             });
         } catch (error) {
             console.log(error.message);
@@ -217,55 +179,37 @@ export default function UseQuiz() {
 
     //Update staff
 
-    let [UpdateCourses, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_COURSE);
+    let [UpdateCourseQuiz, { loading: UPDATE_LOADING }] = useMutation(UPDATE_QUIZ);
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.courseName) {
-            ToastWarning('Course name required')
+        if (!state.editData?.courseBatchesId) {
+            ToastWarning('Course Batches required')
         }
-        else if (!state.editData?.courseDesc) {
-            ToastWarning('Course description required')
-        }
-        else if (!state.editData?.courseIntro) {
-            ToastWarning('Intro required')
-        }
-        else if (!state.editData?.coursePrice) {
-            ToastWarning('Price required')
-        }
-        else if (!state.editData?.instructorId) {
-            ToastWarning('Instructor Id required')
-        }
-        else if (!state.editData?.courseCategoryId) {
-            ToastWarning('Course category Id required')
-        }
-        else if (!state.editData?.courseStatus) {
-            ToastWarning('Status required')
+        else if (!state.editData?.coursesId) {
+            ToastWarning('Courses required')
         }
         else {
             try {
-                await UpdateCourses({
+                await UpdateCourseQuiz({
                     variables: {
                         where: {
                             id: state.editId
                         },
+
                         data: {
-                            courseName: {
-                                set: state.editData?.courseName
+                            courseBatches: {
+                                connect: {
+                                    id: null
+                                }
                             },
-                            courseDesc: {
-                                set: state.editData?.courseDesc
-                            },
-                            courseIntro: {
-                                set: state.editData?.courseIntro
-                            },
-                            courseStatus: {
-                                set: state.editData?.courseStatus
-                            },
-                            coursePrice: {
-                                set: state.editData?.coursePrice
+                            courses: {
+                                connect: {
+                                    id: null
+                                }
                             }
                         }
+
                     },
                     onCompleted() {
                         dispatch({

@@ -7,14 +7,11 @@ import {
   ToastWarning,
 } from "../../../commonComponents/commonFunction/CommonFunction";
 import {
-  ADD_STAFF,
   ADD_USER,
-  DELETE_SINGLE_STAFF,
   DELETE_USER,
-  UPDATE_SINGLE_STAFF,
   UPDATE_USER,
 } from "../../../lib/mutation/AllMutations";
-import { GET_STAFF, GET_USERS } from "../../../lib/queries/AllQueries";
+import {  GET_USERS } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";

@@ -9,9 +9,10 @@ import {
 import {
     ADD_COURSES,
     UPDATE_SINGLE_COURSE,
-    DELETE_SINGLE_COURSE
+    DELETE_SINGLE_COURSE,
+    ADD_MY_COURSES
 } from "../../../lib/mutation/AllMutations";
-import { GET_COURSES } from "../../../lib/queries/AllQueries";
+import { GET_MY_COURSES } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
@@ -26,40 +27,45 @@ import { AppContext } from "../../../State";
 export default function UseMyCourses() {
     const formInputs = [
         {
-            label: "Name",
-            name: "courseName",
+            label: "coursesId",
+            name: "coursesId",
             type: "text",
         },
         {
-            label: "Description",
-            name: "courseDesc",
+            label: "studentId",
+            name: "studentId",
             type: "text",
         },
         {
-            label: "Intro",
-            name: "courseIntro",
+            label: "updateAt",
+            name: "updateAt",
             type: "text",
         },
         {
-            label: "Price",
-            name: "coursePrice",
-            type: "number",
-        },
-        {
-            label: "instructorId",
-            name: "instructorId",
+            label: "createdAt",
+            name: "createdAt",
             type: "text",
         },
         {
-            label: "courseCategoryId",
-            name: "courseCategoryId",
+            label: "courseApproval",
+            name: "courseApproval",
+            type: "text",
+        },
+        {
+            label: "whyReject",
+            name: "whyReject",
+            type: "text",
+        },
+        {
+            label: "course Batche",
+            name: "courseBatches",
             type: "text",
         },
         {
             label: "Status",
-            name: "courseStatus",
+            name: "feeStatus",
             type: "select",
-            dropDownContent: ["PUBLISH", "UNPUBLISH"],
+            dropDownContent: ["PAID", "PENDING","HALFPAID"],
         },
     ]
     const { state, dispatch } = useContext(AppContext);
@@ -71,69 +77,32 @@ export default function UseMyCourses() {
 
     //GET STAFF 
 
-    let { data, loading: GET_LOADING, error } = useQuery(GET_COURSES);
+    let { data, loading: GET_LOADING, error } = useQuery(GET_MY_COURSES);
     console.log("error", error);
-    const refacteredData = [
-        {
-            id: '92739237293729793',
-            courseName: 'Web',
-            courseId: '32329121',
-            studentName: 'Muneeb',
-            studentId: '21',
-            courseApproval: 'true',
-            whyReject: 'No reason',
-            feeStatus: 'Pending',
-            courseBatch: '2',
-            courseBatchId: 1
-        },
-        {
-            id: '92739237293729793',
-            courseName: 'Mobile app',
-            courseId: '32329121',
-            studentName: 'Muneeb',
-            studentId: '21',
-            courseApproval: 'true',
-            whyReject: 'No reason',
-            feeStatus: 'Paid',
-            courseBatch: '2',
-            courseBatchId: 1
-        },
-        {
-            id: '92739237293729793',
-            courseName: 'Web',
-            courseId: '32329121',
-            studentName: 'Muneeb',
-            studentId: '21',
-            courseApproval: 'true',
-            whyReject: 'No reason',
-            feeStatus: 'Pending',
-            courseBatch: '2',
-            courseBatchId: 1
-        },
-    ];
-    //   data?.findManyCourses?.map((item) => {
-    //     refacteredData.push({
-    //       id: item.id,
-    //       courseName: item.courseName,
-    //       courseDesc: item.courseDesc,
-    //       courseIntro: item.courseIntro,
-    //       courseStatus: item.courseStatus,
-    //       coursePrice: item.coursePrice,
-    //       instructorId: item.instructorId,
-    //       courseCategoryId: item.courseCategoryId,
-
-
-
-
-    //     });
-    //   });
-    //   console.log("refacteredData", refacteredData);
+    const refacteredData = [];
+    data?.findManyCourses?.map((item) => {
+        refacteredData.push({
+            id: item.id,
+            coursesId: item.coursesId,
+            studentId: item.studentId,
+            updateAt: item.updateAt,
+            createdAt: item.createdAt,
+            courseApproval: item.courseApproval,
+            whyReject: item.whyReject,
+            feeStatus: item.feeStatus,
+            courseBatchesId: item.courseBatchesId,
+            courseBatches: item.courseBatches.name,
+            courses: item.courses.name,
+            student: item.student.name,
+        });
+    });
+    console.log("refacteredData", refacteredData);
 
     const [loader, setLoader] = useState(false);
 
     //ADD STAFF
 
-    let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
+    let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_MY_COURSES);
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
@@ -162,17 +131,31 @@ export default function UseMyCourses() {
             try {
                 await Mutation({
                     variables: {
-                        data: {
-                            courseName: state.editData?.courseName,
-                            courseDesc: state.editData?.courseDesc,
-                            courseIntro: state.editData?.courseIntro,
-                            courseStatus: state.editData?.courseStatus,
-                            instructorId: state.editData?.instructorId,
-                            courseCategoryId: state.editData?.courseCategoryId,
-                            coursePrice: state.editData?.coursePrice,
 
-                            // phone: state.editData?.phone
-                        },
+                        data: {
+                            id: null,
+                            courses: {
+                                connect: {
+                                    id: null
+                                }
+                            },
+                            student: {
+                                connect: {
+                                    id: null
+                                }
+                            },
+                            createdAt: null,
+                            updateAt: null,
+                            courseApproval: null,
+                            whyReject: null,
+                            feeStatus: null,
+                            courseBatches: {
+                                connect: {
+                                    id: null
+                                }
+                            }
+                        }
+
                     },
                     onCompleted(data, cache) {
                         dispatch({
@@ -185,7 +168,7 @@ export default function UseMyCourses() {
                         ToastSuccess('Course Added')
 
                     },
-                    refetchQueries: [{ query: GET_COURSES }],
+                    refetchQueries: [{ query: GET_MY_COURSES }],
                 });
             } catch (error) {
                 dispatch({
@@ -219,7 +202,7 @@ export default function UseMyCourses() {
                 onCompleted(data) {
                     ToastSuccess('Course Deleted')
                 },
-                refetchQueries: [{ query: GET_COURSES }],
+                refetchQueries: [{ query: GET_MY_COURSES }],
             });
         } catch (error) {
             console.log(error.message);
@@ -292,7 +275,7 @@ export default function UseMyCourses() {
                         });
                         ToastSuccess('Course Updated')
                     },
-                    refetchQueries: [{ query: GET_COURSES }],
+                    refetchQueries: [{ query: GET_MY_COURSES }],
                 })
 
             } catch (error) {

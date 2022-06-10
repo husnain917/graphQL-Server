@@ -33,8 +33,10 @@ export default function Lecture() {
         "Id",
         'Lecture title',
         'Lecture video',
-        'Courses',
         'Course Id',
+        'createdAt',
+        'updateAt',
+        'Actions'
       ]}
       printedKeys={[
         {
@@ -47,10 +49,16 @@ export default function Lecture() {
           key: 'lectureVideo',
         },
         {
-          key: 'courses'
+          key: 'courseId'
         },
         {
           key: 'courseId'
+        },
+        {
+          key: 'createdAt'
+        },
+        {
+          type: 'crud'
         },
       ]}
       formInputs={formInputs}

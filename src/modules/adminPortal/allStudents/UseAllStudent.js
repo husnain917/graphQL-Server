@@ -7,13 +7,11 @@ import {
   ToastWarning,
 } from "../../../commonComponents/commonFunction/CommonFunction";
 import {
-  ADD_STUDENT,
-  DELETE_SINGLE_STUDENT,
+  ADD_USER,
   DELETE_USER,
-  UPDATE_SINGLE_STUDENT,
   UPDATE_USER,
 } from "../../../lib/mutation/AllMutations";
-import { GET_STUDENT, GET_USERS } from "../../../lib/queries/AllQueries";
+import { GET_USERS } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
@@ -96,7 +94,7 @@ export function UseAllStudents() {
 
   //ADD STAFF
 
-  let [CreateManyStudents, { loading: ADD_LOADING }] = useMutation(ADD_STUDENT);
+  let [CreateUser, { loading: ADD_LOADING }] = useMutation(ADD_USER);
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
@@ -125,7 +123,7 @@ export function UseAllStudents() {
 
     else {
       try {
-        await CreateManyStudents({
+        await CreateUser({
           variables: {
             data: {
               name: state.editData?.name,
@@ -181,7 +179,7 @@ export function UseAllStudents() {
         onCompleted(data) {
           ToastSuccess('Student Deleted')
         },
-        refetchQueries: [{ query: GET_STUDENT }],
+        refetchQueries: [{ query: GET_USERS }],
       });
     } catch (error) {
       console.log(error.message);
@@ -258,7 +256,7 @@ export function UseAllStudents() {
             });
             ToastSuccess('Student Updated')
           },
-          refetchQueries: [{ query: GET_STUDENT }],
+          refetchQueries: [{ query: GET_USERS }],
         })
 
       } catch (error) {

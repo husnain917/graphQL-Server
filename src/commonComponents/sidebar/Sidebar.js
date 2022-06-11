@@ -12,6 +12,9 @@ import { Divider, Grid } from '@mui/material';
 import { Outlet, useLocation } from 'react-router-dom';
 import CommonProfileDropDown from '../commonProfileDropdown/CommonProfileDropDown';
 import { AppContext } from '../../State';
+import UseWindowDimensions from '../../customHooks/UseWindowDimensions';
+import { Hidden } from '@mui/material';
+
 const drawerWidth = 240;
 function Sidebar(props) {
   const [{
@@ -23,6 +26,7 @@ function Sidebar(props) {
     handleDrawer
   }] = UseDrawer()
 
+  const { width } = UseWindowDimensions();
   const { window } = props;
   const location = useLocation();
   const anchorRef = React.useRef(null);
@@ -37,6 +41,7 @@ function Sidebar(props) {
             key={index}
             ref={anchorRef}
             button
+            onClick={width < 600 ? handleDrawer : null}
             sx={location?.pathname === item?.path ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
 
           >
@@ -110,20 +115,22 @@ function Sidebar(props) {
         <SidebarStyle.LogoutLink to='/login' onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink>
       </SidebarStyle.WebDrawer>
 
-      <SidebarStyle.MobileDrawer
-        drawerWidth={drawerWidth}
-        container={container}
-        variant="temporary"
-        open={open}
-        onClose={handleDrawer}
-        ModalProps={{
-          keepMounted: true,
-        }}
-      >
-        <Toolbar />
-        {drawer}
-        <SidebarStyle.LogoutLink to='/login' onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink>
-      </SidebarStyle.MobileDrawer>
+      <Hidden smUp>
+        <SidebarStyle.MobileDrawer
+          drawerWidth={drawerWidth}
+          container={container}
+          variant="temporary"
+          open={open}
+          onClose={handleDrawer}
+          ModalProps={{
+            keepMounted: true,
+          }}
+        >
+          <Toolbar />
+          {drawer}
+          <SidebarStyle.LogoutLink to='/login' onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink>
+        </SidebarStyle.MobileDrawer>
+      </Hidden>
 
       <SidebarStyle.MainBox component="main" >
         <Toolbar />

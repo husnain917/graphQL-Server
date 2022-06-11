@@ -21,7 +21,7 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../State';
 export const UseDrawer = () => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
     const { state, dispatch } = useContext(AppContext);
 
     const navigate = useNavigate()

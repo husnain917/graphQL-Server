@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../State';
 import { MENU_ITEMS } from '../../constants/Roles'
 export const UseDrawer = () => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
     const { state, dispatch } = useContext(AppContext);
     const navigate = useNavigate()
     const SideBarListItems = []

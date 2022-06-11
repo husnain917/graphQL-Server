@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
-import React, { useState, useContext } from "react";
-import Axios from "axios";
+import { useState, useContext } from "react";
 import {
   ToastError,
   ToastSuccess,
@@ -11,10 +10,9 @@ import {
   DELETE_USER,
   UPDATE_USER,
 } from "../../../lib/mutation/AllMutations";
-import { GET_USERS } from "../../../lib/queries/AllQueries";
-// import { convertToRaw } from "draft-js";
-// import draftToHtml from "draftjs-to-html";
-import { Slide, toast } from "react-toastify";
+import {
+  GET_USERS
+} from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
 
 
@@ -72,8 +70,11 @@ export function UseAllStudents() {
 
   //GET STAFF 
 
-  let { data, loading: GET_LOADING, error } = useQuery(GET_USERS);
-  console.log("error", error);
+  let {
+    data,
+    loading: GET_LOADING,
+    error
+  } = useQuery(GET_USERS);
   const refacteredData = [];
   data?.users?.map((item) => {
     if (item.role === "STUDENT") {
@@ -88,9 +89,7 @@ export function UseAllStudents() {
       });
     }
   });
-  console.log("refacteredData", refacteredData);
 
-  const [loader, setLoader] = useState(false);
 
   //ADD STAFF
 
@@ -154,7 +153,6 @@ export function UseAllStudents() {
             openFormModal: false,
           },
         });
-        setLoader(false);
         ToastError(error.message);
 
       }
@@ -266,7 +264,6 @@ export function UseAllStudents() {
   }
   return [
     {
-      loader,
       ADD_LOADING,
       GET_LOADING,
       DELETE_LOADING,

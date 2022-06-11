@@ -1,6 +1,5 @@
 import React, { createContext, useReducer } from "react";
 import { EditorState } from "draft-js";
-import { logDOM } from "@testing-library/react";
 
 let AppContext = createContext('');
 
@@ -13,22 +12,45 @@ const initialState = {
     openFormModal: false,
     modalUpdateFlag: false,
     editData: {},
+    imageUrl: ''
 }
 let reducer = (state, action) => {
     // eslint-disable-next-line default-case
     switch (action.type) {
         case "setAuthState": {
             console.log("action", action.payload);
-            return { ...state, authState: action.payload.authState, user: action.payload.user }
+            return {
+                ...state,
+                authState: action.payload.authState,
+                user: action.payload.user
+            }
         }
         case "setModal": {
-            return { ...state, modalUpdateFlag: action?.payload?.modalUpdateFlag || false, openFormModal: action?.payload?.openFormModal, editData: {} }
+            return {
+                ...state,
+                modalUpdateFlag: action?.payload?.modalUpdateFlag || false,
+                openFormModal: action?.payload?.openFormModal,
+                editData: {}
+            }
         }
         case "setEditData": {
-            return { ...state, editData: action.payload }
+            return {
+                ...state,
+                editData: action.payload
+            }
         }
         case "setEditId": {
-            return { ...state, editId: action.payload, }
+            return {
+                ...state,
+                editId: action.payload
+            }
+        }
+        case "setImageUrl": {
+            console.log('image', action.payload);
+            return {
+                ...state,
+                imageUrl: action.payload
+            }
         }
     }
     return state;
@@ -39,15 +61,26 @@ function AppContextProvider(props) {
         ...initialState,
     }
 
-    let [state, dispatch] = useReducer(reducer, fullInitialState);
+    let [
+        state,
+        dispatch
+    ] = useReducer(reducer, fullInitialState);
     let value = { state, dispatch };
 
 
     return (
-        <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
+        <AppContext.Provider
+            value={value}
+        >
+            {props.children}
+        </AppContext.Provider>
     );
 }
 
 let AppContextConsumer = AppContext.Consumer;
 
-export { AppContext, AppContextProvider, AppContextConsumer };
+export {
+    AppContext,
+    AppContextProvider,
+    AppContextConsumer
+};

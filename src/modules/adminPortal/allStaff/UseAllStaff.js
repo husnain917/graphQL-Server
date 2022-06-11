@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
-import React, { useState, useContext } from "react";
-import Axios from "axios";
+import { useState, useContext } from "react";
 import {
   ToastError,
   ToastSuccess,
@@ -11,10 +10,12 @@ import {
   DELETE_USER,
   UPDATE_USER,
 } from "../../../lib/mutation/AllMutations";
-import {  GET_USERS } from "../../../lib/queries/AllQueries";
-import { AppContext } from "../../../State";
-// import { convertToRaw } from "draft-js";
-// import draftToHtml from "draftjs-to-html";
+import {
+  GET_USERS
+} from "../../../lib/queries/AllQueries";
+import {
+  AppContext
+} from "../../../State";
 
 
 
@@ -59,20 +60,23 @@ export function UseAllStaff() {
       label: "Role",
       name: "role",
       type: "select",
-      dropDownContent: ["ADMIN", "TEACHER"],
+      dropDownContent: [
+        "ADMIN",
+        "TEACHER"
+      ],
     },
   ]
-  const { state, dispatch } = useContext(AppContext);
-
-
-
-
-
+  const {
+    state,
+    dispatch
+  } = useContext(AppContext);
 
   //GET STAFF 
 
-  let { data, loading: GET_LOADING, error } = useQuery(GET_USERS);
-  console.log("error", error);
+  let {
+    data,
+    loading: GET_LOADING,
+  } = useQuery(GET_USERS);
   const refacteredData = [];
   data?.users?.map((item) => {
     if (item.role === "ADMIN") {
@@ -98,14 +102,15 @@ export function UseAllStaff() {
       })
     }
   });
-  console.log("refacteredData", refacteredData);
 
-  const [loader, setLoader] = useState(false);
-  const [errormessage, setError] = useState('')
 
   //ADD STAFF
 
-  let [CreateUser, { loading: ADD_LOADING }] = useMutation(ADD_USER);
+  let [
+    CreateUser,
+    {
+      loading: ADD_LOADING
+    }] = useMutation(ADD_USER);
 
 
   const ctaFormHandler = async (event) => {
@@ -130,7 +135,6 @@ export function UseAllStaff() {
     }
     else if (state.editData?.contact.length > 10) {
       ToastWarning('Phone No Must be 10 digits')
-      // setError('Phone Number Must be 10 digits')
     }
 
 
@@ -199,7 +203,6 @@ export function UseAllStaff() {
             openFormModal: false,
           },
         });
-        setLoader(false);
         ToastError(error.message);
 
       }
@@ -213,7 +216,11 @@ export function UseAllStaff() {
 
   // DELETE STAFF
 
-  let [DeleteUser, { loading: DELETE_LOADING }] = useMutation(DELETE_USER);
+  let [
+    DeleteUser,
+    {
+      loading: DELETE_LOADING
+    }] = useMutation(DELETE_USER);
   const ctaDeleteHandler = async ({ ...data }) => {
     try {
       await DeleteUser({
@@ -239,7 +246,11 @@ export function UseAllStaff() {
 
   //Update staff
 
-  let [UpdateStudents, { loading: UPDATE_LOADING }] = useMutation(UPDATE_USER);
+  let [
+    UpdateStudents,
+    {
+      loading: UPDATE_LOADING
+    }] = useMutation(UPDATE_USER);
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
     if (!state.editData?.name) {
@@ -315,7 +326,6 @@ export function UseAllStaff() {
   }
   return [
     {
-      loader,
       ADD_LOADING,
       GET_LOADING,
       DELETE_LOADING,

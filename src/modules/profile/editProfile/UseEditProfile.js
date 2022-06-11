@@ -57,6 +57,9 @@ export function UseEditProfile() {
                             },
                             phone: {
                                 set: contact
+                            },
+                            image:{
+                                
                             }
                         }
                     },

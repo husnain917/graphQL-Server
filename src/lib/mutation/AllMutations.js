@@ -14,7 +14,19 @@ mutation CreateEnrollmentApproval($data: EnrollmentApprovalCreateInput!) {
     transactionId
   }
 }
-`;
+`
+export const ADD_SPEAKERS = gql`
+mutation CreateSpeaker($data: SpeakerCreateInput!) {
+  createSpeaker(data: $data) {
+    id
+    speakerName
+    spkearDesc
+    spekaerImage
+    createdAt
+    updateAt
+  }
+}
+`
 
 
 
@@ -231,7 +243,18 @@ mutation DeleteEnrollmentApproval($where: EnrollmentApprovalWhereUniqueInput!) {
 }
 `
 
-
+export const DELETE_SPEAKER = gql`
+mutation DeleteSpeaker($where: SpeakerWhereUniqueInput!) {
+  deleteSpeaker(where: $where) {
+    id
+    speakerName
+    spkearDesc
+    spekaerImage
+    createdAt
+    updateAt
+  }
+}
+`
 export const DELETE_CONTACT = gql`
 mutation DeleteMutation($where: ContactUsWhereUniqueInput!) {
   deleteContactUs(where: $where) {
@@ -401,7 +424,18 @@ mutation UpdateCourses($data: CoursesUpdateInput!, $where: CoursesWhereUniqueInp
   }
 }
 `
-
+export const UPDATE_SPEAKER = gql`
+mutation UpdateSpeaker($data: SpeakerUpdateInput!, $where: SpeakerWhereUniqueInput!) {
+  updateSpeaker(data: $data, where: $where) {
+    id
+    speakerName
+    spkearDesc
+    spekaerImage
+    createdAt
+    updateAt
+  }
+}
+`
 export const UPDATE_SINGLE_FAQ = gql`
 mutation UpdateFaq($data: FaqUpdateInput!, $where: FaqWhereUniqueInput!) {
   updateFaq(data: $data, where: $where) {

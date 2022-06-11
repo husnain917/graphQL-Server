@@ -121,7 +121,7 @@ export default function Table({
   const searchingFor = (searchQuery) => {
     return function (data) {
       return (
-        (data?.name || data?.courseName || data?.studentName || data?.city || data?.eventName || data?.faqQuestion || data?.id).toLowerCase().includes(
+        (data?.name || data?.courseName || data?.studentName || data?.city || data?.eventName || data?.faqQuestion || data?.speakerName || data?.coursesId || data?.lectureTitle || data?.id).toLowerCase().includes(
           searchQuery?.toLowerCase(),
         )
       );
@@ -280,34 +280,44 @@ export default function Table({
                               subitem?.type === "modalAnswer" ? (
                                 <CommonModal answer={row} />
                               ) :
-                                subitem?.type === "image" ? (
-                                  <TableStyle.Image src={exactKey} />
+                                subitem?.type === "modalProfileUrl" ? (
+                                  <CommonModal freelancingProfileUrl={row} />
                                 ) :
-                                  subitem?.type === "editor" ? (
-                                    <p
-                                      dangerouslySetInnerHTML={{ __html: exactKey }}
-                                    ></p>
-                                  ) : subitem?.type === "crud" ? (
+                                  subitem?.type === "image" ? (
                                     <>
-                                      <TableStyle.IconDiv>
-                                        <Tooltip title="Delete">
-                                          <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
-                                        </Tooltip>
-                                        <Tooltip title="Update">
-                                          <IconButton
-                                            aria-label="update"
-                                            size="small"
-                                            onClick={() => ctaEditButtonHandler(row)}
-                                          >
-                                            <TableStyle.EditIcon />
-                                          </IconButton>
-                                        </Tooltip>
-                                      </TableStyle.IconDiv>
+                                      {
+                                        row.eventImage ?
+                                          <TableStyle.Image src={exactKey} />
+                                          :
+                                          <p>No Image</p>
+                                      }
                                     </>
-                                  ) : (
-                                    exactKey
+                                  ) :
+                                    subitem?.type === "editor" ? (
+                                      <p
+                                        dangerouslySetInnerHTML={{ __html: exactKey }}
+                                      ></p>
+                                    ) : subitem?.type === "crud" ? (
+                                      <>
+                                        <TableStyle.IconDiv>
+                                          <Tooltip title="Delete">
+                                            <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
+                                          </Tooltip>
+                                          <Tooltip title="Update">
+                                            <IconButton
+                                              aria-label="update"
+                                              size="small"
+                                              onClick={() => ctaEditButtonHandler(row)}
+                                            >
+                                              <TableStyle.EditIcon />
+                                            </IconButton>
+                                          </Tooltip>
+                                        </TableStyle.IconDiv>
+                                      </>
+                                    ) : (
+                                      exactKey
 
-                                  )}
+                                    )}
                         </TableStyle.CustomTableCell>
                       );
                     })}

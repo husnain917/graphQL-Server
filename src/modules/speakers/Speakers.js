@@ -1,10 +1,11 @@
 import React from 'react';
-import Table from '../../../commonComponents/table/Table';
-import UseCourseBatch from './UseCourseBatch';
-import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
-export default function CourseBatch() {
+import Table from '../../commonComponents/table/Table';
+import UseSpeakers from './UseSpeakers';
+import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
+export default function Speakers() {
     const [
         {
+            loader,
             ADD_LOADING,
             GET_LOADING,
             DELETE_LOADING,
@@ -15,12 +16,13 @@ export default function CourseBatch() {
             ctaUpdateHandler,
             formInputs,
         },
-    ] = UseCourseBatch();
+    ] = UseSpeakers();
     if (
         GET_LOADING ||
         DELETE_LOADING ||
         UPDATE_LOADING ||
-        ADD_LOADING
+        ADD_LOADING ||
+        loader
     ) {
         return <CommonTableLoader />;
     }
@@ -29,9 +31,9 @@ export default function CourseBatch() {
             title={'Lectures'}
             tableHeadings={[
                 "Id",
-                'Name',
-                'Course Id',
-                'Course Name',
+                'speakerName',
+                'spkearDesc',
+                'spekaerImage',
                 'createdAt',
                 'updateAt',
                 'Actions'
@@ -44,13 +46,14 @@ export default function CourseBatch() {
                     key: "id",
                 },
                 {
-                    key: "name",
+                    key: "speakerName",
                 },
                 {
-                    key: 'coursesId',
+                    key: 'spkearDesc',
                 },
                 {
-                    key: 'courseName'
+                    key: 'spekaerImage',
+                    type:'image'
                 },
                 {
                     key: 'createdAt'
@@ -65,11 +68,7 @@ export default function CourseBatch() {
             formInputs={formInputs}
             filterdata={{
                 key: "status",
-                filterTag: [
-                    'All',
-                    'Offline',
-                    'Active'
-                ],
+                filterTag: ['All', 'Offline', 'Active'],
             }}
             data={refacteredData}
             disableAddIcon={true}

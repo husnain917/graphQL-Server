@@ -8,7 +8,9 @@ import {
 } from '@mui/icons-material';
 import PersonIcon from '@mui/icons-material/Person';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import SurroundSoundIcon from '@mui/icons-material/SurroundSound';
 import { colors } from '../../constants/Color';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 export const DS = {
     MainPageContainer: styled('div')(() => ({
         width: '100%',
@@ -44,6 +46,15 @@ export const DS = {
         fontSize: 50,
         color: colors.lightBlue,
     })),
+    CheckCircleIcon: styled(CheckCircleIcon)(() => ({
+        fontSize: 50,
+        color: colors.lightBlue,
+    })),
+    SurroundSoundIcon: styled(SurroundSoundIcon)(() => ({
+        fontSize: 50,
+        color: colors.lightBlue,
+    })),
+
     EventAvailableIcon: styled(EventAvailableIcon)(() => ({
         fontSize: 50,
         color: colors.lightBlue,

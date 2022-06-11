@@ -50,6 +50,7 @@ export default function SuccessStory() {
             },
             {
               key: "freelancingProfileUrl",
+              type:"modalProfileUrl"
             },
             {
               key: "city",

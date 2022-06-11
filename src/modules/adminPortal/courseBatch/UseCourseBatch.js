@@ -45,7 +45,6 @@ export default function UseCourseBatch() {
     //GET STAFF 
 
     let { data, loading: GET_LOADING, error } = useQuery(GET_COURSE_BATCH);
-    console.log("error", error);
     const refacteredData = [];
     data?.findManyCourseBatches?.map((item) => {
         refacteredData.push({
@@ -57,9 +56,7 @@ export default function UseCourseBatch() {
             updateAt: item.updateAt,
         });
     });
-    console.log("refacteredData", refacteredData);
 
-    const [loader, setLoader] = useState(false);
 
     //ADD STAFF
 
@@ -127,7 +124,6 @@ export default function UseCourseBatch() {
                         openFormModal: false,
                     },
                 });
-                setLoader(false);
                 ToastError(error.message);
 
             }
@@ -215,7 +211,6 @@ export default function UseCourseBatch() {
     }
     return [
         {
-            loader,
             ADD_LOADING,
             GET_LOADING,
             DELETE_LOADING,

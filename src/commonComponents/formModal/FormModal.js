@@ -15,8 +15,10 @@ import { EditorState } from "draft-js";
 import { Calendar } from 'react-calendar';
 
 import { FM } from './FormModalStyle'
+import CloudinaryFunction from "../../constants/CloudinaryFunction";
 export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date }) {
   const { state, dispatch } = useContext(AppContext);
+  const [ctaImageUpdateHandler] = CloudinaryFunction()
   const [open, setOpen] = useState(false)
   const handleCloseUpdate = () => {
     dispatch({
@@ -101,7 +103,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                       item.type === "upload" ?
                         (
                           <div style={{ marginTop: 13, marginBottom: -30 }}>
-                            <input type="file" onChange={e => handleChange(e)} />
+                            <FM.Image type="file" onChange={ctaImageUpdateHandler} />
                           </div>
                         )
                         :

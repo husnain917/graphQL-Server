@@ -1,15 +1,18 @@
 //Import from Libraries
 
 import React from "react";
-import { ToastContainer } from "react-toastify";
+import {
+  ToastContainer
+} from "react-toastify";
 //Import from Files
 import CommonTableLoader from "../../../commonComponents/commonTableLoader/CommonTableLoader";
 import Table from "../../../commonComponents/table/Table";
-import { UseAllStaff } from "./UseAllStaff";
+import {
+  UseAllStaff
+} from "./UseAllStaff";
 export default function AllStaff() {
   const [
     {
-      loader,
       ADD_LOADING,
       GET_LOADING,
       DELETE_LOADING,
@@ -26,8 +29,7 @@ export default function AllStaff() {
     GET_LOADING ||
     DELETE_LOADING ||
     UPDATE_LOADING ||
-    ADD_LOADING ||
-    loader
+    ADD_LOADING 
   ) {
     return <CommonTableLoader />;
   }
@@ -36,7 +38,16 @@ export default function AllStaff() {
       <ToastContainer />
       <Table
         title={"All Staff"}
-        tableHeadings={["Id", "Name", "Email", "Cnic", "contact", "address", "Role", "Action"]}
+        tableHeadings={[
+          "Id",
+          "Name",
+          "Email",
+          "Cnic",
+          "contact",
+          "address",
+          "Role",
+          "Action"
+        ]}
         // ctaEditButtonHandler={ctaEditButtonHandler}
         printedKeys={[
           {
@@ -67,7 +78,11 @@ export default function AllStaff() {
         formInputs={formInputs}
         filterdata={{
           key: "role",
-          filterTag: ['All', 'ADMIN', 'TEACHER'],
+          filterTag: [
+            'All',
+            'ADMIN',
+            'TEACHER'
+          ],
         }}
         data={refacteredData}
         ctaFormHandler={ctaFormHandler}

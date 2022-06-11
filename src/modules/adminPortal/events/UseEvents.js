@@ -56,33 +56,14 @@ export function UseEvents() {
         //     name: "eventDate",
         //     type: "calender",
         // },
-        // {
-        //     label: "Image",
-        //     name: "eventImage",
-        //     type: "upload",
-        // },
+        {
+            label: "Image",
+            name: "eventImage",
+            type: "upload",
+        },
     ]
     const { state, dispatch } = useContext(AppContext);
 
-
-
-    var fileName;
-    var File;
-    const handleChange = (e) => {
-        fileName = e.target.files
-        console.log("sami", fileName);
-        var filesArray = [].slice.call(fileName);
-        filesArray.forEach(e => {
-            console.log(e.name);
-            File = e.name
-            console.log(File);
-            //   console.log(e.size);
-            //   console.log(e.type);
-            //   console.log(e.lastModifiedDate);
-        });
-
-
-    }
 
     //GET STAFF 
 
@@ -122,6 +103,9 @@ export function UseEvents() {
         else if (!state.editData?.speakerId) {
             ToastWarning('Speaker Id required')
         }
+        else if (!state?.imageUrl) {
+            ToastWarning('Image required')
+        }
         else if (!state.editData?.eventStatus) {
             ToastWarning('Status required')
         }
@@ -133,7 +117,7 @@ export function UseEvents() {
                         data: {
                             eventName: state.editData?.eventName,
                             eventDesc: state.editData?.eventDesc,
-                            // eventImage: File,
+                            eventImage: state?.imageUrl,
                             eventDate: new Date(),
                             Speaker: {
                                 connect: {
@@ -297,7 +281,6 @@ export function UseEvents() {
             ctaUpdateHandler,
             onDateChange,
             formInputs,
-            handleChange,
             date
         },
     ];

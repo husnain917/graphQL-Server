@@ -17,6 +17,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import CoPresentIcon from '@mui/icons-material/CoPresent';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import SpeakerIcon from '@mui/icons-material/Speaker';
 export var MENU_ITEMS = [
     {
         text: 'Dashboard',
@@ -178,27 +179,27 @@ export var MENU_ITEMS = [
     {
         text: 'Student List',
         icon: <ListAltIcon />,
-        path: '/studentList',
+        path: '/students',
         role: 'OWNER'
     },
     {
         text: 'Student List',
         icon: <ListAltIcon />,
-        path: '/studentList',
+        path: '/students',
         role: 'TEACHER'
     },
-    {
-        text: 'Course Assigned',
-        icon: <FactCheckIcon />,
-        path: '/courseAssigned',
-        role: 'TEACHER'
-    },
-    {
-        text: 'Course Assigned',
-        icon: <FactCheckIcon />,
-        path: '/courseAssigned',
-        role: 'OWNER'
-    },
+    // {
+    //     text: 'Course Assigned',
+    //     icon: <FactCheckIcon />,
+    //     path: '/courseAssigned',
+    //     role: 'TEACHER'
+    // },
+    // {
+    //     text: 'Course Assigned',
+    //     icon: <FactCheckIcon />,
+    //     path: '/courseAssigned',
+    //     role: 'OWNER'
+    // },
     {
         text: 'Lecture',
         icon: <LaptopChromebookIcon />,
@@ -212,17 +213,23 @@ export var MENU_ITEMS = [
         role: 'OWNER'
     },
     {
-        text: 'Files and Assignment',
-        icon: <UploadFileIcon />,
-        path: '/fileOrAssignment',
-        role: 'TEACHER'
+        text:'Speakers',
+        icon:<SpeakerIcon/>,
+        path:'/speakers',
+        role:'OWNER',
     },
-    {
-        text: 'Files and Assignment',
-        icon: <UploadFileIcon />,
-        path: '/fileOrAssignment',
-        role: 'OWNER'
-    },
+    // {
+    //     text: 'Files and Assignment',
+    //     icon: <UploadFileIcon />,
+    //     path: '/fileOrAssignment',
+    //     role: 'TEACHER'
+    // },
+    // {
+    //     text: 'Files and Assignment',
+    //     icon: <UploadFileIcon />,
+    //     path: '/fileOrAssignment',
+    //     role: 'OWNER'
+    // },
     {
         text: 'Profile ',
         icon: <Face />,

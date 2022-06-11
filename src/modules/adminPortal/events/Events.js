@@ -67,6 +67,7 @@ export default function Events() {
                     },
                     {
                         key: "eventImage",
+                        type:"image"
                     },
                     {
                         key: "eventStatus",

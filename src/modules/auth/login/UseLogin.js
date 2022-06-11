@@ -1,9 +1,8 @@
 import { useMutation } from '@apollo/client';
 import { useState, useContext, useEffect } from 'react';
-import { LOGIN } from '../../../lib/mutation/LoginMutation';
+import { LOGIN, ORG_LOGIN } from '../../../lib/mutation/LoginMutation';
 import { AppContext } from "../../../State";
-import { ToastError } from '../../../commonComponents/commonFunction/CommonFunction';
-import { ACTIVE_USER } from '../../../lib/mutation/AllMutations';
+import { ToastError, ToastSuccess } from '../../../commonComponents/commonFunction/CommonFunction';
 export default function UseLogin() {
 
   const { state, dispatch } = useContext(AppContext);
@@ -38,6 +37,7 @@ export default function UseLogin() {
           email: email,
         },
         onCompleted({ login }) {
+          localStorage.setItem("token", login.token)
           dispatch({
             type: "setAuthState",
             payload: {
@@ -45,19 +45,52 @@ export default function UseLogin() {
               authState: true
             },
           });
-          localStorage.setItem("token", login.token)
-          
+          ToastSuccess(`Welcome ${login.name}`)
+
         },
       })
     }
     catch (error) {
       ToastError(error.message)
-
-
     }
   }
+  const [orgLogin, setOrgLogin] = useState(false)
+
+  let [OrganizationLogin, { loading: ORG_LOADING }] = useMutation(ORG_LOGIN)
+  const organizationLoginHandler = async () => {
+    try {
+      await OrganizationLogin({
+        variables: {
+          password: values.password,
+          email: email
+
+        },
+        onCompleted(login) {
+          localStorage.setItem("token", login.organizationLogin.token)
+          dispatch({
+            type: "setAuthState",
+            payload: {
+              user: login.organizationLogin,
+              authState: true
+            },
+          });
+
+          ToastSuccess(`Welcome ${login.organizationLogin.name}`)
 
 
+        },
+      })
+    } catch (error) {
+      ToastError(error.message)
+    }
+  }
+  const ctaOrgHandler = (e) => {
 
-  return [{ values, handleChange, handleClickShowPassword, email, setEmail, loginHandler, loading }]
+    setOrgLogin(!orgLogin)
+  }
+
+  console.log(orgLogin);
+
+
+  return [{ values, handleChange, handleClickShowPassword, organizationLoginHandler, state, email, orgLogin, setEmail, loginHandler, loading, ORG_LOADING, ctaOrgHandler }]
 }

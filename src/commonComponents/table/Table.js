@@ -22,6 +22,7 @@ import { AppContext } from "../../State";
 import CommonConfirmModal from "../commonConfirmModal/CommonConfirmModal";
 import { logDOM } from "@testing-library/react";
 import CommonModal from '../commonModal/CommonModal'
+import { isNullableType } from "graphql";
 export default function Table({
   title,
   tableHeadings,
@@ -29,13 +30,15 @@ export default function Table({
   formInputs,
   filterdata,
   data,
+  date,
 
   // Handlers
   ctaFormHandler,
-  ctaDeleteHandler,
+  // ctaDeleteHandler,
   ctaUpdateHandler,
   handleChange,
   disableAddIcon,
+  onDateChange,
 }) {
 
   const { state, dispatch } = useContext(AppContext);
@@ -118,7 +121,7 @@ export default function Table({
   const searchingFor = (searchQuery) => {
     return function (data) {
       return (
-        (data?.name || data?.courseName || data?.studentName || data?.city || data?.eventName || data?.faqQuestion || data?.id).toLowerCase().includes(
+        (data?.name || data?.courseName || data?.studentName || data?.city || data?.eventName || data?.faqQuestion || data?.speakerName || data?.coursesId || data?.lectureTitle || data?.id).toLowerCase().includes(
           searchQuery?.toLowerCase(),
         )
       );
@@ -138,7 +141,7 @@ export default function Table({
       {/* Drop Down menu for filter Button */}
 
       {/* Form Modal */}
-      <FormModal formInputs={formInputs} ctaFormHandler={ctaFormHandler} ctaUpdateHandler={ctaUpdateHandler} handleChange={handleChange} />
+      <FormModal formInputs={formInputs} ctaFormHandler={ctaFormHandler} ctaUpdateHandler={ctaUpdateHandler} handleChange={handleChange} onDateChange={onDateChange} date={date} />
       {/* Form Modal */}
 
       <Toolbar disableGutters>
@@ -161,10 +164,24 @@ export default function Table({
                 ) : (
                   <TableStyle.FilterListIcon onClick={handleAnchorClick} />
                 )}
+
                 {
-                  !disableAddIcon &&
-                  <TableStyle.AddIcon onClick={handleClickOpen} />
+                  state.user?.role === 'OWNER' ?
+                    <TableStyle.AddIcon onClick={handleClickOpen} />
+
+                    :
+                    state.user?.role === 'ADMIN' ?
+                      title === "Courses" || title === "All Students" ?
+                        <></>
+                        :
+                        <TableStyle.AddIcon onClick={handleClickOpen} />
+                      :
+                      <TableStyle.AddIcon onClick={handleClickOpen} />
+
+
                 }
+
+
               </TableStyle.SearchAndBtnsContainer>
             </TableStyle.SeachContainer>
           </Hidden>
@@ -257,34 +274,50 @@ export default function Table({
                           key={subIndex + 10}
                         >
                           {
-                            subitem?.type === "image" ? (
-                              <TableStyle.Image src={exactKey} />
+                            subitem?.type === "modalQuestion" ? (
+                              <CommonModal question={row} />
                             ) :
-                              subitem?.type === "editor" ? (
-                                <p
-                                  dangerouslySetInnerHTML={{ __html: exactKey }}
-                                ></p>
-                              ) : subitem?.type === "crud" ? (
-                                <>
-                                  <TableStyle.IconDiv>
-                                    <Tooltip title="Delete">
-                                      <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
-                                    </Tooltip>
-                                    <Tooltip title="Update">
-                                      <IconButton
-                                        aria-label="update"
-                                        size="small"
-                                        onClick={() => ctaEditButtonHandler(row)}
-                                      >
-                                        <TableStyle.EditIcon />
-                                      </IconButton>
-                                    </Tooltip>
-                                  </TableStyle.IconDiv>
-                                </>
-                              ) : (
-                                exactKey
+                              subitem?.type === "modalAnswer" ? (
+                                <CommonModal answer={row} />
+                              ) :
+                                subitem?.type === "modalProfileUrl" ? (
+                                  <CommonModal freelancingProfileUrl={row} />
+                                ) :
+                                  subitem?.type === "image" ? (
+                                    <>
+                                      {
+                                        row.eventImage ?
+                                          <TableStyle.Image src={exactKey} />
+                                          :
+                                          <p>No Image</p>
+                                      }
+                                    </>
+                                  ) :
+                                    subitem?.type === "editor" ? (
+                                      <p
+                                        dangerouslySetInnerHTML={{ __html: exactKey }}
+                                      ></p>
+                                    ) : subitem?.type === "crud" ? (
+                                      <>
+                                        <TableStyle.IconDiv>
+                                          {/* <Tooltip title="Delete">
+                                            <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
+                                          </Tooltip> */}
+                                          <Tooltip title="Update">
+                                            <IconButton
+                                              aria-label="update"
+                                              size="small"
+                                              onClick={() => ctaEditButtonHandler(row)}
+                                            >
+                                              <TableStyle.EditIcon />
+                                            </IconButton>
+                                          </Tooltip>
+                                        </TableStyle.IconDiv>
+                                      </>
+                                    ) : (
+                                      exactKey
 
-                              )}
+                                    )}
                         </TableStyle.CustomTableCell>
                       );
                     })}

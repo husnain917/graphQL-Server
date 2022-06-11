@@ -18,37 +18,110 @@ const style = {
     p: 4,
 };
 
-export default function CommonModal({ question, message }) {
+export default function CommonModal({ question, answer, freelancingProfileUrl }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     return (
         <div>
-            <PButton ctaHandler={handleOpen} title="see more"/>
-            {/* <Button onClick={handleOpen}>See Question</Button> */}
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
-                <Fade in={open}>
-                    <Box sx={style}>
-                        <Typography id="transition-modal-title" variant="h6" component="h2">
-                            Question
-                        </Typography>
-                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                            {question || message}
-                        </Typography>
-                    </Box>
-                </Fade>
-            </Modal>
+            {
+                question?.faqQuestion.length > 30 ?
+                    <>
+                        <PButton ctaHandler={handleOpen} title="see more" />
+                        <Modal
+                            aria-labelledby="transition-modal-title"
+                            aria-describedby="transition-modal-description"
+                            open={open}
+                            onClose={handleClose}
+                            closeAfterTransition
+                            BackdropComponent={Backdrop}
+                            BackdropProps={{
+                                timeout: 500,
+                            }}
+                        >
+                            <Fade in={open}>
+                                <Box sx={style}>
+                                    <Typography id="transition-modal-title" variant="h6" component="h2">
+                                        Question
+                                    </Typography>
+                                    <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                                        {question?.faqQuestion}
+                                    </Typography>
+                                </Box>
+                            </Fade>
+                        </Modal>
+                    </>
+                    :
+                    answer?.faqAnswer.length > 30 ?
+                        <>
+                            <PButton ctaHandler={handleOpen} title="see more" />
+                            <Modal
+                                aria-labelledby="transition-modal-title"
+                                aria-describedby="transition-modal-description"
+                                open={open}
+                                onClose={handleClose}
+                                closeAfterTransition
+                                BackdropComponent={Backdrop}
+                                BackdropProps={{
+                                    timeout: 500,
+                                }}
+                            >
+                                <Fade in={open}>
+                                    <Box sx={style}>
+                                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                                            Answer
+                                        </Typography>
+                                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                                            {answer?.faqAnswer}
+                                        </Typography>
+                                    </Box>
+                                </Fade>
+                            </Modal>
+                        </>
+                        :
+                        question?.faqQuestion.length < 30 ?
+
+                            <p>{question?.faqQuestion}</p>
+
+                            :
+                            answer?.faqAnswer.length < 30 ?
+                                <p>{answer?.faqAnswer}</p>
+                                :
+                                freelancingProfileUrl?.freelancingProfileUrl.length > 15 ?
+                                    <>
+                                        <PButton ctaHandler={handleOpen} title="see more" />
+                                        <Modal
+                                            aria-labelledby="transition-modal-title"
+                                            aria-describedby="transition-modal-description"
+                                            open={open}
+                                            onClose={handleClose}
+                                            closeAfterTransition
+                                            BackdropComponent={Backdrop}
+                                            BackdropProps={{
+                                                timeout: 500,
+                                            }}
+                                        >
+                                            <Fade in={open}>
+                                                <Box sx={style}>
+                                                    <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                        Freelancing Profile Url
+                                                    </Typography>
+                                                    <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                                                        {freelancingProfileUrl?.freelancingProfileUrl}
+                                                    </Typography>
+                                                </Box>
+                                            </Fade>
+                                        </Modal>
+                                    </>
+                                    :
+                                    freelancingProfileUrl?.freelancingProfileUrl.length < 15 ?
+                                        <>
+                                            <p> {freelancingProfileUrl?.freelancingProfileUrl}</p>
+                                        </>
+                                        : ''
+
+            }
         </div>
     );
 }

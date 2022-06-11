@@ -9,18 +9,18 @@ export default function FAQS() {
             loader,
             ADD_LOADING,
             GET_LOADING,
-            DELETE_LOADING,
+            // DELETE_LOADING,
             UPDATE_LOADING,
             refacteredData,
             ctaFormHandler,
-            ctaDeleteHandler,
+            // ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
         },
     ] = UseFaqs();
     if (
         GET_LOADING ||
-        DELETE_LOADING ||
+        // DELETE_LOADING ||
         UPDATE_LOADING ||
         ADD_LOADING ||
         loader
@@ -36,6 +36,7 @@ export default function FAQS() {
                     'Id',
                     'Faq Question',
                     'Faq Answer',
+                    'Course Id',
                     'Created At',
                     'Update At',
                     'Action',
@@ -46,9 +47,14 @@ export default function FAQS() {
                     },
                     {
                         key: "faqQuestion",
+                        type:"modalQuestion"
                     },
                     {
                         key: "faqAnswer",
+                        type:"modalAnswer"
+                    },
+                    {
+                        key: "courseId",
                     },
                     {
                         key: "createdAt",
@@ -56,6 +62,7 @@ export default function FAQS() {
                     {
                         key: "updateAt",
                     },
+
                     {
                         type: "crud",
                     },
@@ -69,31 +76,13 @@ export default function FAQS() {
                     // },
                 ]}
                 formInputs={formInputs}
-                // {[
-                // {
-                //   type: "editor",
-                //   name: "editor",
-                // },
-
-
-                // {
-                //   label: 'CategoryName',
-                //   name: 'categoryName',
-                //   type: 'text',
-                // },
-                // {
-                //   label: 'createrName',
-                //   name: 'createrName',
-                //   type: 'text',
-                // }
-                // ]}
                 filterdata={{
                     key: "role",
                     filterTag: ['All', 'ADMIN', 'TEACHER'],
                 }}
                 data={refacteredData}
                 ctaFormHandler={ctaFormHandler}
-                ctaDeleteHandler={ctaDeleteHandler}
+                // ctaDeleteHandler={ctaDeleteHandler}
                 ctaUpdateHandler={ctaUpdateHandler}
             />
 

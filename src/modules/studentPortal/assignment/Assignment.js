@@ -8,18 +8,18 @@ export default function Assignment() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
     },
   ] = UseAssignment();
   if (
     GET_LOADING ||
-    DELETE_LOADING ||
+    // DELETE_LOADING ||
     UPDATE_LOADING ||
     ADD_LOADING ||
     loader
@@ -34,9 +34,13 @@ export default function Assignment() {
         'Name',
         'Course Batch',
         'Course Batch Id',
-        'Course',
-        'Course Id',
+        'Created At',
+        'Update At',
       ]}
+
+      ctaFormHandler={ctaFormHandler}
+      // ctaDeleteHandler={ctaDeleteHandler}
+      ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
         {
           key: "id",
@@ -51,10 +55,13 @@ export default function Assignment() {
           key: 'courseBatchId',
         },
         {
-          key: 'course'
+          key: 'createdAt'
         },
         {
-          key: 'courseId'
+          key: 'updateAt'
+        },
+        {
+          type: 'crud'
         }
       ]}
       formInputs={formInputs}

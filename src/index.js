@@ -6,27 +6,13 @@ import reportWebVitals from './reportWebVitals';
 import client from './lib/ApolloClient'
 import 'react-toastify/dist/ReactToastify.css';
 import { AppContextProvider } from "./State";
+import 'react-calendar/dist/Calendar.css';
 
 import {
   ApolloProvider,
   gql
 
 } from "@apollo/client";
-
-client
-  .query({
-    query: gql`
-     query {
-  studentsList{
-    title
-    id
-    checkbox
-  }
-}
-
-    `
-  })
-  .then(result => console.log(result));
 
 ReactDOM.render(
 

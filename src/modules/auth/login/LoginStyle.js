@@ -146,7 +146,7 @@ export const LoginStyle = {
         textAlign: 'center',
         fontSize: '16px',
         transition: '0.3s',
-        marginTop: 40,
+        marginTop: 20,
         '&:hover': {
             transition: '0.7s',
             backgroundColor: colors.lightBlue,
@@ -154,4 +154,16 @@ export const LoginStyle = {
             cursor: 'pointer',
         },
     })),
+    OrgCheckbox: styled('div')(() => ({
+        width: "80%",
+        marginTop: '10px',
+        marginLeft: "auto",
+        marginRight: "auto",
+        height: "auto",
+        textAlign: "left",
+        "@media (max-width: 700px)": {
+            width: '95%',
+        },
+    })),
+
 }

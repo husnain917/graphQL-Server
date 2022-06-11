@@ -8,18 +8,18 @@ export default function Quiz() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
     },
   ] = UseQuiz();
   if (
     GET_LOADING ||
-    DELETE_LOADING ||
+    // DELETE_LOADING ||
     UPDATE_LOADING ||
     ADD_LOADING ||
     loader
@@ -36,6 +36,9 @@ export default function Quiz() {
         'Course',
         'Course Id',
       ]}
+      ctaFormHandler={ctaFormHandler}
+      // ctaDeleteHandler,
+      ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
         {
           key: "id",

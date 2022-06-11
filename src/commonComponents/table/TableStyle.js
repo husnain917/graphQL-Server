@@ -99,7 +99,7 @@ export const TableStyle = {
     })),
     Image: styled('img')(({ theme }) => ({
         height: "50px",
-        width: "50px",
+        width: "100px",
     })),
 
     // Icons

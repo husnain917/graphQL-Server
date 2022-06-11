@@ -8,7 +8,7 @@ export default function FileOrAssignment() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
@@ -19,7 +19,7 @@ export default function FileOrAssignment() {
   ] = UseFileOrAssignment();
   if (
     GET_LOADING ||
-    DELETE_LOADING ||
+    // DELETE_LOADING ||
     UPDATE_LOADING ||
     ADD_LOADING ||
     loader

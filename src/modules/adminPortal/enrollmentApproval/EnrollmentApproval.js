@@ -9,11 +9,11 @@ function EnrollmentApproval() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
 
@@ -21,7 +21,7 @@ function EnrollmentApproval() {
   ] = UseEnrollmentApproval();
   if (
     GET_LOADING ||
-    DELETE_LOADING ||
+    // DELETE_LOADING ||
     UPDATE_LOADING ||
     ADD_LOADING ||
     loader
@@ -36,9 +36,8 @@ function EnrollmentApproval() {
           title={'Enrollment Approval'}
           tableHeadings={[
             'Id',
-            'Student Name',
-            'Email',
-            'Course',
+            'User Id',
+            'Course Id',
             'Payment Method',
             'Amount',
             'Transaction ID',
@@ -50,13 +49,10 @@ function EnrollmentApproval() {
               key: "id",
             },
             {
-              key: "studentName",
+              key: "userId",
             },
             {
-              key: "email",
-            },
-            {
-              key: "course",
+              key: "coursesId",
             },
             {
               key: 'amount'
@@ -81,7 +77,7 @@ function EnrollmentApproval() {
           }}
           data={refacteredData}
           ctaFormHandler={ctaFormHandler}
-          ctaDeleteHandler={ctaDeleteHandler}
+          // ctaDeleteHandler={ctaDeleteHandler}
           ctaUpdateHandler={ctaUpdateHandler}
         />
 

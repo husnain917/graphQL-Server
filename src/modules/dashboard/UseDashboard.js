@@ -1,18 +1,69 @@
 import { useQuery } from '@apollo/client';
-import { GET_COURSES, GET_EVENTS, GET_STAFF, GET_STUDENT, GET_SUCCESS_STORIES } from '../../lib/queries/AllQueries';
+import { useContext } from 'react';
+import FiltredData from '../../constants/FiltredRoles';
+import {
+    GET_COURSES,
+    GET_ENROLLMENT,
+    GET_EVENTS,
+    GET_SUCCESS_STORIES
+} from '../../lib/queries/AllQueries';
+import { AppContext } from '../../State';
 export default function UseDashboard() {
-    let { data: STAFF_DATA, loading: STAFF_LOADING, error: STAFF_ERROR } = useQuery(GET_STAFF);
-    let { data: COURSE_DATA, loading: COURSE_LOADING, error: COURSE_ERROR } = useQuery(GET_COURSES);
-    let { data: STUDENT_DATA, loading: STUDENT_LOADING, error: STUDENT_ERROR } = useQuery(GET_STUDENT);
-    let { data: EVENTS_DATA, loading: EVENTS_LOADING, error: EVENTS_ERROR } = useQuery(GET_EVENTS);
-    let { data: SUCCESS_DATA, loading: SUCCESS_LOADING, error: SUCCESS_ERROR } = useQuery(GET_SUCCESS_STORIES);
-
-
-    let studentLength = STUDENT_DATA?.findManyStudents?.length
+    const { state } = useContext(AppContext)
+    let {
+        data: COURSE_DATA,
+        loading: COURSE_LOADING
+    } = useQuery(GET_COURSES);
+    let {
+        data: EVENTS_DATA,
+        loading: EVENTS_LOADING
+    } = useQuery(GET_EVENTS);
+    let {
+        data: ENROLLEMTENT,
+        LOADING: ENROLMENT_LOADING
+    } = useQuery(GET_ENROLLMENT)
+    let {
+        data: SUCCESS_DATA,
+        loading: SUCCESS_LOADING
+    } = useQuery(GET_SUCCESS_STORIES);
+    const [{
+        student,
+        teacher,
+        admin,
+        speakerList,
+        courseBatch,
+        USERS_LOADING,
+        CATEGORY_LOADING,
+        SPEAKERS_LOADING,
+        BATCH_LOADING
+    }] = FiltredData()
+    let studentLength = student?.length
     let successLength = SUCCESS_DATA?.findManySuccessStories?.length
     let eventLength = EVENTS_DATA?.findManyEvents?.length
     let courseLength = COURSE_DATA?.findManyCourses?.length
-    const TeacherLength = STAFF_DATA?.findManyStaff?.filter((role) => role.role === 'TEACHER').length
-    const AdminLength = STAFF_DATA?.findManyStaff?.filter((role) => role.role === 'ADMIN').length
-    return [{ AdminLength, TeacherLength, studentLength, successLength, eventLength, courseLength, STAFF_LOADING, COURSE_LOADING, STUDENT_LOADING, EVENTS_LOADING, SUCCESS_LOADING }];
+    let TeacherLength = teacher?.length
+    let AdminLength = admin?.length
+    let speakerListLength = speakerList?.length
+    let courseBatchlength = courseBatch?.length
+    let enrollement = ENROLLEMTENT?.enrollmentApprovals?.length
+    return [{
+        AdminLength,
+        TeacherLength,
+        studentLength,
+        successLength,
+        courseBatchlength,
+        enrollement,
+        eventLength,
+        state,
+        courseLength,
+        speakerListLength,
+        ENROLMENT_LOADING,
+        COURSE_LOADING,
+        USERS_LOADING,
+        EVENTS_LOADING,
+        CATEGORY_LOADING,
+        SPEAKERS_LOADING,
+        SUCCESS_LOADING,
+        BATCH_LOADING,
+    }];
 }

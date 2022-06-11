@@ -4,29 +4,29 @@ import React from 'react';
 //Import from Files
 
 import Table from '../../../commonComponents/table/Table';
-import { UseAllStudents } from './UseAllStudent';
+import {
+  UseAllStudents
+} from './UseAllStudent';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
 export default function AllStudents() {
   const [
     {
-      loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
     },
   ] = UseAllStudents();
   if (
     GET_LOADING ||
-    DELETE_LOADING ||
+    // DELETE_LOADING ||
     UPDATE_LOADING ||
-    ADD_LOADING ||
-    loader
+    ADD_LOADING
   ) {
     return <CommonTableLoader />;
   }
@@ -34,7 +34,16 @@ export default function AllStudents() {
     <>
       <Table
         title={'All Students'}
-        tableHeadings={['Id','Name', 'Email', 'Status', 'Action']}
+        tableHeadings={[
+          'Id',
+          'Name',
+          'Email',
+          'contact',
+          'cnic',
+          'address',
+          'Status',
+          'Action'
+        ]}
         printedKeys={[
           {
             key: "id",
@@ -46,7 +55,16 @@ export default function AllStudents() {
             key: "email",
           },
           {
-            key: "status",
+            key: "contact",
+          },
+          {
+            key: "cnic",
+          },
+          {
+            key: "address",
+          },
+          {
+            key: "role",
           },
           {
             type: "crud",
@@ -55,11 +73,15 @@ export default function AllStudents() {
         formInputs={formInputs}
         filterdata={{
           key: "role",
-          filterTag: ['All', 'ACTIVE', 'OFFLINE'],
+          filterTag: [
+            'All',
+            'ACTIVE',
+            'OFFLINE'
+          ],
         }}
         data={refacteredData}
         ctaFormHandler={ctaFormHandler}
-        ctaDeleteHandler={ctaDeleteHandler}
+        // ctaDeleteHandler={ctaDeleteHandler}
         ctaUpdateHandler={ctaUpdateHandler}
       />
     </>

@@ -8,18 +8,18 @@ export default function MyCourse() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
     },
   ] = UseMyCourses();
   if (
     GET_LOADING ||
-    DELETE_LOADING ||
+    // DELETE_LOADING ||
     UPDATE_LOADING ||
     ADD_LOADING ||
     loader
@@ -31,59 +31,71 @@ export default function MyCourse() {
       title={'My Courses'}
       tableHeadings={[
         "Id",
-        'Student Name',
-        'Course Name',
         'Course Id',
-        'Student Id',
-        'Fee Status',
-        'Course Batch',
-        'Course Batch Id',
+        'StudentId',
         'Course Approval',
         'Why Reject',
-       
+        'Fee status',
+        'course Batch id',
+        'Created At',
+        'Updated At',
+        'Actions'
+
       ]}
+      ctaFormHandler={ctaFormHandler}
+      // ctaDeleteHandler={ctaDeleteHandler}
+      ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
         {
           key: "id",
         },
         {
-          key: "studentName",
+          key: "coursesId",
         },
-        {
-          key: "courseName",
-        },
-
-        {
-          key: "courseId",
-        },
-
         {
           key: "studentId",
+        },
+
+        {
+          key: "courseApproval",
+        },
+
+        {
+          key: "whyReject",
         },
 
         {
           key: "feeStatus",
         },
         {
-          key: "courseBatch",
+          key: "courseBatchesId",
+        },
+        // {
+        //   key: 'courseBatches',
+        // },
+        // {
+        //   key: "courseApproval",
+        // },
+        // {
+        //   key: "courses",
+        // },
+        // {
+        //   key: 'student'
+        // },
+        {
+          key: 'Created At'
         },
         {
-          key: 'courseBatchId',
+          key: 'Updated At'
         },
         {
-          key: "courseApproval",
-        },
-        {
-          key: "whyReject",
-        },
-        {
-          key:'crud'
+          type: 'crud'
         }
       ]}
       formInputs={formInputs}
       filterdata={{
         key: "feeStatus",
-        filterTag: ['All', 'Pending', 'Paid'],
+        filterTag: ['All', 'PENDING', 'PAID','HALFPAID'],
       }}
       data={refacteredData}
       disableAddIcon={true}

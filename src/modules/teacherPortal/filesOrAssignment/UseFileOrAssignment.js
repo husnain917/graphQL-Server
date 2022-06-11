@@ -9,7 +9,7 @@ import {
 import {
     ADD_COURSES,
     UPDATE_SINGLE_COURSE,
-    DELETE_SINGLE_COURSE
+    // DELETE_SINGLE_COURSE
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSES } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
@@ -192,24 +192,24 @@ export default function UseFileOrAssignment() {
 
     // DELETE STAFF
 
-    let [DeleteCourses, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_COURSE);
-    const ctaDeleteHandler = async ({ ...data }) => {
-        try {
-            await DeleteCourses({
-                variables: {
-                    where: {
-                        id: data.id,
-                    },
-                },
-                onCompleted(data) {
-                    ToastSuccess('Course Deleted')
-                },
-                refetchQueries: [{ query: GET_COURSES }],
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+    // let [DeleteCourses, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_COURSE);
+    // const ctaDeleteHandler = async ({ ...data }) => {
+    //     try {
+    //         await DeleteCourses({
+    //             variables: {
+    //                 where: {
+    //                     id: data.id,
+    //                 },
+    //             },
+    //             onCompleted(data) {
+    //                 ToastSuccess('Course Deleted')
+    //             },
+    //             refetchQueries: [{ query: GET_COURSES }],
+    //         });
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // };
 
 
 
@@ -290,11 +290,11 @@ export default function UseFileOrAssignment() {
             loader,
             ADD_LOADING,
             GET_LOADING,
-            DELETE_LOADING,
+            // DELETE_LOADING,
             UPDATE_LOADING,
             refacteredData,
             ctaFormHandler,
-            ctaDeleteHandler,
+            // ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
         },

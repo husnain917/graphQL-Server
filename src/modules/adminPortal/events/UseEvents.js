@@ -5,9 +5,10 @@ import {
     ToastSuccess,
     ToastWarning,
 } from "../../../commonComponents/commonFunction/CommonFunction";
+import FiltredData from "../../../constants/FiltredRoles";
 import {
     ADD_EVENTS,
-    DELETE_SINGLE_EVENT,
+    // DELETE_SINGLE_EVENT,
     UPDATE_SINGLE_EVENT,
 } from "../../../lib/mutation/AllMutations";
 import { GET_EVENTS } from "../../../lib/queries/AllQueries";
@@ -20,6 +21,13 @@ import { AppContext } from "../../../State";
 
 
 export function UseEvents() {
+    const [date, setDate] = useState(new Date());
+    const [{ speakerList }] = FiltredData()
+    const onDateChange = (newDate) => {
+        setDate(newDate);
+        console.log(newDate);
+    }
+    console.log(speakerList)
     const formInputs = [
         {
             label: "Name",
@@ -32,9 +40,10 @@ export function UseEvents() {
             type: "text",
         },
         {
-            label: "Speaker Id",
+            label: "Select speaker",
             name: "speakerId",
-            type: "text",
+            type: "selectSpeaker",
+            dropDown: speakerList
         },
         {
             label: "Status",
@@ -42,6 +51,11 @@ export function UseEvents() {
             type: "select",
             dropDownContent: ["PAST", "UPCOMING"],
         },
+        // {
+        //     label: "Event Date",
+        //     name: "eventDate",
+        //     type: "calender",
+        // },
         {
             label: "Image",
             name: "eventImage",
@@ -50,25 +64,6 @@ export function UseEvents() {
     ]
     const { state, dispatch } = useContext(AppContext);
 
-
-
-    var fileName;
-    var File;
-    const handleChange = (e) => {
-        fileName = e.target.files
-        console.log("sami", fileName);
-        var filesArray = [].slice.call(fileName);
-        filesArray.forEach(e => {
-            console.log(e.name);
-            File = e.name
-            console.log(File);
-            //   console.log(e.size);
-            //   console.log(e.type);
-            //   console.log(e.lastModifiedDate);
-        });
-
-
-    }
 
     //GET STAFF 
 
@@ -94,7 +89,7 @@ export function UseEvents() {
 
     //ADD STAFF
 
-    let [CreateManyEvents, { loading: ADD_LOADING }] = useMutation(ADD_EVENTS);
+    let [CreateEvents, { loading: ADD_LOADING }] = useMutation(ADD_EVENTS);
 
 
     const ctaFormHandler = async (event) => {
@@ -108,22 +103,29 @@ export function UseEvents() {
         else if (!state.editData?.speakerId) {
             ToastWarning('Speaker Id required')
         }
+        else if (!state?.imageUrl) {
+            ToastWarning('Image required')
+        }
         else if (!state.editData?.eventStatus) {
             ToastWarning('Status required')
         }
         else {
             try {
-                await CreateManyEvents({
+                await CreateEvents({
                     variables: {
+
                         data: {
                             eventName: state.editData?.eventName,
                             eventDesc: state.editData?.eventDesc,
-                            eventImage:  File ? File : 'no file',
+                            eventImage: state?.imageUrl,
                             eventDate: new Date(),
-                            // speakerId: state.editData?.speakerId,
-                            eventStatus: state.editData?.eventStatus,
-
-                        },
+                            Speaker: {
+                                connect: {
+                                    id: state.editData?.speakerId
+                                }
+                            },
+                            eventStatus: state.editData?.eventStatus
+                        }
                     },
                     onCompleted(data, cache) {
                         dispatch({
@@ -158,24 +160,24 @@ export function UseEvents() {
 
     // DELETE STAFF
 
-    let [DeleteEvents, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_EVENT);
-    const ctaDeleteHandler = async ({ ...data }) => {
-        try {
-            await DeleteEvents({
-                variables: {
-                    where: {
-                        id: data.id,
-                    },
-                },
-                onCompleted(data) {
-                    ToastSuccess('Event Deleted')
-                },
-                refetchQueries: [{ query: GET_EVENTS }],
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+    // let [DeleteEvents, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_EVENT);
+    // const ctaDeleteHandler = async ({ ...data }) => {
+    //     try {
+    //         await DeleteEvents({
+    //             variables: {
+    //                 where: {
+    //                     id: data.id,
+    //                 },
+    //             },
+    //             onCompleted(data) {
+    //                 ToastSuccess('Event Deleted')
+    //             },
+    //             refetchQueries: [{ query: GET_EVENTS }],
+    //         });
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // };
 
 
 
@@ -206,6 +208,7 @@ export function UseEvents() {
                         where: {
                             id: state.editId
                         },
+                       
                         data: {
                             eventName: {
                                 set: state.editData?.eventName
@@ -214,15 +217,21 @@ export function UseEvents() {
                                 set: state.editData?.eventDesc
                             },
                             eventImage: {
-                                set: File ? File : 'no file'
+                                set: null
                             },
                             eventDate: {
                                 set: new Date()
+                            },
+                            Speaker: {
+                                connect: {
+                                    id: state.editData?.speakerId
+                                }
                             },
                             eventStatus: {
                                 set: state.editData?.eventStatus
                             }
                         }
+
                     },
                     onCompleted() {
                         dispatch({
@@ -247,14 +256,15 @@ export function UseEvents() {
             loader,
             ADD_LOADING,
             GET_LOADING,
-            DELETE_LOADING,
+            // DELETE_LOADING,
             UPDATE_LOADING,
             refacteredData,
             ctaFormHandler,
-            ctaDeleteHandler,
+            // ctaDeleteHandler,
             ctaUpdateHandler,
+            onDateChange,
             formInputs,
-            handleChange
+            date
         },
     ];
 }

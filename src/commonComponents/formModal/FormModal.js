@@ -12,10 +12,14 @@ import { MenuItem, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import { AppContext } from "../../State";
 import { EditorState } from "draft-js";
-import { FM } from './FormModalStyle'
-export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange }) {
-  const { state, dispatch } = useContext(AppContext);
+import { Calendar } from 'react-calendar';
 
+import { FM } from './FormModalStyle'
+import CloudinaryFunction from "../../constants/CloudinaryFunction";
+export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date }) {
+  const { state, dispatch } = useContext(AppContext);
+  const [ctaImageUpdateHandler] = CloudinaryFunction()
+  const [open, setOpen] = useState(false)
   const handleCloseUpdate = () => {
     dispatch({
       type: "setModal",
@@ -98,35 +102,244 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                     ) :
                       item.type === "upload" ?
                         (
-                          <div style={{ marginTop: 13 ,marginBottom:-30}}>
-                            <input type="file" onChange={e => handleChange(e)} />
+                          <div style={{ marginTop: 13, marginBottom: -30 }}>
+                            <FM.Image type="file" onChange={ctaImageUpdateHandler} />
                           </div>
                         )
                         :
-                        (
-                          <TextField
-                            margin="dense"
-                            id="file"
-                            label={item.label}
-                            name={item.name}
-                            type={item.type}
-                            required
-                            fullWidth
-                            variant="standard"
-                            value={
-                              item.name === "file" ? "" : state.editData[item.name]
-                            }
-                            onChange={(e) => {
-                              test[item.name] = item.name === "file"
-                                ? e.target.files[0].name
-                                : e.target.value;
-                              dispatch({
-                                type: "setEditData",
-                                payload: test,
-                              });
-                            }}
-                          />
-                        )
+                        item.type === "selectCategory" ?
+                          (
+                            <TextField
+                              margin="dense"
+                              id="file"
+                              label={item.label}
+                              name={item.name}
+                              select
+                              required
+                              fullWidth
+                              variant="standard"
+                              onChange={(e) => {
+                                test[item.name] = e.target.value;
+                                dispatch({
+                                  type: "setEditData",
+                                  payload: test,
+                                });
+                              }}
+                            >
+                              {item?.dropDown?.categories?.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.categoryName}
+                                </MenuItem>
+                              ))}
+                            </TextField>
+                          )
+                          :
+                          item.type === "selectInstructor" ?
+                            (
+                              <TextField
+                                margin="dense"
+                                id="file"
+                                label={item.label}
+                                name={item.name}
+                                select
+                                required
+                                fullWidth
+                                variant="standard"
+                                onChange={(e) => {
+                                  test[item.name] = e.target.value;
+                                  dispatch({
+                                    type: "setEditData",
+                                    payload: test,
+                                  });
+                                }}
+                              >
+                                {item?.dropDown?.map((option) => (
+                                  <MenuItem key={option.id} value={option.id}>
+                                    {option.name}
+                                  </MenuItem>
+                                ))}
+                              </TextField>
+                            )
+                            :
+                            item.type === "selectSpeaker" ?
+                              (
+                                <TextField
+                                  margin="dense"
+                                  id="file"
+                                  label={item.label}
+                                  name={item.name}
+                                  select
+                                  required
+                                  fullWidth
+                                  variant="standard"
+                                  onChange={(e) => {
+                                    test[item.name] = e.target.value;
+                                    dispatch({
+                                      type: "setEditData",
+                                      payload: test,
+                                    });
+                                  }}
+                                >
+                                  {item?.dropDown?.map((option) => (
+                                    <MenuItem key={option.id} value={option.id}>
+                                      {option.speakerName}
+                                    </MenuItem>
+                                  ))}
+                                </TextField>
+                              )
+                              :
+                              item.type === "selectCourse" ?
+                                (
+                                  <TextField
+                                    margin="dense"
+                                    id="file"
+                                    label={item.label}
+                                    name={item.name}
+                                    select
+                                    required
+                                    fullWidth
+                                    variant="standard"
+                                    onChange={(e) => {
+                                      test[item.name] = e.target.value;
+                                      dispatch({
+                                        type: "setEditData",
+                                        payload: test,
+                                      });
+                                    }}
+                                  >
+                                    {item?.dropDown?.findManyCourses?.map((option) => (
+                                      <MenuItem key={option.id} value={option.id}>
+                                        {option.courseName}
+                                      </MenuItem>
+                                    ))}
+                                  </TextField>
+                                )
+                                :
+                                item.type === "selectBatch" ?
+                                  (
+                                    <TextField
+                                      margin="dense"
+                                      id="file"
+                                      label={item.label}
+                                      name={item.name}
+                                      select
+                                      required
+                                      fullWidth
+                                      variant="standard"
+                                      onChange={(e) => {
+                                        test[item.name] = e.target.value;
+                                        dispatch({
+                                          type: "setEditData",
+                                          payload: test,
+                                        });
+                                      }}
+                                    >
+                                      {item?.dropDown?.map((option) => (
+                                        <MenuItem key={option.id} value={option.id}>
+                                          {option.courseName}
+                                        </MenuItem>
+                                      ))}
+                                    </TextField>
+                                  )
+                                  :
+                                  item.type === "selectUser" ?
+                                    (
+                                      <TextField
+                                        margin="dense"
+                                        id="file"
+                                        label={item.label}
+                                        name={item.name}
+                                        select
+                                        required
+                                        fullWidth
+                                        variant="standard"
+                                        onChange={(e) => {
+                                          test[item.name] = e.target.value;
+                                          dispatch({
+                                            type: "setEditData",
+                                            payload: test,
+                                          });
+                                        }}
+                                      >
+                                        {item?.dropDown?.map((option) => (
+                                          <MenuItem key={option.id} value={option.id}>
+                                            {option.name}
+                                          </MenuItem>
+                                        ))}
+                                      </TextField>
+                                    )
+                                    :
+                                    item.type === "booleanSelection" ?
+                                      (
+                                        <TextField
+                                          margin="dense"
+                                          id="file"
+                                          label={item.label}
+                                          name={item.name}
+                                          select
+                                          required
+                                          fullWidth
+                                          variant="standard"
+                                          onChange={(e) => {
+                                            test[item.name] = e.target.value;
+                                            dispatch({
+                                              type: "setEditData",
+                                              payload: test,
+                                            });
+                                          }}
+                                        >
+                                          {item?.dropDown?.map((option) => (
+                                            <MenuItem key={option} value={option}>
+                                              {option}
+                                            </MenuItem>
+                                          ))}
+                                        </TextField>
+                                      )
+                                      :
+                                      item.type === "calender" ?
+                                        (
+                                          <>
+                                            <button onClick={() => setOpen(true)}>Select Date</button>
+                                            <>
+                                              {
+                                                open ?
+                                                  <Calendar
+                                                    onChange={onDateChange}
+                                                    value={date}
+                                                    showNeighboringMonth={false}
+                                                    locale={"en-US"}
+                                                  />
+                                                  :
+                                                  ''
+                                              }
+                                            </>
+                                          </>
+                                        )
+                                        :
+                                        (
+                                          <TextField
+                                            margin="dense"
+                                            id="file"
+                                            label={item.label}
+                                            name={item.name}
+                                            type={item.type}
+                                            required
+                                            fullWidth
+                                            variant="standard"
+                                            value={
+                                              item.name === "file" ? "" : state.editData[item.name]
+                                            }
+                                            onChange={(e) => {
+                                              test[item.name] = item.name === "file"
+                                                ? e.target.files[0].name
+                                                : e.target.value;
+                                              dispatch({
+                                                type: "setEditData",
+                                                payload: test,
+                                              });
+                                            }}
+                                          />
+                                        )
                   }
                   <br />
                 </>

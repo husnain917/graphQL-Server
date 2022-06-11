@@ -5,14 +5,13 @@ import { gql } from '@apollo/client';
 export const GET_ENROLLMENT = gql`
 query EnrollmentApprovals {
   enrollmentApprovals {
-    studentName
     id
-    email
-    course
-    paymentMethod
+    userId
+    coursesId
+    status
     amount
     transactionId
-    status
+    paymentMethod
   }
 }
 `;
@@ -27,46 +26,29 @@ query FindManyEvents {
     speakerId
     eventStatus
   }
-}`
+}
+`
 
 export const GET_FAQS = gql`
-query FindManyEvents {
+query Faqs {
   faqs {
     id
-    faqAnswer
     faqQuestion
+    faqAnswer
+    courseId
     createdAt
     updateAt
   }
 }
 `
 
-export const GET_STAFF = gql`
-query FindManyEvents {
-  findManyStaff {
-    id
-    name
-    email
-    role
-    phone
-  }
-}`
 
-export const GET_STUDENT = gql`
-query FindManyEvents {
-  findManyStudents {
-    id
-    name
-    status
-    email
-  }
-}`
 
 export const GET_SUCCESS_STORIES = gql`
-query FindManyEvents {
+query FindManySuccessStories {
   findManySuccessStories {
-    id
     freelancingProfileUrl
+    id
     paymentProof
     description
     status
@@ -74,7 +56,8 @@ query FindManyEvents {
     city
     whyReject
   }
-}`
+}
+`
 
 
 export const GET_USERS = gql`
@@ -83,11 +66,10 @@ query Query {
     id
     name
     email
+    cnic
     address
     contact
     role
-    cnic
-    token
   }
 }
 `
@@ -107,7 +89,7 @@ query Query {
 
 
 export const GET_COURSES = gql`
-query Query {
+query Query{
   findManyCourses {
     id
     courseName
@@ -115,13 +97,15 @@ query Query {
     courseIntro
     instructorId
     courseCategoryId
+    organizationId
+    coursePrice
+    whatYouLearn
+    courseStatus
     createdAt
     updateAt
-    courseStatus
-    whatYouLearn
-    coursePrice
   }
-}`
+}
+`
 
 
 export const GET_CONTACT_US = gql`
@@ -135,3 +119,101 @@ query Query {
     reply
   }
 }`
+
+export const GET_COURSE_CATEGORY = gql`
+query Categories {
+  categories {
+    id
+    categoryName
+  }
+}
+`
+
+export const GET_MY_COURSES = gql`
+query MyCourses {
+  myCourses {
+    coursesId
+    id
+    studentId
+    createdAt
+    updateAt
+    courseApproval
+    whyReject
+    feeStatus
+    courseBatchesId
+  }
+}
+`
+
+export const GET_ATTANDANCE = gql`
+query Query {
+  attendences {
+    id
+    attendence
+    date
+    userId
+  }
+}
+`
+
+export const GET_QUIZ = gql`
+query Query {
+  courseQuizs {
+    id
+    courseBatchesId
+    createdAt
+    coursesId
+    updateAt
+  }
+}
+`
+
+export const GET_ASSIGNMENT = gql`
+query Query {
+  courseAssignments {
+    id
+    name
+    courseBatchesId
+    coursesId
+    createdAt
+    updateAt
+  }
+}
+`
+export const GET_LECTURES = gql`
+query FindManyLectures {
+  findManyLectures {
+    id
+    lectureTitle
+    lectureVideo
+    coursesId
+    createdAt
+    updateAt
+  }
+}`
+
+export const GET_COURSE_BATCH = gql`
+query FindManyCourseBatches {
+  findManyCourseBatches {
+    id
+    name
+    coursesId
+    courseName
+    createdAt
+    updateAt
+  }
+}
+`
+
+export const GET_SPEAKERS = gql`
+query FindManyCourseBatches {
+  speakers {
+    id
+    speakerName
+    spkearDesc
+    spekaerImage
+    createdAt
+    updateAt
+  }
+}
+`

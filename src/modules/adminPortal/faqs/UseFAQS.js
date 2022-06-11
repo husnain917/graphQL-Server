@@ -8,14 +8,14 @@ import {
 } from "../../../commonComponents/commonFunction/CommonFunction";
 import {
   ADD_FAQS,
-  DELETE_SINGLE_FAQ,
+  // DELETE_SINGLE_FAQ,
   UPDATE_SINGLE_FAQ,
 } from "../../../lib/mutation/AllMutations";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
-import { GET_FAQS } from "../../../lib/queries/AllQueries";
+import { GET_COURSES, GET_FAQS } from "../../../lib/queries/AllQueries";
 
 
 
@@ -24,16 +24,23 @@ import { GET_FAQS } from "../../../lib/queries/AllQueries";
 
 
 export function UseFaqs() {
+  const { data: COURSE_LIST } = useQuery(GET_COURSES)
   const formInputs = [
     {
       label: "Faq Question",
       name: "faqQuestion",
-      type: "modal",
+      type: "text"
     },
     {
       label: "Faq Answer",
       name: "faqAnswer",
-      type: "modal",
+      type: "text"
+    },
+    {
+      label: "Course",
+      name: "courseId",
+      type: "selectCourse",
+      dropDown: COURSE_LIST
     },
   ]
   const { state, dispatch } = useContext(AppContext);
@@ -53,6 +60,7 @@ export function UseFaqs() {
       id: item.id,
       faqAnswer: item.faqAnswer,
       faqQuestion: item.faqQuestion,
+      courseId: item.courseId,
       createdAt: item.createdAt,
       updateAt: item.updateAt
     });
@@ -63,7 +71,7 @@ export function UseFaqs() {
 
   //ADD STAFF
 
-  let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_FAQS);
+  let [CreateFaq, { loading: ADD_LOADING }] = useMutation(ADD_FAQS);
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
@@ -75,15 +83,20 @@ export function UseFaqs() {
     }
     else {
       try {
-        await Mutation({
+        await CreateFaq({
           variables: {
             data: {
-              faqAnswer: state.editData?.faqAnswer,
-              faqQuestion: state.editData?.faqQuestion,
+              faqQuestion: state.editData?.faqAnswer,
+              faqAnswer: state.editData?.faqQuestion,
+              course: {
+                connect: {
+                  id: state.editData?.courseId
+                }
+              },
               createdAt: new Date(),
               updateAt: '00000000'
-              // phone: state.editData?.phone
-            },
+            }
+
           },
           onCompleted(data, cache) {
             dispatch({
@@ -117,24 +130,24 @@ export function UseFaqs() {
 
   // DELETE STAFF
 
-  let [DeleteFaq, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_FAQ);
-  const ctaDeleteHandler = async ({ ...data }) => {
-    try {
-      await DeleteFaq({
-        variables: {
-          where: {
-            id: data.id,
-          },
-        },
-        onCompleted(data) {
-          ToastSuccess('FAQ Deleted')
-        },
-        refetchQueries: [{ query: GET_FAQS }],
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // let [DeleteFaq, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_FAQ);
+  // const ctaDeleteHandler = async ({ ...data }) => {
+  //   try {
+  //     await DeleteFaq({
+  //       variables: {
+  //         where: {
+  //           id: data.id,
+  //         },
+  //       },
+  //       onCompleted(data) {
+  //         ToastSuccess('FAQ Deleted')
+  //       },
+  //       refetchQueries: [{ query: GET_FAQS }],
+  //     });
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
 
 
@@ -143,7 +156,7 @@ export function UseFaqs() {
   //Update staff
 
   let [UpdateFaq, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_FAQ);
- 
+
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
     if (!state.editData?.faqQuestion) {
@@ -160,16 +173,22 @@ export function UseFaqs() {
               id: state.editId
             },
             data: {
-              faqAnswer: {
-                set: state.editData?.faqAnswer
-              },
               faqQuestion: {
                 set: state.editData?.faqQuestion
               },
+              faqAnswer: {
+                set: state.editData?.faqAnswer
+              },
+              course: {
+                connect: {
+                  id: state.editData?.courseId
+                }
+              },
               updateAt: {
                 set: new Date()
-              },
+              }
             }
+
           },
           onCompleted() {
             dispatch({
@@ -194,11 +213,11 @@ export function UseFaqs() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
     },

@@ -1,22 +1,18 @@
 import { useMutation, useQuery } from "@apollo/client";
-import React, { useState, useContext } from "react";
-import Axios from "axios";
+import { useState, useContext } from "react";
 import {
     ToastError,
     ToastSuccess,
     ToastWarning,
 } from "../../../commonComponents/commonFunction/CommonFunction";
-import {
-    ADD_ATTANDANCE,
-    // DELETE_ATTANDANCE,
-    UPDATE_ATTANDANCE
-} from "../../../lib/mutation/AllMutations";
-import { GET_ATTANDANCE } from "../../../lib/queries/AllQueries";
-// import { convertToRaw } from "draft-js";
-// import draftToHtml from "draftjs-to-html";
-import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../../State";
 import FiltredData from "../../../constants/FiltredRoles";
+import {
+    ADD_COURSE_BATCH,
+    // DELETE_COURSE_BATCH,
+    UPDATE_COURSE_BATCH
+} from "../../../lib/mutation/AllMutations";
+import { GET_COURSE_BATCH } from "../../../lib/queries/AllQueries";
+import { AppContext } from "../../../State";
 
 
 
@@ -24,24 +20,21 @@ import FiltredData from "../../../constants/FiltredRoles";
 
 
 
-export default function UseAttandance() {
-    const [{ student }] = FiltredData()
+export default function UseCourseBatch() {
+    const [{ COURSE_DATA }] = FiltredData()
     const formInputs = [
         {
-            label: "attendence",
-            name: "attendence",
-            type: "booleanSelection",
-            dropDown: ["PRESENT", "ABSENT"]
+            label: "Name",
+            name: "name",
+            type: "text",
         },
         {
-            label: "user",
-            name: "user",
-            type: "selectUser",
-            dropDown: student
+            label: "Course",
+            name: "coursesId",
+            type: "selectCourse",
+            dropDown: COURSE_DATA
         },
-
     ]
-    console.log("sami", student);
     const { state, dispatch } = useContext(AppContext);
 
 
@@ -51,47 +44,65 @@ export default function UseAttandance() {
 
     //GET STAFF 
 
-    let { data, loading: GET_LOADING, error } = useQuery(GET_ATTANDANCE);
-    console.log("error", error);
+    let { data, loading: GET_LOADING, error } = useQuery(GET_COURSE_BATCH);
     const refacteredData = [];
-    data?.attendences?.map((item) => {
+    data?.findManyCourseBatches?.map((item) => {
         refacteredData.push({
             id: item.id,
-            attendence: item.attendence,
-            date: item.date,
-            userId: item.userId
+            name: item.name,
+            coursesId: item.coursesId,
+            courseName: item.courseName,
+            createdAt: item.createdAt,
+            updateAt: item.updateAt,
         });
     });
-    console.log("refacteredDatanew", refacteredData);
 
-    const [loader, setLoader] = useState(false);
 
     //ADD STAFF
 
-    let [CreateAttendence, { loading: ADD_LOADING }] = useMutation(ADD_ATTANDANCE);
+    let [CreateCourseBatches, { loading: ADD_LOADING }] = useMutation(ADD_COURSE_BATCH);
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.attendence) {
-            ToastWarning('attendence required')
+        if (!state.editData?.name) {
+            ToastWarning('name required')
         }
-        else if (!state.editData?.user) {
-            ToastWarning('user required')
+        else if (!state.editData?.coursesId) {
+            ToastWarning('Course Id required')
         }
+        // else if (!state.editData?.assignmentId) {
+        //     ToastWarning('assignmentId required')
+        // }
+        // else if (!state.editData?.quizId) {
+        //     ToastWarning('quizId required')
+        // }
         else {
             try {
-                await CreateAttendence({
+                await CreateCourseBatches({
                     variables: {
-
                         data: {
-                            attendence: state.editData?.attendence,
-                            date: new Date().toDateString(),
-                            user: {
+                            name: state.editData?.name,
+                            // assignment: {
+                            //     connect: [
+                            //         {
+                            //             id: state.editData?.assignmentId
+                            //         }
+                            //     ]
+                            // },
+                            // quiz: {
+                            //     connect: [
+                            //         {
+                            //             id: state.editData?.quizId
+                            //         }
+                            //     ]
+                            // },
+                            courses: {
                                 connect: {
-                                    id: state.editData?.user
+                                    id: state.editData?.coursesId
                                 }
                             }
                         }
+
                     },
                     onCompleted(data, cache) {
                         dispatch({
@@ -101,10 +112,10 @@ export default function UseAttandance() {
                                 openFormModal: false,
                             },
                         });
-                        ToastSuccess('Attandance marked')
+                        ToastSuccess('Lecture Added')
 
                     },
-                    refetchQueries: [{ query: GET_ATTANDANCE }],
+                    refetchQueries: [{ query: GET_COURSE_BATCH }],
                 });
             } catch (error) {
                 dispatch({
@@ -113,7 +124,6 @@ export default function UseAttandance() {
                         openFormModal: false,
                     },
                 });
-                setLoader(false);
                 ToastError(error.message);
 
             }
@@ -126,19 +136,19 @@ export default function UseAttandance() {
 
     // DELETE STAFF
 
-    // let [Mutation, { loading: DELETE_LOADING }] = useMutation(DELETE_ATTANDANCE);
+    // let [DeleteCourseBatches, { loading: DELETE_LOADING }] = useMutation(DELETE_COURSE_BATCH);
     // const ctaDeleteHandler = async ({ ...data }) => {
     //     try {
-    //         await Mutation({
+    //         await DeleteCourseBatches({
     //             variables: {
     //                 where: {
     //                     id: data.id,
     //                 },
     //             },
     //             onCompleted(data) {
-    //                 ToastSuccess('Attandance Deleted')
+    //                 ToastSuccess('Course Deleted')
     //             },
-    //             refetchQueries: [{ query: GET_ATTANDANCE }],
+    //             refetchQueries: [{ query: GET_COURSE_BATCH }],
     //         });
     //     } catch (error) {
     //         console.log(error.message);
@@ -151,37 +161,34 @@ export default function UseAttandance() {
 
     //Update staff
 
-    let [UpdateAttendence, { loading: UPDATE_LOADING }] = useMutation(UPDATE_ATTANDANCE);
+    let [UpdateCourseBatches, { loading: UPDATE_LOADING }] = useMutation(UPDATE_COURSE_BATCH);
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.attendence) {
-            ToastWarning('attendence required')
+        if (!state.editData?.name) {
+            ToastWarning('name required')
         }
-        else if (!state.editData?.user) {
-            ToastWarning('user required')
+        else if (!state.editData?.coursesId) {
+            ToastWarning('Course Id required')
         }
         else {
             try {
-                await UpdateAttendence({
+                await UpdateCourseBatches({
                     variables: {
                         where: {
                             id: state.editId
                         },
 
                         data: {
-                            attendence: {
-                                set: state.editData?.attendence
+                            name: {
+                                set: state.editData?.name
                             },
-                            date: {
-                                set: new Date().toDateString()
-                            },
-                            user: {
+                            courses: {
                                 connect: {
-                                    id: state.editData?.user
+                                    id: state.editData?.coursesId
                                 }
                             }
-                        },
+                        }
 
                     },
                     onCompleted() {
@@ -192,9 +199,9 @@ export default function UseAttandance() {
                                 openFormModal: false,
                             },
                         });
-                        ToastSuccess('Attandance Updated')
+                        ToastSuccess('Course Updated')
                     },
-                    refetchQueries: [{ query: GET_ATTANDANCE }],
+                    refetchQueries: [{ query: GET_COURSE_BATCH }],
                 })
 
             } catch (error) {
@@ -204,7 +211,6 @@ export default function UseAttandance() {
     }
     return [
         {
-            loader,
             ADD_LOADING,
             GET_LOADING,
             // DELETE_LOADING,

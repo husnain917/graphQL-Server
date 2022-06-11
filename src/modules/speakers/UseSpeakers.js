@@ -5,18 +5,16 @@ import {
     ToastError,
     ToastSuccess,
     ToastWarning,
-} from "../../../commonComponents/commonFunction/CommonFunction";
+} from "../../commonComponents/commonFunction/CommonFunction";
 import {
-    ADD_ATTANDANCE,
-    // DELETE_ATTANDANCE,
-    UPDATE_ATTANDANCE
-} from "../../../lib/mutation/AllMutations";
-import { GET_ATTANDANCE } from "../../../lib/queries/AllQueries";
+    ADD_SPEAKERS,
+    // DELETE_SPEAKER,
+    UPDATE_SPEAKER
+} from "../../lib/mutation/AllMutations";
+import { GET_SPEAKERS } from "../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
-import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../../State";
-import FiltredData from "../../../constants/FiltredRoles";
+import { AppContext } from "../../State";
 
 
 
@@ -24,24 +22,26 @@ import FiltredData from "../../../constants/FiltredRoles";
 
 
 
-export default function UseAttandance() {
-    const [{ student }] = FiltredData()
+export default function UseSpeakers() {
+
     const formInputs = [
         {
-            label: "attendence",
-            name: "attendence",
-            type: "booleanSelection",
-            dropDown: ["PRESENT", "ABSENT"]
+            label: "Speaker Name",
+            name: "speakerName",
+            type: "text",
         },
         {
-            label: "user",
-            name: "user",
-            type: "selectUser",
-            dropDown: student
+            label: "Speaker Desc",
+            name: "spkearDesc",
+            type: "text",
+        },
+        {
+            label: "Speaker Image",
+            name: "spekaerImage",
+            type: "upload",
         },
 
     ]
-    console.log("sami", student);
     const { state, dispatch } = useContext(AppContext);
 
 
@@ -51,46 +51,46 @@ export default function UseAttandance() {
 
     //GET STAFF 
 
-    let { data, loading: GET_LOADING, error } = useQuery(GET_ATTANDANCE);
+    let { data, loading: GET_LOADING, error } = useQuery(GET_SPEAKERS);
     console.log("error", error);
     const refacteredData = [];
-    data?.attendences?.map((item) => {
+    data?.speakers?.map((item) => {
         refacteredData.push({
             id: item.id,
-            attendence: item.attendence,
-            date: item.date,
-            userId: item.userId
+            speakerName: item.speakerName,
+            spkearDesc: item.spkearDesc,
+            spekaerImage: item.spekaerImage,
+            createdAt: item.createdAt,
+            updateAt: item.updateAt,
         });
     });
-    console.log("refacteredDatanew", refacteredData);
+    console.log("refacteredData", refacteredData);
 
     const [loader, setLoader] = useState(false);
 
     //ADD STAFF
 
-    let [CreateAttendence, { loading: ADD_LOADING }] = useMutation(ADD_ATTANDANCE);
+    let [CreateSpeaker, { loading: ADD_LOADING }] = useMutation(ADD_SPEAKERS);
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.attendence) {
-            ToastWarning('attendence required')
+        if (!state.editData?.speakerName) {
+            ToastWarning('speakerName required')
         }
-        else if (!state.editData?.user) {
-            ToastWarning('user required')
+        else if (!state.editData?.spkearDesc) {
+            ToastWarning('spkearDesc required')
+        }
+        else if (!state.editData?.spekaerImage) {
+            ToastWarning('spekaerImage required')
         }
         else {
             try {
-                await CreateAttendence({
+                await CreateSpeaker({
                     variables: {
-
                         data: {
-                            attendence: state.editData?.attendence,
-                            date: new Date().toDateString(),
-                            user: {
-                                connect: {
-                                    id: state.editData?.user
-                                }
-                            }
+                            speakerName: state.editData?.speakerName,
+                            spkearDesc: state.editData?.spkearDesc,
+                            spekaerImage: state?.imageUrl
                         }
                     },
                     onCompleted(data, cache) {
@@ -101,10 +101,10 @@ export default function UseAttandance() {
                                 openFormModal: false,
                             },
                         });
-                        ToastSuccess('Attandance marked')
+                        ToastSuccess('Speaker Added')
 
                     },
-                    refetchQueries: [{ query: GET_ATTANDANCE }],
+                    refetchQueries: [{ query: GET_SPEAKERS }],
                 });
             } catch (error) {
                 dispatch({
@@ -126,19 +126,19 @@ export default function UseAttandance() {
 
     // DELETE STAFF
 
-    // let [Mutation, { loading: DELETE_LOADING }] = useMutation(DELETE_ATTANDANCE);
+    // let [DeleteSpeaker, { loading: DELETE_LOADING }] = useMutation(DELETE_SPEAKER);
     // const ctaDeleteHandler = async ({ ...data }) => {
     //     try {
-    //         await Mutation({
+    //         await DeleteSpeaker({
     //             variables: {
     //                 where: {
     //                     id: data.id,
     //                 },
     //             },
     //             onCompleted(data) {
-    //                 ToastSuccess('Attandance Deleted')
+    //                 ToastSuccess('Speaker Deleted')
     //             },
-    //             refetchQueries: [{ query: GET_ATTANDANCE }],
+    //             refetchQueries: [{ query: GET_SPEAKERS }],
     //         });
     //     } catch (error) {
     //         console.log(error.message);
@@ -151,38 +151,37 @@ export default function UseAttandance() {
 
     //Update staff
 
-    let [UpdateAttendence, { loading: UPDATE_LOADING }] = useMutation(UPDATE_ATTANDANCE);
+    let [UpdateSpeaker, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SPEAKER);
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.attendence) {
-            ToastWarning('attendence required')
+        if (!state.editData?.speakerName) {
+            ToastWarning('Speaker Name required')
         }
-        else if (!state.editData?.user) {
-            ToastWarning('user required')
+        else if (!state.editData?.spkearDesc) {
+            ToastWarning('Speaker Desc required')
+        }
+        else if (!state.editData?.spekaerImage) {
+            ToastWarning('Image required')
         }
         else {
             try {
-                await UpdateAttendence({
+                await UpdateSpeaker({
                     variables: {
                         where: {
                             id: state.editId
                         },
-
                         data: {
-                            attendence: {
-                                set: state.editData?.attendence
+                            speakerName: {
+                                set: state.editData?.speakerName,
                             },
-                            date: {
-                                set: new Date().toDateString()
+                            spkearDesc: {
+                                set: state.editData?.spkearDesc,
                             },
-                            user: {
-                                connect: {
-                                    id: state.editData?.user
-                                }
+                            spekaerImage: {
+                                set: state.editData?.spekaerImage
                             }
                         },
-
                     },
                     onCompleted() {
                         dispatch({
@@ -192,9 +191,9 @@ export default function UseAttandance() {
                                 openFormModal: false,
                             },
                         });
-                        ToastSuccess('Attandance Updated')
+                        ToastSuccess('Speaker Updated')
                     },
-                    refetchQueries: [{ query: GET_ATTANDANCE }],
+                    refetchQueries: [{ query: GET_SPEAKERS }],
                 })
 
             } catch (error) {

@@ -7,15 +7,16 @@ import {
     ToastWarning,
 } from "../../../commonComponents/commonFunction/CommonFunction";
 import {
-    ADD_COURSES,
-    UPDATE_SINGLE_COURSE,
-    DELETE_SINGLE_COURSE
+    ADD_MY_COURSES,
+    // DELETE_MY_COURSE,
+    UPDATE_MY_COURSE
 } from "../../../lib/mutation/AllMutations";
-import { GET_COURSES } from "../../../lib/queries/AllQueries";
+import { GET_MY_COURSES } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
+import FiltredData from "../../../constants/FiltredRoles";
 
 
 
@@ -24,42 +25,31 @@ import { AppContext } from "../../../State";
 
 
 export default function UseMyCourses() {
+    const [{ student, COURSE_DATA, courseBatch }] = FiltredData()
     const formInputs = [
         {
-            label: "Name",
-            name: "courseName",
-            type: "text",
+            label: "Course",
+            name: "coursesId",
+            type: "selectCourse",
+            dropDown: COURSE_DATA
         },
         {
-            label: "Description",
-            name: "courseDesc",
-            type: "text",
+            label: "Student",
+            name: "studentId",
+            type: "selectUser",
+            dropDown: student
         },
         {
-            label: "Intro",
-            name: "courseIntro",
-            type: "text",
-        },
-        {
-            label: "Price",
-            name: "coursePrice",
-            type: "number",
-        },
-        {
-            label: "instructorId",
-            name: "instructorId",
-            type: "text",
-        },
-        {
-            label: "courseCategoryId",
-            name: "courseCategoryId",
-            type: "text",
+            label: "course Batche",
+            name: "courseBatchesId",
+            type: "selectBatch",
+            dropDown: courseBatch
         },
         {
             label: "Status",
-            name: "courseStatus",
+            name: "feeStatus",
             type: "select",
-            dropDownContent: ["PUBLISH", "UNPUBLISH"],
+            dropDownContent: ["PAID", "PENDING", "HALFPAID"],
         },
     ]
     const { state, dispatch } = useContext(AppContext);
@@ -71,108 +61,68 @@ export default function UseMyCourses() {
 
     //GET STAFF 
 
-    let { data, loading: GET_LOADING, error } = useQuery(GET_COURSES);
+    let { data, loading: GET_LOADING, error } = useQuery(GET_MY_COURSES);
     console.log("error", error);
-    const refacteredData = [
-        {
-            id: '92739237293729793',
-            courseName: 'Web',
-            courseId: '32329121',
-            studentName: 'Muneeb',
-            studentId: '21',
-            courseApproval: 'true',
-            whyReject: 'No reason',
-            feeStatus: 'Pending',
-            courseBatch: '2',
-            courseBatchId: 1
-        },
-        {
-            id: '92739237293729793',
-            courseName: 'Mobile app',
-            courseId: '32329121',
-            studentName: 'Muneeb',
-            studentId: '21',
-            courseApproval: 'true',
-            whyReject: 'No reason',
-            feeStatus: 'Paid',
-            courseBatch: '2',
-            courseBatchId: 1
-        },
-        {
-            id: '92739237293729793',
-            courseName: 'Web',
-            courseId: '32329121',
-            studentName: 'Muneeb',
-            studentId: '21',
-            courseApproval: 'true',
-            whyReject: 'No reason',
-            feeStatus: 'Pending',
-            courseBatch: '2',
-            courseBatchId: 1
-        },
-    ];
-    //   data?.findManyCourses?.map((item) => {
-    //     refacteredData.push({
-    //       id: item.id,
-    //       courseName: item.courseName,
-    //       courseDesc: item.courseDesc,
-    //       courseIntro: item.courseIntro,
-    //       courseStatus: item.courseStatus,
-    //       coursePrice: item.coursePrice,
-    //       instructorId: item.instructorId,
-    //       courseCategoryId: item.courseCategoryId,
-
-
-
-
-    //     });
-    //   });
-    //   console.log("refacteredData", refacteredData);
+    const refacteredData = [];
+    data?.myCourses?.map((item) => {
+        refacteredData.push({
+            id: item.id,
+            coursesId: item.coursesId,
+            studentId: item.studentId,
+            courseApproval: item.courseApproval,
+            whyReject: item.whyReject,
+            feeStatus: item.feeStatus,
+            courseBatchesId: item.courseBatchesId,
+            updateAt: item.updateAt,
+            createdAt: item.createdAt,
+        });
+    });
+    console.log("refacteredData", refacteredData);
 
     const [loader, setLoader] = useState(false);
 
     //ADD STAFF
 
-    let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
+    let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_MY_COURSES);
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.courseName) {
-            ToastWarning('Course name required')
+        if (!state.editData?.coursesId) {
+            ToastWarning('Course required')
         }
-        else if (!state.editData?.courseDesc) {
-            ToastWarning('Course description required')
+        else if (!state.editData?.studentId) {
+            ToastWarning('Student  required')
         }
-        else if (!state.editData?.courseIntro) {
-            ToastWarning('Intro required')
+        else if (!state.editData?.courseBatchesId) {
+            ToastWarning('Course Batches required')
         }
-        else if (!state.editData?.coursePrice) {
-            ToastWarning('Price required')
-        }
-        else if (!state.editData?.instructorId) {
-            ToastWarning('Instructor Id required')
-        }
-        else if (!state.editData?.courseCategoryId) {
-            ToastWarning('Course category Id required')
-        }
-        else if (!state.editData?.courseStatus) {
-            ToastWarning('Status required')
+        else if (!state.editData?.feeStatus) {
+            ToastWarning('FeeStatus required')
         }
         else {
             try {
                 await Mutation({
                     variables: {
                         data: {
-                            courseName: state.editData?.courseName,
-                            courseDesc: state.editData?.courseDesc,
-                            courseIntro: state.editData?.courseIntro,
-                            courseStatus: state.editData?.courseStatus,
-                            instructorId: state.editData?.instructorId,
-                            courseCategoryId: state.editData?.courseCategoryId,
-                            coursePrice: state.editData?.coursePrice,
+                            courses: {
+                                connect: {
+                                    id: state.editData?.coursesId
+                                }
+                            },
+                            student: {
+                                connect: {
+                                    id: state.editData?.studentId
+                                }
+                            },
+                            courseBatches: {
+                                connect: {
+                                    id: state.editData?.courseBatchesId
+                                }
+                            },
+                            feeStatus: state?.editData?.feeStatus
+                        }
 
-                            // phone: state.editData?.phone
-                        },
+
                     },
                     onCompleted(data, cache) {
                         dispatch({
@@ -185,7 +135,7 @@ export default function UseMyCourses() {
                         ToastSuccess('Course Added')
 
                     },
-                    refetchQueries: [{ query: GET_COURSES }],
+                    refetchQueries: [{ query: GET_MY_COURSES }],
                 });
             } catch (error) {
                 dispatch({
@@ -207,24 +157,24 @@ export default function UseMyCourses() {
 
     // DELETE STAFF
 
-    let [DeleteCourses, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_COURSE);
-    const ctaDeleteHandler = async ({ ...data }) => {
-        try {
-            await DeleteCourses({
-                variables: {
-                    where: {
-                        id: data.id,
-                    },
-                },
-                onCompleted(data) {
-                    ToastSuccess('Course Deleted')
-                },
-                refetchQueries: [{ query: GET_COURSES }],
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+    // let [DeleteMyCourse, { loading: DELETE_LOADING }] = useMutation(DELETE_MY_COURSE);
+    // const ctaDeleteHandler = async ({ ...data }) => {
+    //     try {
+    //         await DeleteMyCourse({
+    //             variables: {
+    //                 where: {
+    //                     id: data.id,
+    //                 },
+    //             },
+    //             onCompleted(data) {
+    //                 ToastSuccess('Course Deleted')
+    //             },
+    //             refetchQueries: [{ query: GET_MY_COURSES }],
+    //         });
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // };
 
 
 
@@ -232,55 +182,51 @@ export default function UseMyCourses() {
 
     //Update staff
 
-    let [UpdateCourses, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_COURSE);
+    let [UpdateMyCourse, { loading: UPDATE_LOADING }] = useMutation(UPDATE_MY_COURSE);
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.courseName) {
-            ToastWarning('Course name required')
+        if (!state.editData?.coursesId) {
+            ToastWarning('Course required')
         }
-        else if (!state.editData?.courseDesc) {
-            ToastWarning('Course description required')
+        else if (!state.editData?.studentId) {
+            ToastWarning('Student  required')
         }
-        else if (!state.editData?.courseIntro) {
-            ToastWarning('Intro required')
+        else if (!state.editData?.courseBatchesId) {
+            ToastWarning('Course Batches required')
         }
-        else if (!state.editData?.coursePrice) {
-            ToastWarning('Price required')
-        }
-        else if (!state.editData?.instructorId) {
-            ToastWarning('Instructor Id required')
-        }
-        else if (!state.editData?.courseCategoryId) {
-            ToastWarning('Course category Id required')
-        }
-        else if (!state.editData?.courseStatus) {
-            ToastWarning('Status required')
+        else if (!state.editData?.feeStatus) {
+            ToastWarning('FeeStatus required')
         }
         else {
             try {
-                await UpdateCourses({
+                await UpdateMyCourse({
                     variables: {
                         where: {
                             id: state.editId
                         },
+
                         data: {
-                            courseName: {
-                                set: state.editData?.courseName
+                            courses: {
+                                connect: {
+                                    id: state.editData?.coursesId
+                                }
                             },
-                            courseDesc: {
-                                set: state.editData?.courseDesc
+                            student: {
+                                connect: {
+                                    id: state.editData?.studentId
+                                }
                             },
-                            courseIntro: {
-                                set: state.editData?.courseIntro
+                            courseBatches: {
+                                connect: {
+                                    id: state.editData?.courseBatchesId
+                                }
                             },
-                            courseStatus: {
-                                set: state.editData?.courseStatus
-                            },
-                            coursePrice: {
-                                set: state.editData?.coursePrice
+                            feeStatus: {
+                                set: state.editData?.feeStatus
                             }
                         }
+
                     },
                     onCompleted() {
                         dispatch({
@@ -292,7 +238,7 @@ export default function UseMyCourses() {
                         });
                         ToastSuccess('Course Updated')
                     },
-                    refetchQueries: [{ query: GET_COURSES }],
+                    refetchQueries: [{ query: GET_MY_COURSES }],
                 })
 
             } catch (error) {
@@ -305,11 +251,11 @@ export default function UseMyCourses() {
             loader,
             ADD_LOADING,
             GET_LOADING,
-            DELETE_LOADING,
+            // DELETE_LOADING,
             UPDATE_LOADING,
             refacteredData,
             ctaFormHandler,
-            ctaDeleteHandler,
+            // ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
         },

@@ -7,7 +7,6 @@ import { GET_USERS } from '../../../lib/queries/AllQueries'
 import { AppContext } from '../../../State'
 
 export function UseEditProfile() {
-    const navigate = useNavigate()
     const { state } = useContext(AppContext)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -58,6 +57,9 @@ export function UseEditProfile() {
                             },
                             phone: {
                                 set: contact
+                            },
+                            image:{
+                                
                             }
                         }
                     },

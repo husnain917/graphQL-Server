@@ -8,18 +8,18 @@ export default function CourseAssigned() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
     },
   ] = UseCourseAssigned();
   if (
     GET_LOADING ||
-    DELETE_LOADING ||
+    // DELETE_LOADING ||
     UPDATE_LOADING ||
     ADD_LOADING ||
     loader
@@ -37,6 +37,9 @@ export default function CourseAssigned() {
         'Courses',
         'Course Id',
       ]}
+      ctaFormHandler={ctaFormHandler}
+      // ctaDeleteHandler
+      ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
         {
           key: "id",

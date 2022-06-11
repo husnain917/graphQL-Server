@@ -9,13 +9,14 @@ import {
 import {
   ADD_COURSES,
   UPDATE_SINGLE_COURSE,
-  DELETE_SINGLE_COURSE
+  // DELETE_SINGLE_COURSE
 } from "../../lib/mutation/AllMutations";
 import { GET_COURSES } from "../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../State";
+import FiltredData from "../../constants/FiltredRoles";
 
 
 
@@ -24,6 +25,15 @@ import { AppContext } from "../../State";
 
 
 export function UseCourses() {
+
+
+
+  //GET_CATEGORIES
+  const [{ teacher, CATEGORY_DATA }] = FiltredData()
+  const { state, dispatch } = useContext(AppContext);
+
+
+
   const formInputs = [
     {
       label: "Name",
@@ -46,14 +56,16 @@ export function UseCourses() {
       type: "number",
     },
     {
-      label: "instructorId",
-      name: "instructorId",
-      type: "text",
+      label: "Course Category Id",
+      name: "courseCategoryId",
+      type: "selectCategory",
+      dropDown: CATEGORY_DATA
     },
     {
-      label: "courseCategoryId",
-      name: "courseCategoryId",
-      type: "text",
+      label: "Select Instructor",
+      name: "instructorId",
+      type: "selectInstructor",
+      dropDown: teacher
     },
     {
       label: "Status",
@@ -62,8 +74,6 @@ export function UseCourses() {
       dropDownContent: ["PUBLISH", "UNPUBLISH"],
     },
   ]
-  const { state, dispatch } = useContext(AppContext);
-
 
 
 
@@ -96,7 +106,7 @@ export function UseCourses() {
 
   //ADD STAFF
 
-  let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
+  let [CreateCourses, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
@@ -123,19 +133,30 @@ export function UseCourses() {
     }
     else {
       try {
-        await Mutation({
+        await CreateCourses({
           variables: {
             data: {
               courseName: state.editData?.courseName,
               courseDesc: state.editData?.courseDesc,
+              instructor: {
+                connect: {
+                  id: state.editData?.instructorId,
+                }
+              },
               courseIntro: state.editData?.courseIntro,
-              courseStatus: state.editData?.courseStatus,
-              instructorId: state.editData?.instructorId,
-              courseCategoryId: state.editData?.courseCategoryId,
+              courseCategory: {
+                connect: {
+                  id: state.editData?.courseCategoryId,
+                }
+              },
+              organization: {
+                connect: {
+                  id: state.user?.id,
+                }
+              },
               coursePrice: state.editData?.coursePrice,
+            }
 
-              // phone: state.editData?.phone
-            },
           },
           onCompleted(data, cache) {
             dispatch({
@@ -170,24 +191,24 @@ export function UseCourses() {
 
   // DELETE STAFF
 
-  let [DeleteCourses, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_COURSE);
-  const ctaDeleteHandler = async ({ ...data }) => {
-    try {
-      await DeleteCourses({
-        variables: {
-          where: {
-            id: data.id,
-          },
-        },
-        onCompleted(data) {
-          ToastSuccess('Course Deleted')
-        },
-        refetchQueries: [{ query: GET_COURSES }],
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // let [DeleteCourses, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_COURSE);
+  // const ctaDeleteHandler = async ({ ...data }) => {
+  //   try {
+  //     await DeleteCourses({
+  //       variables: {
+  //         where: {
+  //           id: data.id,
+  //         },
+  //       },
+  //       onCompleted(data) {
+  //         ToastSuccess('Course Deleted')
+  //       },
+  //       refetchQueries: [{ query: GET_COURSES }],
+  //     });
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
 
 
@@ -196,7 +217,7 @@ export function UseCourses() {
   //Update staff
 
   let [UpdateCourses, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_COURSE);
-  
+
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
     if (!state.editData?.courseName) {
@@ -237,14 +258,30 @@ export function UseCourses() {
               courseIntro: {
                 set: state.editData?.courseIntro
               },
-              courseStatus: {
-                set: state.editData?.courseStatus
+              instructor: {
+                connect: {
+                  id: state.editData?.instructorId,
+                }
+              },
+              courseCategory: {
+                connect: {
+                  id: state.editData?.courseCategoryId,
+                }
+              },
+              organization: {
+                connect: {
+                  id: state.user?.id
+                }
               },
               coursePrice: {
                 set: state.editData?.coursePrice
-              }
-            }
+              },
+              courseStatus: {
+                set: state.editData?.courseStatus
+              },
+            },
           },
+
           onCompleted() {
             dispatch({
               type: "setModal",
@@ -268,11 +305,11 @@ export function UseCourses() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      //,
       ctaUpdateHandler,
       formInputs,
     },

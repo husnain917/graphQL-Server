@@ -7,11 +7,11 @@ import {
     ToastWarning,
 } from "../../../commonComponents/commonFunction/CommonFunction";
 import {
-    ADD_COURSES,
-    UPDATE_SINGLE_COURSE,
-    DELETE_SINGLE_COURSE
+    ADD_LECTURES,
+    // DELETE_LECTURE,
+    UPDATE_LECTURES
 } from "../../../lib/mutation/AllMutations";
-import { GET_COURSES } from "../../../lib/queries/AllQueries";
+import { GET_COURSES, GET_LECTURES } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
@@ -26,40 +26,19 @@ import { AppContext } from "../../../State";
 export default function UseLecture() {
     const formInputs = [
         {
-            label: "Name",
-            name: "courseName",
+            label: "Lecture Title",
+            name: "lectureTitle",
             type: "text",
         },
         {
-            label: "Description",
-            name: "courseDesc",
+            label: "Lecture Video",
+            name: "lectureVideo",
             type: "text",
         },
         {
-            label: "Intro",
-            name: "courseIntro",
+            label: "Course",
+            name: "coursesId",
             type: "text",
-        },
-        {
-            label: "Price",
-            name: "coursePrice",
-            type: "number",
-        },
-        {
-            label: "instructorId",
-            name: "instructorId",
-            type: "text",
-        },
-        {
-            label: "courseCategoryId",
-            name: "courseCategoryId",
-            type: "text",
-        },
-        {
-            label: "Status",
-            name: "courseStatus",
-            type: "select",
-            dropDownContent: ["PUBLISH", "UNPUBLISH"],
         },
     ]
     const { state, dispatch } = useContext(AppContext);
@@ -71,93 +50,53 @@ export default function UseLecture() {
 
     //GET STAFF 
 
-    let { data, loading: GET_LOADING, error } = useQuery(GET_COURSES);
+    let { data, loading: GET_LOADING, error } = useQuery(GET_LECTURES);
     console.log("error", error);
-    const refacteredData = [
-        {
-            id: '92739237293729793',
-            lectureTitle: 'React Native',
-            lectureVideo: 'mobileApp-ReactNative.mp4',
-            courses: 'Offline',
-            courseId:'23232'
-        },
-        {
-            id: '92739237293729793',
-            lectureTitle: 'React Native',
-            lectureVideo: 'mobileApp-ReactNative.mp4',
-            courses: 'Offline',
-            courseId:'23232'
-        },
-        {
-            id: '92739237293729793',
-            lectureTitle: 'React Native',
-            lectureVideo: 'mobileApp-ReactNative.mp4',
-            courses: 'Offline',
-            courseId:'23232'
-        },
-    ];
-    //   data?.findManyCourses?.map((item) => {
-    //     refacteredData.push({
-    //       id: item.id,
-    //       courseName: item.courseName,
-    //       courseDesc: item.courseDesc,
-    //       courseIntro: item.courseIntro,
-    //       courseStatus: item.courseStatus,
-    //       coursePrice: item.coursePrice,
-    //       instructorId: item.instructorId,
-    //       courseCategoryId: item.courseCategoryId,
-
-
-
-
-    //     });
-    //   });
-    //   console.log("refacteredData", refacteredData);
+    const refacteredData = [];
+    data?.findManyLectures?.map((item) => {
+        refacteredData.push({
+            id: item.id,
+            lectureTitle: item.lectureTitle,
+            lectureVideo: item.lectureVideo,
+            coursesId: item.coursesId,
+            createdAt: item.createdAt,
+            updateAt: item.updateAt,
+        });
+    });
+    console.log("refacteredData", refacteredData);
 
     const [loader, setLoader] = useState(false);
 
     //ADD STAFF
 
-    let [Mutation, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
+    let [CreateLectures, { loading: ADD_LOADING }] = useMutation(ADD_LECTURES);
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.courseName) {
-            ToastWarning('Course name required')
+        if (!state.editData?.lectureTitle) {
+            ToastWarning('Lecture Title required')
         }
-        else if (!state.editData?.courseDesc) {
-            ToastWarning('Course description required')
+        else if (!state.editData?.lectureVideo) {
+            ToastWarning('Lecture Video required')
         }
-        else if (!state.editData?.courseIntro) {
-            ToastWarning('Intro required')
-        }
-        else if (!state.editData?.coursePrice) {
-            ToastWarning('Price required')
-        }
-        else if (!state.editData?.instructorId) {
-            ToastWarning('Instructor Id required')
-        }
-        else if (!state.editData?.courseCategoryId) {
-            ToastWarning('Course category Id required')
-        }
-        else if (!state.editData?.courseStatus) {
-            ToastWarning('Status required')
+        else if (!state.editData?.coursesId) {
+            ToastWarning('Course required')
         }
         else {
             try {
-                await Mutation({
+                await CreateLectures({
                     variables: {
-                        data: {
-                            courseName: state.editData?.courseName,
-                            courseDesc: state.editData?.courseDesc,
-                            courseIntro: state.editData?.courseIntro,
-                            courseStatus: state.editData?.courseStatus,
-                            instructorId: state.editData?.instructorId,
-                            courseCategoryId: state.editData?.courseCategoryId,
-                            coursePrice: state.editData?.coursePrice,
 
-                            // phone: state.editData?.phone
-                        },
+                        data: {
+                            lectureTitle: state.editData?.lectureTitle,
+                            lectureVideo: state.editData?.lectureVideo,
+                            courses: {
+                                connect: {
+                                    id: state.editData?.coursesId
+                                }
+                            }
+                        }
+
                     },
                     onCompleted(data, cache) {
                         dispatch({
@@ -167,10 +106,10 @@ export default function UseLecture() {
                                 openFormModal: false,
                             },
                         });
-                        ToastSuccess('Course Added')
+                        ToastSuccess('Lecture Added')
 
                     },
-                    refetchQueries: [{ query: GET_COURSES }],
+                    refetchQueries: [{ query: GET_LECTURES }],
                 });
             } catch (error) {
                 dispatch({
@@ -192,24 +131,24 @@ export default function UseLecture() {
 
     // DELETE STAFF
 
-    let [DeleteCourses, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_COURSE);
-    const ctaDeleteHandler = async ({ ...data }) => {
-        try {
-            await DeleteCourses({
-                variables: {
-                    where: {
-                        id: data.id,
-                    },
-                },
-                onCompleted(data) {
-                    ToastSuccess('Course Deleted')
-                },
-                refetchQueries: [{ query: GET_COURSES }],
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+    // let [DeleteLectures, { loading: DELETE_LOADING }] = useMutation(DELETE_LECTURE);
+    // const ctaDeleteHandler = async ({ ...data }) => {
+    //     try {
+    //         await DeleteLectures({
+    //             variables: {
+    //                 where: {
+    //                     id: data.id,
+    //                 },
+    //             },
+    //             onCompleted(data) {
+    //                 ToastSuccess('Course Deleted')
+    //             },
+    //             refetchQueries: [{ query: GET_LECTURES }],
+    //         });
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // };
 
 
 
@@ -217,53 +156,37 @@ export default function UseLecture() {
 
     //Update staff
 
-    let [UpdateCourses, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_COURSE);
+    let [UpdateLectures, { loading: UPDATE_LOADING }] = useMutation(UPDATE_LECTURES);
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.courseName) {
-            ToastWarning('Course name required')
+        if (!state.editData?.lectureTitle) {
+            ToastWarning('Lecture Title required')
         }
-        else if (!state.editData?.courseDesc) {
-            ToastWarning('Course description required')
+        else if (!state.editData?.lectureVideo) {
+            ToastWarning('Lecture Video required')
         }
-        else if (!state.editData?.courseIntro) {
-            ToastWarning('Intro required')
-        }
-        else if (!state.editData?.coursePrice) {
-            ToastWarning('Price required')
-        }
-        else if (!state.editData?.instructorId) {
-            ToastWarning('Instructor Id required')
-        }
-        else if (!state.editData?.courseCategoryId) {
-            ToastWarning('Course category Id required')
-        }
-        else if (!state.editData?.courseStatus) {
-            ToastWarning('Status required')
+        else if (!state.editData?.coursesId) {
+            ToastWarning('Course required')
         }
         else {
             try {
-                await UpdateCourses({
+                await UpdateLectures({
                     variables: {
                         where: {
                             id: state.editId
                         },
                         data: {
-                            courseName: {
-                                set: state.editData?.courseName
+                            lectureTitle: {
+                                set: state.editData?.lectureTitle
                             },
-                            courseDesc: {
-                                set: state.editData?.courseDesc
+                            lectureVideo: {
+                                set: state.editData?.lectureVideo
                             },
-                            courseIntro: {
-                                set: state.editData?.courseIntro
-                            },
-                            courseStatus: {
-                                set: state.editData?.courseStatus
-                            },
-                            coursePrice: {
-                                set: state.editData?.coursePrice
+                            courses: {
+                                connect: {
+                                    id: state.editData?.coursesId
+                                }
                             }
                         }
                     },
@@ -290,11 +213,11 @@ export default function UseLecture() {
             loader,
             ADD_LOADING,
             GET_LOADING,
-            DELETE_LOADING,
+            // DELETE_LOADING,
             UPDATE_LOADING,
             refacteredData,
             ctaFormHandler,
-            ctaDeleteHandler,
+            // ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
         },

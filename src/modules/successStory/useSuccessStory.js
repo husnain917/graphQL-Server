@@ -8,7 +8,7 @@ import {
 } from "../../commonComponents/commonFunction/CommonFunction";
 import {
   ADD_SUCCESS_STORY,
-  DELETE_SINGLE_SUCCESS_STORY,
+  // DELETE_SINGLE_SUCCESS_STORY,
   UPDATE_SINGLE_SUCCESS,
 } from "../../lib/mutation/AllMutations";
 import { GET_SUCCESS_STORIES } from "../../lib/queries/AllQueries";
@@ -18,12 +18,13 @@ import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../State";
 
 
-
+import FiltredRoles from '../../constants/FiltredRoles'
 
 
 
 
 export function UseSuccessStory() {
+  const [{ student }] = FiltredRoles()
   const formInputs = [
     {
       label: "City",
@@ -56,11 +57,18 @@ export function UseSuccessStory() {
       type: "text",
     },
     {
+      label: "Select User",
+      name: "user",
+      type: "selectUser",
+      dropDown: student,
+    },
+    {
       label: "Status",
       name: "status",
       type: "select",
       dropDownContent: ["PUBLISH", "UNPUBLISH"],
     },
+
   ]
   const { state, dispatch } = useContext(AppContext);
 
@@ -84,7 +92,7 @@ export function UseSuccessStory() {
       status: item.status,
       totalEarnedAmount: item.totalEarnedAmount,
       whyReject: item.whyReject,
-
+      // user: item.user
     });
   });
   console.log("refacteredData", refacteredData);
@@ -93,7 +101,7 @@ export function UseSuccessStory() {
 
   //ADD STAFF
 
-  let [CreateManyStories, { loading: ADD_LOADING }] = useMutation(ADD_SUCCESS_STORY);
+  let [CreateSuccessStories, { loading: ADD_LOADING }] = useMutation(ADD_SUCCESS_STORY);
   const ctaFormHandler = async (event) => {
     event.preventDefault();
     if (!state.editData?.city) {
@@ -119,18 +127,25 @@ export function UseSuccessStory() {
     }
     else {
       try {
-        await CreateManyStories({
+        await CreateSuccessStories({
           variables: {
             data: {
-              city: state.editData?.city,
               freelancingProfileUrl: state.editData?.freelancingProfileUrl,
               paymentProof: state.editData?.paymentProof,
               description: state.editData?.description,
               status: state.editData?.status,
               totalEarnedAmount: state.editData?.totalEarnedAmount,
+              city: state.editData?.city,
               whyReject: state.editData?.whyReject,
-              // phone: state.editData?.phone
-            },
+              user: {
+                connect: [
+                  {
+                    id: state.editData?.user
+                  }
+                ]
+              }
+            }
+
           },
           onCompleted(data, cache) {
             dispatch({
@@ -164,24 +179,24 @@ export function UseSuccessStory() {
 
   // DELETE STAFF
 
-  let [DeleteSuccessStories, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_SUCCESS_STORY);
-  const ctaDeleteHandler = async ({ ...data }) => {
-    try {
-      await DeleteSuccessStories({
-        variables: {
-          where: {
-            id: data.id,
-          },
-        },
-        onCompleted(data) {
-          ToastSuccess('Story Deleted')
-        },
-        refetchQueries: [{ query: GET_SUCCESS_STORIES }],
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // let [DeleteSuccessStories, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_SUCCESS_STORY);
+  // const ctaDeleteHandler = async ({ ...data }) => {
+  //   try {
+  //     await DeleteSuccessStories({
+  //       variables: {
+  //         where: {
+  //           id: data.id,
+  //         },
+  //       },
+  //       onCompleted(data) {
+  //         ToastSuccess('Story Deleted')
+  //       },
+  //       refetchQueries: [{ query: GET_SUCCESS_STORIES }],
+  //     });
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
 
 
@@ -242,8 +257,15 @@ export function UseSuccessStory() {
               },
               whyReject: {
                 set: state.editData?.whyReject
+              },
+              user: {
+                connect: [
+                  {
+                    id: state.editData?.user
+                  }
+                ]
               }
-            }
+            },
           },
           onCompleted() {
             dispatch({
@@ -268,11 +290,11 @@ export function UseSuccessStory() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
     },

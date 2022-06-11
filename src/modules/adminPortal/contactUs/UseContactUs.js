@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
-import React, { useState, useContext } from "react";
-import Axios from "axios";
+import { useState, useContext } from "react";
 import {
     ToastError,
     ToastSuccess,
@@ -8,13 +7,10 @@ import {
 } from "../../../commonComponents/commonFunction/CommonFunction";
 import {
     ADD_CONTACT_US,
-    DELETE_CONTACT,
+    // DELETE_CONTACT,
     UPDATE_SINGLE_CONTACT,
 } from "../../../lib/mutation/AllMutations";
 import { GET_CONTACT_US } from "../../../lib/queries/AllQueries";
-// import { convertToRaw } from "draft-js";
-// import draftToHtml from "draftjs-to-html";
-import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
 
 
@@ -49,7 +45,12 @@ export function UseContactUs() {
             label: "Status",
             name: "status",
             type: "select",
-            dropDownContent: ["CONTACTED", "DECLINE", "UNSEEN", "USEFUL"],
+            dropDownContent: [
+                "CONTACTED",
+                "DECLINE",
+                "UNSEEN",
+                "USEFUL"
+            ],
         },
     ]
     const { state, dispatch } = useContext(AppContext);
@@ -61,8 +62,10 @@ export function UseContactUs() {
 
     //GET STAFF 
 
-    let { data, loading: GET_LOADING, error } = useQuery(GET_CONTACT_US);
-    console.log("error", error);
+    let {
+        data,
+        loading: GET_LOADING,
+    } = useQuery(GET_CONTACT_US);
     const refacteredData = [];
     data?.contactuses?.map((item) => {
         refacteredData.push({
@@ -75,13 +78,15 @@ export function UseContactUs() {
 
         });
     });
-    console.log("refacteredData", refacteredData);
 
-    const [loader, setLoader] = useState(false);
 
     //ADD STAFF
 
-    let [CreateManyStudents, { loading: ADD_LOADING }] = useMutation(ADD_CONTACT_US);
+    let [
+        CreateContactUs,
+        {
+            loading: ADD_LOADING
+        }] = useMutation(ADD_CONTACT_US);
     const ctaFormHandler = async (event) => {
         event.preventDefault();
         if (!state.editData?.name) {
@@ -101,7 +106,7 @@ export function UseContactUs() {
         }
         else {
             try {
-                await CreateManyStudents({
+                await CreateContactUs({
                     variables: {
                         data: {
                             name: state.editData?.name,
@@ -131,8 +136,7 @@ export function UseContactUs() {
                         openFormModal: false,
                     },
                 });
-                setLoader(false);
-                ToastError(error.message);
+                ToastError("Contact not added");
 
             }
         }
@@ -144,24 +148,28 @@ export function UseContactUs() {
 
     // DELETE STAFF
 
-    let [DeleteMutation, { loading: DELETE_LOADING }] = useMutation(DELETE_CONTACT);
-    const ctaDeleteHandler = async ({ ...data }) => {
-        try {
-            await DeleteMutation({
-                variables: {
-                    where: {
-                        id: data.id,
-                    },
-                },
-                onCompleted(data) {
-                    ToastSuccess('Contact Deleted')
-                },
-                refetchQueries: [{ query: GET_CONTACT_US }],
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+    // let [
+    //     DeleteMutation,
+    //     {
+    //         loading: DELETE_LOADING
+    //     }] = useMutation(DELETE_CONTACT);
+    // const ctaDeleteHandler = async ({ ...data }) => {
+    //     try {
+    //         await DeleteMutation({
+    //             variables: {
+    //                 where: {
+    //                     id: data.id,
+    //                 },
+    //             },
+    //             onCompleted(data) {
+    //                 ToastSuccess('Contact Deleted')
+    //             },
+    //             refetchQueries: [{ query: GET_CONTACT_US }],
+    //         });
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // };
 
 
 
@@ -169,8 +177,12 @@ export function UseContactUs() {
 
     //Update staff
 
-    let [UpdateContactUs, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_CONTACT);
-   
+    let [
+        UpdateContactUs,
+        {
+            loading: UPDATE_LOADING
+        }] = useMutation(UPDATE_SINGLE_CONTACT);
+
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
         if (!state.editData?.name) {
@@ -234,14 +246,13 @@ export function UseContactUs() {
     }
     return [
         {
-            loader,
             ADD_LOADING,
             GET_LOADING,
-            DELETE_LOADING,
+            // DELETE_LOADING,
             UPDATE_LOADING,
             refacteredData,
             ctaFormHandler,
-            ctaDeleteHandler,
+            // ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
         },

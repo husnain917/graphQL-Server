@@ -34,7 +34,7 @@ export default function Table({
 
   // Handlers
   ctaFormHandler,
-  ctaDeleteHandler,
+  // ctaDeleteHandler,
   ctaUpdateHandler,
   handleChange,
   disableAddIcon,
@@ -300,9 +300,9 @@ export default function Table({
                                     ) : subitem?.type === "crud" ? (
                                       <>
                                         <TableStyle.IconDiv>
-                                          <Tooltip title="Delete">
+                                          {/* <Tooltip title="Delete">
                                             <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
-                                          </Tooltip>
+                                          </Tooltip> */}
                                           <Tooltip title="Update">
                                             <IconButton
                                               aria-label="update"

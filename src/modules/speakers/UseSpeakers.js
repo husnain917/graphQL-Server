@@ -8,7 +8,7 @@ import {
 } from "../../commonComponents/commonFunction/CommonFunction";
 import {
     ADD_SPEAKERS,
-    DELETE_SPEAKER,
+    // DELETE_SPEAKER,
     UPDATE_SPEAKER
 } from "../../lib/mutation/AllMutations";
 import { GET_SPEAKERS } from "../../lib/queries/AllQueries";
@@ -126,24 +126,24 @@ export default function UseSpeakers() {
 
     // DELETE STAFF
 
-    let [DeleteSpeaker, { loading: DELETE_LOADING }] = useMutation(DELETE_SPEAKER);
-    const ctaDeleteHandler = async ({ ...data }) => {
-        try {
-            await DeleteSpeaker({
-                variables: {
-                    where: {
-                        id: data.id,
-                    },
-                },
-                onCompleted(data) {
-                    ToastSuccess('Speaker Deleted')
-                },
-                refetchQueries: [{ query: GET_SPEAKERS }],
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+    // let [DeleteSpeaker, { loading: DELETE_LOADING }] = useMutation(DELETE_SPEAKER);
+    // const ctaDeleteHandler = async ({ ...data }) => {
+    //     try {
+    //         await DeleteSpeaker({
+    //             variables: {
+    //                 where: {
+    //                     id: data.id,
+    //                 },
+    //             },
+    //             onCompleted(data) {
+    //                 ToastSuccess('Speaker Deleted')
+    //             },
+    //             refetchQueries: [{ query: GET_SPEAKERS }],
+    //         });
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // };
 
 
 
@@ -206,11 +206,11 @@ export default function UseSpeakers() {
             loader,
             ADD_LOADING,
             GET_LOADING,
-            DELETE_LOADING,
+            // DELETE_LOADING,
             UPDATE_LOADING,
             refacteredData,
             ctaFormHandler,
-            ctaDeleteHandler,
+            // ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
         },

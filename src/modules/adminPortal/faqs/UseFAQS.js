@@ -8,7 +8,7 @@ import {
 } from "../../../commonComponents/commonFunction/CommonFunction";
 import {
   ADD_FAQS,
-  DELETE_SINGLE_FAQ,
+  // DELETE_SINGLE_FAQ,
   UPDATE_SINGLE_FAQ,
 } from "../../../lib/mutation/AllMutations";
 // import { convertToRaw } from "draft-js";
@@ -130,24 +130,24 @@ export function UseFaqs() {
 
   // DELETE STAFF
 
-  let [DeleteFaq, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_FAQ);
-  const ctaDeleteHandler = async ({ ...data }) => {
-    try {
-      await DeleteFaq({
-        variables: {
-          where: {
-            id: data.id,
-          },
-        },
-        onCompleted(data) {
-          ToastSuccess('FAQ Deleted')
-        },
-        refetchQueries: [{ query: GET_FAQS }],
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // let [DeleteFaq, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_FAQ);
+  // const ctaDeleteHandler = async ({ ...data }) => {
+  //   try {
+  //     await DeleteFaq({
+  //       variables: {
+  //         where: {
+  //           id: data.id,
+  //         },
+  //       },
+  //       onCompleted(data) {
+  //         ToastSuccess('FAQ Deleted')
+  //       },
+  //       refetchQueries: [{ query: GET_FAQS }],
+  //     });
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
 
 
@@ -213,11 +213,11 @@ export function UseFaqs() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
     },

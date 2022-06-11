@@ -8,18 +8,18 @@ export default function Attandance() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
     },
   ] = UseAttandance();
   if (
     GET_LOADING ||
-    DELETE_LOADING ||
+    // DELETE_LOADING ||
     UPDATE_LOADING ||
     ADD_LOADING ||
     loader
@@ -36,7 +36,7 @@ export default function Attandance() {
         'User Id',
         'Actions'
       ]}
-      ctaDeleteHandler={ctaDeleteHandler}
+      // ctaDeleteHandler={ctaDeleteHandler}
       ctaFormHandler={ctaFormHandler}
       ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[

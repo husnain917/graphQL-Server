@@ -7,18 +7,18 @@ export default function CourseBatch() {
         {
             ADD_LOADING,
             GET_LOADING,
-            DELETE_LOADING,
+            // DELETE_LOADING,
             UPDATE_LOADING,
             refacteredData,
             ctaFormHandler,
-            ctaDeleteHandler,
+            // ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
         },
     ] = UseCourseBatch();
     if (
         GET_LOADING ||
-        DELETE_LOADING ||
+        // DELETE_LOADING ||
         UPDATE_LOADING ||
         ADD_LOADING
     ) {
@@ -37,7 +37,7 @@ export default function CourseBatch() {
                 'Actions'
             ]}
             ctaFormHandler={ctaFormHandler}
-            ctaDeleteHandler={ctaDeleteHandler}
+            // ctaDeleteHandler={ctaDeleteHandler}
             ctaUpdateHandler={ctaUpdateHandler}
             printedKeys={[
                 {

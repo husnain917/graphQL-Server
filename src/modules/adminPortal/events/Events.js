@@ -9,11 +9,11 @@ export default function Events() {
             loader,
             ADD_LOADING,
             GET_LOADING,
-            DELETE_LOADING,
+            // DELETE_LOADING,
             UPDATE_LOADING,
             refacteredData,
             ctaFormHandler,
-            ctaDeleteHandler,
+            // ctaDeleteHandler,
             ctaUpdateHandler,
             onDateChange,
             formInputs,
@@ -23,7 +23,7 @@ export default function Events() {
     ] = UseEvents();
     if (
         GET_LOADING ||
-        DELETE_LOADING ||
+        // DELETE_LOADING ||
         UPDATE_LOADING ||
         ADD_LOADING ||
         loader
@@ -84,7 +84,7 @@ export default function Events() {
                 data={refacteredData}
                 ctaFormHandler={ctaFormHandler}
                 handleChange={handleChange}
-                ctaDeleteHandler={ctaDeleteHandler}
+                // ctaDeleteHandler={ctaDeleteHandler}
                 ctaUpdateHandler={ctaUpdateHandler}
             />
 

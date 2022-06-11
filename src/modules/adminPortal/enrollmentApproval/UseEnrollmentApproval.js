@@ -8,7 +8,7 @@ import {
 import FiltredRoles from "../../../constants/FiltredRoles";
 import {
   ADD_ENROLMMENT_APPROVAL,
-  DELETE_ENROLMMENT_APPROVAL,
+  // DELETE_ENROLMMENT_APPROVAL,
   UPDATE_SINGLE_ENROLLMENT,
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSES, GET_ENROLLMENT } from "../../../lib/queries/AllQueries";
@@ -166,24 +166,24 @@ export function UseEnrollmentApproval() {
 
   // DELETE STAFF
 
-  let [DeleteEnrollmentApproval, { loading: DELETE_LOADING }] = useMutation(DELETE_ENROLMMENT_APPROVAL);
-  const ctaDeleteHandler = async ({ ...data }) => {
-    try {
-      await DeleteEnrollmentApproval({
-        variables: {
-          where: {
-            id: data.id,
-          },
-        },
-        onCompleted(data) {
-          ToastSuccess('Enrollment Deleted')
-        },
-        refetchQueries: [{ query: GET_ENROLLMENT }],
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // let [DeleteEnrollmentApproval, { loading: DELETE_LOADING }] = useMutation(DELETE_ENROLMMENT_APPROVAL);
+  // const ctaDeleteHandler = async ({ ...data }) => {
+  //   try {
+  //     await DeleteEnrollmentApproval({
+  //       variables: {
+  //         where: {
+  //           id: data.id,
+  //         },
+  //       },
+  //       onCompleted(data) {
+  //         ToastSuccess('Enrollment Deleted')
+  //       },
+  //       refetchQueries: [{ query: GET_ENROLLMENT }],
+  //     });
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
 
 
@@ -220,58 +220,6 @@ export function UseEnrollmentApproval() {
             where: {
               id: state.editId
             },
-            // data: {
-            //   studentName: {
-            //     set: state.editData?.studentName
-            //   },
-            //   email: {
-            //     set: state.editData?.email
-            //   },
-            //   course: {
-            //     set: state.editData?.course
-            //   },
-            //   paymentMethod: {
-            //     set: state.editData?.paymentMethod
-            //   },
-            //   amount: {
-            //     set: state.editData?.amount
-            //   },
-            //   transactionId: {
-            //     set: state.editData?.transactionId
-            //   },
-            //   status: {
-            //     set: state.editData?.status
-            //   },
-
-            // data: {
-            //   user: {
-            //     update: {
-            //       name: {
-            //         set: state.editData?.userId
-            //       }
-            //     }
-            //   },
-            //   courses: {
-            //     update: {
-            //       courseName: {
-            //         set: state.editData?.coursesId
-            //       }
-            //     }
-            //   },
-            //   status: {
-            //     set: state.editData?.status,
-            //   },
-            //   paymentMethod: {
-            //     set: state.editData?.paymentMethod,
-            //   },
-            //   amount: {
-            //     set: state.editData?.amount,
-            //   },
-            //   transactionId: {
-            //     set: state.editData?.transactionId,
-            //   }
-            // },
-
             data: {
               user: {
                 connect: {
@@ -320,11 +268,11 @@ export function UseEnrollmentApproval() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
     },

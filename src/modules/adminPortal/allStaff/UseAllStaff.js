@@ -7,7 +7,7 @@ import {
 } from "../../../commonComponents/commonFunction/CommonFunction";
 import {
   ADD_USER,
-  DELETE_USER,
+  // DELETE_USER,
   UPDATE_USER,
 } from "../../../lib/mutation/AllMutations";
 import {
@@ -216,29 +216,29 @@ export function UseAllStaff() {
 
   // DELETE STAFF
 
-  let [
-    DeleteUser,
-    {
-      loading: DELETE_LOADING
-    }] = useMutation(DELETE_USER);
-  const ctaDeleteHandler = async ({ ...data }) => {
-    try {
-      await DeleteUser({
-        variables: {
-          where: {
-            id: data.id,
-          },
-        },
-        refetchQueries: [{ query: GET_USERS }],
-        onCompleted(data) {
-          ToastSuccess('Staff Deleted')
-        },
+  // let [
+  //   DeleteUser,
+  //   {
+  //     loading: DELETE_LOADING
+  //   }] = useMutation(DELETE_USER);
+  // const ctaDeleteHandler = async ({ ...data }) => {
+  //   try {
+  //     await DeleteUser({
+  //       variables: {
+  //         where: {
+  //           id: data.id,
+  //         },
+  //       },
+  //       refetchQueries: [{ query: GET_USERS }],
+  //       onCompleted(data) {
+  //         ToastSuccess('Staff Deleted')
+  //       },
 
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  //     });
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
 
 
@@ -328,11 +328,11 @@ export function UseAllStaff() {
     {
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
       // ctaEditButtonHandler

@@ -8,18 +8,18 @@ export default function MyCourse() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
     },
   ] = UseMyCourses();
   if (
     GET_LOADING ||
-    DELETE_LOADING ||
+    // DELETE_LOADING ||
     UPDATE_LOADING ||
     ADD_LOADING ||
     loader
@@ -43,7 +43,7 @@ export default function MyCourse() {
 
       ]}
       ctaFormHandler={ctaFormHandler}
-      ctaDeleteHandler={ctaDeleteHandler}
+      // ctaDeleteHandler={ctaDeleteHandler}
       ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
         {

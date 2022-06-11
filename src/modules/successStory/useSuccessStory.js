@@ -8,7 +8,7 @@ import {
 } from "../../commonComponents/commonFunction/CommonFunction";
 import {
   ADD_SUCCESS_STORY,
-  DELETE_SINGLE_SUCCESS_STORY,
+  // DELETE_SINGLE_SUCCESS_STORY,
   UPDATE_SINGLE_SUCCESS,
 } from "../../lib/mutation/AllMutations";
 import { GET_SUCCESS_STORIES } from "../../lib/queries/AllQueries";
@@ -129,16 +129,6 @@ export function UseSuccessStory() {
       try {
         await CreateSuccessStories({
           variables: {
-            // data: {
-            //   city: state.editData?.city,
-            //   freelancingProfileUrl: state.editData?.freelancingProfileUrl,
-            //   paymentProof: state.editData?.paymentProof,
-            //   description: state.editData?.description,
-            //   status: state.editData?.status,
-            //   totalEarnedAmount: state.editData?.totalEarnedAmount,
-            //   whyReject: state.editData?.whyReject,
-            // },
-
             data: {
               freelancingProfileUrl: state.editData?.freelancingProfileUrl,
               paymentProof: state.editData?.paymentProof,
@@ -189,24 +179,24 @@ export function UseSuccessStory() {
 
   // DELETE STAFF
 
-  let [DeleteSuccessStories, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_SUCCESS_STORY);
-  const ctaDeleteHandler = async ({ ...data }) => {
-    try {
-      await DeleteSuccessStories({
-        variables: {
-          where: {
-            id: data.id,
-          },
-        },
-        onCompleted(data) {
-          ToastSuccess('Story Deleted')
-        },
-        refetchQueries: [{ query: GET_SUCCESS_STORIES }],
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // let [DeleteSuccessStories, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_SUCCESS_STORY);
+  // const ctaDeleteHandler = async ({ ...data }) => {
+  //   try {
+  //     await DeleteSuccessStories({
+  //       variables: {
+  //         where: {
+  //           id: data.id,
+  //         },
+  //       },
+  //       onCompleted(data) {
+  //         ToastSuccess('Story Deleted')
+  //       },
+  //       refetchQueries: [{ query: GET_SUCCESS_STORIES }],
+  //     });
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
 
 
@@ -246,66 +236,6 @@ export function UseSuccessStory() {
             where: {
               id: state.editId
             },
-            // data: {
-            //   freelancingProfileUrl: {
-            //     set: state.editData?.freelancingProfileUrl
-            //   },
-            //   paymentProof: {
-            //     set: state.editData?.paymentProof
-            //   },
-            //   description: {
-            //     set: state.editData?.description
-            //   },
-            //   status: {
-            //     set: state.editData?.status
-            //   },
-            //   totalEarnedAmount: {
-            //     set: state.editData?.totalEarnedAmount
-            //   },
-            //   city: {
-            //     set: state.editData?.city
-            //   },
-            //   whyReject: {
-            //     set: state.editData?.whyReject
-            //   }
-            // }
-            // data: {
-            //   freelancingProfileUrl: {
-            //     set: state.editData?.freelancingProfileUrl
-            //   },
-            //   paymentProof: {
-            //     set: state.editData?.paymentProof
-            //   },
-            //   description: {
-            //     set: state.editData?.description
-            //   },
-            //   status: {
-            //     set: state.editData?.status
-            //   },
-            //   totalEarnedAmount: {
-            //     set: state.editData?.totalEarnedAmount
-            //   },
-            //   city: {
-            //     set: state.editData?.city
-            //   },
-            //   whyReject: {
-            //     set: state.editData?.whyReject
-            //   },
-            //   user: {
-            //     update: [
-            //       {
-            //         where: {
-            //           id: null
-            //         },
-            //         data: {
-            //           name: {
-            //             set: null
-            //           }
-            //         }
-            //       }
-            //     ]
-            //   }
-            // },
             data: {
               freelancingProfileUrl: {
                 set: state.editData?.freelancingProfileUrl
@@ -360,11 +290,11 @@ export function UseSuccessStory() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
     },

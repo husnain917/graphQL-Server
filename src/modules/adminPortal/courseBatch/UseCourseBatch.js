@@ -8,7 +8,7 @@ import {
 import FiltredData from "../../../constants/FiltredRoles";
 import {
     ADD_COURSE_BATCH,
-    DELETE_COURSE_BATCH,
+    // DELETE_COURSE_BATCH,
     UPDATE_COURSE_BATCH
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSE_BATCH } from "../../../lib/queries/AllQueries";
@@ -136,24 +136,24 @@ export default function UseCourseBatch() {
 
     // DELETE STAFF
 
-    let [DeleteCourseBatches, { loading: DELETE_LOADING }] = useMutation(DELETE_COURSE_BATCH);
-    const ctaDeleteHandler = async ({ ...data }) => {
-        try {
-            await DeleteCourseBatches({
-                variables: {
-                    where: {
-                        id: data.id,
-                    },
-                },
-                onCompleted(data) {
-                    ToastSuccess('Course Deleted')
-                },
-                refetchQueries: [{ query: GET_COURSE_BATCH }],
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+    // let [DeleteCourseBatches, { loading: DELETE_LOADING }] = useMutation(DELETE_COURSE_BATCH);
+    // const ctaDeleteHandler = async ({ ...data }) => {
+    //     try {
+    //         await DeleteCourseBatches({
+    //             variables: {
+    //                 where: {
+    //                     id: data.id,
+    //                 },
+    //             },
+    //             onCompleted(data) {
+    //                 ToastSuccess('Course Deleted')
+    //             },
+    //             refetchQueries: [{ query: GET_COURSE_BATCH }],
+    //         });
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // };
 
 
 
@@ -213,11 +213,11 @@ export default function UseCourseBatch() {
         {
             ADD_LOADING,
             GET_LOADING,
-            DELETE_LOADING,
+            // DELETE_LOADING,
             UPDATE_LOADING,
             refacteredData,
             ctaFormHandler,
-            ctaDeleteHandler,
+            // ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
         },

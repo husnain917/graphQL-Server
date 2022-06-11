@@ -9,18 +9,18 @@ export default function ContactUs() {
         {
             ADD_LOADING,
             GET_LOADING,
-            DELETE_LOADING,
+            // DELETE_LOADING,
             UPDATE_LOADING,
             refacteredData,
             ctaFormHandler,
-            ctaDeleteHandler,
+            // ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
         },
     ] = UseContactUs();
     if (
         GET_LOADING ||
-        DELETE_LOADING ||
+        // DELETE_LOADING ||
         UPDATE_LOADING ||
         ADD_LOADING
     ) {
@@ -77,7 +77,7 @@ export default function ContactUs() {
                     }}
                     data={refacteredData}
                     ctaFormHandler={ctaFormHandler}
-                    ctaDeleteHandler={ctaDeleteHandler}
+                    // ctaDeleteHandler={ctaDeleteHandler}
                     ctaUpdateHandler={ctaUpdateHandler}
                 />
 

@@ -8,7 +8,7 @@ import {
 import FiltredData from "../../../constants/FiltredRoles";
 import {
     ADD_EVENTS,
-    DELETE_SINGLE_EVENT,
+    // DELETE_SINGLE_EVENT,
     UPDATE_SINGLE_EVENT,
 } from "../../../lib/mutation/AllMutations";
 import { GET_EVENTS } from "../../../lib/queries/AllQueries";
@@ -160,24 +160,24 @@ export function UseEvents() {
 
     // DELETE STAFF
 
-    let [DeleteEvents, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_EVENT);
-    const ctaDeleteHandler = async ({ ...data }) => {
-        try {
-            await DeleteEvents({
-                variables: {
-                    where: {
-                        id: data.id,
-                    },
-                },
-                onCompleted(data) {
-                    ToastSuccess('Event Deleted')
-                },
-                refetchQueries: [{ query: GET_EVENTS }],
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+    // let [DeleteEvents, { loading: DELETE_LOADING }] = useMutation(DELETE_SINGLE_EVENT);
+    // const ctaDeleteHandler = async ({ ...data }) => {
+    //     try {
+    //         await DeleteEvents({
+    //             variables: {
+    //                 where: {
+    //                     id: data.id,
+    //                 },
+    //             },
+    //             onCompleted(data) {
+    //                 ToastSuccess('Event Deleted')
+    //             },
+    //             refetchQueries: [{ query: GET_EVENTS }],
+    //         });
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // };
 
 
 
@@ -208,24 +208,7 @@ export function UseEvents() {
                         where: {
                             id: state.editId
                         },
-                        // data: {
-                        //     eventName: {
-                        //         set: state.editData?.eventName
-                        //     },
-                        //     eventDesc: {
-                        //         set: state.editData?.eventDesc
-                        //     },
-                        //     eventImage: {
-                        //         set: File ? File : 'no file'
-                        //     },
-                        //     eventDate: {
-                        //         set: new Date()
-                        //     },
-                        //     eventStatus: {
-                        //         set: state.editData?.eventStatus
-                        //     }
-                        // }
-
+                       
                         data: {
                             eventName: {
                                 set: state.editData?.eventName
@@ -273,11 +256,11 @@ export function UseEvents() {
             loader,
             ADD_LOADING,
             GET_LOADING,
-            DELETE_LOADING,
+            // DELETE_LOADING,
             UPDATE_LOADING,
             refacteredData,
             ctaFormHandler,
-            ctaDeleteHandler,
+            // ctaDeleteHandler,
             ctaUpdateHandler,
             onDateChange,
             formInputs,

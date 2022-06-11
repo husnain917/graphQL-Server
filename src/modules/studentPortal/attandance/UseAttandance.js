@@ -7,10 +7,8 @@ import {
     ToastWarning,
 } from "../../../commonComponents/commonFunction/CommonFunction";
 import {
-    UPDATE_SINGLE_COURSE,
-    DELETE_SINGLE_COURSE,
     ADD_ATTANDANCE,
-    DELETE_ATTANDANCE,
+    // DELETE_ATTANDANCE,
     UPDATE_ATTANDANCE
 } from "../../../lib/mutation/AllMutations";
 import { GET_ATTANDANCE } from "../../../lib/queries/AllQueries";
@@ -128,24 +126,24 @@ export default function UseAttandance() {
 
     // DELETE STAFF
 
-    let [Mutation, { loading: DELETE_LOADING }] = useMutation(DELETE_ATTANDANCE);
-    const ctaDeleteHandler = async ({ ...data }) => {
-        try {
-            await Mutation({
-                variables: {
-                    where: {
-                        id: data.id,
-                    },
-                },
-                onCompleted(data) {
-                    ToastSuccess('Attandance Deleted')
-                },
-                refetchQueries: [{ query: GET_ATTANDANCE }],
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+    // let [Mutation, { loading: DELETE_LOADING }] = useMutation(DELETE_ATTANDANCE);
+    // const ctaDeleteHandler = async ({ ...data }) => {
+    //     try {
+    //         await Mutation({
+    //             variables: {
+    //                 where: {
+    //                     id: data.id,
+    //                 },
+    //             },
+    //             onCompleted(data) {
+    //                 ToastSuccess('Attandance Deleted')
+    //             },
+    //             refetchQueries: [{ query: GET_ATTANDANCE }],
+    //         });
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // };
 
 
 
@@ -209,11 +207,11 @@ export default function UseAttandance() {
             loader,
             ADD_LOADING,
             GET_LOADING,
-            DELETE_LOADING,
+            // DELETE_LOADING,
             UPDATE_LOADING,
             refacteredData,
             ctaFormHandler,
-            ctaDeleteHandler,
+            // ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
         },

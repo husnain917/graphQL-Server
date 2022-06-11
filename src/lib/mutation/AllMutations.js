@@ -210,189 +210,189 @@ mutation CreateCourseBatches($data: CourseBatchesCreateInput!) {
 
 
 
-export const DELETE_SINGLE_COURSE = gql`
-mutation DeleteCourses($where: CoursesWhereUniqueInput!) {
-  deleteCourses(where: $where) {
-    id
-    courseDesc
-    courseName
-    courseIntro
-    instructorId
-    courseCategoryId
-    organizationId
-    coursePrice
-    whatYouLearn
-    courseStatus
-    createdAt
-    updateAt
-  }
-}
-`
+// export const DELETE_SINGLE_COURSE = gql`
+// mutation DeleteCourses($where: CoursesWhereUniqueInput!) {
+//   deleteCourses(where: $where) {
+//     id
+//     courseDesc
+//     courseName
+//     courseIntro
+//     instructorId
+//     courseCategoryId
+//     organizationId
+//     coursePrice
+//     whatYouLearn
+//     courseStatus
+//     createdAt
+//     updateAt
+//   }
+// }
+// `
 
-export const DELETE_ENROLMMENT_APPROVAL = gql`
-mutation DeleteEnrollmentApproval($where: EnrollmentApprovalWhereUniqueInput!) {
-  deleteEnrollmentApproval(where: $where) {
-    id
-    userId
-    coursesId
-    status
-    paymentMethod
-    amount
-    transactionId
-  }
-}
-`
+// export const DELETE_ENROLMMENT_APPROVAL = gql`
+// mutation DeleteEnrollmentApproval($where: EnrollmentApprovalWhereUniqueInput!) {
+//   deleteEnrollmentApproval(where: $where) {
+//     id
+//     userId
+//     coursesId
+//     status
+//     paymentMethod
+//     amount
+//     transactionId
+//   }
+// }
+// `
 
-export const DELETE_SPEAKER = gql`
-mutation DeleteSpeaker($where: SpeakerWhereUniqueInput!) {
-  deleteSpeaker(where: $where) {
-    id
-    speakerName
-    spkearDesc
-    spekaerImage
-    createdAt
-    updateAt
-  }
-}
-`
-export const DELETE_CONTACT = gql`
-mutation DeleteMutation($where: ContactUsWhereUniqueInput!) {
-  deleteContactUs(where: $where) {
-    name
-  }
-}
-`
+// export const DELETE_SPEAKER = gql`
+// mutation DeleteSpeaker($where: SpeakerWhereUniqueInput!) {
+//   deleteSpeaker(where: $where) {
+//     id
+//     speakerName
+//     spkearDesc
+//     spekaerImage
+//     createdAt
+//     updateAt
+//   }
+// }
+// `
+// export const DELETE_CONTACT = gql`
+// mutation DeleteMutation($where: ContactUsWhereUniqueInput!) {
+//   deleteContactUs(where: $where) {
+//     name
+//   }
+// }
+// `
 
-export const DELETE_SINGLE_SUCCESS_STORY = gql`
-mutation DeleteSuccessStories($where: SuccessStoriesWhereUniqueInput!) {
-  deleteSuccessStories(where: $where) {
-    id
-    freelancingProfileUrl
-    paymentProof
-    description
-    totalEarnedAmount
-    status
-    city
-    whyReject
-  }
-}
-`
+// export const DELETE_SINGLE_SUCCESS_STORY = gql`
+// mutation DeleteSuccessStories($where: SuccessStoriesWhereUniqueInput!) {
+//   deleteSuccessStories(where: $where) {
+//     id
+//     freelancingProfileUrl
+//     paymentProof
+//     description
+//     totalEarnedAmount
+//     status
+//     city
+//     whyReject
+//   }
+// }
+// `
 
-export const DELETE_SINGLE_EVENT = gql`
-mutation DeleteEvents($where: EventsWhereUniqueInput!) {
-  deleteEvents(where: $where) {
-    id
-    eventName
-    eventImage
-    eventDesc
-    eventDate
-    speakerId
-    eventStatus
-  }
-}
-`
+// export const DELETE_SINGLE_EVENT = gql`
+// mutation DeleteEvents($where: EventsWhereUniqueInput!) {
+//   deleteEvents(where: $where) {
+//     id
+//     eventName
+//     eventImage
+//     eventDesc
+//     eventDate
+//     speakerId
+//     eventStatus
+//   }
+// }
+// `
 
-export const DELETE_SINGLE_FAQ = gql`
-mutation DeleteFaq($where: FaqWhereUniqueInput!) {
-  deleteFaq(where: $where) {
-    id
-    faqQuestion
-    faqAnswer
-    courseId
-    createdAt
-    updateAt
-    course {
-      courseName
-      id
-      courseDesc
-    }
-  }
-}
-`
-export const DELETE_USER = gql`
-mutation DeleteUser($where: UserWhereUniqueInput!) {
-  deleteUser(where: $where) {
-    id
-    name
-    email
-    cnic
-    address
-    contact
-    role
-  }
-}
-`
+// export const DELETE_SINGLE_FAQ = gql`
+// mutation DeleteFaq($where: FaqWhereUniqueInput!) {
+//   deleteFaq(where: $where) {
+//     id
+//     faqQuestion
+//     faqAnswer
+//     courseId
+//     createdAt
+//     updateAt
+//     course {
+//       courseName
+//       id
+//       courseDesc
+//     }
+//   }
+// }
+// `
+// export const DELETE_USER = gql`
+// mutation DeleteUser($where: UserWhereUniqueInput!) {
+//   deleteUser(where: $where) {
+//     id
+//     name
+//     email
+//     cnic
+//     address
+//     contact
+//     role
+//   }
+// }
+// `
 
-export const DELETE_ATTANDANCE = gql`
-mutation Mutation($where: AttendenceWhereUniqueInput!) {
-  deleteAttendence(where: $where) {
-    id
-  }
-}
-`
-export const DELETE_QUIZ = gql`
-mutation DeleteCourseQuiz($where: CourseQuizWhereUniqueInput!) {
-  deleteCourseQuiz(where: $where) {
-    id
-    courseBatchesId
-    coursesId
-    createdAt
-    updateAt
-  }
-}
-`
-export const DELETE_ASSIGNMENT = gql`
-mutation DeleteCourseAssignment($where: CourseAssignmentWhereUniqueInput!) {
-  deleteCourseAssignment(where: $where) {
-    id
-    name
-    courseBatchesId
-    coursesId
-    createdAt
-    updateAt
-  }
-}`
+// export const DELETE_ATTANDANCE = gql`
+// mutation Mutation($where: AttendenceWhereUniqueInput!) {
+//   deleteAttendence(where: $where) {
+//     id
+//   }
+// }
+// `
+// export const DELETE_QUIZ = gql`
+// mutation DeleteCourseQuiz($where: CourseQuizWhereUniqueInput!) {
+//   deleteCourseQuiz(where: $where) {
+//     id
+//     courseBatchesId
+//     coursesId
+//     createdAt
+//     updateAt
+//   }
+// }
+// `
+// export const DELETE_ASSIGNMENT = gql`
+// mutation DeleteCourseAssignment($where: CourseAssignmentWhereUniqueInput!) {
+//   deleteCourseAssignment(where: $where) {
+//     id
+//     name
+//     courseBatchesId
+//     coursesId
+//     createdAt
+//     updateAt
+//   }
+// }`
 
-export const DELETE_LECTURE = gql`
-mutation DeleteLectures($where: LecturesWhereUniqueInput!) {
-  deleteLectures(where: $where) {
-    id
-    lectureTitle
-    lectureVideo
-    coursesId
-    createdAt
-    updateAt
-  }
-}
-`
-export const DELETE_COURSE_BATCH = gql`
-mutation DeleteCourseBatches($where: CourseBatchesWhereUniqueInput!) {
-  deleteCourseBatches(where: $where) {
-    id
-    name
-    coursesId
-    courseName
-    createdAt
-    updateAt
-  }
-}
-`
+// export const DELETE_LECTURE = gql`
+// mutation DeleteLectures($where: LecturesWhereUniqueInput!) {
+//   deleteLectures(where: $where) {
+//     id
+//     lectureTitle
+//     lectureVideo
+//     coursesId
+//     createdAt
+//     updateAt
+//   }
+// }
+// `
+// export const DELETE_COURSE_BATCH = gql`
+// mutation DeleteCourseBatches($where: CourseBatchesWhereUniqueInput!) {
+//   deleteCourseBatches(where: $where) {
+//     id
+//     name
+//     coursesId
+//     courseName
+//     createdAt
+//     updateAt
+//   }
+// }
+// `
 
-export const DELETE_MY_COURSE = gql`
-mutation DeleteMyCourse($where: MyCourseWhereUniqueInput!) {
-  deleteMyCourse(where: $where) {
-    id
-    coursesId
-    studentId
-    createdAt
-    updateAt
-    courseApproval
-    whyReject
-    feeStatus
-    courseBatchesId
-  }
-}
-`
+// export const DELETE_MY_COURSE = gql`
+// mutation DeleteMyCourse($where: MyCourseWhereUniqueInput!) {
+//   deleteMyCourse(where: $where) {
+//     id
+//     coursesId
+//     studentId
+//     createdAt
+//     updateAt
+//     courseApproval
+//     whyReject
+//     feeStatus
+//     courseBatchesId
+//   }
+// }
+// `
 
 //UPDATE SINGLE MUTATIONS
 

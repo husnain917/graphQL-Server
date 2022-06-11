@@ -7,14 +7,11 @@ import {
     ToastWarning,
 } from "../../../commonComponents/commonFunction/CommonFunction";
 import {
-    ADD_COURSES,
-    UPDATE_SINGLE_COURSE,
-    DELETE_SINGLE_COURSE,
     ADD_QUIZ,
-    DELETE_QUIZ,
+    // DELETE_QUIZ,
     UPDATE_QUIZ
 } from "../../../lib/mutation/AllMutations";
-import { GET_COURSES, GET_QUIZ } from "../../../lib/queries/AllQueries";
+import {  GET_QUIZ } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
@@ -154,24 +151,24 @@ export default function UseQuiz() {
 
     // DELETE STAFF
 
-    let [DeleteCourseQuiz, { loading: DELETE_LOADING }] = useMutation(DELETE_QUIZ);
-    const ctaDeleteHandler = async ({ ...data }) => {
-        try {
-            await DeleteCourseQuiz({
-                variables: {
-                    where: {
-                        id: data.id,
-                    },
-                },
-                onCompleted(data) {
-                    ToastSuccess('Quiz Deleted')
-                },
-                refetchQueries: [{ query: GET_QUIZ }],
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+    // let [DeleteCourseQuiz, { loading: DELETE_LOADING }] = useMutation(DELETE_QUIZ);
+    // const ctaDeleteHandler = async ({ ...data }) => {
+    //     try {
+    //         await DeleteCourseQuiz({
+    //             variables: {
+    //                 where: {
+    //                     id: data.id,
+    //                 },
+    //             },
+    //             onCompleted(data) {
+    //                 ToastSuccess('Quiz Deleted')
+    //             },
+    //             refetchQueries: [{ query: GET_QUIZ }],
+    //         });
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // };
 
 
 
@@ -221,7 +218,7 @@ export default function UseQuiz() {
                         });
                         ToastSuccess('Course Updated')
                     },
-                    refetchQueries: [{ query: GET_COURSES }],
+                    refetchQueries: [{ query: GET_QUIZ }],
                 })
 
             } catch (error) {
@@ -234,11 +231,11 @@ export default function UseQuiz() {
             loader,
             ADD_LOADING,
             GET_LOADING,
-            DELETE_LOADING,
+            // DELETE_LOADING,
             UPDATE_LOADING,
             refacteredData,
             ctaFormHandler,
-            ctaDeleteHandler,
+            // ctaDeleteHandler,
             ctaUpdateHandler,
             formInputs,
         },

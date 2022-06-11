@@ -8,18 +8,18 @@ export default function Assignment() {
       loader,
       ADD_LOADING,
       GET_LOADING,
-      DELETE_LOADING,
+      // DELETE_LOADING,
       UPDATE_LOADING,
       refacteredData,
       ctaFormHandler,
-      ctaDeleteHandler,
+      // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
     },
   ] = UseAssignment();
   if (
     GET_LOADING ||
-    DELETE_LOADING ||
+    // DELETE_LOADING ||
     UPDATE_LOADING ||
     ADD_LOADING ||
     loader
@@ -39,7 +39,7 @@ export default function Assignment() {
       ]}
 
       ctaFormHandler={ctaFormHandler}
-      ctaDeleteHandler={ctaDeleteHandler}
+      // ctaDeleteHandler={ctaDeleteHandler}
       ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
         {

@@ -33,12 +33,12 @@ export default function MyCourse() {
         "Id",
         'Course Id',
         'StudentId',
+        'course Batch id',
         'Course Approval',
         'Why Reject',
-        'Fee status',
-        'course Batch id',
         'Created At',
         'Updated At',
+        'Fee status',
         'Actions'
 
       ]}
@@ -55,20 +55,15 @@ export default function MyCourse() {
         {
           key: "studentId",
         },
-
+        {
+          key: "courseBatchesId",
+        },
         {
           key: "courseApproval",
         },
 
         {
           key: "whyReject",
-        },
-
-        {
-          key: "feeStatus",
-        },
-        {
-          key: "courseBatchesId",
         },
         // {
         //   key: 'courseBatches',
@@ -83,10 +78,14 @@ export default function MyCourse() {
         //   key: 'student'
         // },
         {
-          key: 'Created At'
+          key: 'createdAt'
         },
         {
-          key: 'Updated At'
+          key: 'updateAt'
+        },
+
+        {
+          key: "feeStatus",
         },
         {
           type: 'crud'
@@ -95,7 +94,7 @@ export default function MyCourse() {
       formInputs={formInputs}
       filterdata={{
         key: "feeStatus",
-        filterTag: ['All', 'PENDING', 'PAID','HALFPAID'],
+        filterTag: ['All', 'PENDING', 'PAID', 'HALFPAID'],
       }}
       data={refacteredData}
       disableAddIcon={true}

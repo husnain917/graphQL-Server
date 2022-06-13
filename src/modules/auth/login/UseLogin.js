@@ -81,7 +81,7 @@ export default function UseLogin() {
         },
       })
     } catch (error) {
-      ToastError(error.message)
+      ToastError("Not Valid Member")
     }
   }
   const ctaOrgHandler = (e) => {

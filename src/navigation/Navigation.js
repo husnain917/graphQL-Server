@@ -126,7 +126,7 @@ export default function Navigation() {
                                             path='/'
                                             element={
                                                 <PrivateRouting isAllowed={state.authState}>
-                                                    <StudentList />
+                                                    <AllStudents />
                                                 </PrivateRouting>
                                             }
                                         /> : ''

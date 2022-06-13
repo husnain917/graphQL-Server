@@ -28,7 +28,7 @@ export default function Speakers() {
     }
     return (
         <Table
-            title={'Lectures'}
+            title={'Speakers'}
             tableHeadings={[
                 "Id",
                 'speakerName',

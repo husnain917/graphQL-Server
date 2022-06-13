@@ -11,11 +11,12 @@ import {
     // DELETE_QUIZ,
     UPDATE_QUIZ
 } from "../../../lib/mutation/AllMutations";
-import {  GET_QUIZ } from "../../../lib/queries/AllQueries";
+import { GET_QUIZ } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
+import FiltredData from "../../../constants/FiltredRoles";
 
 
 
@@ -24,42 +25,21 @@ import { AppContext } from "../../../State";
 
 
 export default function UseQuiz() {
+    const [{ courseBatch, COURSE_DATA }] = FiltredData()
     const formInputs = [
+
         {
-            label: "Name",
-            name: "courseName",
-            type: "text",
+            label: "Course Batches",
+            name: "courseBatchesId",
+            type: "selectBatch",
+            dropDown: courseBatch
         },
         {
-            label: "Description",
-            name: "courseDesc",
-            type: "text",
-        },
-        {
-            label: "Intro",
-            name: "courseIntro",
-            type: "text",
-        },
-        {
-            label: "Price",
-            name: "coursePrice",
-            type: "number",
-        },
-        {
-            label: "instructorId",
-            name: "instructorId",
-            type: "text",
-        },
-        {
-            label: "courseCategoryId",
-            name: "courseCategoryId",
-            type: "text",
-        },
-        {
-            label: "Status",
-            name: "courseStatus",
-            type: "select",
-            dropDownContent: ["PUBLISH", "UNPUBLISH"],
+            label: "Courses",
+            name: "coursesId",
+            type: "selectCourse",
+            dropDown: COURSE_DATA
+
         },
     ]
     const { state, dispatch } = useContext(AppContext);
@@ -85,7 +65,6 @@ export default function UseQuiz() {
     });
     console.log("refacteredData", refacteredData);
 
-    const [loader, setLoader] = useState(false);
 
     //ADD STAFF
 
@@ -107,12 +86,12 @@ export default function UseQuiz() {
                         data: {
                             courseBatches: {
                                 connect: {
-                                    id: null
+                                    id: state?.editData?.courseBatchesId
                                 }
                             },
                             courses: {
                                 connect: {
-                                    id: null
+                                    id: state?.editData?.coursesId
                                 }
                             },
                         }
@@ -138,7 +117,6 @@ export default function UseQuiz() {
                         openFormModal: false,
                     },
                 });
-                setLoader(false);
                 ToastError(error.message);
 
             }
@@ -197,12 +175,12 @@ export default function UseQuiz() {
                         data: {
                             courseBatches: {
                                 connect: {
-                                    id: null
+                                    id: state?.editData?.courseBatchesId
                                 }
                             },
                             courses: {
                                 connect: {
-                                    id: null
+                                    id: state?.editData?.coursesId
                                 }
                             }
                         }
@@ -216,7 +194,7 @@ export default function UseQuiz() {
                                 openFormModal: false,
                             },
                         });
-                        ToastSuccess('Course Updated')
+                        ToastSuccess('Quiz Updated')
                     },
                     refetchQueries: [{ query: GET_QUIZ }],
                 })
@@ -228,7 +206,6 @@ export default function UseQuiz() {
     }
     return [
         {
-            loader,
             ADD_LOADING,
             GET_LOADING,
             // DELETE_LOADING,

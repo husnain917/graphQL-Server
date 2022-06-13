@@ -92,7 +92,7 @@ export default function EditProfile() {
                         onChange={(e) => setAddress(e.target.value)}
                     />
                 </Grid>
-                <Grid item
+                {/* <Grid item
                     xl={12}
                     lg={12}
                     md={12}
@@ -101,7 +101,7 @@ export default function EditProfile() {
                     <CommonEditField
                         type='file'
                     />
-                </Grid>
+                </Grid> */}
                 <Grid item
                     xl={12}
                     lg={12}

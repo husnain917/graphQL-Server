@@ -17,14 +17,14 @@ export const FM = {
             color: "#ffffff"
         }
     })),
-    Image: styled('input')(() => ({
-        backgroundColor: colors.appBar,
-        color: "#ffffff",
-        padding: "5px",
-        '&:hover': {
-            backgroundColor: "#ffffff",
-            color: colors.appBar,
-            border: `1px solid ${colors.appBar}`
-        }
-    }))
+    // Image: styled('input')(() => ({
+    //     backgroundColor: colors.appBar,
+    //     color: "#ffffff",
+    //     padding: "5px",
+    //     '&:hover': {
+    //         backgroundColor: "#ffffff",
+    //         color: colors.appBar,
+    //         border: `1px solid ${colors.appBar}`
+    //     }
+    // }))
 }

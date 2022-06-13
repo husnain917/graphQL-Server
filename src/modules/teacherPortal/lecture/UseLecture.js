@@ -16,6 +16,7 @@ import { GET_COURSES, GET_LECTURES } from "../../../lib/queries/AllQueries";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
+import FiltredData from "../../../constants/FiltredRoles";
 
 
 
@@ -24,6 +25,7 @@ import { AppContext } from "../../../State";
 
 
 export default function UseLecture() {
+    const [{ COURSE_DATA }] = FiltredData()
     const formInputs = [
         {
             label: "Lecture Title",
@@ -38,7 +40,8 @@ export default function UseLecture() {
         {
             label: "Course",
             name: "coursesId",
-            type: "text",
+            type: "selectCourse",
+            dropDown: COURSE_DATA
         },
     ]
     const { state, dispatch } = useContext(AppContext);

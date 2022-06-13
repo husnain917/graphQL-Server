@@ -41,7 +41,7 @@ export default function AllStudents() {
           'contact',
           'cnic',
           'address',
-          'Status',
+          'Role',
           'Action'
         ]}
         printedKeys={[

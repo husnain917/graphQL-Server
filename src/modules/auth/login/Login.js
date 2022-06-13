@@ -72,7 +72,7 @@ export default function Login() {
                                 onChange={() => ctaOrgHandler()}
                             />
                             }
-                            label="Organization Member?"
+                            label="Organization Login?"
 
                         />
                     </LoginStyle.OrgCheckbox>

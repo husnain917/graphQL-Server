@@ -95,7 +95,7 @@ function Sidebar(props) {
 
       <SidebarStyle.WebDrawer variant="permanent" container={container} open={open}>
         <SidebarStyle.DrawerHeader>
-          <SidebarStyle.Image src={logo} />
+        <SidebarStyle.Image src={logo} />
         </SidebarStyle.DrawerHeader>
         <Divider />
         {drawer}

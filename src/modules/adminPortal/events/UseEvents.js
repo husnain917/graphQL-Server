@@ -103,13 +103,15 @@ export function UseEvents() {
         else if (!state.editData?.speakerId) {
             ToastWarning('Speaker Id required')
         }
-        else if (!state?.imageUrl) {
+        else if (state.imageUrl==="") {
             ToastWarning('Image required')
+            console.log(state.imageUrl);
         }
         else if (!state.editData?.eventStatus) {
             ToastWarning('Status required')
         }
         else {
+
             try {
                 await CreateEvents({
                     variables: {
@@ -208,7 +210,7 @@ export function UseEvents() {
                         where: {
                             id: state.editId
                         },
-                       
+
                         data: {
                             eventName: {
                                 set: state.editData?.eventName
@@ -217,7 +219,7 @@ export function UseEvents() {
                                 set: state.editData?.eventDesc
                             },
                             eventImage: {
-                                set: null
+                                set: state?.imageUrl,
                             },
                             eventDate: {
                                 set: new Date()

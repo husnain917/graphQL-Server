@@ -6,7 +6,7 @@ export const P = {
     Mycontainer: styled(Container)(() => ({
         padding: '20px',
         textAlign: 'left',
-       
+
     })),
     MycontainerBorder: styled(Container)(() => ({
         paddingTop: '20px',
@@ -18,24 +18,26 @@ export const P = {
     MycontainerName: styled(Container)(() => ({
         padding: '20px',
         backgroundColor: `${colors.gray}`,
+        display: "flex",
+        flexWrap: "wrap",
         "@media (max-width: 700px)": {
-            textAlign:'center'
+            textAlign: 'center'
         },
     })),
-    Myimg:styled('img')(()=>({
-        height:'80px',
-        width:'80px',
-        objectFit:'cover'
+    Myimg: styled('img')(() => ({
+        height: '80px',
+        width: '80px',
+        objectFit: 'cover'
     })),
-    MyLink:styled(NavLink)(()=>({
-        textDecoration:'none',
-        '&:hover':{
-            textDecoration:'underline',
+    MyLink: styled(NavLink)(() => ({
+        textDecoration: 'none',
+        '&:hover': {
+            textDecoration: 'underline',
         },
-       '&:visited':{
-           color:`${colors.blue}`
-       }
+        '&:visited': {
+            color: `${colors.blue}`
+        }
 
     })),
-  
+
 }

@@ -31,9 +31,9 @@ export default function Attandance() {
       title={'Attandance'}
       tableHeadings={[
         "Id",
-        'attendence',
         'Date',
         'User Id',
+        'attendence',
         'Actions'
       ]}
       // ctaDeleteHandler={ctaDeleteHandler}
@@ -44,13 +44,13 @@ export default function Attandance() {
           key: "id",
         },
         {
-          key: "attendence",
-        },
-        {
           key: 'date',
         },
         {
           key: 'userId'
+        },
+        {
+          key: "attendence",
         },
         {
           type: "crud",
@@ -58,8 +58,11 @@ export default function Attandance() {
       ]}
       formInputs={formInputs}
       filterdata={{
-        key: "attendance",
-        filterTag: ['All', 'PRESENT', 'ABSENT'],
+        key: "attandance",
+        filterTag: [
+          'All',
+          'PRESENT',
+          'ABSENT'],
       }}
       data={refacteredData}
       disableAddIcon={true}

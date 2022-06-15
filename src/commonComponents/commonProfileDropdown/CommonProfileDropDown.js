@@ -3,6 +3,10 @@ import { CPD } from './CommonProfileDropDownStyle'
 import img from '../../assets/profile.jpg'
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../State';
+import student from '../../assets/profile/student.png'
+import teacher from '../../assets/profile/teacher.png'
+import admin from '../../assets/profile/admin.png'
+import owner from '../../assets/profile/owner.png'
 export default function CommonProfileDropDown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -38,7 +42,23 @@ export default function CommonProfileDropDown() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-      ><CPD.ProfileLinkImage src={img} alt='img' /></CPD.IconButton>
+      >
+        {
+          state.user?.role === "OWNER" ?
+            <CPD.ProfileLinkImage src={owner} alt='img' />
+            :
+            state.user?.role === "ADMIN" ?
+              <CPD.ProfileLinkImage src={admin} alt='img' />
+              :
+              state.user?.role === "TEACHER" ?
+                <CPD.ProfileLinkImage src={teacher} alt='img' />
+                :
+                state.user?.role === "STUDENT" ?
+                  <CPD.ProfileLinkImage src={student} alt='img' />
+                  :
+                  ''
+        }
+      </CPD.IconButton>
 
       <CPD.Menu
         id="basic-menu"

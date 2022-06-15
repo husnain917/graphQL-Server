@@ -31,10 +31,9 @@ export default function Quiz() {
       title={'Quiz'}
       tableHeadings={[
         "Id",
-        'Course Batch',
         'Course Batch Id',
         'Course',
-        'Course Id',
+        'Actions',
       ]}
       ctaFormHandler={ctaFormHandler}
       // ctaDeleteHandler,
@@ -44,16 +43,13 @@ export default function Quiz() {
           key: "id",
         },
         {
-          key: "courseBatch",
+          key: "courseBatchesId",
         },
         {
-          key: 'courseBatchId',
+          key: 'coursesId',
         },
         {
-          key: 'course'
-        },
-        {
-          key: 'courseId'
+          type: "crud"
         }
       ]}
       formInputs={formInputs}

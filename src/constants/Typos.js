@@ -18,8 +18,11 @@ export const TypoText = styled(Typography)({
     color: '#00668B'
 })
 export const TypoTextProfile = styled(Typography)({
-    fontSize: '20px',
+    fontSize: '17px',
     fontWeight: '200',
     color: '#00668B',
-    paddingTop:'20px'
+    paddingTop: '20px',
+    display: "flex",
+    flexWrap: "wrap",
+    wordBreak: "break-all"
 })

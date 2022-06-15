@@ -56,7 +56,8 @@ export default function Table({
   const filterDataArray = data?.filter((item) => {
     if (filterValue === "") {
       return item;
-    } else if (filterValue === item.role) {
+    }
+    else if (filterValue === item.role) {
       return item;
     }
     else if (filterValue === item.status) {
@@ -68,14 +69,14 @@ export default function Table({
     else if (filterValue === item.eventStatus) {
       return item
     }
-    else if (filterValue === "All") {
-      return item;
-    }
     else if (filterValue === item.feeStatus) {
       return item
     }
-    else if (filterValue === item.attendance) {
+    else if (filterValue === item.attendence) {
       return item
+    }
+    else if (filterValue === "All") {
+      return item;
     }
   });
 
@@ -161,14 +162,29 @@ export default function Table({
 
                 {title === "FAQS" ? (
                   ""
-                ) : (
-                  <TableStyle.FilterListIcon onClick={handleAnchorClick} />
-                )}
+                ) :
+                  title === "Course Batches" ?
+                    ''
+                    :
+                    title === "Assignments" ?
+                      ''
+                      :
+                      title === "Quiz" ?
+                        ''
+                        :
+                        title === "Lectures" ?
+                          ''
+                          :
+                          title === "All Students" ?
+                            ''
+                            : (
+                              <TableStyle.FilterListIcon onClick={handleAnchorClick} />
+                            )}
+
 
                 {
                   state.user?.role === 'OWNER' ?
                     <TableStyle.AddIcon onClick={handleClickOpen} />
-
                     :
                     state.user?.role === 'ADMIN' ?
                       title === "Courses" || title === "All Students" ?
@@ -176,8 +192,19 @@ export default function Table({
                         :
                         <TableStyle.AddIcon onClick={handleClickOpen} />
                       :
-                      <TableStyle.AddIcon onClick={handleClickOpen} />
-
+                      state.user?.role === "STUDENT" ?
+                        title === "My Courses" || title === "Attandance" ?
+                          <></>
+                          :
+                          <TableStyle.AddIcon onClick={handleClickOpen} />
+                        :
+                        state.user?.role === "TEACHER" ?
+                          title === "Lectures" || title === "All Students" ?
+                            <></>
+                            :
+                            <TableStyle.AddIcon onClick={handleClickOpen} />
+                          :
+                          <TableStyle.AddIcon onClick={handleClickOpen} />
 
                 }
 
@@ -289,7 +316,10 @@ export default function Table({
                                         row.eventImage ?
                                           <TableStyle.Image src={exactKey} />
                                           :
-                                          <p>No Image</p>
+                                          row.spekaerImage ?
+                                            <TableStyle.Image src={exactKey} />
+                                            :
+                                            <p>No Image</p>
                                       }
                                     </>
                                   ) :
@@ -300,18 +330,50 @@ export default function Table({
                                     ) : subitem?.type === "crud" ? (
                                       <>
                                         <TableStyle.IconDiv>
-                                          {/* <Tooltip title="Delete">
-                                            <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
-                                          </Tooltip> */}
-                                          <Tooltip title="Update">
-                                            <IconButton
-                                              aria-label="update"
-                                              size="small"
-                                              onClick={() => ctaEditButtonHandler(row)}
-                                            >
-                                              <TableStyle.EditIcon />
-                                            </IconButton>
-                                          </Tooltip>
+                                          {
+                                            state?.user?.role === "STUDENT" ?
+                                              title === "My Courses" || title === "Attandance" || title === "Quiz" ?
+                                                <></>
+                                                :
+                                                <>
+                                                  {/* <Tooltip title="Delete">
+                                        <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
+                                      </Tooltip> */}
+                                                  <Tooltip title="Update">
+                                                    <IconButton
+                                                      aria-label="update"
+                                                      size="small"
+                                                      onClick={() => ctaEditButtonHandler(row)}
+                                                    >
+                                                      <TableStyle.EditIcon />
+                                                    </IconButton>
+                                                  </Tooltip>
+                                                </>
+                                              :
+                                              state?.user?.role === "TEACHER" ?
+                                                title === "Lectures" ?
+                                                  <></>
+                                                  :
+                                                  <Tooltip title="Update">
+                                                    <IconButton
+                                                      aria-label="update"
+                                                      size="small"
+                                                      onClick={() => ctaEditButtonHandler(row)}
+                                                    >
+                                                      <TableStyle.EditIcon />
+                                                    </IconButton>
+                                                  </Tooltip>
+                                                :
+                                                <Tooltip title="Update">
+                                                  <IconButton
+                                                    aria-label="update"
+                                                    size="small"
+                                                    onClick={() => ctaEditButtonHandler(row)}
+                                                  >
+                                                    <TableStyle.EditIcon />
+                                                  </IconButton>
+                                                </Tooltip>
+                                          }
                                         </TableStyle.IconDiv>
                                       </>
                                     ) : (

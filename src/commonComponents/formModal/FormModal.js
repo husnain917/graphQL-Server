@@ -103,7 +103,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                       item.type === "upload" ?
                         (
                           <div style={{ marginTop: 13, marginBottom: -30 }}>
-                            <FM.Image type="file" onChange={ctaImageUpdateHandler} />
+                            <input type="file" onChange={ctaImageUpdateHandler} />
                           </div>
                         )
                         :

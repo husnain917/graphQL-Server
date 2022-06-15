@@ -52,13 +52,13 @@ export default function Lecture() {
           key: 'lectureVideo',
         },
         {
-          key: 'courseId'
-        },
-        {
-          key: 'courseId'
+          key: 'coursesId'
         },
         {
           key: 'createdAt'
+        },
+        {
+          key: 'updateAt'
         },
         {
           type: 'crud'

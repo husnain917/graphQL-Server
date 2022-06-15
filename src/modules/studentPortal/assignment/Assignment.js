@@ -32,10 +32,11 @@ export default function Assignment() {
       tableHeadings={[
         "Id",
         'Name',
-        'Course Batch',
+        'Course Id',
         'Course Batch Id',
         'Created At',
         'Update At',
+        'Actions'
       ]}
 
       ctaFormHandler={ctaFormHandler}
@@ -49,10 +50,10 @@ export default function Assignment() {
           key: "name",
         },
         {
-          key: "courseBatch",
+          key: "coursesId",
         },
         {
-          key: 'courseBatchId',
+          key: 'courseBatchesId',
         },
         {
           key: 'createdAt'

@@ -7,6 +7,7 @@ import {
     ToastWarning,
 } from "../../../commonComponents/commonFunction/CommonFunction";
 import {
+    ADD_ASSIGNMENT,
     ADD_COURSES,
     // DELETE_ASSIGNMENT,
     UPDATE_ASSIGNMENT
@@ -16,6 +17,7 @@ import { GET_ASSIGNMENT, GET_COURSES } from "../../../lib/queries/AllQueries";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
+import FiltredData from "../../../constants/FiltredRoles";
 
 
 
@@ -24,6 +26,7 @@ import { AppContext } from "../../../State";
 
 
 export default function UseAssignment() {
+    const [{ courseBatch, COURSE_DATA }] = FiltredData()
     const formInputs = [
         {
             label: "Name",
@@ -33,12 +36,14 @@ export default function UseAssignment() {
         {
             label: "Course Batches",
             name: "courseBatchesId",
-            type: "text",
+            type: "selectBatch",
+            dropDown: courseBatch
         },
         {
             label: "Courses",
             name: "coursesId",
-            type: "text",
+            type: "selectCourse",
+            dropDown: COURSE_DATA
         },
     ]
     const { state, dispatch } = useContext(AppContext);
@@ -57,8 +62,8 @@ export default function UseAssignment() {
         refacteredData.push({
             id: item.id,
             name: item.name,
-            courseBatchId: item.courseBatchId,
-            courseId: item.courseId,
+            courseBatchesId: item.courseBatchesId,
+            coursesId: item.coursesId,
             createdAt: item.createdAt,
             updateAt: item.updateAt
         });
@@ -69,7 +74,7 @@ export default function UseAssignment() {
 
     //ADD STAFF
 
-    let [CreateCourseAssignment, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
+    let [CreateCourseAssignment, { loading: ADD_LOADING }] = useMutation(ADD_ASSIGNMENT);
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();

@@ -80,8 +80,8 @@ export default function UseSpeakers() {
         else if (!state.editData?.spkearDesc) {
             ToastWarning('spkearDesc required')
         }
-        else if (!state.editData?.spekaerImage) {
-            ToastWarning('spekaerImage required')
+        else if (state.imageUrl === "") {
+            ToastWarning('Image required')
         }
         else {
             try {
@@ -90,7 +90,7 @@ export default function UseSpeakers() {
                         data: {
                             speakerName: state.editData?.speakerName,
                             spkearDesc: state.editData?.spkearDesc,
-                            spekaerImage: state?.imageUrl
+                            spekaerImage: state.imageUrl
                         }
                     },
                     onCompleted(data, cache) {
@@ -148,7 +148,7 @@ export default function UseSpeakers() {
 
 
 
-
+    console.log("ijmage22", state.imageUrl);
     //Update staff
 
     let [UpdateSpeaker, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SPEAKER);
@@ -161,9 +161,9 @@ export default function UseSpeakers() {
         else if (!state.editData?.spkearDesc) {
             ToastWarning('Speaker Desc required')
         }
-        else if (!state.editData?.spekaerImage) {
-            ToastWarning('Image required')
-        }
+        // else if (!state?.imageUrl) {
+        //     ToastWarning('Image required')
+        // }
         else {
             try {
                 await UpdateSpeaker({
@@ -179,7 +179,7 @@ export default function UseSpeakers() {
                                 set: state.editData?.spkearDesc,
                             },
                             spekaerImage: {
-                                set: state.editData?.spekaerImage
+                                set: state.imageUrl
                             }
                         },
                     },

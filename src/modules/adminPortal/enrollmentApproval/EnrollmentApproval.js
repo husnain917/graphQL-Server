@@ -1,6 +1,7 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
+import NewTable from '../../../commonComponents/newTable/NewTable';
 import Table from '../../../commonComponents/table/Table';
 import { UseEnrollmentApproval } from './UseEnrollmentApproval';
 function EnrollmentApproval() {
@@ -32,17 +33,41 @@ function EnrollmentApproval() {
     <div>
       <>
 
-        <Table
+        <NewTable
           title={'Enrollment Approval'}
           tableHeadings={[
-            'Id',
-            'User Id',
-            'Course Id',
-            'Payment Method',
-            'Amount',
-            'Transaction ID',
-            'Status',
-            'Action',
+            {
+              id: "id",
+              Label: "Id"
+          },
+          {
+              id: "userId",
+              Label: "User Id"
+          },
+          {
+              id: "courseId",
+              Label: "Course Id"
+          },
+          {
+              id: "paymentMethod",
+              Label: "Payment Method"
+          },
+          {
+              id: "amount",
+              Label: "Amount"
+          },
+          {
+              id: "transactionId",
+              Label: "Transaction Id"
+          },
+          {
+            id: "status",
+            Label: 'Status'
+          },
+          {
+              id: "action",
+              Label: "Action"
+          },
           ]}
           printedKeys={[
             {

@@ -1,35 +1,48 @@
 import { styled } from '@mui/material/styles';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import MailIcon from '@mui/icons-material/Mail';
 import LockIcon from '@mui/icons-material/Lock';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { colors } from '../../../constants/Color';
+import LogIn from '../../../assets/LogIn.png'
 export const LoginStyle = {
     MainPage: styled('div')(() => ({
-        backgroundColor: '#f2f4f7',
         width: '100%',
         height: '100vh',
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
-        minHeight: 540,
+        justifyContent: 'flex-start',
         overflowY: 'auto',
+        backgroundImage: "url("+LogIn+")", 
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+
+        
     })),
     LoginContainer: styled('div')(() => ({
+        paddingTop: 48,
+        paddingBottom: 48,
+        borderRadius: 16,
         backgroundColor: 'white',
         maxWidth: 520,
-        height: 523,
+        maxHeight: 'auto',
         width: '90%',
         margin: '0 auto',
+        marginBottom: 40,
         "@media (max-width: 700px)": {
             width: '95%',
         },
     })),
     InlineHeaderContainer: styled('div')(() => ({
         display: 'flex',
+        marginBottom: 32,
         flexDirection: 'row',
         width: '80%',
         marginLeft: 'auto',
         marginRight: 'auto',
-        marginTop: 40,
+        justifyContent: 'center',
         "@media (max-width: 700px)": {
             width: '90%',
         },
@@ -41,86 +54,107 @@ export const LoginStyle = {
         marginRight: 10,
     })),
     LoginHeading: styled('p')(() => ({
-        color: '#8c8a99',
+        color: '#000000',
         fontSize: 25,
-        fontWeight: 'bold',
-        marginLeft: -135,
+        fontWeight: '500',
+        textAlign: 'center',
+        margin: 0,
     })),
     Image: styled('img')(() => ({
-        marginTop: -10,
-        marginLeft: -5,
+        marginTop: 40,
+        marginBottom: 40,
     })),
-    InputFieldHeading: styled('p')(() => ({
-        marginTop: 30,
+
+    ForgotContainer: styled('div')(() => ({
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 5,
         width: '80%',
         marginLeft: 'auto',
         marginRight: 'auto',
-        display: 'flex',
-        alignItems: 'center',
-        fontSize: 13,
-        color: 'grey',
-        fontWeight: 'bold',
         "@media (max-width: 700px)": {
             width: '95%',
         },
+
+
     })),
-    IconAndInputField: styled('div')(() => ({
+    InputFieldHeading: styled('p')(() => ({
+        display: 'flex',
+        alignItems: 'center',
+        fontSize: 14,
+        color: '#121F3E',
+        fontWeight: '500',
+    })),
+    ForgotPassword: styled('p')(() => ({
+        display: 'flex',
+        alignItems: 'center',
+        fontSize: 13,
+        color: '#1E86FF',
+        fontWeight: 'bold',
+    })),
+    IconAndInputField: styled('div')(({typing}) => ({
         width: '80%',
+        height: '55px',
         marginLeft: 'auto',
         marginRight: 'auto',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        borderWidth: 1,
+        border: typing? '1px solid #1E86FF' :'1px solid #E5EBF0' ,
+        borderRadius: 8,
         "@media (max-width: 700px)": {
             width: '95%',
         },
     })),
     IconContainer: styled('div')(() => ({
         alignItems: 'center',
-        backgroundColor: '#f2f4f7',
-        width: '10%',
-        height: 34,
+        marginLeft: 21,
+        marginRight: 16,
         display: 'flex',
         justifyContent: 'center',
         "@media (max-width: 700px)": {
-            width: '20%',
+            marginLeft: 10,
+            marginRight: 14,
         },
     })),
-    PersonOutlineIcon: styled(PersonOutlineIcon)(() => ({
-        color: 'grey',
+    PersonOutlineIcon: styled(MailIcon)(({typing}) => ({
+        color: typing ? '#1E86FF': 'grey',
         fontSize: 20,
     })),
-    LockIcon: styled(LockIcon)(() => ({
+    LockIcon: styled(LockIcon)(({typing}) => ({
         width: 20,
-        color: 'grey',
+        color: typing ? '#1E86FF': 'grey',
     })),
     Input: styled('input')(() => ({
-        width: '90%',
-        height: 20,
-        borderColor: '#f2f4f7',
-        borderWidth: 1,
-        padding: '15px 15px',
+        width: '100%',
+        borderRadius: 8,
+        height: 55,
+        fontSize: 14,
+        fontWeight: 500,
         boxSizing: "border-box",
-        border: " 2px solid #eeeeee",
+        border: 'none',
+        outline: 'none',
         "@media (max-width: 700px)": {
-            width: '90%',
+            width: '100%',
         },
     })),
     PasswordVisibleIconContainer: styled('div')(() => ({
         alignItems: 'center',
-        backgroundColor: colors.lightBlue,
-        width: '10%',
-        height: 34,
+        height: 55,
+        position: 'relative',
+        // position: 'absolute',
+        // right: 16,
         display: 'flex',
         justifyContent: 'center',
-        "@media (max-width: 700px)": {
-            width: '20%',
-        },
     })),
     VisibilityIcon: styled(VisibilityIcon)(({ showPassword }) => ({
         width: 20,
-        color: showPassword ? 'white' : 'grey',
+        position: 'absolute',
+        right: 16,
         cursor: 'pointer',
+        color: showPassword ? '#1E86FF' : 'grey'
     })),
     LoaderContainer: styled('div')(() => ({
         display: 'flex',
@@ -129,30 +163,27 @@ export const LoginStyle = {
         marginTop: 30,
     })),
     ButtonContainer: styled('div')(() => ({
-        width: '75%',
-        paddingRight: 25,
+        height: 52,
+        width: '80%',
+        // paddingRight: 25,
         marginLeft: 'auto',
         marginRight: 'auto',
         "@media (max-width: 700px)": {
-            width: '90%',
+            width: '95%',
         },
     })),
     LoginButton: styled('button')(() => ({
-        backgroundColor: 'white',
+        borderRadius: 8,
+        height: 52,
+        backgroundColor: '#1E86FF',
         width: '100%',
-        color: colors.lightBlue,
+        color: colors.white,
         padding: '10px 22px',
-        border: `1px solid ${colors.lightBlue}`,
+        border: 'none',
         textAlign: 'center',
         fontSize: '16px',
-        transition: '0.3s',
+        cursor: 'pointer',
         marginTop: 20,
-        '&:hover': {
-            transition: '0.7s',
-            backgroundColor: colors.lightBlue,
-            color: 'white',
-            cursor: 'pointer',
-        },
     })),
     OrgCheckbox: styled('div')(() => ({
         width: "80%",
@@ -164,6 +195,14 @@ export const LoginStyle = {
         "@media (max-width: 700px)": {
             width: '95%',
         },
+
+    })),
+    
+    Estaric: styled('p')(() => ({ 
+        margin: 0,
+        color: '#FF5963',
+        marginLeft: 2,
+        marginTop: -2,
     })),
 
 }

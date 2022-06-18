@@ -1,18 +1,24 @@
 //Import from Libraries
 import React, { useContext, useState } from "react";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
+import TableCell , {tableCellClasses} from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import AddIcon from '@mui/icons-material/Add';
 import {
   Toolbar,
   IconButton,
   Typography,
   Tooltip,
   Hidden,
+  Button,
+  Icon
 } from "@mui/material";
+import CloudIcon from '../../assets/cloud.png'
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+
 //Import from Files
 import GlobalSearch from "../globalSearch/GlobalSearch";
 import { TableStyle } from "./TableStyle";
@@ -128,6 +134,15 @@ export default function Table({
     };
   };
 
+
+
+  const svgIcon = (
+    <Icon>
+      <img alt="edit" src={CloudIcon} width={20} height={20} />
+    </Icon>
+  );
+
+
   return (
     <>
       {/* Drop Down menu for filter Button */}
@@ -149,7 +164,7 @@ export default function Table({
           {/* Table Header For Big Screens */}
           <Hidden smDown>
             <TableStyle.SeachContainer>
-              <Typography variant="h6" component="div" noW3rap={true}>
+              <Typography color={'#121F3E'} variant="h6" component="div" noW3rap={true}>
                 {title}
               </Typography>
               <TableStyle.SearchAndBtnsContainer>
@@ -162,22 +177,33 @@ export default function Table({
                 {title === "FAQS" ? (
                   ""
                 ) : (
-                  <TableStyle.FilterListIcon onClick={handleAnchorClick} />
+                  <>
+                    <TableStyle.FilterButton variant="outlined" startIcon={<FilterAltIcon />} onClick={handleAnchorClick}>
+                      Filter
+                    </TableStyle.FilterButton>
+                    <TableStyle.ExportButton variant="outlined" startIcon={svgIcon} onClick={handleAnchorClick}>
+                      Export
+                    </TableStyle.ExportButton>
+                  </>
                 )}
 
                 {
                   state.user?.role === 'OWNER' ?
-                    <TableStyle.AddIcon onClick={handleClickOpen} />
+                    <TableStyle.AddButton variant="outlined" startIcon={<AddIcon />} onClick={handleClickOpen}>
+                      Add
+                    </TableStyle.AddButton>
 
                     :
                     state.user?.role === 'ADMIN' ?
                       title === "Courses" || title === "All Students" ?
                         <></>
                         :
-                        <TableStyle.AddIcon onClick={handleClickOpen} />
-                      :
-                      <TableStyle.AddIcon onClick={handleClickOpen} />
-
+                        <TableStyle.AddButton variant="outlined" startIcon={<AddIcon />} onClick={handleClickOpen}>
+                          Add
+                        </TableStyle.AddButton> :
+                      <TableStyle.AddButton variant="outlined" startIcon={<AddIcon />} onClick={handleClickOpen}>
+                        Add
+                      </TableStyle.AddButton>
 
                 }
 
@@ -191,6 +217,7 @@ export default function Table({
           <Hidden smUp>
             <TableStyle.MobileViewTableHeader searchShow={searchShow}>
               <Typography
+                color={'#121F3E'}
                 variant="h6"
                 component="div"
                 noWrap={true}
@@ -201,14 +228,13 @@ export default function Table({
               </Typography>
               {searchShow && (
                 <TableStyle.SearchBox>
-                  <TableStyle.FilterListIcon />
                   <GlobalSearch
                     onChangeText={(val) => { setSearchQuery(val) }}
                     placeholder="Search here..."
                     searchCancel={() => { setSearchQuery('') }}
                   />
                   <IconButton
-                    size="large"
+                    size="small"
                     disableFocusRipple
                     disableRipple
                     onClick={(val) => {
@@ -221,7 +247,7 @@ export default function Table({
                     </TableStyle.CloseIconBox>
                   </IconButton>
                   {
-                    !disableAddIcon &&
+                    disableAddIcon &&
                     <TableStyle.AddIcon onClick={handleClickOpen} />
                   }
                 </TableStyle.SearchBox>
@@ -230,7 +256,6 @@ export default function Table({
                 <TableStyle.HeaderIconsContainer>
                   <TableStyle.FilterListIcon onClick={handleAnchorClick} />
                   <IconButton
-                    size="large"
                     color="inherit"
                     aria-label="search"
                     disableFocusRipple
@@ -250,10 +275,25 @@ export default function Table({
         </TableStyle.BoxElement>
       </Toolbar>
 
-      {/* Table  */}
 
-      <TableContainer component={Paper}>
-        <TableStyle.CustomTable size="small" aria-label="a dense table">
+
+
+
+
+
+
+      {/* Table  */}
+      <TableContainer >
+        <TableStyle.CustomTable
+          aria-labelledby="tableTitle"
+          size={'large'}
+          sx={{
+            minWidth: 750,
+            [`& .${tableCellClasses.root}`]: {
+              borderBottom: "none"
+            }
+          }}
+        >
           <TableHead>
             <TableRow>
               {tableHeadings?.map((item, i) => {
@@ -261,6 +301,9 @@ export default function Table({
               })}
             </TableRow>
           </TableHead>
+
+
+
           <TableBody>
             {filterDataArray?.filter(searchingFor(searchQuery)).map((row, index) => {
               return (

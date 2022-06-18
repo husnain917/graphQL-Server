@@ -15,7 +15,9 @@ export const Search = styled('div')(({ theme }) => ({
         backgroundColor: '#f2f4f7'
     },
     marginLeft: 0,
-    boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.19)",
+    border: '1px solid #E5EBF0',
+    borderRadius: 8,
+    // boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.19)",
 }));
 
 export const SearchIconWrapper = styled('div')(({ theme }) => ({

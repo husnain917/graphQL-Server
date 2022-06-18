@@ -13,13 +13,27 @@ import Box from "@mui/material/Box";
 import { AppContext } from "../../State";
 import { EditorState } from "draft-js";
 import { Calendar } from 'react-calendar';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
 
 import { FM } from './FormModalStyle'
 import CloudinaryFunction from "../../constants/CloudinaryFunction";
+import { blue } from "@mui/material/colors";
 export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date }) {
   const { state, dispatch } = useContext(AppContext);
   const [ctaImageUpdateHandler] = CloudinaryFunction()
   const [open, setOpen] = useState(false)
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   const handleCloseUpdate = () => {
     dispatch({
       type: "setModal",
@@ -32,41 +46,51 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
 
   return (
     <div>
-      <Dialog open={state.openFormModal} onClose={handleCloseUpdate}>
-        <DialogTitle>Form</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
+      <Dialog open={state.openFormModal} onClose={handleCloseUpdate} fullScreen={fullScreen} fullWidth={true} BackdropProps={{ style: { backgroundColor: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(8px)' } }}>
+        <DialogTitle>
+          Add
+          <IconButton
+            aria-label="close"
+            onClick={handleCloseUpdate}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent dividers>
+          {/* <DialogContentText>
             Please read carefully and fill all required fields.
-          </DialogContentText>
-          <Box>
+          </DialogContentText> */}
+          <Box >
             {formInputs.map((item, index) => {
               const test = state.editData;
               return (
                 <>
                   {item.type === "select" ? (
-                    <TextField
-                      margin="dense"
-                      id="file"
-                      label={item.label}
-                      name={item.name}
-                      select
-                      required
-                      fullWidth
-                      variant="standard"
-                      onChange={(e) => {
-                        test[item.name] = e.target.value;
-                        dispatch({
-                          type: "setEditData",
-                          payload: test,
-                        });
-                      }}
-                    >
-                      {item?.dropDownContent?.map((option) => (
-                        <MenuItem key={option} value={option}>
-                          {option}
-                        </MenuItem>
-                      ))}
-                    </TextField>
+                    <>
+                      <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
+                      <RadioGroup
+                        row
+                        aria-labelledby="demo-row-radio-buttons-group-label"
+                        name="row-radio-buttons-group"
+                        onChange={(e) => {
+                          test[item.name] = e.target.value;
+                          dispatch({
+                            type: "setEditData",
+                            payload: test,
+                          });
+                        }}
+                      >
+                        {item?.dropDownContent?.map((option) => (
+                          <FormControlLabel value={option} control={<Radio />} label={option} />
+                        ))}
+                      </RadioGroup>
+                    </>
 
                   ) :
                     item.type === "editor" ? (
@@ -109,42 +133,12 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                         :
                         item.type === "selectCategory" ?
                           (
-                            <TextField
-                              margin="dense"
-                              id="file"
-                              label={item.label}
-                              name={item.name}
-                              select
-                              required
-                              fullWidth
-                              variant="standard"
-                              onChange={(e) => {
-                                test[item.name] = e.target.value;
-                                dispatch({
-                                  type: "setEditData",
-                                  payload: test,
-                                });
-                              }}
-                            >
-                              {item?.dropDown?.categories?.map((option) => (
-                                <MenuItem key={option.id} value={option.id}>
-                                  {option.categoryName}
-                                </MenuItem>
-                              ))}
-                            </TextField>
-                          )
-                          :
-                          item.type === "selectInstructor" ?
-                            (
-                              <TextField
-                                margin="dense"
-                                id="file"
-                                label={item.label}
-                                name={item.name}
-                                select
-                                required
-                                fullWidth
-                                variant="standard"
+                            <>
+                              <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
+                              <RadioGroup
+                                row
+                                aria-labelledby="demo-row-radio-buttons-group-label"
+                                name="row-radio-buttons-group"
                                 onChange={(e) => {
                                   test[item.name] = e.target.value;
                                   dispatch({
@@ -153,25 +147,22 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                   });
                                 }}
                               >
-                                {item?.dropDown?.map((option) => (
-                                  <MenuItem key={option.id} value={option.id}>
-                                    {option.name}
-                                  </MenuItem>
+                                {item?.dropDown?.categories?.map((option) => (
+                                  <FormControlLabel value={option.categoryName} control={<Radio />} label={option.categoryName} />
                                 ))}
-                              </TextField>
-                            )
-                            :
-                            item.type === "selectSpeaker" ?
-                              (
-                                <TextField
-                                  margin="dense"
-                                  id="file"
-                                  label={item.label}
-                                  name={item.name}
-                                  select
-                                  required
-                                  fullWidth
-                                  variant="standard"
+                              </RadioGroup>
+                            </>
+
+                          )
+                          :
+                          item.type === "selectInstructor" ?
+                            (
+                              <>
+                                <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
+                                <RadioGroup
+                                  row
+                                  aria-labelledby="demo-row-radio-buttons-group-label"
+                                  name="row-radio-buttons-group"
                                   onChange={(e) => {
                                     test[item.name] = e.target.value;
                                     dispatch({
@@ -181,24 +172,20 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                   }}
                                 >
                                   {item?.dropDown?.map((option) => (
-                                    <MenuItem key={option.id} value={option.id}>
-                                      {option.speakerName}
-                                    </MenuItem>
+                                    <FormControlLabel value={option.name} control={<Radio />} label={option.name} />
                                   ))}
-                                </TextField>
-                              )
-                              :
-                              item.type === "selectCourse" ?
-                                (
-                                  <TextField
-                                    margin="dense"
-                                    id="file"
-                                    label={item.label}
-                                    name={item.name}
-                                    select
-                                    required
-                                    fullWidth
-                                    variant="standard"
+                                </RadioGroup>
+                              </>
+                            )
+                            :
+                            item.type === "selectSpeaker" ?
+                              (
+                                <>
+                                  <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
+                                  <RadioGroup
+                                    row
+                                    aria-labelledby="demo-row-radio-buttons-group-label"
+                                    name="row-radio-buttons-group"
                                     onChange={(e) => {
                                       test[item.name] = e.target.value;
                                       dispatch({
@@ -207,25 +194,21 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                       });
                                     }}
                                   >
-                                    {item?.dropDown?.findManyCourses?.map((option) => (
-                                      <MenuItem key={option.id} value={option.id}>
-                                        {option.courseName}
-                                      </MenuItem>
+                                    {item?.dropDown?.map((option) => (
+                                      <FormControlLabel value={option.speakerName} control={<Radio />} label={option.speakerName} />
                                     ))}
-                                  </TextField>
-                                )
-                                :
-                                item.type === "selectBatch" ?
-                                  (
-                                    <TextField
-                                      margin="dense"
-                                      id="file"
-                                      label={item.label}
-                                      name={item.name}
-                                      select
-                                      required
-                                      fullWidth
-                                      variant="standard"
+                                  </RadioGroup>
+                                </>
+                              )
+                              :
+                              item.type === "selectCourse" ?
+                                (
+                                  <>
+                                    <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
+                                    <RadioGroup
+                                      row
+                                      aria-labelledby="demo-row-radio-buttons-group-label"
+                                      name="row-radio-buttons-group"
                                       onChange={(e) => {
                                         test[item.name] = e.target.value;
                                         dispatch({
@@ -234,25 +217,21 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                         });
                                       }}
                                     >
-                                      {item?.dropDown?.map((option) => (
-                                        <MenuItem key={option.id} value={option.id}>
-                                          {option.courseName}
-                                        </MenuItem>
+                                      {item?.dropDown?.findManyCourses?.map((option) => (
+                                        <FormControlLabel key={option.id} value={option.courseName} control={<Radio />} label={option.courseName} />
                                       ))}
-                                    </TextField>
-                                  )
-                                  :
-                                  item.type === "selectUser" ?
-                                    (
-                                      <TextField
-                                        margin="dense"
-                                        id="file"
-                                        label={item.label}
-                                        name={item.name}
-                                        select
-                                        required
-                                        fullWidth
-                                        variant="standard"
+                                    </RadioGroup>
+                                  </>
+                                )
+                                :
+                                item.type === "selectBatch" ?
+                                  (
+                                    <>
+                                      <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
+                                      <RadioGroup
+                                        row
+                                        aria-labelledby="demo-row-radio-buttons-group-label"
+                                        name="row-radio-buttons-group"
                                         onChange={(e) => {
                                           test[item.name] = e.target.value;
                                           dispatch({
@@ -262,24 +241,20 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                         }}
                                       >
                                         {item?.dropDown?.map((option) => (
-                                          <MenuItem key={option.id} value={option.id}>
-                                            {option.name}
-                                          </MenuItem>
+                                          <FormControlLabel key={option.id} value={option.courseName} control={<Radio />} label={option.courseName} />
                                         ))}
-                                      </TextField>
-                                    )
-                                    :
-                                    item.type === "booleanSelection" ?
-                                      (
-                                        <TextField
-                                          margin="dense"
-                                          id="file"
-                                          label={item.label}
-                                          name={item.name}
-                                          select
-                                          required
-                                          fullWidth
-                                          variant="standard"
+                                      </RadioGroup>
+                                    </>
+                                  )
+                                  :
+                                  item.type === "selectUser" ?
+                                    (
+                                      <>
+                                        <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
+                                        <RadioGroup
+                                          row
+                                          aria-labelledby="demo-row-radio-buttons-group-label"
+                                          name="row-radio-buttons-group"
                                           onChange={(e) => {
                                             test[item.name] = e.target.value;
                                             dispatch({
@@ -289,11 +264,36 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                           }}
                                         >
                                           {item?.dropDown?.map((option) => (
-                                            <MenuItem key={option} value={option}>
-                                              {option}
-                                            </MenuItem>
+                                            <FormControlLabel key={option.id} value={option.name} control={<Radio />} label={option.name} />
                                           ))}
-                                        </TextField>
+                                        </RadioGroup>
+                                      </>
+
+                                    )
+                                    :
+                                    item.type === "booleanSelection" ?
+                                      (
+                                        <>
+                                          <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
+                                          <RadioGroup
+                                            row
+                                            aria-labelledby="demo-row-radio-buttons-group-label"
+                                            name="row-radio-buttons-group"
+                                            onChange={(e) => {
+                                              test[item.name] = e.target.value;
+                                              dispatch({
+                                                type: "setEditData",
+                                                payload: test,
+                                              });
+                                            }}
+
+                                          >
+                                            {item?.dropDown?.map((option) => (
+                                              <FormControlLabel key={option} value={option} control={<Radio />} label={option} />
+                                            ))}
+                                          </RadioGroup>
+                                        </>
+
                                       )
                                       :
                                       item.type === "calender" ?
@@ -317,7 +317,9 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                         )
                                         :
                                         (
-                                          <TextField
+                                          <FM.TextInput
+                                            InputLabelProps={{ shrink: true }}
+                                            InputProps={{ disableUnderline: true }}
                                             margin="dense"
                                             id="file"
                                             label={item.label}
@@ -346,25 +348,25 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
               );
             })}
             <br />
-            <Stack direction="row" spacing={1}>
-              {state.modalUpdateFlag ? (
-                <FM.FormButton type="submit" variant="outlined" onClick={ctaUpdateHandler}>
-                  Update
-                </FM.FormButton>
-              ) : (
-                <FM.FormButton type="submit" variant="outlined" onClick={ctaFormHandler}>
-                  submit
-                </FM.FormButton>
-              )}
-
-              <FM.FormButton variant="outlined" onClick={handleCloseUpdate}>
-                Close
-              </FM.FormButton>
-            </Stack>
           </Box>
           <br />
         </DialogContent>
-        <DialogActions></DialogActions>
+        <DialogActions>
+          <Stack direction="row" spacing={2} justifyContent="flex-end" alignItems="center">
+            <FM.FormButton style={{ color: '#1E86FF' }} variant="outlined" onClick={handleCloseUpdate}>
+              Cancel
+            </FM.FormButton>
+            {state.modalUpdateFlag ? (
+              <FM.FormButton style={{ backgroundColor: '#1E86FF' }} type="submit" variant="outlined" onClick={ctaUpdateHandler}>
+                Update
+              </FM.FormButton>
+            ) : (
+              <FM.FormButton style={{ backgroundColor: '#1E86FF' }} type="submit" variant="outlined" onClick={ctaFormHandler}>
+                Submit
+              </FM.FormButton>
+            )}
+          </Stack>
+        </DialogActions>
       </Dialog>
     </div>
   );

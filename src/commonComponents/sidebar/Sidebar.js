@@ -15,7 +15,7 @@ import { AppContext } from '../../State';
 import UseWindowDimensions from '../../customHooks/UseWindowDimensions';
 import { Hidden } from '@mui/material';
 
-const drawerWidth = 240;
+const drawerWidth = 276;
 function Sidebar(props) {
   const [{
     SideBarListItems,
@@ -40,14 +40,13 @@ function Sidebar(props) {
             ref={anchorRef}
             button
             onClick={width < 600 ? handleDrawer : null}
-            sx={location?.pathname === item?.path ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
+            sx={location?.pathname === item?.path ? { backgroundColor: '#E8F3FF' , borderRadius: 2 } : null}
 
           >
-            <SidebarStyle.ListItemIconTag >{item?.icon}</SidebarStyle.ListItemIconTag>
-            <SidebarStyle.ListItemTextTag primary={item?.text} />
+            <SidebarStyle.ListItemIconTag Active={location?.pathname === item?.path} >{item?.icon}</SidebarStyle.ListItemIconTag>
+            <SidebarStyle.ListItemTextTag Active={location?.pathname === item?.path} primary={item?.text} />
           </ListItem>
         </SidebarStyle.DomLink>
-        <Divider />
       </>
     );
   };
@@ -69,27 +68,17 @@ function Sidebar(props) {
   return (
     <SidebarStyle.Box >
       <CssBaseline />
-      <SidebarStyle.AppBar position="fixed" open={open}>
-        <Toolbar>
+      <SidebarStyle.AppBar elevation={0} position="fixed" open={open}>
+        <Toolbar sx={{justifyContent: 'space-between'}}>
           <SidebarStyle.IconButton
-            color="inherit"
             aria-label="open drawer"
             onClick={handleDrawer}
             edge="start"
           >
             <MenuIcon />
           </SidebarStyle.IconButton>
-          <Grid container>
-            <Grid item xl={2} lg={2} md={2} sm={4} xs={8}>
-              <SidebarStyle.TypoTraining variant='h6' noWrap component='div'>
-                Training Portal
-              </SidebarStyle.TypoTraining>
-            </Grid>
-            <Grid item xl={10} lg={10} md={9} sm={0} xs={0}>
-              <CommonProfileDropDown />
-            </Grid>
 
-          </Grid>
+          <CommonProfileDropDown />
         </Toolbar>
       </SidebarStyle.AppBar>
 
@@ -102,7 +91,7 @@ function Sidebar(props) {
         <SidebarStyle.LogoutLink to='/login' onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink>
       </SidebarStyle.WebDrawer>
 
-      <Hidden smUp>
+      <Hidden mdUp>
         <SidebarStyle.MobileDrawer
           drawerWidth={drawerWidth}
           container={container}
@@ -119,11 +108,11 @@ function Sidebar(props) {
         </SidebarStyle.MobileDrawer>
       </Hidden>
 
-      <SidebarStyle.MainBox component="main" >
-        <Toolbar />
+      <SidebarStyle.Main component="main" open={open} >
+        <SidebarStyle.DrawerHeader />
         {/* {props.children} */}
         <Outlet />
-      </SidebarStyle.MainBox>
+      </SidebarStyle.Main>
     </SidebarStyle.Box>
   );
 }

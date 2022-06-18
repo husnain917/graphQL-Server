@@ -57,7 +57,7 @@ export function UseAllStaff() {
       type: "text",
     },
     {
-      label: "Role",
+      label: "User Group",
       name: "role",
       type: "select",
       dropDownContent: [
@@ -77,7 +77,18 @@ export function UseAllStaff() {
     data,
     loading: GET_LOADING,
   } = useQuery(GET_USERS);
-  const refacteredData = [];
+  const refacteredData = [
+    // {
+    //   id: 1 ,
+    //   name: 'Atest',
+    //   email: "Atest@gmail.com",
+    //   contact: "1234",
+    //   address: "ATest Address",
+    //   cnic: "112321212",
+    //   role: "ATeacher"
+    // },
+  ];
+
   data?.users?.map((item) => {
     if (item.role === "ADMIN") {
       refacteredData.push({

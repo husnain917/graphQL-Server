@@ -6,7 +6,7 @@ import { colors } from '../../constants/Color';
 import { Link } from "react-router-dom";
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-const drawerWidth = 240;
+const drawerWidth = 276;
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
@@ -29,20 +29,22 @@ const closedMixin = (theme) => ({
 })
 export const SidebarStyle = {
   //Main Body
-  Box: styled(Box)(() => ({
-    display: 'flex'
+  Box: styled(Box)(({theme}) => ({
+    [theme.breakpoints.up('md')]: {
+      display: 'flex'
+  },
   })),
   //Appbar 
   AppBar: styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
   })(({ theme, open }) => ({
-    backgroundColor: colors.lightBlue,
+    backgroundColor: colors.white,
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       ...(open && {
         marginLeft: drawerWidth,
         width: `calc(100% - ${drawerWidth}px)`,
@@ -56,13 +58,14 @@ export const SidebarStyle = {
   //Web Drawer
   WebDrawer: styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         display: 'none'
       },
       width: drawerWidth,
       flexShrink: 0,
       whiteSpace: 'nowrap',
       boxSizing: 'border-box',
+      border: 'none',
       ...(open && {
         ...openedMixin(theme),
         '& .MuiDrawer-paper': openedMixin(theme),
@@ -81,7 +84,7 @@ export const SidebarStyle = {
     [theme.breakpoints.up('xs')]: {
       display: 'block'
     },
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'none'
     },
     '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
@@ -89,6 +92,7 @@ export const SidebarStyle = {
   //IconButton 
   IconButton: styled(IconButton)(({ theme }) => ({
     marginRight: 30,
+    color: '#000',
   })),
   //Drawer + Image Wrapper
   DrawerHeader: styled('div')(({ theme }) => ({
@@ -105,8 +109,9 @@ export const SidebarStyle = {
     marginTop: 4
   })),
   //Childrens Render
-  MainBox: styled(Box)(({ theme }) => ({
+  Main: styled('main')(({ theme }) => ({
     flexGrow: 1,
+    overflowWrap: 'break-word',
     backgroundColor: colors.black + 10,
     minHeight: '100vh',
     height: '100%',
@@ -119,18 +124,23 @@ export const SidebarStyle = {
 
   DomLink: styled(Link)(() => ({
     display: 'flex',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    marginLeft: 16,
+    marginRight: 16,
+    width: 244
   })),
-  ListItemIconTag: styled(ListItemIcon)(() => ({
-    color: '#145DA0'
+  ListItemIconTag: styled(ListItemIcon)(({Active}) => ({
+    color: Active ? '#1E86FF' : '#96A0B5',
+    // '#1E86FF'
   })),
-  ListItemTextTag: styled(ListItemText)(() => ({
-    color: colors.black + 90,
+  ListItemTextTag: styled(ListItemText)(({Active}) => ({
+    color: Active ? '#1E86FF' : '#96A0B5',
     marginLeft: -2
   })),
 
   TypoTraining: styled(Typography)(() => ({
     marginTop: '12px ',
+    color: '#000',
     "@media (max-width:900px)": {
       marginTop: '0px',
       float: 'left'

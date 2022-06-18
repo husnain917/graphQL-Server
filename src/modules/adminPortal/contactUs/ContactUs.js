@@ -4,6 +4,7 @@ import CommonTableLoader from '../../../commonComponents/commonTableLoader/Commo
 import {
     UseContactUs
 } from './UseContactUs';
+import NewTable from '../../../commonComponents/newTable/NewTable';
 export default function ContactUs() {
     const [
         {
@@ -30,17 +31,38 @@ export default function ContactUs() {
         <div>
             <>
 
-                <Table
+                <NewTable
                     title='Contact us'
                     tableHeadings={[
-                        'Id',
-                        'Name',
-                        'Subject',
-                        'Message',
-                        'Reply',
-                        'Status',
-                        'Action',
-                    ]}
+                        {
+                          id: "id",
+                          Label: "Id"
+                        },
+                        {
+                          id: "name",
+                          Label: "Name"
+                        },
+                        {
+                          id: "subject",
+                          Label: "Subject"
+                        },
+                        {
+                          id: "message",
+                          Label: "Message"
+                        },
+                        {
+                          id: "reply",
+                          Label: "Reply"
+                        },
+                        {
+                          id: "status",
+                          Label: "Status"
+                        },
+                        {
+                          id: "action",
+                          Label: "Action"
+                        },
+                      ]}
                     printedKeys={[
                         {
                             key: "id",

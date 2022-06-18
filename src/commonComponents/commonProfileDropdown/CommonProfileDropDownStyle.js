@@ -13,9 +13,9 @@ export const CPD = {
     })),
     IconButton: styled(IconButton)(() => ({
         float: 'right',
-        "@media (max-width: 900px)": {
-            display: 'none',
-        },
+        // "@media (max-width: 900px)": {
+        //     display: 'none',
+        // },
     })),
     ProfileLink: styled(Link)(() => ({
         textDecoration: 'none',

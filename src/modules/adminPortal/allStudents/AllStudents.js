@@ -8,6 +8,7 @@ import {
   UseAllStudents
 } from './UseAllStudent';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
+import NewTable from '../../../commonComponents/newTable/NewTable';
 export default function AllStudents() {
   const [
     {
@@ -32,17 +33,41 @@ export default function AllStudents() {
   }
   return (
     <>
-      <Table
+      <NewTable
         title={'All Students'}
         tableHeadings={[
-          'Id',
-          'Name',
-          'Email',
-          'contact',
-          'cnic',
-          'address',
-          'Role',
-          'Action'
+          {
+            id: "id",
+            Label: "Id"
+          },
+          {
+            id: "name",
+            Label: "Name"
+          },
+          {
+            id: "email",
+            Label: "Email"
+          },
+          {
+            id: "contact",
+            Label: "Contact"
+          },
+          {
+            id: "cnic",
+            Label: "CNIC"
+          },
+          {
+            id: "address",
+            Label: "Address"
+          },
+          {
+            id: "status",
+            Label: "Status"
+          },
+          {
+            id: "action",
+            Label: "Action"
+          },
         ]}
         printedKeys={[
           {

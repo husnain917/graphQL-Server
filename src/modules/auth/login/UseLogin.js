@@ -13,17 +13,36 @@ export default function UseLogin() {
     password: '',
     weight: '',
     weightRange: '',
-    showPassword: false,
+    emailTyping: false,
+    passwordTyping: false,
   });
+  const [showPassword , setShowPassword] = useState(false);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
+
+  const emailTyping = () => {
+    setValues({ ...values, emailTyping: true  });
+  };
+  const emaiTypingRemove = () => {
+    setValues({ ...values, emailTyping: false  });
+
+  }
+  const passwordTyping = ()=> {
+    setValues({ ...values, passwordTyping: true  });
+  }
+  const passwordTypingRemove = ()=> {
+    setValues({ ...values, passwordTyping: false  });
+  };
+
   const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
+    // setValues({
+    //   ...values,
+    //   showPassword: true,
+    // });
+    setShowPassword(!showPassword)
+    console.log('Value of ShowPAssword' , showPassword);
   };
 
 
@@ -89,8 +108,5 @@ export default function UseLogin() {
     setOrgLogin(!orgLogin)
   }
 
-  console.log(orgLogin);
-
-
-  return [{ values, handleChange, handleClickShowPassword, organizationLoginHandler, state, email, orgLogin, setEmail, loginHandler, loading, ORG_LOADING, ctaOrgHandler }]
+  return [{ values, handleChange, handleClickShowPassword, organizationLoginHandler, state, email, orgLogin, setEmail, loginHandler, loading, ORG_LOADING, ctaOrgHandler , emailTyping , emaiTypingRemove , passwordTyping , passwordTypingRemove , showPassword}]
 }

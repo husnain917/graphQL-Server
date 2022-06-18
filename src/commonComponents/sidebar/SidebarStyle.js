@@ -124,11 +124,21 @@ export const SidebarStyle = {
   ListItemIconTag: styled(ListItemIcon)(() => ({
     color: '#145DA0'
   })),
+  ListItemArrowIconTag: styled(ListItemIcon)(() => ({
+    color: '#145DA0',
+    marginLeft: 120,
+  })),
   ListItemTextTag: styled(ListItemText)(() => ({
     color: colors.black + 90,
     marginLeft: -2
   })),
-
+  ListItemTextTagForDropDown: styled(ListItemText)(() => ({
+    color: colors.black + 90,
+    marginLeft: -22
+  })),
+  ListItemsContainerForSettings: styled('div')(({ theme }) => ({
+    marginLeft: 20,
+  })),
   TypoTraining: styled(Typography)(() => ({
     marginTop: '12px ',
     "@media (max-width:900px)": {

@@ -1,7 +1,10 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../State';
-import { MENU_ITEMS } from '../../constants/Roles'
+import { MENU_ITEMS } from '../../constants/Roles';
+import WebhookIcon from '@mui/icons-material/Webhook';
+import GroupIcon from '@mui/icons-material/Group';
+import StorageIcon from '@mui/icons-material/Storage';
 export const UseDrawer = () => {
     const [open, setOpen] = React.useState(true);
     const { state, dispatch } = useContext(AppContext);
@@ -28,11 +31,29 @@ export const UseDrawer = () => {
 
 
     }
+    const dropDownItems=[
+        {
+            text: 'Tabs Permission',
+            icon: <StorageIcon />,
+            path: '/tabs-permission',
+        },
+        {
+            text: 'API Permissions',
+            icon: <WebhookIcon />,
+            path: '/api-permissions',
+        },
+        {
+            text: 'User Groups',
+            icon: <GroupIcon />,
+            path: '/user-groups',
+        },
+    ]
 
     return [{
         SideBarListItems,
         open,
         handleDrawer,
-        ctaLogoutHandler
+        ctaLogoutHandler,
+        dropDownItems
     }]
 }

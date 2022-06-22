@@ -2,6 +2,7 @@ import React from 'react';
 import Table from '../../../commonComponents/table/Table';
 import UseMyCourses from './UseMyCourses';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
+import NewTable from '../../../commonComponents/newTable/NewTable';
 export default function MyCourse() {
   const [
     {
@@ -27,28 +28,50 @@ export default function MyCourse() {
     return <CommonTableLoader />;
   }
   return (
-    <Table
+    <NewTable
       title={'My Courses'}
       tableHeadings={[
-        "Id",
-        'Course Id',
-        'StudentId',
-        'Course Approval',
-        'Why Reject',
-        'Fee status',
-        'course Batch id',
-        'Created At',
-        'Updated At',
-        'Actions'
-
+        {
+            id: "courseId",
+            Label: "Course Id"
+        },
+        {
+            id: "studentId",
+            Label: "Student Id"
+        },
+        {
+            id: "courseApproval",
+            Label: "Course Approval"
+        },
+        {
+          id: 'whyReject',
+          Label: 'Why Reject' 
+        },
+        {
+          id: 'whyReject',
+          Label: 'Why Reject' 
+        },
+        {
+          id: 'feeStatus',
+          Label: 'Fee status' 
+        },
+        {
+          id: "createdAt",
+          Label: "Created At"
+        },
+        {
+            id: "updateAt",
+            Label: "Update At"
+        },
+        {
+            id: "action",
+            Label: "Action"
+        },
       ]}
       ctaFormHandler={ctaFormHandler}
       // ctaDeleteHandler={ctaDeleteHandler}
       ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
-        {
-          key: "id",
-        },
         {
           key: "coursesId",
         },

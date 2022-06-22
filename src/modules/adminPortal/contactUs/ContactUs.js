@@ -35,10 +35,6 @@ export default function ContactUs() {
                     title='Contact us'
                     tableHeadings={[
                         {
-                          id: "id",
-                          Label: "Id"
-                        },
-                        {
                           id: "name",
                           Label: "Name"
                         },
@@ -64,9 +60,6 @@ export default function ContactUs() {
                         },
                       ]}
                     printedKeys={[
-                        {
-                            key: "id",
-                        },
                         {
                             key: "name",
                         },

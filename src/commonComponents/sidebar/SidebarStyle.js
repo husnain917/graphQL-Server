@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, Button, IconButton, ListItem, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -38,6 +38,7 @@ export const SidebarStyle = {
   AppBar: styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
   })(({ theme, open }) => ({
+    border: 'none',
     backgroundColor: colors.white,
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -66,6 +67,7 @@ export const SidebarStyle = {
       whiteSpace: 'nowrap',
       boxSizing: 'border-box',
       border: 'none',
+      borderWidth: 0,
       ...(open && {
         ...openedMixin(theme),
         '& .MuiDrawer-paper': openedMixin(theme),
@@ -129,6 +131,15 @@ export const SidebarStyle = {
     marginRight: 16,
     width: 244
   })),
+  ListItem: styled(ListItem)(({Active}) => ({
+    // color: Active ? '#1E86FF' : '#96A0B5',
+    backgroundColor: Active ? '#E8F3FF' : 'transparent' , 
+    borderRadius: 8,
+    '&:hover': {
+      backgroundColor: 'rgba(232, 243, 255, 0.5)',
+      borderRadius: 8,
+    },
+  })),
   ListItemIconTag: styled(ListItemIcon)(({Active}) => ({
     color: Active ? '#1E86FF' : '#96A0B5',
     // '#1E86FF'
@@ -146,19 +157,25 @@ export const SidebarStyle = {
       float: 'left'
     }
   })),
-  LogoutLink: styled(Link)(() => ({
+  LogoutLink: styled(Button)(() => ({
     textDecoration: 'none',
-    color: colors.lightBlue,
-    marginTop: '-7.8px',
+    position: 'relative',
+    bottom: 0,
+    color: "white",
     padding: '10px',
-    border: '1px solid ' + colors.lightBlue,
+    borderRadius: 8,
+    backgroundColor: colors.lightBlue,
     textAlign: 'center',
     transition: '0.5s',
     '&:hover': {
       backgroundColor: colors.lightBlue,
       color: "white"
-    }
+    },
+    marginTop: 60,
+    marginBottom: 10,
+    marginLeft: 16,
+    marginRight: 16,
+    height: 44,
+    width: 244
   }))
-
-
 };

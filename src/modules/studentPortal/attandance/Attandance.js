@@ -2,6 +2,7 @@ import React from 'react';
 import Table from '../../../commonComponents/table/Table';
 import UseAttandance from './UseAttandance';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
+import NewTable from '../../../commonComponents/newTable/NewTable';
 export default function Attandance() {
   const [
     {
@@ -27,22 +28,30 @@ export default function Attandance() {
     return <CommonTableLoader />;
   }
   return (
-    <Table
+    <NewTable
       title={'Attandance'}
       tableHeadings={[
-        "Id",
-        'attendence',
-        'Date',
-        'User Id',
-        'Actions'
+        {
+            id: "attendence",
+            Label: "Attendence"
+        },
+        {
+            id: "date",
+            Label: "Date"
+        },
+        {
+            id: "userId",
+            Label: "User Id"
+        },
+        {
+            id: "action",
+            Label: "Action"
+        },
       ]}
       // ctaDeleteHandler={ctaDeleteHandler}
       ctaFormHandler={ctaFormHandler}
       ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
-        {
-          key: "id",
-        },
         {
           key: "attendence",
         },

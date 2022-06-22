@@ -1,5 +1,6 @@
 import React from 'react';
 import Table from '../../../commonComponents/table/Table';
+import NewTable from '../../../commonComponents/newTable/NewTable';
 import { UseFaqs } from './UseFAQS';
 import { ToastContainer } from 'react-toastify';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
@@ -30,21 +31,35 @@ export default function FAQS() {
     return (
         <>
 
-            <Table
+            <NewTable
                 title='FAQS'
                 tableHeadings={[
-                    'Id',
-                    'Faq Question',
-                    'Faq Answer',
-                    'Course Id',
-                    'Created At',
-                    'Update At',
-                    'Action',
+                    {
+                        id: "faqQuestion",
+                        Label: "Faq Question"
+                    },
+                    {
+                        id: "faqAnswer",
+                        Label: "Faq Answer"
+                    },
+                    {
+                        id: "courseId",
+                        Label: "Course Id"
+                    },
+                    {
+                        id: "createdAt",
+                        Label: "Created At"
+                    },
+                    {
+                        id: "updateAt",
+                        Label: "Update At"
+                    },
+                    {
+                        id: "action",
+                        Label: "Action"
+                    },
                 ]}
                 printedKeys={[
-                    {
-                        key: "id",
-                    },
                     {
                         key: "faqQuestion",
                         type:"modalQuestion"

@@ -14,6 +14,7 @@ import CommonProfileDropDown from '../commonProfileDropdown/CommonProfileDropDow
 import { AppContext } from '../../State';
 import UseWindowDimensions from '../../customHooks/UseWindowDimensions';
 import { Hidden } from '@mui/material';
+import { Link } from "react-router-dom";
 
 const drawerWidth = 276;
 function Sidebar(props) {
@@ -35,17 +36,18 @@ function Sidebar(props) {
     return (
       <>
         <SidebarStyle.DomLink to={item?.path} key={index}>
-          <ListItem
+          <SidebarStyle.ListItem
             key={index}
             ref={anchorRef}
             button
-            onClick={width < 600 ? handleDrawer : null}
-            sx={location?.pathname === item?.path ? { backgroundColor: '#E8F3FF' , borderRadius: 2 } : null}
+            onClick={width < 900 ? handleDrawer : null}
+            Active={location?.pathname === item?.path}
+            // sx={location?.pathname === item?.path ? { backgroundColor: '#E8F3FF' , borderRadius: 2 } : null}
 
           >
             <SidebarStyle.ListItemIconTag Active={location?.pathname === item?.path} >{item?.icon}</SidebarStyle.ListItemIconTag>
             <SidebarStyle.ListItemTextTag Active={location?.pathname === item?.path} primary={item?.text} />
-          </ListItem>
+          </SidebarStyle.ListItem>
         </SidebarStyle.DomLink>
       </>
     );
@@ -82,13 +84,13 @@ function Sidebar(props) {
         </Toolbar>
       </SidebarStyle.AppBar>
 
-      <SidebarStyle.WebDrawer variant="permanent" container={container} open={open}>
+      <SidebarStyle.WebDrawer  sx={{ '& .MuiDrawer-paper': {border: 'none'}}} variant="permanent" container={container} open={open}>
         <SidebarStyle.DrawerHeader>
           <SidebarStyle.Image src={logo} />
         </SidebarStyle.DrawerHeader>
         <Divider />
         {drawer}
-        <SidebarStyle.LogoutLink to='/login' onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink>
+        <Link to='/login' className='link'><SidebarStyle.LogoutLink  onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink></Link>
       </SidebarStyle.WebDrawer>
 
       <Hidden mdUp>
@@ -104,7 +106,7 @@ function Sidebar(props) {
         >
           <Toolbar />
           {drawer}
-          <SidebarStyle.LogoutLink to='/login' onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink>
+          <Link to='/login' className='link'> <SidebarStyle.LogoutLink  onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink></Link>
         </SidebarStyle.MobileDrawer>
       </Hidden>
 

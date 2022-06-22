@@ -37,10 +37,6 @@ export default function AllStudents() {
         title={'All Students'}
         tableHeadings={[
           {
-            id: "id",
-            Label: "Id"
-          },
-          {
             id: "name",
             Label: "Name"
           },
@@ -70,9 +66,6 @@ export default function AllStudents() {
           },
         ]}
         printedKeys={[
-          {
-            key: "id",
-          },
           {
             key: "name",
           },

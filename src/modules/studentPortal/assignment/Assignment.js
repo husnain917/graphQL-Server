@@ -2,6 +2,7 @@ import React from 'react';
 import Table from '../../../commonComponents/table/Table';
 import UseAssignment from './UseAssignment';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
+import NewTable from '../../../commonComponents/newTable/NewTable';
 export default function Assignment() {
   const [
     {
@@ -27,24 +28,35 @@ export default function Assignment() {
     return <CommonTableLoader />;
   }
   return (
-    <Table
+    <NewTable
       title={'Assignments'}
       tableHeadings={[
-        "Id",
-        'Name',
-        'Course Batch',
-        'Course Batch Id',
-        'Created At',
-        'Update At',
+        {
+            id: "name",
+            Label: "Name"
+        },
+        {
+            id: "courseBatch",
+            Label: "Course Batch"
+        },
+        {
+            id: "courseBatchId",
+            Label: "Course Batch Id"
+        },
+        {
+            id: "createdAt",
+            Label: "Created At"
+        },
+        {
+            id: "updateAt",
+            Label: "Update At"
+        },
       ]}
 
       ctaFormHandler={ctaFormHandler}
       // ctaDeleteHandler={ctaDeleteHandler}
       ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
-        {
-          key: "id",
-        },
         {
           key: "name",
         },

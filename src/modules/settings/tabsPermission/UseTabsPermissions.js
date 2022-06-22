@@ -83,21 +83,21 @@ export function UseTabsPermissions() {
             title: 'Stest',
             route: "Stest@gmail.com",
             createdAt: new Date(),
-            UpdatedAt: "00"
+            UpdatedAt: "--/--/--"
         },
         {
             id: 2,
             title: 'Stest',
             route: "Stest@gmail.com",
             createdAt: new Date(),
-            UpdatedAt: "00"
+            UpdatedAt: "--/--/--"
         },
         {
             id: 3,
             title: 'Stest',
             route: "Stest@gmail.com",
             createdAt: new Date(),
-            UpdatedAt: "00"
+            UpdatedAt: "--/--/--"
         },
     ];
 

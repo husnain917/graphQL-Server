@@ -40,7 +40,7 @@ export default function TabsPermissions() {
 
       {/* <Table */}
       <NewTable
-        title={"Api Permissions"}
+        title={"Tabs Permissions"}
         tableHeadings={[
           {
             id: "title",

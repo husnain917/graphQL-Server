@@ -2,6 +2,7 @@ import React from 'react';
 import { UseCourses } from './UseCourses';
 import Table from '../../commonComponents/table/Table';
 import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
+import NewTable from '../../commonComponents/newTable/NewTable';
 export default function Course() {
     const [
         {
@@ -29,23 +30,43 @@ export default function Course() {
     return (
         <>
 
-            <Table
+            <NewTable
                 title={'Courses'}
                 tableHeadings={[
-                    "Id",
-                    'Course Name',
-                    'Description',
-                    'Introduction',
-                    'instructor Id',
-                    'Category Id',
-                    'Price',
-                    'Status',
-                    'Action',
+                {
+                    id: "courseName",
+                    Label: "Course Name"
+                },
+                {
+                    id: "description",
+                    Label: "Description"
+                },
+                {
+                    id: "introduction",
+                    Label: "Introduction"
+                },
+                {
+                    id: "instructorId",
+                    Label: "Instructor Id"
+                },
+                {
+                    id: "categoryId",
+                    Label: "Category Id"
+                },
+                {
+                  id: "price",
+                  Label: "Price"
+                },
+                {
+                  id: "status",
+                  Label: "Status"
+                },
+                {
+                    id: "action",
+                    Label: "Action"
+                },
                 ]}
                 printedKeys={[
-                  {
-                    key: "id",
-                  },
                   {
                     key: "courseName",
                   },

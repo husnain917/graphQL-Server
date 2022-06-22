@@ -24,13 +24,13 @@ export var MENU_ITEMS = [
     {
         text: 'Dashboard',
         icon: <Dashboard />,
-        path: '/dashboard',
+        path: '/',
         role: 'ADMIN'
     },
     {
         text: 'Dashboard',
         icon: <Dashboard />,
-        path: '/dashboard',
+        path: '/',
         role: 'OWNER'
     },
     {

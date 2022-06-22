@@ -27,7 +27,7 @@ import CommonModal from '../commonModal/CommonModal';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import AddIcon from '@mui/icons-material/Add';
 import UseWindowDimensions from '../../customHooks/UseWindowDimensions';
-
+import moment from 'moment';
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
@@ -148,7 +148,6 @@ const EnhancedTableToolbar = (props) => {
                 }}
             >
                 <Typography
-                    sx={{ width: '100px' }}
                     variant="h6"
                     id="tableTitle"
                     component="div"
@@ -350,20 +349,19 @@ export default function NewTable({
 
 
     const AvatarBgColor = (note) => {
-        if (note === "a" || note === "e" || note === "i" || note === "m" || note === "q" || note === "u" || note === "1" || note === "5" ) {
-          return  {bg: '#FFEEEF' , color:'#FF5963' }
+        if (note === "a" || note === "e" || note === "i" || note === "m" || note === "q" || note === "u" || note === "1" || note === "5") {
+            return { bg: '#FFEEEF', color: '#FF5963' }
         }
         else if (note === "b" || note === "f" || note === "j" || note === "n" || note === "r" || note === "v" || note === "x" || note === "2" || note === "6" || note === "9") {
-          return {bg: '#E6F9F4' , color:'#02C58F' }
+            return { bg: '#E6F9F4', color: '#02C58F' }
         }
         else if (note === "c" || note === "g" || note === "k" || note === "o" || note === "s" || note === "w" || note === "y" || note === "3" || note === "7") {
-            return {bg: '#FFF5EF' , color:'#FF985F' }
+            return { bg: '#FFF5EF', color: '#FF985F' }
         }
-        else 
-        {
-            return {bg: '#E8F3FF', color:  '#1E86FF'}
+        else {
+            return { bg: '#E8F3FF', color: '#1E86FF' }
         }
-      };
+    };
 
     const handleClickOpen = () => {
         dispatch({
@@ -408,7 +406,7 @@ export default function NewTable({
     const searchingFor = (searchQuery) => {
         return function (data) {
             return (
-                (data?.name || data?.courseName || data?.studentName || data?.city || data?.eventName || data?.faqQuestion || data?.speakerName || data?.coursesId || data?.lectureTitle || data?.id).toLowerCase().includes(
+                (data?.name || data?.title || data?.courseName || data?.studentName || data?.city || data?.eventName || data?.faqQuestion || data?.speakerName || data?.coursesId || data?.lectureTitle || data?.id).toLowerCase().includes(
                     searchQuery?.toLowerCase(),
                 )
             );
@@ -481,25 +479,28 @@ export default function NewTable({
             {/* Form Modal */}
             <FormModal formInputs={formInputs} ctaFormHandler={ctaFormHandler} ctaUpdateHandler={ctaUpdateHandler} handleChange={handleChange} onDateChange={onDateChange} date={date} />
             {/* Form Modal */}
-            <Paper sx={{ width: '100%', mb: 2 }}>
+            <NewTableStyle.Paper>
                 <EnhancedTableToolbar numSelected={selected.length} toolBarTitle={title} state={state} dispatch={dispatch} handleAnchorClick={handleAnchorClick} handleClickOpen={handleClickOpen} />
 
                 <NewTableStyle.MobileViewTableHeader searchShow={searchShow} disableGutters >
-                    <TablePagination
-                        rowsPerPageOptions={[10, 25, 100]}
-                        labelRowsPerPage={'Show'}
-                        component="div"
-                        count={filterDataArray.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                        nextIconButtonProps={{ style: { display: 'none' } }}
-                        backIconButtonProps={{ style: { display: 'none' } }}
-                        labelDisplayedRows={({ }) => ``}
-                        SelectProps={{ style: { borderWidth: 1, border: '1px solid #E5EBF0', borderRadius: 8, justifyContent: 'center', alignItems: 'center' } }}
-                        style={{ display: searchShow && "none", justifyContent: 'flex-start', width: '120px' , marginLeft: -20 }}
-                    />
+                    <NewTableStyle.PaginationContainer>
+                        <TablePagination
+                            rowsPerPageOptions={[10, 25, 100]}
+                            labelRowsPerPage={'Show'}
+                            component="div"
+                            count={filterDataArray.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            onPageChange={handleChangePage}
+                            onRowsPerPageChange={handleChangeRowsPerPage}
+                            nextIconButtonProps={{ style: { display: 'none' } }}
+                            backIconButtonProps={{ style: { display: 'none' } }}
+                            labelDisplayedRows={({ }) => ``}
+                            SelectProps={{ style: { borderWidth: 1, border: '1px solid #E5EBF0', borderRadius: 8, justifyContent: 'center', alignItems: 'center' } }}
+                            style={{ display: searchShow && "none", justifyContent: 'flex-start', width: '120px', marginLeft: -20, color: '#96A0B5' }}
+                        />
+                        <NewTableStyle.PaginationText>Enteries</NewTableStyle.PaginationText>
+                    </NewTableStyle.PaginationContainer>
 
                     <Hidden smDown>
                         <GlobalSearch
@@ -545,15 +546,16 @@ export default function NewTable({
                                     return (
                                         <>
                                             <TableRow
-                                                onClick={(event) => handleClick(event, row.id)}
+                                                // onClick={(event) => handleClick(event, row.id)}
                                                 role="checkbox"
                                                 aria-checked={isItemSelected}
                                                 tabIndex={-1}
                                                 key={row.name}
-                                                sx={{ height: 60 , cursor: 'pointer' }}
+                                                sx={{ height: 60 }}
                                             >
                                                 <TableCell padding="checkbox">
                                                     <NewTableStyle.Checkbox
+                                                        onClick={(event) => handleClick(event, row.id)}
                                                         size='small'
                                                         checked={isItemSelected}
                                                         disableRipple
@@ -617,25 +619,26 @@ export default function NewTable({
                                                                                             </NewTableStyle.IconDiv>
                                                                                         </>
                                                                                     ) : subitem.key === 'role' || subitem.key === 'status' ? (
-                                                                                        <NewTableStyle.Role variant="outlined" 
+                                                                                        <NewTableStyle.Role variant="outlined"
                                                                                             bgColor={AvatarBgColor(exactKey[0].toLowerCase())?.bg}
                                                                                             Color={AvatarBgColor(exactKey[0].toLowerCase())?.color}
-
                                                                                         >
                                                                                             {exactKey}
                                                                                         </NewTableStyle.Role>
 
-                                                                                    ) : subitem.key === 'name'  ? (
+                                                                                    ) : subitem.key === 'name' ? (
                                                                                         <NewTableStyle.AvatarBox>
                                                                                             <NewTableStyle.Avatar
-                                                                                                    bgColor={AvatarBgColor(exactKey[0].toLowerCase())?.bg}
-                                                                                                    Color={AvatarBgColor(exactKey[0].toLowerCase())?.color}
+                                                                                                bgColor={AvatarBgColor(exactKey[0].toLowerCase())?.bg}
+                                                                                                Color={AvatarBgColor(exactKey[0].toLowerCase())?.color}
                                                                                             >{exactKey[0].toUpperCase()}</NewTableStyle.Avatar>
                                                                                             <NewTableStyle.EmailNameContainer >
-                                                                                                <NewTableStyle.P_Tag_Name>{exactKey}</NewTableStyle.P_Tag_Name>
-                                                                                                <NewTableStyle.P_Tag_Email>{'malikkloppa@gmail.com'}</NewTableStyle.P_Tag_Email>
+                                                                                                <NewTableStyle.PTagName>{exactKey}</NewTableStyle.PTagName>
+                                                                                                <NewTableStyle.PTagEmail>{'malikkloppa@gmail.com'}</NewTableStyle.PTagEmail>
                                                                                             </NewTableStyle.EmailNameContainer>
                                                                                         </NewTableStyle.AvatarBox>
+                                                                                    ) : subitem.key === 'createdAt' || subitem.key === 'updateAt' ? (
+                                                                                        <NewTableStyle.PTime>{moment(exactKey).format('DD-MMM-YY hh:mm A')}</NewTableStyle.PTime>
                                                                                     ) : (
                                                                                         exactKey
 
@@ -661,7 +664,7 @@ export default function NewTable({
                         </TableBody>
                     </NewTableStyle.Table>
                 </NewTableStyle.TableContainer>
-            </Paper>
+            </NewTableStyle.Paper>
         </Box>
     );
 }

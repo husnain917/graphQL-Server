@@ -16,6 +16,7 @@ import UseWindowDimensions from '../../customHooks/UseWindowDimensions';
 import { Hidden } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Link } from "react-router-dom"
 const drawerWidth = 240;
 function Sidebar(props) {
   const [{
@@ -37,27 +38,29 @@ function Sidebar(props) {
   const renderSidebarItems = (item, index) => {
     return (
       <>
-        <SidebarStyle.DomLink to={item?.path == '/settings' ? location?.pathname : item?.path} key={index}>
-          <ListItem
+        <SidebarStyle.DomLink to={item?.path === '/settings' ? location?.pathname : item?.path} key={index}>
+          <SidebarStyle.ListItem
             key={index}
             ref={anchorRef}
             button
-            onClick={width < 600 ? handleDrawer : null && item?.path != '/settings' ? handleDrawer : item?.path == '/settings' ? () => setDropDownOpen(!dropDownOpen) : null}
-            sx={location?.pathname === item?.path ? { backgroundColor: '#E8F3FF' , borderRadius: 2 } : null}
+            onClick={width < 600 ? handleDrawer : null && item?.path !== '/settings' ? handleDrawer : item?.path === '/settings' ? () => setDropDownOpen(!dropDownOpen) : null}
+            Active={location?.pathname === item?.path}
+          // sx={location?.pathname === item?.path ? { backgroundColor: '#E8F3FF' , borderRadius: 2 } : null}
 
           >
             <SidebarStyle.ListItemIconTag Active={location?.pathname === item?.path} >{item?.icon}</SidebarStyle.ListItemIconTag>
             <SidebarStyle.ListItemTextTag Active={location?.pathname === item?.path} primary={item?.text} />
             {
-              item?.path == '/settings' ?
+              item?.path === '/settings' ?
                 dropDownOpen ?
-                  <SidebarStyle.ListItemArrowIconTag><KeyboardArrowDownIcon /></SidebarStyle.ListItemArrowIconTag>
+                  <SidebarStyle.ListItemIconTag><KeyboardArrowDownIcon /></SidebarStyle.ListItemIconTag>
                   :
-                  <SidebarStyle.ListItemArrowIconTag ><KeyboardArrowRightIcon /></SidebarStyle.ListItemArrowIconTag>
+                  <SidebarStyle.ListItemIconTag ><KeyboardArrowRightIcon /></SidebarStyle.ListItemIconTag>
                 : null
             }
-          </ListItem>
+          </SidebarStyle.ListItem>
         </SidebarStyle.DomLink>
+
         {
           dropDownOpen && item?.path == '/settings' ?
             <SidebarStyle.ListItemsContainerForSettings>
@@ -81,7 +84,7 @@ function Sidebar(props) {
             </SidebarStyle.ListItemsContainerForSettings >
             : null
         }
-        
+
       </>
     );
   };
@@ -104,7 +107,7 @@ function Sidebar(props) {
     <SidebarStyle.Box >
       <CssBaseline />
       <SidebarStyle.AppBar elevation={0} position="fixed" open={open}>
-        <Toolbar sx={{justifyContent: 'space-between'}}>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
           <SidebarStyle.IconButton
             aria-label="open drawer"
             onClick={handleDrawer}
@@ -117,13 +120,13 @@ function Sidebar(props) {
         </Toolbar>
       </SidebarStyle.AppBar>
 
-      <SidebarStyle.WebDrawer variant="permanent" container={container} open={open}>
+      <SidebarStyle.WebDrawer sx={{ '& .MuiDrawer-paper': { border: 'none' } }} variant="permanent" container={container} open={open}>
         <SidebarStyle.DrawerHeader>
           <SidebarStyle.Image src={logo} />
         </SidebarStyle.DrawerHeader>
         <Divider />
         {drawer}
-        <SidebarStyle.LogoutLink to='/login' onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink>
+        <Link to='/login' className='link'><SidebarStyle.LogoutLink onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink></Link>
       </SidebarStyle.WebDrawer>
 
       <Hidden mdUp>
@@ -139,7 +142,7 @@ function Sidebar(props) {
         >
           <Toolbar />
           {drawer}
-          <SidebarStyle.LogoutLink to='/login' onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink>
+          <Link to='/login' className='link'> <SidebarStyle.LogoutLink onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink></Link>
         </SidebarStyle.MobileDrawer>
       </Hidden>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import Table from '../../../commonComponents/table/Table';
 import UseStudentList from './UseStudentList';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
+import NewTable from '../../../commonComponents/newTable/NewTable';
 export default function StudentList() {
   const [
     {
@@ -27,18 +28,23 @@ export default function StudentList() {
     return <CommonTableLoader />;
   }
   return (
-    <Table
+    <NewTable
       title={'Students List'}
       tableHeadings={[
-        "Id",
-        'Name',
-        'Email',
-        'Status',
+        {
+          id: 'name',
+          Label: 'Name'
+        },
+        {
+          id: 'email',
+          Label: 'Email'
+        },
+        {
+          id: 'status',
+          Label: 'Status'
+        },
       ]}
       printedKeys={[
-        {
-          key: "id",
-        },
         {
           key: "name",
         },

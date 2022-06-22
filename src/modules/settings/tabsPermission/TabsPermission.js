@@ -1,40 +1,96 @@
-import { Grid } from '@mui/material'
-import React from 'react'
-import { TabsStyle } from './TabsPermissionsStyle'
-export default function TabsPermission() {
+//Import from Libraries
 
+import React from "react";
+import {
+  ToastContainer
+} from "react-toastify";
+//Import from Files
+import CommonTableLoader from "../../../commonComponents/commonTableLoader/CommonTableLoader";
+import NewTable from "../../../commonComponents/newTable/NewTable";
+import Table from "../../../commonComponents/table/Table";
+import {
+  UseTabsPermissions
+} from "./UseTabsPermissions";
+export default function TabsPermissions() {
+  const [
+    {
+      // ADD_LOADING,
+      // GET_LOADING,
+      // DELETE_LOADING,
+      // UPDATE_LOADING,
+      refacteredData,
+      // ctaFormHandler,
+      // ctaDeleteHandler,
+      // ctaUpdateHandler,
+      formInputs,
+      // ctaEditButtonHandler
+    },
+  ] = UseTabsPermissions();
+  // if (
+  //   GET_LOADING ||
+  //   // DELETE_LOADING ||
+  //   UPDATE_LOADING ||
+  //   ADD_LOADING
+  // ) {
+  //   return <CommonTableLoader />;
+  // }
   return (
-    <TabsStyle.MainDiv>
-      <Grid container>
-        <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
-          <TabsStyle.InputLabel>
-            User Group Name
-            <TabsStyle.MyInput />
-          </TabsStyle.InputLabel>
-        </Grid>
-        <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
-          <TabsStyle.InputLabel>
-            User Role
-            <TabsStyle.MyInput />
-          </TabsStyle.InputLabel>
-        </Grid>
-        <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
-          <TabsStyle.InputLabel>
-            User Type
-            <TabsStyle.MyInput />
-          </TabsStyle.InputLabel>
-        </Grid>
-        {/* <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
-          <TabsStyle.InputLabel>
-            User Group Name
-            <TabsStyle.MyInput />
-          </TabsStyle.InputLabel>
-        </Grid> */}
-      </Grid>
-      <TabsStyle.PermissionText>
-        API Permissions
-      </TabsStyle.PermissionText>
-      
-    </TabsStyle.MainDiv>
-  )
+    <>
+      <ToastContainer />
+
+      {/* <Table */}
+      <NewTable
+        title={"Api Permissions"}
+        tableHeadings={[
+          {
+            id: "title",
+            Label: "Title"
+          },
+          {
+            id: "route",
+            Label: "Route"
+          },
+          {
+            id: "createdAt",
+            Label: "Created At"
+          },
+          {
+            id: "updatedAt",
+            Label: "updatedAt"
+          },
+        ]}
+        // ctaEditButtonHandler={ctaEditButtonHandler}
+        printedKeys={[
+          {
+            key: "title",
+          },
+          {
+            key: "route",
+          },
+          {
+            key: "createdAt",
+          },
+          {
+            key: "UpdatedAt",
+          },
+          {
+            type: "crud",
+          },
+        ]}
+        formInputs={formInputs}
+        filterdata={{
+          key: "role",
+          filterTag: [
+            'All',
+            'ADMIN',
+            'TEACHER'
+          ],
+        }}
+        data={refacteredData}
+        // ctaFormHandler={ctaFormHandler}
+        // ctaDeleteHandler={ctaDeleteHandler}
+        // ctaUpdateHandler={ctaUpdateHandler}
+      />
+    </>
+  );
 }

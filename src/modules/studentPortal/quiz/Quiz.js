@@ -2,6 +2,7 @@ import React from 'react';
 import Table from '../../../commonComponents/table/Table';
 import UseQuiz from './UseQuiz';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
+import NewTable from '../../../commonComponents/newTable/NewTable';
 export default function Quiz() {
   const [
     {
@@ -27,23 +28,32 @@ export default function Quiz() {
     return <CommonTableLoader />;
   }
   return (
-    <Table
+    <NewTable
       title={'Quiz'}
       tableHeadings={[
-        "Id",
-        'Course Batch Id',
-        'Course',
-        'Actions',
+        {
+         id: 'courseBatch',
+         Label: 'Course Batch' 
+        },
+        {
+          id: 'courseBatchId',
+          Label: 'Course Batch Id' 
+         },
+         {
+          id: 'course',
+          Label: 'Course' 
+         },
+         {
+          id: 'courseId',
+          Label: 'Course Id' 
+         },
       ]}
       ctaFormHandler={ctaFormHandler}
       // ctaDeleteHandler,
       ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
         {
-          key: "id",
-        },
-        {
-          key: "courseBatchesId",
+          key: "courseBatch",
         },
         {
           key: 'coursesId',

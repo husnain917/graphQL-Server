@@ -36,10 +36,6 @@ function EnrollmentApproval() {
         <NewTable
           title={'Enrollment Approval'}
           tableHeadings={[
-            {
-              id: "id",
-              Label: "Id"
-          },
           {
               id: "userId",
               Label: "User Id"
@@ -70,9 +66,6 @@ function EnrollmentApproval() {
           },
           ]}
           printedKeys={[
-            {
-              key: "id",
-            },
             {
               key: "userId",
             },

@@ -56,19 +56,21 @@ export default function Navigation() {
                         // </PublicRouting>
                     }
                 />
-                <Route path='/' element={
+                <Route 
+                    path='/' 
+                    element={
                     <PrivateRouting isAllowed={state.authState}>
                         <Sidebar />
                     </PrivateRouting>
                 }>
-                    <Route
+                    {/* <Route
                         path='/dashboard'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <Dashboard />
-                            </PrivateRouting>
+                        <PrivateRouting isAllowed={state.authState}>
+                            <Dashboard />
+                        </PrivateRouting>
                         }
-                    />
+                    /> */}
                     <Route
                         path='/contactus'
                         element={

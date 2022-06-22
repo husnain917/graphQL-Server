@@ -30,10 +30,6 @@ export default function CourseBatch() {
             title={'Lectures'}
             tableHeadings={[
                 {
-                    id: "id",
-                    Label: "Id"
-                },
-                {
                     id: "name",
                     Label: "Name"
                 },
@@ -63,9 +59,6 @@ export default function CourseBatch() {
             // ctaDeleteHandler={ctaDeleteHandler}
             ctaUpdateHandler={ctaUpdateHandler}
             printedKeys={[
-                {
-                    key: "id",
-                },
                 {
                     key: "name",
                 },

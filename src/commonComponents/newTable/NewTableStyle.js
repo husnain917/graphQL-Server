@@ -1,6 +1,6 @@
 
 import { styled, alpha } from '@mui/material/styles';
-import { Avatar, Box, Button, Checkbox, TableContainer, TableHead, Toolbar } from '@mui/material';
+import { Avatar, Box, Button, Checkbox, Paper, TableContainer, TableHead, Toolbar } from '@mui/material';
 import { Close, Delete, Edit } from '@mui/icons-material'
 import { TableRow, Table, TableCell , } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -11,7 +11,11 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import AddIcon from '@mui/icons-material/Add';
 import  { tableCellClasses } from "@mui/material/TableCell";
 export const NewTableStyle = {
-
+    Paper: styled(Paper)(() => ({
+    width: '100%',
+    mb: 2 ,
+    borderRadius: 16
+    })),
     SelectedContainer: styled('div')(() => ({
         display: 'flex'
     })),
@@ -30,7 +34,7 @@ export const NewTableStyle = {
         color: selected ? '#1E86FF' : '#E5EBF0',
     })),
     Table: styled(Table)(({ theme }) => ({
-        minWidth: 'auto',
+        // minWidth: 'auto',
         [`& .${tableCellClasses.root}`]: {
             borderBottom: "none"
         },
@@ -39,6 +43,7 @@ export const NewTableStyle = {
         },
     })),
     TableContainer: styled(TableContainer)(({ theme }) => ({
+        overflow: 'scroll',
         overflowX: 'auto',
         width: '98%',
         marginLeft: '1%',
@@ -53,13 +58,16 @@ export const NewTableStyle = {
     EmailNameContainer: styled('div')(({ theme }) => ({
         marginLeft: 12
     })),
-    P_Tag_Name: styled('p')(({ theme }) => ({
+    PTime: styled('p')(({ theme }) => ({
+        margin: 0,
+    })),
+    PTagName: styled('p')(({ theme }) => ({
         fontSize: '14px',
         margin: 0,
         fontWeight: '500',
         marginBottom: 4
     })),
-    P_Tag_Email: styled('p')(({ theme }) => ({
+    PTagEmail: styled('p')(({ theme }) => ({
         fontSize: '12px',
         margin: 0,
         fontWeight: '500',
@@ -120,6 +128,17 @@ export const NewTableStyle = {
         },
         marginRight: 10,
     })),
+    PaginationContainer: styled('div')(() => ({
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    })),
+    PaginationText: styled('p')(() => ({
+        margin: 0 ,
+        color: '#96A0B5',
+        marginLeft: 8,
+        fontSize: 14,
+    })), 
     SearchBox: styled(Box)(({ theme }) => ({
         display: 'flex',
         alignItems: 'center',

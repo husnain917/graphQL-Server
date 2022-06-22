@@ -2,6 +2,7 @@ import React from 'react';
 import Table from '../../../commonComponents/table/Table';
 import UseFileOrAssignment from './UseFileOrAssignment';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
+import NewTable from '../../../commonComponents/newTable/NewTable';
 export default function FileOrAssignment() {
   const [
     {
@@ -27,20 +28,31 @@ export default function FileOrAssignment() {
     return <CommonTableLoader />;
   }
   return (
-    <Table
+    <NewTable
       title={'Files or Assignments'}
       tableHeadings={[
-        "Id",
-        'Name',
-        'Course Batches',
-        'Course Batches Id',
-        'Courses',
-        'Course Id',
+        {
+          id: 'name',
+          Label: 'Name'
+        },
+        {
+          id: 'courseBatches',
+          Label: 'Course Batches'
+        },
+        {
+          id: 'courseBatchesId',
+          Label: 'Course Batches Id'
+        },
+        {
+          id: 'courses',
+          Label: 'Courses'
+        },
+        {
+          id: 'courseId',
+          Label: 'Course Id'
+        },
       ]}
       printedKeys={[
-        {
-          key: "id",
-        },
         {
           key: "name",
         },

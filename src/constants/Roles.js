@@ -8,6 +8,7 @@ import {
     QuestionAnswerRounded,
     ContactMail,
 } from '@mui/icons-material';
+import SettingsIcon from '@mui/icons-material/Settings';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import LaptopChromebookIcon from '@mui/icons-material/LaptopChromebook';
@@ -18,6 +19,7 @@ import CoPresentIcon from '@mui/icons-material/CoPresent';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import SpeakerIcon from '@mui/icons-material/Speaker';
+
 export var MENU_ITEMS = [
     {
         text: 'Dashboard',
@@ -253,6 +255,12 @@ export var MENU_ITEMS = [
         icon: <Face />,
         path: `/profile/id`,
         role: 'STUDENT'
-    }
+    },
+    {
+        text: 'Settings',
+        icon: <SettingsIcon />,
+        path: '/settings',
+        role: 'OWNER'
+    },
 ];
 

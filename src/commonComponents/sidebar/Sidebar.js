@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -14,14 +14,16 @@ import CommonProfileDropDown from '../commonProfileDropdown/CommonProfileDropDow
 import { AppContext } from '../../State';
 import UseWindowDimensions from '../../customHooks/UseWindowDimensions';
 import { Hidden } from '@mui/material';
-
-const drawerWidth = 276;
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+const drawerWidth = 240;
 function Sidebar(props) {
   const [{
     SideBarListItems,
     open,
     ctaLogoutHandler,
-    handleDrawer
+    handleDrawer,
+    dropDownItems
   }] = UseDrawer()
 
   const { width } = UseWindowDimensions();
@@ -29,24 +31,57 @@ function Sidebar(props) {
   const location = useLocation();
   const anchorRef = React.useRef(null);
   const { state } = React.useContext(AppContext)
+  const [dropDownOpen, setDropDownOpen] = useState(false);
   const container = window !== undefined ? () => window().document.body : undefined;
   //List Item 
   const renderSidebarItems = (item, index) => {
     return (
       <>
-        <SidebarStyle.DomLink to={item?.path} key={index}>
+        <SidebarStyle.DomLink to={item?.path == '/settings' ? location?.pathname : item?.path} key={index}>
           <ListItem
             key={index}
             ref={anchorRef}
             button
-            onClick={width < 600 ? handleDrawer : null}
+            onClick={width < 600 ? handleDrawer : null && item?.path != '/settings' ? handleDrawer : item?.path == '/settings' ? () => setDropDownOpen(!dropDownOpen) : null}
             sx={location?.pathname === item?.path ? { backgroundColor: '#E8F3FF' , borderRadius: 2 } : null}
 
           >
             <SidebarStyle.ListItemIconTag Active={location?.pathname === item?.path} >{item?.icon}</SidebarStyle.ListItemIconTag>
             <SidebarStyle.ListItemTextTag Active={location?.pathname === item?.path} primary={item?.text} />
+            {
+              item?.path == '/settings' ?
+                dropDownOpen ?
+                  <SidebarStyle.ListItemArrowIconTag><KeyboardArrowDownIcon /></SidebarStyle.ListItemArrowIconTag>
+                  :
+                  <SidebarStyle.ListItemArrowIconTag ><KeyboardArrowRightIcon /></SidebarStyle.ListItemArrowIconTag>
+                : null
+            }
           </ListItem>
         </SidebarStyle.DomLink>
+        {
+          dropDownOpen && item?.path == '/settings' ?
+            <SidebarStyle.ListItemsContainerForSettings>
+              {
+                dropDownItems.map((item) => {
+                  return (
+                    <SidebarStyle.DomLink to={item?.path} key={index}>
+                      <ListItem
+                        ref={anchorRef}
+                        onClick={width < 600 ? handleDrawer : null}
+                        button
+                        sx={location?.pathname === item?.path ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
+                      >
+                        <SidebarStyle.ListItemIconTag >{item?.icon}</SidebarStyle.ListItemIconTag>
+                        <SidebarStyle.ListItemTextTagForDropDown primary={item?.text} />
+                      </ListItem>
+                    </SidebarStyle.DomLink>
+                  )
+                })
+              }
+            </SidebarStyle.ListItemsContainerForSettings >
+            : null
+        }
+        
       </>
     );
   };
@@ -84,7 +119,7 @@ function Sidebar(props) {
 
       <SidebarStyle.WebDrawer variant="permanent" container={container} open={open}>
         <SidebarStyle.DrawerHeader>
-        <SidebarStyle.Image src={logo} />
+          <SidebarStyle.Image src={logo} />
         </SidebarStyle.DrawerHeader>
         <Divider />
         {drawer}

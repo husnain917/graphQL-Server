@@ -135,9 +135,22 @@ export const SidebarStyle = {
   })),
   ListItemTextTag: styled(ListItemText)(({Active}) => ({
     color: Active ? '#1E86FF' : '#96A0B5',
+  })),
+  ListItemArrowIconTag: styled(ListItemIcon)(() => ({
+    color: '#145DA0',
+    marginLeft: 120,
+  })),
+  ListItemTextTag: styled(ListItemText)(() => ({
+    color: colors.black + 90,
     marginLeft: -2
   })),
-
+  ListItemTextTagForDropDown: styled(ListItemText)(() => ({
+    color: colors.black + 90,
+    marginLeft: -22
+  })),
+  ListItemsContainerForSettings: styled('div')(({ theme }) => ({
+    marginLeft: 20,
+  })),
   TypoTraining: styled(Typography)(() => ({
     marginTop: '12px ',
     color: '#000',

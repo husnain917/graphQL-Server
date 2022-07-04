@@ -42,15 +42,9 @@ mutation CreateCourses($data: CoursesCreateInput!) {
     courseIntro
     instructorId
     courseCategoryId
+    organizationId
     coursePrice
     whatYouLearn
-    courseStatus
-    createdAt
-    updateAt
-    instructor {
-      id
-      name
-    }
   }
 }
 `
@@ -120,9 +114,10 @@ mutation CreateUser($data: UserCreateInput!) {
     cnic
     address
     contact
-    role
+    userRole
     permission
     id
+    userRole
   }
 }
 `
@@ -498,10 +493,10 @@ mutation UpdateUser($data: UserUpdateInput!, $where: UserWhereUniqueInput!) {
     id
     name
     email
-    address
     cnic
+    address
     contact
-    role
+    userRole
   }
 }
 `

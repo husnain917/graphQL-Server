@@ -71,6 +71,7 @@ query Users {
     contact
     permission
     emailApproval
+    userRole
     successStoriesId
     token
     createdAt

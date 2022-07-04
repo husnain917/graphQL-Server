@@ -29,6 +29,11 @@ export default function UseCourseBatch() {
             type: "text",
         },
         {
+            label: "Course Name",
+            name: "courseName",
+            type: "text",
+        },
+        {
             label: "Course",
             name: "coursesId",
             type: "selectCourse",
@@ -70,6 +75,9 @@ export default function UseCourseBatch() {
         else if (!state.editData?.coursesId) {
             ToastWarning('Course Id required')
         }
+        else if (!state.editData?.courseName) {
+            ToastWarning('Course Name required')
+        }
         // else if (!state.editData?.assignmentId) {
         //     ToastWarning('assignmentId required')
         // }
@@ -81,24 +89,11 @@ export default function UseCourseBatch() {
                 await CreateCourseBatches({
                     variables: {
                         data: {
-                            name: state.editData?.name,
-                            // assignment: {
-                            //     connect: [
-                            //         {
-                            //             id: state.editData?.assignmentId
-                            //         }
-                            //     ]
-                            // },
-                            // quiz: {
-                            //     connect: [
-                            //         {
-                            //             id: state.editData?.quizId
-                            //         }
-                            //     ]
-                            // },
-                            courses: {
+                            name: state?.editData?.name,
+                            courseName: state?.editData?.courseName,
+                            Courses: {
                                 connect: {
-                                    id: state.editData?.coursesId
+                                    id: state?.editData?.coursesId
                                 }
                             }
                         }
@@ -171,6 +166,9 @@ export default function UseCourseBatch() {
         else if (!state.editData?.coursesId) {
             ToastWarning('Course Id required')
         }
+        else if (!state.editData?.courseName) {
+            ToastWarning('Course Name required')
+        }
         else {
             try {
                 await UpdateCourseBatches({
@@ -178,17 +176,21 @@ export default function UseCourseBatch() {
                         where: {
                             id: state.editId
                         },
-
+                        
                         data: {
                             name: {
-                                set: state.editData?.name
+                                set: state?.editData?.name,
                             },
-                            courses: {
+                            courseName: {
+                                set: state?.editData?.courseName,
+                            },
+                            Courses: {
                                 connect: {
-                                    id: state.editData?.coursesId
+                                    id: state?.editData?.coursesId
                                 }
                             }
                         }
+
 
                     },
                     onCompleted() {

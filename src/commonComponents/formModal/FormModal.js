@@ -87,6 +87,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                             type: "setEditData",
                             payload: test,
                           });
+                          console.log('pp',test);
                         }}
                       >
                         {item?.dropDownContent?.map((option) => (
@@ -157,7 +158,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                 }}
                               >
                                 {item?.dropDown?.categories?.map((option) => (
-                                  <FormControlLabel value={option.categoryName} control={<Radio />} label={option.categoryName} />
+                                  <FormControlLabel value={option.id} control={<Radio />} label={option.categoryName} />
                                 ))}
                               </RadioGroup>
                             </>
@@ -174,6 +175,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                   name="row-radio-buttons-group"
                                   onChange={(e) => {
                                     test[item.name] = e.target.value;
+                                    console.log("kk",item.name);
                                     dispatch({
                                       type: "setEditData",
                                       payload: test,
@@ -181,7 +183,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                   }}
                                 >
                                   {item?.dropDown?.map((option) => (
-                                    <FormControlLabel value={option.name} control={<Radio />} label={option.name} />
+                                    <FormControlLabel value={option.id} control={<Radio />} label={option.name} />
                                   ))}
                                 </RadioGroup>
                               </>
@@ -227,7 +229,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                       }}
                                     >
                                       {item?.dropDown?.findManyCourses?.map((option) => (
-                                        <FormControlLabel key={option.id} value={option.courseName} control={<Radio />} label={option.courseName} />
+                                        <FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.courseName} />
                                       ))}
                                     </RadioGroup>
                                   </>

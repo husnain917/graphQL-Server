@@ -89,29 +89,29 @@ export function UseAllStaff() {
     // },
   ];
 
-  data?.users?.map((item) => {
-    if (item?.userGroup?.userGroupRole === "ADMIN") {
+  data?.users?.forEach((item) => {
+    if (item?.userRole === "ADMIN") {
+      refacteredData.push({
+        id: item?.id,
+        name: item?.name,
+        email: item?.email,
+        contact: item?.contact,
+        // address: item.address,
+        cnic: item?.cnic,
+        role: item?.userRole,
+      })
+    }
+    else if (item?.userRole === "TEACHER") {
       refacteredData.push({
         id: item.id,
         name: item.name,
         email: item.email,
         contact: item.contact,
-        address: item.address,
+        // address: item.address,
         cnic: item.cnic,
-        // role: item.role,
+        role: item?.userRole,
       })
     }
-    // else if (item?.userGroup?.userGroupRole === "TEACHER") {
-    //   refacteredData.push({
-    //     id: item.id,
-    //     name: item.name,
-    //     email: item.email,
-    //     contact: item.contact,
-    //     address: item.address,
-    //     cnic: item.cnic,
-    //     // role: item.role,
-    //   })
-    // }
     console.log(item);
   });
   console.log("sami", refacteredData);
@@ -145,7 +145,7 @@ export function UseAllStaff() {
     else if (!state.editData?.role) {
       ToastWarning('Role required')
     }
-    else if (state.editData?.contact.length > 10) {
+    else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
       ToastWarning('Phone No Must be 10 digits')
     }
 
@@ -161,8 +161,7 @@ export function UseAllStaff() {
               password: state.editData?.password,
               cnic: state.editData?.cnic,
               contact: state.editData?.contact,
-              address: state.editData?.address,
-              role: state.editData?.role,
+              userRole: state.editData?.role,
             }
 
           },
@@ -259,7 +258,7 @@ export function UseAllStaff() {
   //Update staff
 
   let [
-    UpdateStudents,
+    UpdateUser,
     {
       loading: UPDATE_LOADING
     }] = useMutation(UPDATE_USER);
@@ -271,8 +270,8 @@ export function UseAllStaff() {
     else if (!state.editData?.email) {
       ToastWarning('Email required')
     }
-    else if (!state.editData?.contact) {
-      ToastWarning('contact required')
+    else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
+      ToastWarning('Phone No Must be 10 digit')
     }
     else if (!state.editData?.cnic) {
       ToastWarning('cnic required')
@@ -285,7 +284,7 @@ export function UseAllStaff() {
     }
     else {
       try {
-        await UpdateStudents({
+        await UpdateUser({
           variables: {
             where: {
               id: state.editId
@@ -310,7 +309,7 @@ export function UseAllStaff() {
               contact: {
                 set: state.editData?.contact,
               },
-              role: {
+              userRole: {
                 set: state.editData?.role,
               }
             },

@@ -35,55 +35,65 @@ function Sidebar(props) {
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const container = window !== undefined ? () => window().document.body : undefined;
   //List Item 
-  const renderSidebarItems = (item, index) => {
+  const renderSidebarItems = (items, index) => {
     return (
       <>
-        <SidebarStyle.DomLink to={item?.path === '/settings' ? location?.pathname : item?.path} key={index}>
-          <SidebarStyle.ListItem
-            key={index}
-            ref={anchorRef}
-            button
-            onClick={width < 600 ? handleDrawer : null && item?.path !== '/settings' ? handleDrawer : item?.path === '/settings' ? () => setDropDownOpen(!dropDownOpen) : null}
-            Active={location?.pathname === item?.path}
-          // sx={location?.pathname === item?.path ? { backgroundColor: '#E8F3FF' , borderRadius: 2 } : null}
-
-          >
-            <SidebarStyle.ListItemIconTag Active={location?.pathname === item?.path} >{item?.icon}</SidebarStyle.ListItemIconTag>
-            <SidebarStyle.ListItemTextTag Active={location?.pathname === item?.path} primary={item?.text} />
-            {
-              item?.path === '/settings' ?
-                dropDownOpen ?
-                  <SidebarStyle.ListItemIconTag><KeyboardArrowDownIcon /></SidebarStyle.ListItemIconTag>
-                  :
-                  <SidebarStyle.ListItemIconTag ><KeyboardArrowRightIcon /></SidebarStyle.ListItemIconTag>
-                : null
-            }
-          </SidebarStyle.ListItem>
-        </SidebarStyle.DomLink>
-
         {
-          dropDownOpen && item?.path == '/settings' ?
-            <SidebarStyle.ListItemsContainerForSettings>
-              {
-                dropDownItems.map((item) => {
-                  return (
-                    <SidebarStyle.DomLink to={item?.path} key={index}>
-                      <ListItem
-                        ref={anchorRef}
-                        onClick={width < 600 ? handleDrawer : null}
-                        button
-                        sx={location?.pathname === item?.path ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
-                      >
-                        <SidebarStyle.ListItemIconTag >{item?.icon}</SidebarStyle.ListItemIconTag>
-                        <SidebarStyle.ListItemTextTagForDropDown primary={item?.text} />
-                      </ListItem>
-                    </SidebarStyle.DomLink>
-                  )
-                })
-              }
-            </SidebarStyle.ListItemsContainerForSettings >
-            : null
+          items.pages.map((item) => {
+            return (
+              <>
+                <SidebarStyle.DomLink to={item?.pageURL === '/settings' ? location?.pathname : item?.pageURL} key={index}>
+                  <SidebarStyle.ListItem
+                    key={index}
+                    ref={anchorRef}
+                    button
+                    onClick={width < 600 ? handleDrawer : null && item?.pageURL !== '/settings' ? handleDrawer : item?.pageURL === '/settings' ? () => setDropDownOpen(!dropDownOpen) : null}
+                    Active={location?.pathname === item?.pageURL}
+                  // sx={location?.pathname === item?.path ? { backgroundColor: '#E8F3FF' , borderRadius: 2 } : null}
+
+                  >
+                    <SidebarStyle.ListItemIconTag Active={location?.pathname === item?.pageURL} >{item?.icon}</SidebarStyle.ListItemIconTag>
+                    <SidebarStyle.ListItemTextTag Active={location?.pathname === item?.pageURL} primary={item?.pageName} />
+                    {
+                      item?.pageURL === '/settings' ?
+                        dropDownOpen ?
+                          <SidebarStyle.ListItemIconTag><KeyboardArrowDownIcon /></SidebarStyle.ListItemIconTag>
+                          :
+                          <SidebarStyle.ListItemIconTag ><KeyboardArrowRightIcon /></SidebarStyle.ListItemIconTag>
+                        : null
+                    }
+                  </SidebarStyle.ListItem>
+                </SidebarStyle.DomLink>
+
+                {
+                  dropDownOpen && item?.pageURL === '/settings' ?
+                    <SidebarStyle.ListItemsContainerForSettings>
+                      {
+                        dropDownItems.map((item) => {
+                          return (
+                            <SidebarStyle.DomLink to={item?.pageURL} key={index}>
+                              <ListItem
+                                ref={anchorRef}
+                                onClick={width < 600 ? handleDrawer : null}
+                                button
+                                  Active={location?.pathname === item?.pageURL}
+                                sx={location?.pathname === item?.pageURL ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
+                              >
+                                <SidebarStyle.ListItemIconTag >{item?.icon}</SidebarStyle.ListItemIconTag>
+                                <SidebarStyle.ListItemTextTagForDropDown primary={item?.pageName} />
+                              </ListItem>
+                            </SidebarStyle.DomLink>
+                          )
+                        })
+                      }
+                    </SidebarStyle.ListItemsContainerForSettings >
+                    : null
+                }
+              </>
+            )
+          })
         }
+
 
       </>
     );
@@ -94,8 +104,9 @@ function Sidebar(props) {
       <List>
         <>
           {
-            SideBarListItems.map((item, index) => {
-              return renderSidebarItems(item, index)
+            state?.tabsPersmission.map((items, index) => {
+              return renderSidebarItems(items, index)
+
             })
           }
         </>

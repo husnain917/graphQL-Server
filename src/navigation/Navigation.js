@@ -63,16 +63,16 @@ export default function Navigation() {
                         <Sidebar />
                     </PrivateRouting>
                 }>
-                    {/* <Route
-                        path='/dashboard'
+                    <Route
+                        path='/'
                         element={
                         <PrivateRouting isAllowed={state.authState}>
                             <Dashboard />
                         </PrivateRouting>
                         }
-                    /> */}
+                    />
                     <Route
-                        path='/contactus'
+                        path='/contact'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <ContactUs />
@@ -137,7 +137,7 @@ export default function Navigation() {
                                         /> : ''
                     }
                     <Route
-                        path='/successStory'
+                        path='/successStories'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <SuccessStory />
@@ -153,7 +153,7 @@ export default function Navigation() {
                         }
                     />
                     <Route
-                        path='/approve-enrollment'
+                        path='/enrollmentApproval'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <EnrollmentApproval />
@@ -169,7 +169,7 @@ export default function Navigation() {
                         }
                     />
                     <Route
-                        path='/faq'
+                        path='/faqs'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <FAQS />
@@ -192,7 +192,7 @@ export default function Navigation() {
 
 
                     {/* students routes */}
-                    <Route path='/myCourse'
+                    <Route path='/myCourses'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <MyCourse />

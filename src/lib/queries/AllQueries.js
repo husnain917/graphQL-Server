@@ -61,7 +61,7 @@ query FindManySuccessStories {
 
 
 export const GET_USERS = gql`
-query Query {
+query Users {
   users {
     id
     name
@@ -69,7 +69,17 @@ query Query {
     cnic
     address
     contact
-    role
+    permission
+    emailApproval
+    successStoriesId
+    token
+    createdAt
+    updateAt
+    status
+    userGroupId
+    userGroup{
+      userGroupRole
+    }
   }
 }
 `

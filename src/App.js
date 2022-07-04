@@ -32,7 +32,6 @@ function App() {
               user: login.getActiveUser,
               authState: true
             },
-            
           });
           ToastSuccess(`Welcome ${login.getActiveUser?.name}`)
         }
@@ -49,7 +48,7 @@ function App() {
       const tokenId1 = await localStorage.getItem('token');
       if (tokenId1) {
         user()
-       
+
       }
     }
     token()

@@ -10,11 +10,24 @@ export const UseDrawer = () => {
     const { state, dispatch } = useContext(AppContext);
     const navigate = useNavigate()
     const SideBarListItems = []
-    var sideBarMenu = MENU_ITEMS.filter((item) => {
-        if (item.role === state.user?.role) {
-            return SideBarListItems.push(item)
-        }
+    var sideBarMenu = state?.tabsPersmission.map((item) => {
+        //  MENU_ITEMS.filter((item) => {
+        // if (item.role === state.user?.role)
+        // if (item.role === state.user?.organizationLogin?.role) 
+
+        // {
+        //     return SideBarListItems.push(item)
+        // }
+
+        // console.log("sami item", item.pages.map((items) => {
+        //     return items.pageName
+        // }));
+        // return SideBarListItems.push(item.pages.map((items) => {
+        //     return items
+        // }))
     });
+    console.log(SideBarListItems);
+    // console.log(state.user?.organizationLogin?.userGroup);
     const handleDrawer = () => {
         setOpen(!open);
     };
@@ -31,21 +44,21 @@ export const UseDrawer = () => {
 
 
     }
-    const dropDownItems=[
+    const dropDownItems = [
         {
-            text: 'Tabs Permission',
+            pageName: 'Tabs Permission',
             icon: <StorageIcon />,
-            path: '/tabs-permission',
+            pageURL: '/tabs-permission',
         },
         {
-            text: 'API Permissions',
+            pageName: 'API Permissions',
             icon: <WebhookIcon />,
-            path: '/api-permissions',
+            pageURL: '/api-permissions',
         },
         {
-            text: 'User Groups',
+            pageName: 'User Groups',
             icon: <GroupIcon />,
-            path: '/user-groups',
+            pageURL: '/user-groups',
         },
     ]
 

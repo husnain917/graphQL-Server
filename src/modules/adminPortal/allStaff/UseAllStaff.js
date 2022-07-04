@@ -79,7 +79,7 @@ export function UseAllStaff() {
   } = useQuery(GET_USERS);
   const refacteredData = [
     // {
-    //   id: 1 ,
+    //   id: 1,
     //   name: 'Atest',
     //   email: "Atest@gmail.com",
     //   contact: "1234",
@@ -90,7 +90,7 @@ export function UseAllStaff() {
   ];
 
   data?.users?.map((item) => {
-    if (item.role === "ADMIN") {
+    if (item?.userGroup?.userGroupRole === "ADMIN") {
       refacteredData.push({
         id: item.id,
         name: item.name,
@@ -98,22 +98,23 @@ export function UseAllStaff() {
         contact: item.contact,
         address: item.address,
         cnic: item.cnic,
-        role: item.role,
+        // role: item.role,
       })
     }
-    else if (item.role === "TEACHER") {
-      refacteredData.push({
-        id: item.id,
-        name: item.name,
-        email: item.email,
-        contact: item.contact,
-        address: item.address,
-        cnic: item.cnic,
-        role: item.role,
-      })
-    }
+    // else if (item?.userGroup?.userGroupRole === "TEACHER") {
+    //   refacteredData.push({
+    //     id: item.id,
+    //     name: item.name,
+    //     email: item.email,
+    //     contact: item.contact,
+    //     address: item.address,
+    //     cnic: item.cnic,
+    //     // role: item.role,
+    //   })
+    // }
+    console.log(item);
   });
-
+  console.log("sami", refacteredData);
 
   //ADD STAFF
 

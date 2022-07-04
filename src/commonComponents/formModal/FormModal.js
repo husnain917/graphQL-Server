@@ -33,6 +33,9 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
   const [open, setOpen] = useState(false)
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const [sami, setSami] = useState('')
+
+  console.log(sami);
 
   const handleCloseUpdate = () => {
     dispatch({
@@ -87,7 +90,13 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                         }}
                       >
                         {item?.dropDownContent?.map((option) => (
-                          <FormControlLabel value={option} control={<Radio />} label={option} />
+                          <FormControlLabel
+                            value={option}
+                            control={
+                              <Radio/>
+                            }
+                            label={option}
+                          />
                         ))}
                       </RadioGroup>
                     </>

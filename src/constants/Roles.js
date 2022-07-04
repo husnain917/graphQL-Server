@@ -31,7 +31,7 @@ export var MENU_ITEMS = [
         text: 'Dashboard',
         icon: <Dashboard />,
         path: '/',
-        role: 'OWNER'
+        role: 'ORGANIZATIONKEY'
     },
     {
         text: 'Staff',

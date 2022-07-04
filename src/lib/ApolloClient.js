@@ -1,8 +1,8 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 const httpLink = createHttpLink({
-    // uri: 'http://localhost:3000/graphql',
-    uri: 'https://training-portal-backend.herokuapp.com/graphql'
+    uri: 'http://localhost:3000/graphql',
+    // uri: 'https://training-portal-backend.herokuapp.com/graphql'
 });
 
 
@@ -15,7 +15,7 @@ const authLink = setContext(async (_, { headers }) => {
         headers: {
             ...headers,
             authorization: token,
-            "organizationKey": '5d84d7320f41d5f9e8394f02e4d9e32cdb86a94ebd1e13c45aa2c30f946e4fe7'
+            "organizationKey": 'e4eb237924de93bf52e335250048bffd599e9ba90050d1136a19a00354eaed28'
         },
     };
 });

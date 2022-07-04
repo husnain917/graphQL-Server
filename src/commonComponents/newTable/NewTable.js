@@ -634,7 +634,7 @@ export default function NewTable({
                                                                                             >{exactKey[0].toUpperCase()}</NewTableStyle.Avatar>
                                                                                             <NewTableStyle.EmailNameContainer >
                                                                                                 <NewTableStyle.PTagName>{exactKey}</NewTableStyle.PTagName>
-                                                                                                <NewTableStyle.PTagEmail>{'malikkloppa@gmail.com'}</NewTableStyle.PTagEmail>
+                                                                                                <NewTableStyle.PTagEmail>{}</NewTableStyle.PTagEmail>
                                                                                             </NewTableStyle.EmailNameContainer>
                                                                                         </NewTableStyle.AvatarBox>
                                                                                     ) : subitem.key === 'createdAt' || subitem.key === 'updateAt' ? (

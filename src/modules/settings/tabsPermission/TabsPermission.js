@@ -43,12 +43,12 @@ export default function TabsPermissions() {
         title={"Tabs Permissions"}
         tableHeadings={[
           {
-            id: "title",
-            Label: "Title"
+            id: "permissions",
+            Label: "permissions"
           },
           {
-            id: "route",
-            Label: "Route"
+            id: "role",
+            Label: "role"
           },
           {
             id: "createdAt",
@@ -58,14 +58,18 @@ export default function TabsPermissions() {
             id: "updatedAt",
             Label: "updatedAt"
           },
+          {
+            id: "actions",
+            Label: "Actions"
+          }
         ]}
         // ctaEditButtonHandler={ctaEditButtonHandler}
         printedKeys={[
           {
-            key: "title",
+            key: "permissions",
           },
           {
-            key: "route",
+            key: "role",
           },
           {
             key: "createdAt",
@@ -87,9 +91,9 @@ export default function TabsPermissions() {
           ],
         }}
         data={refacteredData}
-        // ctaFormHandler={ctaFormHandler}
-        // ctaDeleteHandler={ctaDeleteHandler}
-        // ctaUpdateHandler={ctaUpdateHandler}
+      // ctaFormHandler={ctaFormHandler}
+      // ctaDeleteHandler={ctaDeleteHandler}
+      // ctaUpdateHandler={ctaUpdateHandler}
       />
     </>
   );

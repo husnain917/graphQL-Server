@@ -11,6 +11,7 @@ const initialState = {
     draftHtml: EditorState.createEmpty(),
     openFormModal: false,
     modalUpdateFlag: false,
+    orgLogin: false,
     editData: {},
     imageUrl: '',
     tabsPersmission: []
@@ -59,6 +60,12 @@ let reducer = (state, action) => {
             return {
                 ...state,
                 tabsPersmission: action.payload
+            }
+        }
+        case "ORGlogin": {
+            return {
+                ...state,
+                orgLogin: action.payload
             }
         }
     }

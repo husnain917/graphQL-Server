@@ -206,7 +206,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                     }}
                                   >
                                     {item?.dropDown?.map((option) => (
-                                      <FormControlLabel value={option.speakerName} control={<Radio />} label={option.speakerName} />
+                                      <FormControlLabel value={option.id} control={<Radio />} label={option.speakerName} />
                                     ))}
                                   </RadioGroup>
                                 </>
@@ -252,7 +252,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                         }}
                                       >
                                         {item?.dropDown?.map((option) => (
-                                          <FormControlLabel key={option.id} value={option.courseName} control={<Radio />} label={option.courseName} />
+                                          <FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.courseName} />
                                         ))}
                                       </RadioGroup>
                                     </>
@@ -275,7 +275,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                           }}
                                         >
                                           {item?.dropDown?.map((option) => (
-                                            <FormControlLabel key={option.id} value={option.name} control={<Radio />} label={option.name} />
+                                            <FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.name} />
                                           ))}
                                         </RadioGroup>
                                       </>

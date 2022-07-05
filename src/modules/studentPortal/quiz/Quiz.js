@@ -32,21 +32,30 @@ export default function Quiz() {
       title={'Quiz'}
       tableHeadings={[
         {
-         id: 'courseBatch',
-         Label: 'Course Batch' 
+          id: 'courseBatch',
+          Label: 'Course Batch'
         },
         {
-          id: 'courseBatchId',
-          Label: 'Course Batch Id' 
-         },
-         {
-          id: 'course',
-          Label: 'Course' 
-         },
-         {
-          id: 'courseId',
-          Label: 'Course Id' 
-         },
+          id: 'courseBatchesId',
+          Label: 'Course Batch Id'
+        },
+        {
+          id: 'coursesId',
+          Label: 'Course Id'
+        },
+        {
+          id: 'createdAt',
+          Label: 'Created At'
+        },
+        {
+          id: "updateAt",
+          Label: "Update At"
+        },
+        {
+          id: "action",
+          Label: "Action"
+      },
+
       ]}
       ctaFormHandler={ctaFormHandler}
       // ctaDeleteHandler,
@@ -56,7 +65,16 @@ export default function Quiz() {
           key: "courseBatch",
         },
         {
-          key: 'coursesId',
+          key: 'courseBatchesId',
+        },
+        {
+          key: "coursesId"
+        },
+        {
+          key: "createdAt"
+        },
+        {
+          key: "updatedAt"
         },
         {
           type: "crud"

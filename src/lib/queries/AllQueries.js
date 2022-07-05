@@ -78,8 +78,12 @@ query Users {
     updateAt
     status
     userGroupId
-    userGroup{
+    userGroup {
+      userName
       userGroupRole
+      tabsPermission
+      createdAt
+      updateAt
     }
   }
 }

@@ -85,7 +85,7 @@ export default function Login() {
                         </LoginStyle.LoaderContainer>
                         :
                         <LoginStyle.ButtonContainer>
-                            <LoginStyle.LoginButton onClick={orgLogin ? organizationLoginHandler : loginHandler}>Log In</LoginStyle.LoginButton>
+                            <LoginStyle.LoginButton onClick={state?.orgLogin ? organizationLoginHandler : loginHandler}>Log In</LoginStyle.LoginButton>
                         </LoginStyle.ButtonContainer>
                     }
                 </LoginStyle.LoginContainer>

@@ -33,8 +33,11 @@ function App() {
               authState: true
             },
           });
+
           ToastSuccess(`Welcome ${login.getActiveUser?.name}`)
+          console.log("redirect", login);
         }
+
       })
 
     } catch (error) {

@@ -45,16 +45,16 @@ export const UseDrawer = () => {
 
     }
     const dropDownItems = [
-        {
-            pageName: 'Tabs Permission',
-            icon: <StorageIcon />,
-            pageURL: '/tabs-permission',
-        },
-        {
-            pageName: 'API Permissions',
-            icon: <WebhookIcon />,
-            pageURL: '/api-permissions',
-        },
+        // {
+        //     pageName: 'Tabs Permission',
+        //     icon: <StorageIcon />,
+        //     pageURL: '/tabs-permission',
+        // },
+        // {
+        //     pageName: 'API Permissions',
+        //     icon: <WebhookIcon />,
+        //     pageURL: '/api-permissions',
+        // },
         {
             pageName: 'User Groups',
             icon: <GroupIcon />,

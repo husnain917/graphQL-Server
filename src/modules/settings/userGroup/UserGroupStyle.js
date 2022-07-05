@@ -27,7 +27,7 @@ export const TabsStyle = {
         marginTop: 10,
         borderRadius: 5,
         '&:focus':{
-            border: "2px solid #3fbe69",
+            border: "1px solid #3fbe69",
         }
 
     })),

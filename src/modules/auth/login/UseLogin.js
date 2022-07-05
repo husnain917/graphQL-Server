@@ -131,8 +131,10 @@ export default function UseLogin() {
     }
   }
   const ctaOrgHandler = (e) => {
-
-    setOrgLogin(!orgLogin)
+    dispatch({
+      type: "ORGlogin",
+      payload: true
+    })
   }
 
   return [{ values, handleChange, handleClickShowPassword, organizationLoginHandler, state, email, orgLogin, setEmail, loginHandler, loading, ORG_LOADING, ctaOrgHandler, emailTyping, emaiTypingRemove, passwordTyping, passwordTypingRemove, showPassword }]

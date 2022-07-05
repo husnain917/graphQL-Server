@@ -17,6 +17,8 @@ import { Hidden } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Link } from "react-router-dom"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { MENU_ITEMS } from '../../constants/Roles'
 const drawerWidth = 240;
 function Sidebar(props) {
   const [{
@@ -52,7 +54,18 @@ function Sidebar(props) {
                   // sx={location?.pathname === item?.path ? { backgroundColor: '#E8F3FF' , borderRadius: 2 } : null}
 
                   >
-                    <SidebarStyle.ListItemIconTag Active={location?.pathname === item?.pageURL} >{item?.icon}</SidebarStyle.ListItemIconTag>
+                    {
+                      MENU_ITEMS.map((items) => {
+                        if (items.text === item.pageName) {
+                          return (
+                            <SidebarStyle.ListItemIconTag Active={location?.pathname === item?.pageURL} >
+                              {items.icon}
+                            </SidebarStyle.ListItemIconTag>
+                          )
+                        }
+                      })
+                    }
+
                     <SidebarStyle.ListItemTextTag Active={location?.pathname === item?.pageURL} primary={item?.pageName} />
                     {
                       item?.pageURL === '/settings' ?
@@ -76,7 +89,7 @@ function Sidebar(props) {
                                 ref={anchorRef}
                                 onClick={width < 600 ? handleDrawer : null}
                                 button
-                                  Active={location?.pathname === item?.pageURL}
+                                Active={location?.pathname === item?.pageURL}
                                 sx={location?.pathname === item?.pageURL ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
                               >
                                 <SidebarStyle.ListItemIconTag >{item?.icon}</SidebarStyle.ListItemIconTag>

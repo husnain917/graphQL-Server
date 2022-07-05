@@ -29,6 +29,20 @@ mutation CreateSpeaker($data: SpeakerCreateInput!) {
 `
 
 
+export const ADD_USER_GROUP = gql`
+mutation CreateUserGroup($data: UserGroupCreateInput!) {
+  createUserGroup(data: $data) {
+    id
+    userName
+    userGroupRole
+    tabsPermission
+    createdAt
+    updateAt
+  }
+}
+`
+
+
 
 
 

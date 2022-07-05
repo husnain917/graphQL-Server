@@ -32,20 +32,20 @@ export default function Attandance() {
       title={'Attandance'}
       tableHeadings={[
         {
-            id: "attendence",
-            Label: "Attendence"
+          id: "attendence",
+          Label: "Attendence"
         },
         {
-            id: "date",
-            Label: "Date"
+          id: "date",
+          Label: "Date"
         },
         {
-            id: "userId",
-            Label: "User Id"
+          id: "userId",
+          Label: "User Id"
         },
         {
-            id: "action",
-            Label: "Action"
+          id: "action",
+          Label: "Action"
         },
       ]}
       // ctaDeleteHandler={ctaDeleteHandler}
@@ -61,9 +61,9 @@ export default function Attandance() {
         {
           key: 'userId'
         },
-        {
-          key: "attendence",
-        },
+        // {
+        //   key: "attendence",
+        // },
         {
           type: "crud",
         },

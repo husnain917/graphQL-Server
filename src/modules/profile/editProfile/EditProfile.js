@@ -1,3 +1,4 @@
+import { CandlestickChartSharp } from '@mui/icons-material'
 import { Grid } from '@mui/material'
 import React, { Suspense } from 'react'
 import CommonEditField from '../../../commonComponents/commonField/CommonEditField'
@@ -12,8 +13,10 @@ export default function EditProfile() {
         email,
         address,
         contact,
+        cnic,
         setName,
         setEmail,
+        role,
         setAddress,
         setContact,
         state,
@@ -37,7 +40,10 @@ export default function EditProfile() {
                     <CommonEditField
                         Label='Name'
                         type='text'
-                        placeholder={state.user.name}
+                        placeholder={state?.orgLogin ?
+                            state?.user?.organizationLogin.name
+                            :
+                            state?.user.email}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
@@ -50,7 +56,8 @@ export default function EditProfile() {
                     <CommonEditField
                         Label='Email'
                         type='email'
-                        value={state.user.email}
+                        
+                        value={email}
                     />
                 </Grid>
                 <Grid item
@@ -61,7 +68,7 @@ export default function EditProfile() {
                     xs={12}>
                     <CommonEditField
                         Label='Role'
-                        value={state.user.role}
+                        value={role}
                     />
                 </Grid>
                 <Grid item
@@ -73,11 +80,31 @@ export default function EditProfile() {
                     <CommonEditField
                         Label='Phone No'
                         type='number'
-                        placeholder={state.user?.contact}
+                        placeholder={state?.orgLogin ?
+                            state?.user?.organizationLogin.contact
+                            :
+                            state?.user.contact}
                         value={contact}
                         onChange={(e) => setContact(e.target.value)}
                     />
                 </Grid>
+                {/* <Grid item
+                    xl={6}
+                    lg={6}
+                    md={6}
+                    sm={12}
+                    xs={12}>
+                    <CommonEditField
+                        Label='Phone No'
+                        type='number'
+                        placeholder={state?.orgLogin ?
+                            state?.user?.organizationLogin.cnic
+                            :
+                            state?.user.cnic}
+                        value={cnic}
+                        onChange={(e) => setContact(e.target.value)}
+                    />
+                </Grid> */}
                 <Grid item
                     xl={12}
                     lg={12}
@@ -87,7 +114,10 @@ export default function EditProfile() {
                     <CommonEditField
                         Label='Address'
                         type='text'
-                        placeholder={state.user.address}
+                        placeholder={state?.orgLogin ?
+                            state?.user?.organizationLogin.address
+                            :
+                            state?.user.address}
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                     />

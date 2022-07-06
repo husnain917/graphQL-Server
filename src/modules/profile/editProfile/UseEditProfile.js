@@ -25,7 +25,10 @@ export function UseEditProfile() {
         setEmail(state.user?.email)
         setContact(state.user?.contact)
         setAddress(state.user?.address)
-        setRole(state.user?.userGroup.userGroupRole)
+        setRole(state?.orgLogin ?
+            state?.user?.organizationLogin.role
+            :
+            state?.user.userGroup.userGroupRole)
         setCnic(state?.user.cnic)
     }, [])
 

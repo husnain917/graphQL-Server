@@ -56,7 +56,7 @@ export default function ProfileData() {
               xs={12}>
               <CommonField
                 Role={state?.orgLogin ?
-                  state?.user?.organizationLogin.userGroup.userGroupRole
+                  state?.user?.organizationLogin.role
                   :
                   state?.user.userGroup.userGroupRole}
                 Label='Role'

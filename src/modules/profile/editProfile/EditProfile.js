@@ -56,7 +56,10 @@ export default function EditProfile() {
                     <CommonEditField
                         Label='Email'
                         type='email'
-                        
+                        placeholder={state?.orgLogin ?
+                            state?.user?.organizationLogin.email
+                            :
+                            state?.user.userGroup.email}
                         value={email}
                     />
                 </Grid>
@@ -69,6 +72,10 @@ export default function EditProfile() {
                     <CommonEditField
                         Label='Role'
                         value={role}
+                        placeholder={state?.orgLogin ?
+                            state?.user?.organizationLogin.role
+                            :
+                            state?.user.userGroup.userGroupRole}
                     />
                 </Grid>
                 <Grid item

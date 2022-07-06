@@ -1,5 +1,5 @@
 import { Checkbox, Grid } from '@mui/material'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { TabsStyle } from './UserGroupStyle'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,11 +14,15 @@ export default function UserGroup() {
   const [userName, userGroupRole, email, setEmail, setUserName, setuserGroupRole, ctaFormHandler] = UseUserGroup()
   const { state, dispatch } = useContext(AppContext);
 
-  const [AddPermission, setAddPermission] = useState(false)
-  const [DelPermission, setDelPermission] = useState(false)
-  const [EditPermission, setEditPermission] = useState(false)
-  const [ViewPermission, setViewPermission] = useState(false)
-  const [AllPermission, setAllPermission] = useState(false)
+  const [AddPermission, setAddPermission] = useState()
+  const [DelPermission, setDelPermission] = useState()
+  const [EditPermission, setEditPermission] = useState()
+  const [ViewPermission, setViewPermission] = useState()
+  const [AllPermission, setAllPermission] = useState()
+  const [pushobj, setPush] = useState()
+  const [mynewArray, setMyNewArray] = useState({
+    "navigationResults": []
+  })
 
   const ctaViewPermission = () => {
     state?.tabsPersmission.map((item, index) => {
@@ -29,30 +33,74 @@ export default function UserGroup() {
       })
     })
   }
-  const ctaAddPermission = () => {
-    const obj = {
-      "navigationResults": [
-        {
-          "moduleName": "Dashboard",
-          "module_id": "",
-          "module_icon": "",
-          "pages": [
+  useEffect(() => {
+    state.tabsPersmission.map((item, index) => {
+      item.pages.map((items) => {
+        if (items.pageName === item.moduleName) {
+          setPush(item.AddToJson)
+        }
+        if (items.pageName === item.moduleName) {
+          setAddPermission(items.AddPermission)
+          setDelPermission(items.DelPermission)
+          setEditPermission(items.EditPermission)
+          setViewPermission(items.ViewPermission)
+          setAllPermission(items.FullAccess)
+
+        }
+      })
+    })
+  }, [])
+  var MyNewArray = {
+    "navigationResults": []
+  }
+  const ctaAddPermission = (item) => {
+
+    const newArray = state?.tabsPersmission.map((ites, i) => {
+      ites.pages.forEach((row) => {
+        var obj = {
+          "navigationResults": [
             {
-              "pageName": "Dashboard",
-              "pageID": "",
-              "pageURL": "/",
-              "page_id": "",
-              "AddPermission": false,
-              "DelPermission": false,
-              "EditPermission": false,
-              "ViewPermission": false,
-              "FullAccess": false
+              "moduleName": item.moduleName,
+              "module_id": item.module_id,
+              "AddToJson": pushobj,
+              "pages": [
+                {
+                  "pageName": row.pageName,
+                  "pageID": row.pageID,
+                  "pageURL": row.pageURL,
+                  "page_id": row.page_id,
+                  "AddPermission": AddPermission,
+                  "DelPermission": DelPermission,
+                  "EditPermission": EditPermission,
+                  "ViewPermission": ViewPermission,
+                  "FullAccess": AllPermission
+                }
+              ]
             }
           ]
         }
-      ]
+        if (ites.module_id === item.module_id) {
+
+          if (!pushobj) {
+            var finalArray = [...MyNewArray.navigationResults, obj]
+
+          }
+          // if (item.AddToJson) {
+          //   MyNewArray.navigationResults.pop(obj)
+          // }
+          console.log("newArray", finalArray);
+
+          return
+        }
+      })
+
+      //   console.log("newArray", finalArray);
+      return ites
+    })
+
   }
-}
+
+
   return (
     <TabsStyle.MainDiv>
       <Grid container>
@@ -62,12 +110,12 @@ export default function UserGroup() {
             <TabsStyle.MyInput placeholder='Enter Name' value={userName} onChange={(e) => setUserName(e.target.value)} />
           </TabsStyle.InputLabel>
         </Grid>
-        <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
+        {/* <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
           <TabsStyle.InputLabel>
             User Email
             <TabsStyle.MyInput placeholder='Enter Email' value={email} onChange={(e) => setEmail(e.target.value)} />
           </TabsStyle.InputLabel>
-        </Grid>
+        </Grid> */}
         <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
           <TabsStyle.InputLabel>
             User Role
@@ -89,6 +137,7 @@ export default function UserGroup() {
                 <TabsStyle.PermissionTableTitleHead align="right">Update</TabsStyle.PermissionTableTitleHead>
                 <TabsStyle.PermissionTableTitleHead align="right">Delete</TabsStyle.PermissionTableTitleHead>
                 <TabsStyle.PermissionTableTitleHead align="center">Full Access</TabsStyle.PermissionTableTitleHead>
+                <TabsStyle.PermissionTableTitleHead align="center">Add</TabsStyle.PermissionTableTitleHead>
               </TableRow>
             </TabsStyle.PermissionsTableHead>
             <TableBody>
@@ -110,7 +159,7 @@ export default function UserGroup() {
                                 <Checkbox
                                   checked={ViewPermission}
                                   value={ViewPermission}
-                                  onChange={ctaViewPermission}
+                                  onChange={() => setViewPermission(!ViewPermission)}
                                 />
                               </TableCell>
                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="right">
@@ -122,16 +171,16 @@ export default function UserGroup() {
                               </TableCell>
                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="right">
                                 <Checkbox
-                                  checked={DelPermission}
-                                  value={DelPermission}
-                                  onChange={() => setDelPermission(!DelPermission)}
+                                  checked={EditPermission}
+                                  value={EditPermission}
+                                  onChange={() => setEditPermission(!EditPermission)}
                                 />
                               </TableCell>
                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="right">
                                 <Checkbox
-                                  checked={EditPermission}
-                                  value={EditPermission}
-                                  onChange={() => setEditPermission(!EditPermission)}
+                                  checked={DelPermission}
+                                  value={DelPermission}
+                                  onChange={() => setDelPermission(!DelPermission)}
                                 />
                               </TableCell>
                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="center">
@@ -139,6 +188,14 @@ export default function UserGroup() {
                                   checked={AllPermission}
                                   value={AllPermission}
                                   onChange={() => setAllPermission(!AllPermission)}
+                                />
+                              </TableCell>
+                              <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="center">
+                                <Checkbox
+                                  checked={pushobj}
+                                  value={pushobj}
+                                  onChange={() => setPush(!pushobj)}
+                                onClick={() => ctaAddPermission(item)}
                                 />
                               </TableCell>
                             </>
@@ -154,7 +211,7 @@ export default function UserGroup() {
         </TableContainer>
         <br />
         <PButton title='Add User Group' />
-       
+
       </TabsStyle.TableDiv>
     </TabsStyle.MainDiv>
   )

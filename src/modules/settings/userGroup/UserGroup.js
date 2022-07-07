@@ -20,19 +20,10 @@ export default function UserGroup() {
   const [ViewPermission, setViewPermission] = useState()
   const [AllPermission, setAllPermission] = useState()
   const [pushobj, setPush] = useState()
+  const [stateArray, setStateArray] = useState(state.tabsPersmission)
   const [mynewArray, setMyNewArray] = useState({
     "navigationResults": []
   })
-
-  const ctaViewPermission = () => {
-    state?.tabsPersmission.map((item, index) => {
-      item.pages.map((items, i) => {
-        if (index === i) {
-          setViewPermission(!ViewPermission)
-        }
-      })
-    })
-  }
   useEffect(() => {
     state.tabsPersmission.map((item, index) => {
       item.pages.map((items) => {
@@ -50,56 +41,201 @@ export default function UserGroup() {
       })
     })
   }, [])
-  var MyNewArray = {
-    "navigationResults": []
-  }
   const ctaAddPermission = (item) => {
 
-    const newArray = state?.tabsPersmission.map((ites, i) => {
-      ites.pages.forEach((row) => {
-        var obj = {
-          "navigationResults": [
-            {
-              "moduleName": item.moduleName,
-              "module_id": item.module_id,
-              "AddToJson": pushobj,
-              "pages": [
-                {
-                  "pageName": row.pageName,
-                  "pageID": row.pageID,
-                  "pageURL": row.pageURL,
-                  "page_id": row.page_id,
-                  "AddPermission": AddPermission,
-                  "DelPermission": DelPermission,
-                  "EditPermission": EditPermission,
-                  "ViewPermission": ViewPermission,
-                  "FullAccess": AllPermission
-                }
-              ]
-            }
-          ]
-        }
-        if (ites.module_id === item.module_id) {
-
-          if (!pushobj) {
-            var finalArray = [...MyNewArray.navigationResults, obj]
-
+    const newArray = stateArray.map((ites, i) => {
+      if (ites.module_id === item.module_id) {
+        ites.pages.forEach((row) => {
+          var obj = {
+            "moduleName": item.moduleName,
+            "module_id": item.module_id,
+            "AddToJson": !item.AddToJson,
+            "pages": [
+              {
+                "pageName": row.pageName,
+                "pageID": row.pageID,
+                "pageURL": row.pageURL,
+                "page_id": row.page_id,
+                "AddPermission": row.AddPermission,
+                "DelPermission": row.DelPermission,
+                "EditPermission": row.EditPermission,
+                "ViewPermission": row.ViewPermission,
+                "FullAccess": row.FullAccess
+              }
+            ]
           }
-          // if (item.AddToJson) {
-          //   MyNewArray.navigationResults.pop(obj)
+
+          // if (ites.module_id === item.module_id) {
+
+          // if (!pushobj) {
+          // var finalArray = mynewArray.navigationResults.push(obj)
+          setStateArray([...stateArray, obj])
+          console.log(stateArray);
           // }
-          console.log("newArray", finalArray);
+          // else if (pushobj) {
+          //   let newStudents = mynewArray.navigationResults.filter((ite) => {
+          //     if (ite.module_id !== item.module_id) {
+          //       return obj;
+          //     }
+          //   })
 
-          return
-        }
-      })
 
-      //   console.log("newArray", finalArray);
+          // }
+          //   console.log("newArray", mynewArray);
+          //   return obj
+          // }
+        })
+      }
       return ites
     })
 
   }
 
+
+  const ctaPermission = (item, row) => {
+    const newArray = state?.tabsPersmission.map((ites, i) => {
+      ites.pages.forEach((rows) => {
+        if (item.module_id === ites.module_id) {
+          var obj = {
+            "moduleName": item.moduleName,
+            "module_id": item.module_id,
+            "AddToJson": pushobj,
+            "pages": [
+              {
+                "pageName": row.pageName,
+                "pageID": row.pageID,
+                "pageURL": row.pageURL,
+                "page_id": row.page_id,
+                "AddPermission": row.AddPermission,
+                "DelPermission": row.DelPermission,
+                "EditPermission": row.EditPermission,
+                "ViewPermission": row.ViewPermission,
+                "FullAccess": row.FullAccess
+              }
+            ]
+          }
+          console.log("object", obj);
+        }
+      })
+    })
+  }
+
+  const ctaCreatePermission = (item, row) => {
+    const newArray = state?.tabsPersmission.map((ites, i) => {
+      ites.pages.forEach((rows) => {
+        if (item.module_id === ites.module_id) {
+          var obj = {
+            "moduleName": item.moduleName,
+            "module_id": item.module_id,
+            "AddToJson": pushobj,
+            "pages": [
+              {
+                "pageName": row.pageName,
+                "pageID": row.pageID,
+                "pageURL": row.pageURL,
+                "page_id": row.page_id,
+                "AddPermission": !row.AddPermission,
+              }
+            ]
+          }
+          console.log("object", obj);
+        }
+      })
+    })
+  }
+  const ctaDeletePermission = (item, row) => {
+    const newArray = state?.tabsPersmission.map((ites, i) => {
+      ites.pages.forEach((rows) => {
+        if (item.module_id === ites.module_id) {
+          var obj = {
+            "moduleName": item.moduleName,
+            "module_id": item.module_id,
+            "AddToJson": pushobj,
+            "pages": [
+              {
+                "pageName": row.pageName,
+                "pageID": row.pageID,
+                "pageURL": row.pageURL,
+                "page_id": row.page_id,
+                "DelPermission": !row.DelPermission,
+              }
+            ]
+          }
+          console.log("object", obj);
+        }
+      })
+    })
+  }
+  const ctaeditPermission = (item, row) => {
+    const newArray = state?.tabsPersmission.map((ites, i) => {
+      ites.pages.forEach((rows) => {
+        if (item.module_id === ites.module_id) {
+          var obj = {
+            "moduleName": item.moduleName,
+            "module_id": item.module_id,
+            "AddToJson": pushobj,
+            "pages": [
+              {
+                "pageName": row.pageName,
+                "pageID": row.pageID,
+                "pageURL": row.pageURL,
+                "page_id": row.page_id,
+                "EditPermission": !row.EditPermission,
+              }
+            ]
+          }
+          console.log("object", obj);
+        }
+      })
+    })
+  }
+  const ctaviewPermission = (item, row) => {
+    const newArray = state?.tabsPersmission.map((ites, i) => {
+      ites.pages.forEach((rows) => {
+        if (item.module_id === ites.module_id) {
+          var obj = {
+            "moduleName": item.moduleName,
+            "module_id": item.module_id,
+            "AddToJson": pushobj,
+            "pages": [
+              {
+                "pageName": row.pageName,
+                "pageID": row.pageID,
+                "pageURL": row.pageURL,
+                "page_id": row.page_id,
+                "ViewPermission": !row.ViewPermission,
+              }
+            ]
+          }
+          console.log("object", obj);
+        }
+      })
+    })
+  }
+
+  const ctaFullPermission = (item, row) => {
+    const newArray = state?.tabsPersmission.map((ites, i) => {
+      ites.pages.forEach((rows) => {
+        if (item.module_id === ites.module_id) {
+          var obj = {
+            "moduleName": item.moduleName,
+            "module_id": item.module_id,
+            "AddToJson": pushobj,
+            "pages": [
+              {
+                "pageName": row.pageName,
+                "pageID": row.pageID,
+                "pageURL": row.pageURL,
+                "page_id": row.page_id,
+                "FullAccess": !row.FullAccess
+              }
+            ]
+          }
+          console.log("object", obj);
+        }
+      })
+    })
+  }
 
   return (
     <TabsStyle.MainDiv>
@@ -142,7 +278,7 @@ export default function UserGroup() {
             </TabsStyle.PermissionsTableHead>
             <TableBody>
               {
-                state?.tabsPersmission.map((item, i) => {
+                stateArray.map((item, i) => {
                   return (
                     <TableRow
                       key={i}
@@ -153,49 +289,50 @@ export default function UserGroup() {
                       </TabsStyle.PermissionTitletTxt>
                       {
                         item.pages.map((row) => {
+                          console.log("row", row);
                           return (
                             <>
                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="right">
                                 <Checkbox
-                                  checked={ViewPermission}
-                                  value={ViewPermission}
-                                  onChange={() => setViewPermission(!ViewPermission)}
+                                  checked={row.ViewPermission}
+                                  value={row.ViewPermission}
+                                  onChange={() => ctaviewPermission(item, row)}
                                 />
                               </TableCell>
                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="right">
                                 <Checkbox
-                                  checked={AddPermission}
-                                  value={AddPermission}
-                                  onChange={() => setAddPermission(!AddPermission)}
+                                  checked={row.AddPermission}
+                                  value={row.AddPermission}
+                                  onChange={() => ctaCreatePermission(item, row)}
                                 />
                               </TableCell>
                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="right">
                                 <Checkbox
-                                  checked={EditPermission}
-                                  value={EditPermission}
-                                  onChange={() => setEditPermission(!EditPermission)}
+                                  checked={row.EditPermission}
+                                  value={row.EditPermission}
+                                  onChange={() => ctaeditPermission(item, row)}
                                 />
                               </TableCell>
                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="right">
                                 <Checkbox
-                                  checked={DelPermission}
-                                  value={DelPermission}
-                                  onChange={() => setDelPermission(!DelPermission)}
+                                  checked={row.DelPermission}
+                                  value={row.DelPermission}
+                                  onChange={() => ctaDeletePermission(item, row)}
                                 />
                               </TableCell>
                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="center">
                                 <Checkbox
-                                  checked={AllPermission}
-                                  value={AllPermission}
-                                  onChange={() => setAllPermission(!AllPermission)}
+                                  checked={row.FullAccess}
+                                  value={row.FullAccess}
+                                  onChange={() => ctaFullPermission(item, row)}
                                 />
                               </TableCell>
                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="center">
                                 <Checkbox
                                   checked={pushobj}
                                   value={pushobj}
-                                  onChange={() => setPush(!pushobj)}
-                                onClick={() => ctaAddPermission(item)}
+                                  onChange={() => ctaAddPermission(item)}
+                                // onClick={() => ctaAddPermission(item)}
                                 />
                               </TableCell>
                             </>

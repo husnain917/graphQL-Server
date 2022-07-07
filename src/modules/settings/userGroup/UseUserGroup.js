@@ -31,12 +31,10 @@ export function UseUserGroup() {
                             userName: userName,
                             userGroupRole: userGroupRole,
                             tabsPermission: null,
-                            user: {
-                                connect: [
-                                    {
-                                        email: email
-                                    }
-                                ]
+                            Organizations: {
+                                connect: {
+                                    id: state?.user?.organizationLogin?.id
+                                }
                             }
                         }
 

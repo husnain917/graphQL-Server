@@ -1,3 +1,341 @@
+// import { Checkbox, Grid } from '@mui/material'
+// import React, { useContext, useEffect, useState } from 'react'
+// import { TabsStyle } from './UserGroupStyle'
+// import Table from '@mui/material/Table';
+// import TableBody from '@mui/material/TableBody';
+// import TableCell from '@mui/material/TableCell';
+// import TableContainer from '@mui/material/TableContainer';
+// import TableRow from '@mui/material/TableRow';
+// import Paper from '@mui/material/Paper';
+// import { AppContext } from "../../../State";
+// import PButton from '../../../commonComponents/Pbutton/Pbutton';
+// import { UseUserGroup } from './UseUserGroup';
+// export default function UserGroup() {
+//   const [userName, userGroupRole, email, setEmail, setUserName, setuserGroupRole, ctaFormHandler] = UseUserGroup()
+//   const { state, dispatch } = useContext(AppContext);
+
+//   // const [AddPermission, setAddPermission] = useState()
+//   // const [DelPermission, setDelPermission] = useState()
+//   // const [EditPermission, setEditPermission] = useState()
+//   // const [ViewPermission, setViewPermission] = useState()
+//   // const [AllPermission, setAllPermission] = useState()
+//   const [pushobj, setPush] = useState()
+//   const [stateArray, setStateArray] = useState(state.tabsPersmission)
+//   const [mynewArray, setMyNewArray] = useState({
+//      "navigationResult": []
+//      })
+//   // useEffect(() => {
+//   //   state.tabsPersmission.map((item, index) => {
+//   //     item.pages.map((items) => {
+//   //       if (items.pageName === item.moduleName) {
+//   //         setPush(item.AddToJson)
+//   //       }
+//   //       if (items.pageName === item.moduleName) {
+//   //         setAddPermission(items.AddPermission)
+//   //         setDelPermission(items.DelPermission)
+//   //         setEditPermission(items.EditPermission)
+//   //         setViewPermission(items.ViewPermission)
+//   //         setAllPermission(items.FullAccess)
+
+//   //       }
+//   //     })
+//   //   })
+//   // }, [])
+
+
+
+//   const ctaCreateHandler = (item, row) => {
+//     const newArray = stateArray.map((ites, i) => {
+//       ites.pages.map((rows) => {
+//         if (ites.module_id === item.module_id || row.pageID === rows.pageID) {
+//           var obj = {
+//             "moduleName": item.moduleName,
+//             "module_id": item.module_id,
+//             "AddToJson": item.AddToJson,
+//             "pages": [
+//               {
+//                 "pageName": row.pageName,
+//                 "pageID": row.pageID,
+//                 "pageURL": row.pageURL,
+//                 "page_id": row.page_id,
+//                 "AddPermission": !rows.AddPermission,
+//               }
+//             ]
+//           }
+//         }
+//         console.log(!rows.AddPermission);
+//       })
+
+//     })
+//   }
+//   const ctaDeleteHandler = (item, row) => {
+//     const newArray = stateArray.map((ites, i) => {
+//       // if (ites.module_id === item.module_id) {
+//       ites.pages.map((rows) => {
+//         if (ites.module_id === item.module_id || row.pageID === rows.pageID) {
+//           var obj = {
+//             "moduleName": item.moduleName,
+//             "module_id": item.module_id,
+//             "AddToJson": item.AddToJson,
+//             "pages": [
+//               {
+//                 "pageName": row.pageName,
+//                 "pageID": row.pageID,
+//                 "pageURL": row.pageURL,
+//                 "page_id": row.page_id,
+//                 "DelPermission": !rows.DelPermission,
+//               }
+//             ]
+//           }
+//         }
+//       })
+//       // }
+//     })
+//   }
+//   const ctaUpdateHandler = (item, row) => {
+//     const newArray = stateArray.map((ites, i) => {
+//       // if (ites.module_id === item.module_id) {
+//       ites.pages.map((rows) => {
+//         if (ites.module_id === item.module_id || row.pageID === rows.pageID) {
+//           var obj = {
+//             "moduleName": item.moduleName,
+//             "module_id": item.module_id,
+//             "AddToJson": item.AddToJson,
+//             "pages": [
+//               {
+//                 "pageName": row.pageName,
+//                 "pageID": row.pageID,
+//                 "pageURL": row.pageURL,
+//                 "page_id": row.page_id,
+//                 "EditPermission": !rows.EditPermission,
+//               }
+//             ]
+//           }
+//         }
+//       })
+//       // }
+//     })
+//   }
+//   const ctaViewHandler = (item, row) => {
+//     const newArray = stateArray.map((ites, i) => {
+//       // if (ites.module_id === item.module_id) {
+//       ites.pages.map((rows) => {
+//         if (ites.module_id === item.module_id || row.pageID === rows.pageID) {
+//           var obj = {
+//             "moduleName": item.moduleName,
+//             "module_id": item.module_id,
+//             "AddToJson": item.AddToJson,
+//             "pages": [
+//               {
+//                 "pageName": row.pageName,
+//                 "pageID": row.pageID,
+//                 "pageURL": row.pageURL,
+//                 "page_id": row.page_id,
+//                 "ViewPermission": !rows.ViewPermission,
+//               }
+//             ]
+//           }
+//         }
+//       })
+//       // }
+//     })
+//   }
+//   const ctaFullAccessHandler = (item, row) => {
+//     const newArray = stateArray.map((ites, i) => {
+//       // if (ites.module_id === item.module_id) {
+//       ites.pages.map((rows) => {
+//         if (ites.module_id === item.module_id || row.pageID === rows.pageID) {
+//           var obj = {
+//             "moduleName": item.moduleName,
+//             "module_id": item.module_id,
+//             "AddToJson": item.AddToJson,
+//             "pages": [
+//               {
+//                 "pageName": row.pageName,
+//                 "pageID": row.pageID,
+//                 "pageURL": row.pageURL,
+//                 "page_id": row.page_id,
+//                 "AddPermission": !rows.AddPermission,
+//                 "DelPermission": !rows.DelPermission,
+//                 "EditPermission": !rows.EditPermission,
+//                 "ViewPermission": !rows.ViewPermission,
+//                 "FullAccess": !rows.FullAccess
+//               }
+//             ]
+//           }
+//         }
+//       })
+//       // }
+//     })
+//   }
+
+
+
+//   const ctaAddPermission = (item, row) => {
+
+//     const newArray = stateArray.map((ites, i) => {
+//       ites.pages.map((rows) => {
+//         if (ites.module_id === item.module_id || row.pageID === rows.pageID) {
+//           var obj = {
+//             "moduleName": item.moduleName,
+//             "module_id": item.module_id,
+//             "AddToJson": item.AddToJson,
+//             "pages": [
+//               {
+//                 "pageName": row.pageName,
+//                 "pageID": row.pageID,
+//                 "pageURL": row.pageURL,
+//                 "page_id": row.page_id,
+//                 "AddPermission": rows.AddPermission,
+//                 "DelPermission": rows.DelPermission,
+//                 "EditPermission": rows.EditPermission,
+//                 "ViewPermission": rows.ViewPermission,
+//                 "FullAccess": rows.FullAccess
+//               }
+//             ]
+//           }
+//           var finalArray = mynewArray.navigationResult.push(obj)
+//           console.log("newArray", mynewArray);
+//           setMyNewArray([...mynewArray.navigationResult, obj])
+//           return obj
+//           // if (ites.module_id === item.module_id) {
+
+//           //   // if (!pushobj) {
+//           //   // var finalArray = mynewArray.navigationResults.push(obj)
+//           //   setMyNewArray([...mynewArray.navigationResults, obj])
+
+
+
+
+
+//           //   // }
+//           //   console.log("newArray", mynewArray);
+//           //   return obj
+//           // }
+//         }
+//       })
+//       return ites
+//     })
+
+//   }
+
+
+//   return (
+//     <TabsStyle.MainDiv>
+//       <Grid container>
+//         <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
+//           <TabsStyle.InputLabel>
+//             User Group Name
+//             <TabsStyle.MyInput placeholder='Enter Name' value={userName} onChange={(e) => setUserName(e.target.value)} />
+//           </TabsStyle.InputLabel>
+//         </Grid>
+//         {/* <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
+//           <TabsStyle.InputLabel>
+//             User Email
+//             <TabsStyle.MyInput placeholder='Enter Email' value={email} onChange={(e) => setEmail(e.target.value)} />
+//           </TabsStyle.InputLabel>
+//         </Grid> */}
+//         <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
+//           <TabsStyle.InputLabel>
+//             User Role
+//             <TabsStyle.MyInput placeholder='Enter Role' value={userGroupRole} onChange={(e) => setuserGroupRole(e.target.value)} />
+//           </TabsStyle.InputLabel>
+//         </Grid>
+//       </Grid>
+//       <TabsStyle.PermissionText>
+//         API Permissions
+//       </TabsStyle.PermissionText>
+//       <TabsStyle.TableDiv>
+//         <TableContainer component={Paper}>
+//           <Table sx={{ minWidth: 530 }} aria-label="simple table">
+//             <TabsStyle.PermissionsTableHead>
+//               <TableRow>
+//                 <TabsStyle.PermissionTableTitleHead>Option</TabsStyle.PermissionTableTitleHead>
+//                 <TabsStyle.PermissionTableTitleHead align="right">View Only</TabsStyle.PermissionTableTitleHead>
+//                 <TabsStyle.PermissionTableTitleHead align="right">Create</TabsStyle.PermissionTableTitleHead>
+//                 <TabsStyle.PermissionTableTitleHead align="right">Update</TabsStyle.PermissionTableTitleHead>
+//                 <TabsStyle.PermissionTableTitleHead align="right">Delete</TabsStyle.PermissionTableTitleHead>
+//                 <TabsStyle.PermissionTableTitleHead align="center">Full Access</TabsStyle.PermissionTableTitleHead>
+//                 <TabsStyle.PermissionTableTitleHead align="center">Add</TabsStyle.PermissionTableTitleHead>
+//               </TableRow>
+//             </TabsStyle.PermissionsTableHead>
+//             <TableBody>
+//               {
+//                 stateArray.map((item, i) => {
+//                   return (
+//                     <TableRow
+//                       key={i}
+//                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+//                     >
+//                       <TabsStyle.PermissionTitletTxt component="th" scope="row">
+//                         {item.moduleName}
+//                       </TabsStyle.PermissionTitletTxt>
+//                       {
+//                         item.pages.map((row) => {
+//                           console.log(row);
+//                           return (
+//                             <>
+//                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="right">
+//                                 <Checkbox
+//                                   checked={row.ViewPermission}
+//                                   value={row.ViewPermission}
+//                                   onChange={() => ctaViewHandler(item, row)}
+//                                 />
+//                               </TableCell>
+//                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="right">
+//                                 <Checkbox
+//                                   checked={row.AddPermission}
+//                                   value={row.AddPermission}
+//                                   onChange={() => ctaCreateHandler(item, row)}
+//                                 />
+//                               </TableCell>
+//                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="right">
+//                                 <Checkbox
+//                                   checked={row.EditPermission}
+//                                   value={row.EditPermission}
+//                                   onChange={() => ctaUpdateHandler(item, row)}
+//                                 />
+//                               </TableCell>
+//                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="right">
+//                                 <Checkbox
+//                                   checked={row.DelPermission}
+//                                   value={row.DelPermission}
+//                                   onChange={() => ctaDeleteHandler(item, row)}
+//                                 />
+//                               </TableCell>
+//                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="center">
+//                                 <Checkbox
+//                                   checked={row.FullAccess}
+//                                   value={row.FullAccess}
+//                                   onChange={() => ctaFullAccessHandler(item, row)}
+//                                 />
+//                               </TableCell>
+//                               <TableCell style={{ paddingBottom: 10, paddingTop: 10 }} align="center">
+//                                 <Checkbox
+//                                   checked={item.AddToJson}
+//                                   value={item.AddToJson}
+//                                   onChange={() => ctaAddPermission(item, row)}
+//                                 // onClick={() => ctaAddPermission(item, row)}
+//                                 />
+//                               </TableCell>
+//                             </>
+//                           )
+//                         })
+//                       }
+//                     </TableRow>
+//                   )
+//                 })
+//               }
+//             </TableBody>
+//           </Table>
+//         </TableContainer>
+//         <br />
+//         <PButton title='Add User Group' />
+
+//       </TabsStyle.TableDiv>
+//     </TabsStyle.MainDiv>
+//   )
+// }
 import { Checkbox, Grid } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { TabsStyle } from "./UserGroupStyle";
@@ -7,9 +345,9 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { AppContext } from "../../../State";
 import PButton from "../../../commonComponents/Pbutton/Pbutton";
 import { UseUserGroup } from "./UseUserGroup";
+import { AppContext } from "../../../State";
 export default function UserGroup() {
   const [
     userName,
@@ -21,7 +359,6 @@ export default function UserGroup() {
     ctaFormHandler,
   ] = UseUserGroup();
   const { state, dispatch } = useContext(AppContext);
-
   const [AddPermission, setAddPermission] = useState();
   const [DelPermission, setDelPermission] = useState();
   const [EditPermission, setEditPermission] = useState();
@@ -70,31 +407,13 @@ export default function UserGroup() {
               },
             ],
           };
-
-          // if (ites.module_id === item.module_id) {
-
-          // if (!pushobj) {
-          // var finalArray = mynewArray.navigationResults.push(obj)
           setStateArray([...stateArray, obj]);
-          // console.log(stateArray);
-          // }
-          // else if (pushobj) {
-          //   let newStudents = mynewArray.navigationResults.filter((ite) => {
-          //     if (ite.module_id !== item.module_id) {
-          //       return obj;
-          //     }
-          //   })
-
-          // }
-          //   console.log("newArray", mynewArray);
-          //   return obj
-          // }
         });
       }
       return ites;
     });
+  
   };
-  // console.log(stateArray);
   const ctaPermission = (item, row) => {
     const newArray = state?.tabsPersmission.map((ites, i) => {
       ites.pages.forEach((rows) => {
@@ -122,7 +441,7 @@ export default function UserGroup() {
       });
     });
   };
-
+  
   const ctaCreatePermission = (item, row) => {
     const newArray = state?.tabsPersmission.map((ites, i) => {
       ites.pages.forEach((rows) => {
@@ -215,7 +534,7 @@ export default function UserGroup() {
       });
     });
   };
-
+  
   const ctaFullPermission = (item, row) => {
     const newArray = state?.tabsPersmission.map((ites, i) => {
       ites.pages.forEach((rows) => {
@@ -343,7 +662,7 @@ export default function UserGroup() {
   //   if (findModule.length === 1) {
   //     return findModule[0]?.pages[pageIndex][permission];
   //   } else {
-
+  
   //     return false;
   //   }
   // };
@@ -352,32 +671,25 @@ export default function UserGroup() {
       <Grid container>
         <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
           <TabsStyle.InputLabel>
+          <TabsStyle.MyInput
             User Group Name
-            <TabsStyle.MyInput
-              placeholder="Enter Name"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-            />
+            placeholder="Enter Name"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+              />
           </TabsStyle.InputLabel>
         </Grid>
-        {/* <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
-          <TabsStyle.InputLabel>
-            User Email
-            <TabsStyle.MyInput placeholder='Enter Email' value={email} onChange={(e) => setEmail(e.target.value)} />
-          </TabsStyle.InputLabel>
-        </Grid> */}
         <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
           <TabsStyle.InputLabel>
+          <TabsStyle.MyInput
             User Role
-            <TabsStyle.MyInput
-              placeholder="Enter Role"
-              value={userGroupRole}
-              onChange={(e) => setuserGroupRole(e.target.value)}
-            />
+            placeholder="Enter Role"
+            value={userGroupRole}
+            onChange={(e) => setuserGroupRole(e.target.value)}
+              />
           </TabsStyle.InputLabel>
         </Grid>
       </Grid>
-      <TabsStyle.PermissionText>API Permissions</TabsStyle.PermissionText>
       <TabsStyle.TableDiv>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 530 }} aria-label="simple table">
@@ -399,12 +711,12 @@ export default function UserGroup() {
                   Delete
                 </TabsStyle.PermissionTableTitleHead>
                 {/* <TabsStyle.PermissionTableTitleHead align="center">
-                  Full Access
-                </TabsStyle.PermissionTableTitleHead> */}
+                    Full Access
+                  </TabsStyle.PermissionTableTitleHead> */}
               </TableRow>
             </TabsStyle.PermissionsTableHead>
             <TableBody>
-              {test?.map((navModule, navModuleIndex) => {
+              {stateArray?.map((navModule, navModuleIndex) => {
                 return navModule?.pages.map((navPage, navPageIndex) => {
                   return (
                     <>
@@ -502,5 +814,6 @@ export default function UserGroup() {
         <PButton title="Add User Group" />
       </TabsStyle.TableDiv>
     </TabsStyle.MainDiv>
-  );
+  )
+  
 }

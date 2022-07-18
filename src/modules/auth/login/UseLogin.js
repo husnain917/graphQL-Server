@@ -101,7 +101,6 @@ export default function UseLogin() {
         variables: {
           password: values.password,
           email: email
-
         },
         onCompleted(login) {
           localStorage.setItem("token", login.organizationLogin.token)
@@ -112,7 +111,6 @@ export default function UseLogin() {
               authState: true
             },
           });
-
           ToastSuccess(`Welcome ${login.organizationLogin.name}`)
           login.organizationLogin?.userGroup.map((item) => {
             if (item.userGroupRole === "ORGANIZATIONKEY")

@@ -659,11 +659,27 @@ mutation GetActiveUser($token: String!) {
     id
     name
     email
+    role
     address
     contact
     secretKeyId
     token
-    role
+    users {
+      name
+      id
+      email
+      cnic
+      address
+      contact
+    }
+    userGroup {
+      id
+      userName
+      userGroupRole
+      tabsPermission
+      createdAt
+      updateAt
+      organizationsId
+    }
   }
-
-} `
+}`

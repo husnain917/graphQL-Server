@@ -9,8 +9,75 @@ export const UseDrawer = () => {
     const [open, setOpen] = React.useState(true);
     const { state, dispatch } = useContext(AppContext);
     const navigate = useNavigate()
-    const SideBarListItems = []
-    var sideBarMenu = state?.tabsPersmission.map((item) => {
+    const SideBarListItems = [
+        {
+            "userName": "techloset",
+            "userGroupRole": "",
+            "navigationResults": [
+              {
+                "moduleName": "Dashboard",
+                "module_id": "1",
+                "AddToJson": false,
+                "pages": [
+                  {
+                    "pageName": "Dashboard",
+                    "pageID": "1",
+                    "pageURL": "/",
+                    "page_id": "1",
+                    "AddPermission": false,
+                    "DelPermission": false,
+                    "EditPermission": false,
+                    "ViewPermission": false,
+                    "FullAccess": false
+                  },
+                  {
+                    "pageName": "Dashboard",
+                    "pageID": "1",
+                    "pageURL": "/",
+                    "page_id": "1",
+                    "AddPermission": false,
+                    "DelPermission": false,
+                    "EditPermission": false,
+                    "ViewPermission": false,
+                    "FullAccess": false
+                  }
+                ]
+              },
+              {
+                "moduleName": "staff",
+                "module_id": "1",
+                "AddToJson": false,
+                "pages": [
+                  {
+                    "pageName": "staff",
+                    "pageID": "1",
+                    "pageURL": "/",
+                    "page_id": "1",
+                    "AddPermission": false,
+                    "DelPermission": false,
+                    "EditPermission": false,
+                    "ViewPermission": false,
+                    "FullAccess": false
+                  },
+                  {
+                    "pageName": "staff",
+                    "pageID": "1",
+                    "pageURL": "/",
+                    "page_id": "1",
+                    "AddPermission": false,
+                    "DelPermission": false,
+                    "EditPermission": false,
+                    "ViewPermission": false,
+                    "FullAccess": false
+                  }
+                ]
+              },
+            ]
+            }
+    ]
+   
+    
+    // var sideBarMenu = state?.tabsPersmission.map((item) => {
         //  MENU_ITEMS.filter((item) => {
         // if (item.role === state.user?.role)
         // if (item.role === state.user?.organizationLogin?.role) 
@@ -25,8 +92,8 @@ export const UseDrawer = () => {
         // return SideBarListItems.push(item.pages.map((items) => {
         //     return items
         // }))
-    });
-    console.log(SideBarListItems);
+    // });
+    // console.log(SideBarListItems);
     // console.log(state.user?.organizationLogin?.userGroup);
     const handleDrawer = () => {
         setOpen(!open);

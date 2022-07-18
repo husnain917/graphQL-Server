@@ -119,10 +119,39 @@ function Sidebar(props) {
           {
             state?.tabsPersmission.map((items, index) => {
               return renderSidebarItems(items, index)
+            })
+          } 
+          {/* {
+            SideBarListItems.map((item) => {
+              return item.navigationResults.map((items) => {
+                return (
+                  <p>
+                    {items.moduleName}
+                    {
+                      items.pages.map((val) => {
+                        return (
+                          <>
+                            {
+                              items.module_id === val.page_id ?
+                                <p>{val.pageName}</p>
+                                :
+                                ''
+                            }
+                          </>
+                        )
+                      })
+                    }
+
+                  </p>
+                )
+
+
+              })
 
             })
-          }
+          } */}
         </>
+
 
       </List>
     </div>

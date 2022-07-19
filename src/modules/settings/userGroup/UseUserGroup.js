@@ -11,9 +11,11 @@ export function UseUserGroup() {
     const [userGroupRole, setuserGroupRole] = useState('')
     const [email, setEmail] = useState('')
 
-    const allData = [];
+    const allData = {
+        "navigationResults":[]
+    };
     const handlingPermission = (item, pageIndex, permission) => {
-        const findModule = allData.filter((i) => i.moduleName === item.moduleName);
+        const findModule = allData.navigationResults.filter((i) => i.moduleName === item.moduleName);
         if (findModule.length === 1) {
             const checkPageexist = findModule[0]?.pages.find(
                 (p) => p.pageName === item.pages[pageIndex].pageName
@@ -37,7 +39,7 @@ export function UseUserGroup() {
             test.module_id = item.module_id;
             test.collapse = item.collapse;
             test.pages[pageIndex][permission] = !item.pages[pageIndex][permission];
-            allData.push(test);
+            allData.navigationResults.push(test);
         }
         console.log("allData", allData);
     };
@@ -64,11 +66,11 @@ export function UseUserGroup() {
                             userName: userName,
                             userGroupRole: userGroupRole,
                             tabsPermission: allData,
-                            Organizations: {
-                                connect: {
-                                    id: state?.user?.organizationLogin?.id
-                                }
-                            }
+                            // Organizations: {
+                            //     connect: {
+                            //         id: state?.user?.organizationLogin?.id && state?.getActiveUser.id
+                            //     }
+                            // }
                         }
 
                     },

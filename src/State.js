@@ -56,9 +56,6 @@ let reducer = (state, action) => {
             }
         }
         case "tabsPermission": {
-            console.log("samishoukat", action.payload.map((item)=>{
-                return item.moduleName
-            }));
             return {
                 ...state,
                 tabsPersmission: action.payload

@@ -2,6 +2,7 @@ import React from 'react';
 import Table from '../../commonComponents/table/Table';
 import UseSpeakers from './UseSpeakers';
 import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
+import NewTable from '../../commonComponents/newTable/NewTable';
 export default function Speakers() {
     const [
         {
@@ -27,24 +28,46 @@ export default function Speakers() {
         return <CommonTableLoader />;
     }
     return (
-        <Table
+        <NewTable
             title={'Speakers'}
             tableHeadings={[
-                "Id",
-                'speakerName',
-                'spkearDesc',
-                'spekaerImage',
-                'createdAt',
-                'updateAt',
-                'Actions'
+                // {
+                //     id: "Id",
+                //     Label: "Id"
+                // },
+                {
+                    id: "speakerName",
+                    Label: "speakerName"
+                },
+                {
+                    id: "spkearDesc",
+                    Label: "spkearDesc"
+                },
+                {
+                    id: "spekaerImage",
+                    Label: "spekaerImage"
+                },
+                {
+                    id: "createdAt",
+                    Label: "createdAt"
+                },
+                {
+                    id: "updateAt",
+                    Label: "updateAt"
+                },
+                {
+                    id: "action",
+                    Label: "Action"
+                }
             ]}
+
             ctaFormHandler={ctaFormHandler}
             // ctaDeleteHandler={ctaDeleteHandler}
             ctaUpdateHandler={ctaUpdateHandler}
             printedKeys={[
-                {
-                    key: "id",
-                },
+                // {
+                //     key: "id",
+                // },
                 {
                     key: "speakerName",
                 },
@@ -53,7 +76,7 @@ export default function Speakers() {
                 },
                 {
                     key: 'spekaerImage',
-                    type:'image'
+                    type: 'image'
                 },
                 {
                     key: 'createdAt'

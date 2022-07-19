@@ -29,6 +29,9 @@ import Lecture from '../modules/teacherPortal/lecture/Lecture'
 import FilesOrAssignment from '../modules/teacherPortal/filesOrAssignment/FilesOrAssignment'
 import CourseBatch from '../modules/adminPortal/courseBatch/CourseBatch';
 import Speakers from '../modules/speakers/Speakers';
+import TabsPermission from '../modules/settings/tabsPermission/TabsPermission';
+import ApiPermissions from '../modules/settings/apiPermissions/ApiPermissions';
+import UserGroup from '../modules/settings/userGroup/UserGroup';
 
 export default function Navigation() {
     const { state, dispatch } = useContext(AppContext);
@@ -53,21 +56,23 @@ export default function Navigation() {
                         // </PublicRouting>
                     }
                 />
-                <Route path='/' element={
+                <Route 
+                    path='/' 
+                    element={
                     <PrivateRouting isAllowed={state.authState}>
                         <Sidebar />
                     </PrivateRouting>
                 }>
                     <Route
-                        path='/dashboard'
+                        path='/'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <Dashboard />
-                            </PrivateRouting>
+                        <PrivateRouting isAllowed={state.authState}>
+                            <Dashboard />
+                        </PrivateRouting>
                         }
                     />
                     <Route
-                        path='/contactus'
+                        path='/contact'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <ContactUs />
@@ -132,7 +137,7 @@ export default function Navigation() {
                                         /> : ''
                     }
                     <Route
-                        path='/successStory'
+                        path='/successStories'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <SuccessStory />
@@ -148,7 +153,7 @@ export default function Navigation() {
                         }
                     />
                     <Route
-                        path='/approve-enrollment'
+                        path='/enrollmentApproval'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <EnrollmentApproval />
@@ -164,7 +169,7 @@ export default function Navigation() {
                         }
                     />
                     <Route
-                        path='/faq'
+                        path='/faqs'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <FAQS />
@@ -187,7 +192,7 @@ export default function Navigation() {
 
 
                     {/* students routes */}
-                    <Route path='/myCourse'
+                    <Route path='/myCourses'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <MyCourse />
@@ -249,6 +254,24 @@ export default function Navigation() {
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <Speakers />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/tabs-permission'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <TabsPermission />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/api-permissions'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <ApiPermissions />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/user-groups'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <UserGroup />
                             </PrivateRouting>}
                     />
                 </Route>

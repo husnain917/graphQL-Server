@@ -58,13 +58,18 @@ export function UseAllStaff() {
     },
     {
       label: "Role",
-      name: "role",
-      type: "select",
-      dropDownContent: [
-        "ADMIN",
-        "TEACHER"
-      ],
+      name: "userGroupRole",
+      type: "roleSelect",
     },
+    // {
+    //   label: "User Group",
+    //   name: "role",
+    //   type: "select",
+    //   dropDownContent: [
+    //     "ADMIN",
+    //     "TEACHER"
+    //   ],
+    // },
   ]
   const {
     state,
@@ -77,37 +82,36 @@ export function UseAllStaff() {
     data,
     loading: GET_LOADING,
   } = useQuery(GET_USERS);
-  const refacteredData = [];
-  data?.users?.map((item) => {
-    if (item.role === "ADMIN") {
-      refacteredData.push({
-        id: item.id,
-        name: item.name,
-        email: item.email,
-        contact: item.contact,
-        address: item.address,
-        cnic: item.cnic,
-        role: item.role,
-      })
-    }
-    else if (item.role === "TEACHER") {
-      refacteredData.push({
-        id: item.id,
-        name: item.name,
-        email: item.email,
-        contact: item.contact,
-        address: item.address,
-        cnic: item.cnic,
-        role: item.role,
-      })
-    }
+  const refacteredData = [
+    // {
+    //   id: 1,
+    //   name: 'Atest',
+    //   email: "Atest@gmail.com",
+    //   contact: "1234",
+    //   address: "ATest Address",
+    //   cnic: "112321212",
+    //   role: "ATeacher"
+    // },
+  ];
+  data?.users?.forEach((item) => {
+  
+    refacteredData.push({
+      id: item?.id,
+      name: item?.name,
+      email: item?.email,
+      contact: item?.contact,
+      // address: item.address,
+      cnic: item?.cnic,
+      role: item?.userRole,
+    })
+    console.log(item);
   });
-
+  console.log("sami", refacteredData);
 
   //ADD STAFF
 
   let [
-    CreateUser,
+    Register,
     {
       loading: ADD_LOADING
     }] = useMutation(ADD_USER);
@@ -130,17 +134,17 @@ export function UseAllStaff() {
     else if (!state.editData?.address) {
       ToastWarning('address required')
     }
-    else if (!state.editData?.role) {
-      ToastWarning('Role required')
-    }
-    else if (state.editData?.contact.length > 10) {
+    // else if (!state.editData?.role) {
+    //   ToastWarning('Role required')
+    // }
+    else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
       ToastWarning('Phone No Must be 10 digits')
     }
 
 
     else {
       try {
-        await CreateUser({
+        await Register({
           variables: {
 
             data: {
@@ -149,8 +153,6 @@ export function UseAllStaff() {
               password: state.editData?.password,
               cnic: state.editData?.cnic,
               contact: state.editData?.contact,
-              address: state.editData?.address,
-              role: state.editData?.role,
             }
 
           },
@@ -247,7 +249,7 @@ export function UseAllStaff() {
   //Update staff
 
   let [
-    UpdateStudents,
+    UpdateUser,
     {
       loading: UPDATE_LOADING
     }] = useMutation(UPDATE_USER);
@@ -259,8 +261,8 @@ export function UseAllStaff() {
     else if (!state.editData?.email) {
       ToastWarning('Email required')
     }
-    else if (!state.editData?.contact) {
-      ToastWarning('contact required')
+    else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
+      ToastWarning('Phone No Must be 10 digit')
     }
     else if (!state.editData?.cnic) {
       ToastWarning('cnic required')
@@ -273,7 +275,7 @@ export function UseAllStaff() {
     }
     else {
       try {
-        await UpdateStudents({
+        await UpdateUser({
           variables: {
             where: {
               id: state.editId
@@ -298,7 +300,7 @@ export function UseAllStaff() {
               contact: {
                 set: state.editData?.contact,
               },
-              role: {
+              userRole: {
                 set: state.editData?.role,
               }
             },

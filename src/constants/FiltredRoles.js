@@ -32,13 +32,13 @@ export default function FiltredData() {
 
 
     const student = USER_DATA?.users?.filter((role) => {
-        return role?.role === 'STUDENT'
+        return role?.userRole === 'STUDENT'
     })
     const teacher = USER_DATA?.users?.filter((role) => {
-        return role?.role === 'TEACHER'
+        return role?.userRole === 'TEACHER'
     })
     const admin = USER_DATA?.users?.filter((role) => {
-        return role?.role === 'ADMIN'
+        return role?.userRole === 'ADMIN'
     })
 
     const speakerList = SPEAKERS?.speakers?.filter((item) => {

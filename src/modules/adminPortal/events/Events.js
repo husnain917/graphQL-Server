@@ -1,6 +1,8 @@
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import Table from '../../../commonComponents/table/Table';
+import NewTable from '../../../commonComponents/newTable/NewTable';
+
 import { UseEvents } from './UseEvents';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
 export default function Events() {
@@ -33,24 +35,41 @@ export default function Events() {
     return (
         <div>
 
-            <Table
+            <NewTable
                 title={'Events'}
                 tableHeadings={[
-                    'Id',
-                    'Name',
-                    'Description',
-                    'Date',
-                    'SpeakerId',
-                    'Image',
-                    'Status',
-                    'Action',
+                    {
+                        id: "name",
+                        Label: "Name"
+                    },
+                    {
+                        id: "description",
+                        Label: "Description"
+                    },
+                    {
+                        id: "date",
+                        Label: "Date"
+                    },
+                    {
+                        id: "peakerId",
+                        Label: "Speaker Id"
+                    },
+                    {
+                        id: "image",
+                        Label: "Image"
+                    },
+                    {
+                      id: "status",
+                      Label: 'Status'
+                    },
+                    {
+                        id: "action",
+                        Label: "Action"
+                    },
                 ]}
                 date={date}
                 onDateChange={onDateChange}
                 printedKeys={[
-                    {
-                        key: "id",
-                    },
                     {
                         key: "eventName",
                     },

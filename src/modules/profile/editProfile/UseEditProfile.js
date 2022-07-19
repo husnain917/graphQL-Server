@@ -13,6 +13,8 @@ export function UseEditProfile() {
     const [contact, setContact] = useState('')
     const [address, setAddress] = useState('')
     const [file, setFile] = useState('')
+    const [role, setRole] = useState('')
+    const [cnic, setCnic] = useState('')
     let [UpdateUser, { loading: UPDATE_LOADING }] = useMutation(UPDATE_USER)
     // const handleChange = (e) => {
     //     setFile(e.target.files[0])
@@ -23,6 +25,11 @@ export function UseEditProfile() {
         setEmail(state.user?.email)
         setContact(state.user?.contact)
         setAddress(state.user?.address)
+        setRole(state?.orgLogin ?
+            state?.user?.organizationLogin.role
+            :
+            state?.user.userGroup.userGroupRole)
+        setCnic(state?.user.cnic)
     }, [])
 
     const ctaUpdateHandler = async (e) => {
@@ -47,21 +54,27 @@ export function UseEditProfile() {
                         },
                         data: {
                             name: {
-                                set: name
+                                set: name,
                             },
                             email: {
-                                set: email
+                                set: email,
+                            },
+                            // password: {
+                            //   set: state.editData?.password,
+                            // },
+                            cnic: {
+                                set: cnic,
                             },
                             address: {
-                                set: address
+                                set: address,
                             },
-                            phone: {
-                                set: contact
+                            contact: {
+                                set: contact,
                             },
-                            image:{
-                                
+                            userRole: {
+                                set: role,
                             }
-                        }
+                        },
                     },
                     onCompleted() {
                         ToastSuccess('User Updated')
@@ -80,6 +93,7 @@ export function UseEditProfile() {
         email,
         address,
         contact,
+        role,
         setName,
         setEmail,
         setAddress,

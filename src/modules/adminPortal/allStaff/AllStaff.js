@@ -6,6 +6,7 @@ import {
 } from "react-toastify";
 //Import from Files
 import CommonTableLoader from "../../../commonComponents/commonTableLoader/CommonTableLoader";
+import NewTable from "../../../commonComponents/newTable/NewTable";
 import Table from "../../../commonComponents/table/Table";
 import {
   UseAllStaff
@@ -29,30 +30,49 @@ export default function AllStaff() {
     GET_LOADING ||
     // DELETE_LOADING ||
     UPDATE_LOADING ||
-    ADD_LOADING 
+    ADD_LOADING
   ) {
     return <CommonTableLoader />;
   }
   return (
     <>
       <ToastContainer />
-      <Table
+
+      {/* <Table */}
+      <NewTable
         title={"All Staff"}
         tableHeadings={[
-          "Id",
-          "Name",
-          "Email",
-          "Cnic",
-          "contact",
-          "address",
-          "Role",
-          "Action"
+          {
+            id: "name",
+            Label: "Name"
+          },
+          {
+            id: "email",
+            Label: "Email"
+          },
+          {
+            id: "cnic",
+            Label: "CNIC"
+          },
+          {
+            id: "contact",
+            Label: "Contact"
+          },
+          {
+            id: "address",
+            Label: "Address"
+          },
+          {
+            id: "role",
+            Label: "Role"
+          },
+          {
+            id: "action",
+            Label: "Action"
+          },
         ]}
         // ctaEditButtonHandler={ctaEditButtonHandler}
         printedKeys={[
-          {
-            key: "id",
-          },
           {
             key: "name",
           },

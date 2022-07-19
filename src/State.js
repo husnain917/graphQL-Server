@@ -11,8 +11,10 @@ const initialState = {
     draftHtml: EditorState.createEmpty(),
     openFormModal: false,
     modalUpdateFlag: false,
+    orgLogin: false,
     editData: {},
-    imageUrl: ''
+    imageUrl: '',
+    tabsPersmission: []
 }
 let reducer = (state, action) => {
     // eslint-disable-next-line default-case
@@ -34,6 +36,7 @@ let reducer = (state, action) => {
             }
         }
         case "setEditData": {
+            console.log("sami", action.payload);
             return {
                 ...state,
                 editData: action.payload
@@ -50,6 +53,19 @@ let reducer = (state, action) => {
             return {
                 ...state,
                 imageUrl: action.payload
+            }
+        }
+        case "tabsPermission": {
+            console.log("a",action.payload);
+            return {
+                ...state,
+                tabsPersmission: action.payload
+            }
+        }
+        case "ORGlogin": {
+            return {
+                ...state,
+                orgLogin: action.payload
             }
         }
     }

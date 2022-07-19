@@ -24,18 +24,7 @@ export function UseEnrollmentApproval() {
   const [{ student }] = FiltredRoles()
   const { data: Courses } = useQuery(GET_COURSES)
   const formInputs = [
-    {
-      label: "User",
-      name: "userId",
-      type: "selectUser",
-      dropDown: student
-    },
-    {
-      label: "Courses",
-      name: "coursesId",
-      type: "selectCourse",
-      dropDown: Courses
-    },
+ 
     {
       label: "Payment Method",
       name: "paymentMethod",
@@ -50,6 +39,18 @@ export function UseEnrollmentApproval() {
       label: "Transaction Id",
       name: "transactionId",
       type: "text",
+    },
+    {
+      label: "User",
+      name: "userId",
+      type: "selectUser",
+      dropDown: student
+    },
+    {
+      label: "Courses",
+      name: "coursesId",
+      type: "selectCourse",
+      dropDown: Courses
     },
     {
       label: "Status",

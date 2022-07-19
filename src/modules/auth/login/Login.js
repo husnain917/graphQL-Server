@@ -8,65 +8,67 @@ import { StageSpinner } from 'react-spinners-kit'
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { colors } from "../../../constants/Color";
 export default function Login() {
-    const [{ values, handleChange, handleClickShowPassword, state, orgLogin, email, setEmail, loginHandler, ORG_LOADING, organizationLoginHandler, loading, ctaOrgHandler }] = UseLogin();
+    const [{ values, handleChange, handleClickShowPassword, state, orgLogin, email, setEmail, loginHandler, ORG_LOADING, organizationLoginHandler, loading, ctaOrgHandler, emailTyping, emaiTypingRemove, passwordTyping, passwordTypingRemove, showPassword }] = UseLogin();
     // if (error) {
     //     notify()
     // }
     return (
         <div>
             <LoginStyle.MainPage>
+                <LoginStyle.Image src={loginPageLogo} />
+
                 <LoginStyle.LoginContainer>
                     {/* Below Code for toastify   */}
                     {/* <ToastContainer/> */}
                     {/* Below Code for Header. (Login Heading and Logo) */}
                     <LoginStyle.InlineHeaderContainer>
-                        <LoginStyle.LeftBorder />
-                        <div>
-                            <LoginStyle.LoginHeading>
-                                Login
-                            </LoginStyle.LoginHeading>
-                            <LoginStyle.Image src={loginPageLogo} />
-                        </div>
+                        <LoginStyle.LoginHeading>
+                            Sign In
+                        </LoginStyle.LoginHeading>
                     </LoginStyle.InlineHeaderContainer>
                     {/* Below Code for Email Input Field   */}
-                    <LoginStyle.InputFieldHeading>
-                        Email
-                    </LoginStyle.InputFieldHeading>
-                    <LoginStyle.IconAndInputField>
+                    <LoginStyle.ForgotContainer>
+                        <LoginStyle.InputFieldHeading>
+                            Email<LoginStyle.Estaric>{'*'}</LoginStyle.Estaric>
+                        </LoginStyle.InputFieldHeading>
+                    </LoginStyle.ForgotContainer>
+
+                    <LoginStyle.IconAndInputField typing={values.emailTyping} onClick={() => emailTyping()}>
                         <LoginStyle.IconContainer>
-                            <LoginStyle.PersonOutlineIcon />
+                            <LoginStyle.PersonOutlineIcon typing={values.emailTyping} />
                         </LoginStyle.IconContainer>
-                        <LoginStyle.Input type='text' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <CommonTooltip route='login' title="Enter your email address e.g abc@gmail.com" />
+                        <LoginStyle.Input type='text' placeholder='Enter an email address' value={email} onChange={(e) => setEmail(e.target.value)} onBlur={() => emaiTypingRemove()} />
                     </LoginStyle.IconAndInputField>
                     {/* Below Code for Password Input Field */}
-                    <LoginStyle.InputFieldHeading>
-                        Password
-                    </LoginStyle.InputFieldHeading>
-                    <LoginStyle.IconAndInputField>
+
+
+                    <LoginStyle.ForgotContainer>
+
+                        <LoginStyle.InputFieldHeading>
+                            Password<LoginStyle.Estaric>{'*'}</LoginStyle.Estaric>
+                        </LoginStyle.InputFieldHeading>
+                        <LoginStyle.ForgotPassword>
+                            Forgot Password?
+                        </LoginStyle.ForgotPassword>
+                    </LoginStyle.ForgotContainer>
+
+                    <LoginStyle.IconAndInputField typing={values.passwordTyping} onClick={() => passwordTyping()}>
                         <LoginStyle.IconContainer>
-                            <LoginStyle.LockIcon />
+                            <LoginStyle.LockIcon typing={values.passwordTyping} />
                         </LoginStyle.IconContainer>
-                        <LoginStyle.Input value={values.password} onChange={handleChange('password')} type={values.showPassword ? 'text' : 'password'} placeholder='Password' />
+                        <LoginStyle.Input value={values.password} onChange={handleChange('password')} type={showPassword ? 'text' : 'password'} placeholder='Enter a password' onBlur={() => passwordTypingRemove()} />
                         {/* Below Code is part of Password input field used for changing Password visible Icon Color   */}
-                        {!values.showPassword ?
-                            <LoginStyle.IconContainer>
-                                <LoginStyle.VisibilityIcon onClick={handleClickShowPassword} showPassword={values.showPassword} />
-                            </LoginStyle.IconContainer>
-                            :
                             <LoginStyle.PasswordVisibleIconContainer>
-                                <LoginStyle.VisibilityIcon onClick={handleClickShowPassword} showPassword={values.showPassword} />
-                            </LoginStyle.PasswordVisibleIconContainer>
-                        }
-                        <CommonTooltip route='login' title='Enter your password' />
+                                <LoginStyle.VisibilityIcon showPassword={showPassword} onClick={()=> handleClickShowPassword()}  />
+                            </LoginStyle.PasswordVisibleIconContainer>                
                     </LoginStyle.IconAndInputField>
                     <LoginStyle.OrgCheckbox>
                         <FormControlLabel
                             control={<Checkbox
                                 sx={{
-                                    color: colors.lightBlue,
+                                    color: '#1E86FF',
                                     '&.Mui-checked': {
-                                        color: colors.lightBlue,
+                                        color: '#1E86FF',
                                     },
                                 }}
                                 onChange={() => ctaOrgHandler()}
@@ -83,7 +85,7 @@ export default function Login() {
                         </LoginStyle.LoaderContainer>
                         :
                         <LoginStyle.ButtonContainer>
-                            <LoginStyle.LoginButton onClick={orgLogin ? organizationLoginHandler : loginHandler}>Login</LoginStyle.LoginButton>
+                            <LoginStyle.LoginButton onClick={state?.orgLogin ? organizationLoginHandler : loginHandler}>Log In</LoginStyle.LoginButton>
                         </LoginStyle.ButtonContainer>
                     }
                 </LoginStyle.LoginContainer>

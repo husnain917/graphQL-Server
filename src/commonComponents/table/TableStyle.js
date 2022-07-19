@@ -1,12 +1,14 @@
 
 import { styled, alpha } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { Close, Delete, Edit } from '@mui/icons-material'
 import { TableRow, Table, TableCell } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { colors } from '../../constants/Color';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import AddIcon from '@mui/icons-material/Add';
 import { MagicSpinner } from 'react-spinners-kit';
 export const TableStyle = {
     // Data Fetching Loading Container
@@ -32,7 +34,8 @@ export const TableStyle = {
             paddingTop: 6,
         },
         paddingBottom: 10,
-        backgroundColor: colors.lightBlue,
+        backgroundColor: colors.white,
+
         color: 'white',
         boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19)",
         paddingLeft: theme.spacing(2),
@@ -67,6 +70,9 @@ export const TableStyle = {
     SearchBox: styled(Box)(({ theme }) => ({
         display: 'flex',
         alignItems: 'center',
+        // backgroundColor: 'green',
+        justifyContent: 'space-between',
+        marginTop: 4
 
     })),
     CloseIconBox: styled(Box)(({ theme }) => ({
@@ -74,6 +80,8 @@ export const TableStyle = {
         height: 26,
         backgroundColor: '#A9A9A9',
         borderRadius: 999,
+        alignItems: 'center',
+        justifyContent: 'center',
 
     })),
     HeaderIconsContainer: styled('div')(() => ({
@@ -103,21 +111,26 @@ export const TableStyle = {
     })),
 
     // Icons
-    FilterListIcon: styled(FilterListIcon)(() => ({
-        fontSize: 35,
+    FilterListIcon: styled(FilterAltIcon)(() => ({
+        fontSize: 27,
         marginRight: 10,
         marginLeft: 10,
         cursor: 'pointer',
+        color: '#96A0B5'
     })),
-    AddIcon: styled(AddCircleOutlineIcon)(() => ({
-        fontSize: 35,
+    AddIcon: styled(AddIcon)(() => ({
+        fontSize: 27,
         cursor: 'pointer',
+        color: '#96A0B5'
     })),
     CloseIcon: styled(Close)({
         color: '#fff',
+        fontSize: 22,
+        marginTop: 2
     }),
     SearchIcon: styled(SearchIcon)(() => ({
         fontSize: 27,
+        color: '#96A0B5'
     })),
     DeleteIcon: styled(Delete)(() => ({
         color: '#f44336'
@@ -129,7 +142,49 @@ export const TableStyle = {
         display: "flex",
         justifyContent: "center",
         flexWrap: "wrap"
-    }))
+    })),
+    FilterButton: styled(Button)(({ theme }) => ({
+        textTransform: 'none',
+        border:' 1px solid #E5EBF0',
+        backgroundColor: "#fff",
+        borderRadius: '8px',
+        color: '#96A0B5',
+        width: 90,
+        height: 37,
+        "&:hover": {
+            backgroundColor: "#fff",
+            border:' 1px solid #E5EBF0',
+        }
+    
+    })),
+    ExportButton: styled(Button)(({ theme }) => ({
+        textTransform: 'none',
+        border:'none',
+        borderRadius: '8px',
+        backgroundColor:' rgba(30, 134, 255, 0.1)',
+        color: '#1E86FF',
+        width: 99,
+        height: 37,
+        "&:hover": {
+            backgroundColor:' rgba(30, 134, 255, 0.1)',
+            border: 'none',
+        }
+    
+    })),
+    AddButton: styled(Button)(({ theme }) => ({
+        textTransform: 'none',
+        border:'none',
+        borderRadius: '8px',
+        backgroundColor:'#1E86FF;',
+        color: '#ffffff',
+        width: 115,
+        height: 37,
+        "&:hover": {
+            backgroundColor:'#1E86FF;',
+            border: 'none',
+        }
+    
+    })),
 
 }
 

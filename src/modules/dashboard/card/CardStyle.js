@@ -16,12 +16,12 @@ export const CS={
     })),
     Heading:styled('p')(({card})=>({
         fontSize:card=='greeting'?25:16,
-        color:'#646777',
+        color:'#96A0B5',
         fontWeight:'500',
     })),
     Value:styled('p')(()=>({
         fontWeight:'bold',
         fontSize:20,
-        color:'#646777'
+        color:'#96A0B5'
     })),
 }

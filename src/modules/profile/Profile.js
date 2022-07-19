@@ -38,22 +38,31 @@ export default function Profile() {
                                     <P.MycontainerName>
                                         <Stack direction="row" spacing={2}>
                                             {
-                                                state.user?.role === "OWNER" ?
-                                                    <P.Myimg src={owner} alt='broken-img' />
+                                                state?.orgLogin ?
+                                                    state.user?.organizationLogin.role === "ORGANIZATIONKEY" ?
+                                                        <P.Myimg src={owner} alt='broken-img' />
+                                                        :
+                                                        ''
                                                     :
-                                                    state.user?.role === "ADMIN" ?
+
+                                                    state.user?.userGroup?.userGroupRole === "ADMIN" ?
                                                         <P.Myimg src={admin} alt='broken-img' />
                                                         :
-                                                        state.user?.role === "TEACHER" ?
+                                                        state.user?.userGroup?.userGroupRole === "TEACHER" ?
                                                             <P.Myimg src={teacher} alt='broken-img' />
                                                             :
-                                                            state.user?.role === "STUDENT" ?
+                                                            state.user?.userGroup?.userGroupRole === "STUDENT" ?
                                                                 <P.Myimg src={student} alt='broken-img' />
                                                                 :
                                                                 ""
+
+
                                             }
                                             <TypoTextProfile>
-                                                {state.user.name}
+                                                {state?.orgLogin ?
+                                                    state?.user?.organizationLogin.name
+                                                    :
+                                                    state?.user.name}
                                             </TypoTextProfile>
                                         </Stack>
                                     </P.MycontainerName>

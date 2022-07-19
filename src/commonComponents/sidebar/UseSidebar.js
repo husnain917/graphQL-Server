@@ -1,17 +1,14 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../State';
-import { MENU_ITEMS } from '../../constants/Roles'
+import { MENU_ITEMS } from '../../constants/Roles';
+import WebhookIcon from '@mui/icons-material/Webhook';
+import GroupIcon from '@mui/icons-material/Group';
+import StorageIcon from '@mui/icons-material/Storage';
 export const UseDrawer = () => {
     const [open, setOpen] = React.useState(true);
     const { state, dispatch } = useContext(AppContext);
     const navigate = useNavigate()
-    const SideBarListItems = []
-    var sideBarMenu = MENU_ITEMS.filter((item) => {
-        if (item.role === state.user?.role) {
-            return SideBarListItems.push(item)
-        }
-    });
     const handleDrawer = () => {
         setOpen(!open);
     };
@@ -28,11 +25,13 @@ export const UseDrawer = () => {
 
 
     }
+    
+  
 
     return [{
-        SideBarListItems,
+        
         open,
         handleDrawer,
-        ctaLogoutHandler
+        ctaLogoutHandler,
     }]
 }

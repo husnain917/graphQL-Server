@@ -13,25 +13,46 @@ export default function UseLogin() {
     password: '',
     weight: '',
     weightRange: '',
-    showPassword: false,
+    emailTyping: false,
+    passwordTyping: false,
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
+
+  const emailTyping = () => {
+    setValues({ ...values, emailTyping: true });
+  };
+  const emaiTypingRemove = () => {
+    setValues({ ...values, emailTyping: false });
+
+  }
+  const passwordTyping = () => {
+    setValues({ ...values, passwordTyping: true });
+  }
+  const passwordTypingRemove = () => {
+    setValues({ ...values, passwordTyping: false });
+  };
+
   const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
+    // setValues({
+    //   ...values,
+    //   showPassword: true,
+    // });
+    setShowPassword(!showPassword)
+    console.log('Value of ShowPAssword', showPassword);
   };
 
 
 
-  let [Mutation, { loading }] = useMutation(LOGIN)
+  let [Login, { loading }] = useMutation(LOGIN)
   const loginHandler = async () => {
+    console.log(email);
+    console.log(values.password,);
     try {
-      await Mutation({
+      await Login({
         variables: {
           password: values.password,
           email: email,
@@ -46,7 +67,24 @@ export default function UseLogin() {
             },
           });
           ToastSuccess(`Welcome ${login.name}`)
-
+          if (login.userGroup?.userGroupRole === "STUDENT") {
+            dispatch({
+              type: "tabsPermission",
+              payload: login.userGroup?.tabsPermission?.navigationResults
+            })
+          }
+          else if (login.userGroup?.userGroupRole === "ADMIN") {
+            dispatch({
+              type: "tabsPermission",
+              payload: login.userGroup?.tabsPermission?.navigationResults
+            })
+          }
+          else if (login.userGroup?.userGroupRole === "TEACHER") {
+            dispatch({
+              type: "tabsPermission",
+              payload: login.userGroup?.tabsPermission?.navigationResults
+            })
+          }
         },
       })
     }
@@ -63,19 +101,25 @@ export default function UseLogin() {
         variables: {
           password: values.password,
           email: email
-
         },
         onCompleted(login) {
           localStorage.setItem("token", login.organizationLogin.token)
           dispatch({
             type: "setAuthState",
             payload: {
-              user: login.organizationLogin,
+              user: login,
               authState: true
             },
           });
-
           ToastSuccess(`Welcome ${login.organizationLogin.name}`)
+          login.organizationLogin?.userGroup.map((item) => {
+            if (item.userGroupRole === "ORGANIZATIONKEY")
+              dispatch({
+                type: "tabsPermission",
+                payload: item.tabsPermission?.navigationResults
+              })
+
+          })
 
 
         },
@@ -85,12 +129,11 @@ export default function UseLogin() {
     }
   }
   const ctaOrgHandler = (e) => {
-
-    setOrgLogin(!orgLogin)
+    dispatch({
+      type: "ORGlogin",
+      payload: true
+    })
   }
 
-  console.log(orgLogin);
-
-
-  return [{ values, handleChange, handleClickShowPassword, organizationLoginHandler, state, email, orgLogin, setEmail, loginHandler, loading, ORG_LOADING, ctaOrgHandler }]
+  return [{ values, handleChange, handleClickShowPassword, organizationLoginHandler, state, email, orgLogin, setEmail, loginHandler, loading, ORG_LOADING, ctaOrgHandler, emailTyping, emaiTypingRemove, passwordTyping, passwordTypingRemove, showPassword }]
 }

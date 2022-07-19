@@ -2,6 +2,7 @@ import React from 'react';
 import Table from '../../commonComponents/table/Table';
 import { UseSuccessStory } from './UseSuccessStory';
 import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
+import NewTable from '../../commonComponents/newTable/NewTable';
 export default function SuccessStory() {
   const [
     {
@@ -31,23 +32,43 @@ export default function SuccessStory() {
     <>
 
       <div>
-        <Table
+        <NewTable
           title={'Success Stories'}
           tableHeadings={[
-            'Id',
-            'FreelancingProfileUrl',
-            'City',
-            'PaymentProof',
-            'Description',
-            'TotalEarnedAmount',
-            'WhyReject',
-            'Status',
-            'Action',
+            {
+              id: 'freelancingProfileUrl',
+              Label: 'FreelancingProfileUrl'
+            },
+            {
+              id: 'city',
+              Label: 'City'
+            },
+            {
+              id: 'paymentProof',
+              Label: 'Payment Proof'
+            },
+            {
+              id: 'description',
+              Label: 'Description'
+            },
+            {
+              id: 'totalEarnedAmount',
+              Label: 'TotalEarnedAmount'
+            },
+            {
+              id: 'whyReject',
+              Label: 'Why Reject'
+            },
+            {
+              id: "status",
+              Label: 'Status'
+            },
+            {
+                id: "action",
+                Label: "Action"
+            },
           ]}
           printedKeys={[
-            {
-              key: "id",
-            },
             {
               key: "freelancingProfileUrl",
               type:"modalProfileUrl"

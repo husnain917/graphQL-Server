@@ -76,16 +76,16 @@ export function UseAllStudents() {
     error
   } = useQuery(GET_USERS);
   const refacteredData = [];
-  data?.users?.map((item) => {
-    if (item.role === "STUDENT") {
+  data?.users?.forEach((item) => {
+    if (item.userRole === "STUDENT") {
       refacteredData.push({
         id: item.id,
         name: item.name,
         email: item.email,
         cnic: item.cnic,
-        address: item.address,
+        // address: item.address,
         contact: item.contact,
-        role: item.role
+        role: item.userRole
       });
     }
   });
@@ -115,7 +115,7 @@ export function UseAllStudents() {
     else if (!state.editData?.role) {
       ToastWarning('Role required')
     }
-    else if (state.editData?.contact.length > 10) {
+    else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
       ToastWarning('Phone No Must be 10 digits')
       // setError('Phone Number Must be 10 digits')
     }
@@ -131,7 +131,7 @@ export function UseAllStudents() {
               cnic: state.editData?.cnic,
               contact: state.editData?.contact,
               address: state.editData?.address,
-              role: state.editData?.role,
+              userRole: state.editData?.role,
             }
           },
           onCompleted(data, cache) {
@@ -200,8 +200,8 @@ export function UseAllStudents() {
     else if (!state.editData?.email) {
       ToastWarning('Email required')
     }
-    else if (!state.editData?.contact) {
-      ToastWarning('contact required')
+    else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
+      ToastWarning('contact must be 11 characters')
     }
     else if (!state.editData?.cnic) {
       ToastWarning('cnic required')
@@ -239,7 +239,7 @@ export function UseAllStudents() {
               contact: {
                 set: state.editData?.contact,
               },
-              role: {
+              userRole: {
                 set: state.editData?.role,
               }
             },

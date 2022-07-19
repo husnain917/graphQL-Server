@@ -2,6 +2,7 @@ import React from 'react';
 import Table from '../../../commonComponents/table/Table';
 import UseCourseBatch from './UseCourseBatch';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
+import NewTable from '../../../commonComponents/newTable/NewTable';
 export default function CourseBatch() {
     const [
         {
@@ -25,24 +26,39 @@ export default function CourseBatch() {
         return <CommonTableLoader />;
     }
     return (
-        <Table
-            title={'Course Batches'}
+        <NewTable
+            title={'Lectures'}
             tableHeadings={[
-                "Id",
-                'Name',
-                'Course Id',
-                'Course Name',
-                'createdAt',
-                'updateAt',
-                'Actions'
+                {
+                    id: "name",
+                    Label: "Name"
+                },
+                {
+                    id: "courseId",
+                    Label: "Course Id"
+                },
+                {
+                    id: "courseName",
+                    Label: "Course Name"
+                },
+                {
+                    id: "createdAt",
+                    Label: "Created At"
+                },
+                {
+                    id: "updateAt",
+                    Label: "Update At"
+                },
+                {
+                    id: "action",
+                    Label: "Action"
+                },
             ]}
+            
             ctaFormHandler={ctaFormHandler}
             // ctaDeleteHandler={ctaDeleteHandler}
             ctaUpdateHandler={ctaUpdateHandler}
             printedKeys={[
-                {
-                    key: "id",
-                },
                 {
                     key: "name",
                 },

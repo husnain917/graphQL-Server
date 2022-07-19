@@ -32,10 +32,20 @@ function App() {
               user: login.getActiveUser,
               authState: true
             },
-            
           });
+
+          login.getActiveUser?.userGroup.map((item) => {
+            if (item.userGroupRole === "ORGANIZATIONKEY")
+              dispatch({
+                type: "tabsPermission",
+                payload: item.tabsPermission?.navigationResults
+              })
+
+          })
           ToastSuccess(`Welcome ${login.getActiveUser?.name}`)
+          console.log("redirect", login);
         }
+
       })
 
     } catch (error) {
@@ -49,7 +59,7 @@ function App() {
       const tokenId1 = await localStorage.getItem('token');
       if (tokenId1) {
         user()
-       
+
       }
     }
     token()

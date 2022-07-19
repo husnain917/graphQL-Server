@@ -29,6 +29,20 @@ mutation CreateSpeaker($data: SpeakerCreateInput!) {
 `
 
 
+export const ADD_USER_GROUP = gql`
+mutation CreateUserGroup($data: UserGroupCreateInput!) {
+  createUserGroup(data: $data) {
+    id
+    userName
+    userGroupRole
+    tabsPermission
+    createdAt
+    updateAt
+  }
+}
+`
+
+
 
 
 
@@ -42,15 +56,9 @@ mutation CreateCourses($data: CoursesCreateInput!) {
     courseIntro
     instructorId
     courseCategoryId
+    organizationId
     coursePrice
     whatYouLearn
-    courseStatus
-    createdAt
-    updateAt
-    instructor {
-      id
-      name
-    }
   }
 }
 `
@@ -113,16 +121,14 @@ mutation CreateFaq($data: FaqCreateInput!) {
 }`
 
 export const ADD_USER = gql`
-mutation CreateUser($data: UserCreateInput!) {
-  createUser(data: $data) {
+mutation Register($data: UserCreateInput!) {
+  register(data: $data) {
+    id
     name
     email
     cnic
     address
     contact
-    role
-    permission
-    id
   }
 }
 `
@@ -498,10 +504,10 @@ mutation UpdateUser($data: UserUpdateInput!, $where: UserWhereUniqueInput!) {
     id
     name
     email
-    address
     cnic
+    address
     contact
-    role
+    userRole
   }
 }
 `
@@ -650,11 +656,27 @@ mutation GetActiveUser($token: String!) {
     id
     name
     email
+    role
     address
     contact
     secretKeyId
     token
-    role
+    users {
+      name
+      id
+      email
+      cnic
+      address
+      contact
+    }
+    userGroup {
+      id
+      userName
+      userGroupRole
+      tabsPermission
+      createdAt
+      updateAt
+      organizationsId
+    }
   }
-
-} `
+}`

@@ -19,7 +19,9 @@ import CoPresentIcon from '@mui/icons-material/CoPresent';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import SpeakerIcon from '@mui/icons-material/Speaker';
-
+import WebhookIcon from '@mui/icons-material/Webhook';
+import GroupIcon from '@mui/icons-material/Group';
+import StorageIcon from '@mui/icons-material/Storage';
 export var MENU_ITEMS = [
     {
         text: 'Dashboard',
@@ -129,5 +131,20 @@ export var MENU_ITEMS = [
         path: '/settings',
         role: 'OWNER'
     },
+    {
+        text: 'User Groups',
+        path: '/user-group',
+        icon: <GroupIcon />,
+    },
+    {
+        text: 'Tabs Permission',
+        path: '/tabs-permission',
+        icon: <WebhookIcon />,
+    },
+    {
+        text: 'Api Permission',
+        path: '/api-permissions',
+        icon: <StorageIcon />,
+    }
 ];
 

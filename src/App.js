@@ -34,6 +34,14 @@ function App() {
             },
           });
 
+          login.getActiveUser?.userGroup.map((item) => {
+            if (item.userGroupRole === "ORGANIZATIONKEY")
+              dispatch({
+                type: "tabsPermission",
+                payload: item.tabsPermission?.navigationResults
+              })
+
+          })
           ToastSuccess(`Welcome ${login.getActiveUser?.name}`)
           console.log("redirect", login);
         }

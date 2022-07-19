@@ -10,7 +10,39 @@ export function UseUserGroup() {
     const [userName, setUserName] = useState('')
     const [userGroupRole, setuserGroupRole] = useState('')
     const [email, setEmail] = useState('')
-    const ctaFormHandler = async (event) => {
+
+    const allData = [];
+    const handlingPermission = (item, pageIndex, permission) => {
+        const findModule = allData.filter((i) => i.moduleName === item.moduleName);
+        if (findModule.length === 1) {
+            const checkPageexist = findModule[0]?.pages.find(
+                (p) => p.pageName === item.pages[pageIndex].pageName
+            );
+            if (!checkPageexist) {
+                findModule[0]?.pages.push(item.pages[pageIndex]);
+            }
+            findModule[0].pages[pageIndex][permission] =
+                !findModule[0].pages[pageIndex][permission];
+        } else {
+            const test = {
+                moduleName: "",
+                moduleUrl: "",
+                module_id: "",
+                collapse: "",
+                pages: [],
+            };
+            test.pages.push(item.pages[pageIndex]);
+            test.moduleName = item.moduleName;
+            test.moduleUrl = item.moduleUrl;
+            test.module_id = item.module_id;
+            test.collapse = item.collapse;
+            test.pages[pageIndex][permission] = !item.pages[pageIndex][permission];
+            allData.push(test);
+        }
+        console.log("allData", allData);
+    };
+    console.log(state?.user?.organizationLogin?.id)
+    const ctaHandler = async (event) => {
 
         event.preventDefault();
         if (userName === '') {
@@ -19,10 +51,11 @@ export function UseUserGroup() {
         else if (userGroupRole === '') {
             ToastWarning('User Group Role Required')
         }
-        else if (email === '') {
-            ToastWarning('Email required')
-        }
+        // else if (email === '') {
+        //     ToastWarning('Email required')
+        // }
         else {
+
             try {
                 await CreateUserGroup({
                     variables: {
@@ -30,7 +63,7 @@ export function UseUserGroup() {
                         data: {
                             userName: userName,
                             userGroupRole: userGroupRole,
-                            tabsPermission: null,
+                            tabsPermission: allData,
                             Organizations: {
                                 connect: {
                                     id: state?.user?.organizationLogin?.id
@@ -52,11 +85,12 @@ export function UseUserGroup() {
                         openFormModal: false,
                     },
                 });
-                ToastError(error.message);
+                // ToastError(error.message);
+                console.log(error.message)
 
             }
         }
     };
 
-    return [userName, userGroupRole, email, setEmail, setUserName, setuserGroupRole, ctaFormHandler]
+    return [userName, userGroupRole, email, setEmail, setUserName, setuserGroupRole, ctaHandler, handlingPermission]
 }

@@ -356,304 +356,275 @@ export default function UserGroup() {
     setEmail,
     setUserName,
     setuserGroupRole,
-    ctaFormHandler,
+    ctaHandler,
+    handlingPermission
   ] = UseUserGroup();
   const { state, dispatch } = useContext(AppContext);
-  const [AddPermission, setAddPermission] = useState();
-  const [DelPermission, setDelPermission] = useState();
-  const [EditPermission, setEditPermission] = useState();
-  const [ViewPermission, setViewPermission] = useState();
-  const [AllPermission, setAllPermission] = useState();
-  const [pushobj, setPush] = useState();
   const [stateArray, setStateArray] = useState(state.tabsPersmission);
-  const [mynewArray, setMyNewArray] = useState({
-    navigationResults: [],
-  });
-  useEffect(() => {
-    state.tabsPersmission.map((item, index) => {
-      item.pages.map((items) => {
-        if (items.pageName === item.moduleName) {
-          setPush(item.AddToJson);
-        }
-        if (items.pageName === item.moduleName) {
-          setAddPermission(items.AddPermission);
-          setDelPermission(items.DelPermission);
-          setEditPermission(items.EditPermission);
-          setViewPermission(items.ViewPermission);
-          setAllPermission(items.FullAccess);
-        }
-      });
-    });
-  }, []);
-  const ctaAddPermission = (item) => {
-    const newArray = stateArray.map((ites, i) => {
-      if (ites.module_id === item.module_id) {
-        ites.pages.forEach((row) => {
-          var obj = {
-            moduleName: item.moduleName,
-            module_id: item.module_id,
-            AddToJson: !item.AddToJson,
-            pages: [
-              {
-                pageName: row.pageName,
-                pageID: row.pageID,
-                pageURL: row.pageURL,
-                page_id: row.page_id,
-                AddPermission: row.AddPermission,
-                DelPermission: row.DelPermission,
-                EditPermission: row.EditPermission,
-                ViewPermission: row.ViewPermission,
-                FullAccess: row.FullAccess,
-              },
-            ],
-          };
-          setStateArray([...stateArray, obj]);
-        });
-      }
-      return ites;
-    });
+  // const [mynewArray, setMyNewArray] = useState({
+  //   navigationResults: [],
+  // });
+  // useEffect(() => {
+  //   state.tabsPersmission.map((item, index) => {
+  //     item.pages.map((items) => {
+  //       if (items.pageName === item.moduleName) {
+  //         setPush(item.AddToJson);
+  //       }
+  //       if (items.pageName === item.moduleName) {
+  //         setAddPermission(items.AddPermission);
+  //         setDelPermission(items.DelPermission);
+  //         setEditPermission(items.EditPermission);
+  //         setViewPermission(items.ViewPermission);
+  //         setAllPermission(items.FullAccess);
+  //       }
+  //     });
+  //   });
+  // }, []);
+  // const ctaAddPermission = (item) => {
+  //   const newArray = stateArray.map((ites, i) => {
+  //     if (ites.module_id === item.module_id) {
+  //       ites.pages.forEach((row) => {
+  //         var obj = {
+  //           moduleName: item.moduleName,
+  //           module_id: item.module_id,
+  //           AddToJson: !item.AddToJson,
+  //           pages: [
+  //             {
+  //               pageName: row.pageName,
+  //               pageID: row.pageID,
+  //               pageURL: row.pageURL,
+  //               page_id: row.page_id,
+  //               AddPermission: row.AddPermission,
+  //               DelPermission: row.DelPermission,
+  //               EditPermission: row.EditPermission,
+  //               ViewPermission: row.ViewPermission,
+  //               FullAccess: row.FullAccess,
+  //             },
+  //           ],
+  //         };
+  //         setStateArray([...stateArray, obj]);
+  //       });
+  //     }
+  //     return ites;
+  //   });
   
-  };
-  const ctaPermission = (item, row) => {
-    const newArray = state?.tabsPersmission.map((ites, i) => {
-      ites.pages.forEach((rows) => {
-        if (item.module_id === ites.module_id) {
-          var obj = {
-            moduleName: item.moduleName,
-            module_id: item.module_id,
-            AddToJson: pushobj,
-            pages: [
-              {
-                pageName: row.pageName,
-                pageID: row.pageID,
-                pageURL: row.pageURL,
-                page_id: row.page_id,
-                AddPermission: row.AddPermission,
-                DelPermission: row.DelPermission,
-                EditPermission: row.EditPermission,
-                ViewPermission: row.ViewPermission,
-                FullAccess: row.FullAccess,
-              },
-            ],
-          };
-          // console.log("object", obj);
-        }
-      });
-    });
-  };
+  // };
+  // const ctaPermission = (item, row) => {
+  //   const newArray = state?.tabsPersmission.map((ites, i) => {
+  //     ites.pages.forEach((rows) => {
+  //       if (item.module_id === ites.module_id) {
+  //         var obj = {
+  //           moduleName: item.moduleName,
+  //           module_id: item.module_id,
+  //           AddToJson: pushobj,
+  //           pages: [
+  //             {
+  //               pageName: row.pageName,
+  //               pageID: row.pageID,
+  //               pageURL: row.pageURL,
+  //               page_id: row.page_id,
+  //               AddPermission: row.AddPermission,
+  //               DelPermission: row.DelPermission,
+  //               EditPermission: row.EditPermission,
+  //               ViewPermission: row.ViewPermission,
+  //               FullAccess: row.FullAccess,
+  //             },
+  //           ],
+  //         };
+  //         // console.log("object", obj);
+  //       }
+  //     });
+  //   });
+  // };
   
-  const ctaCreatePermission = (item, row) => {
-    const newArray = state?.tabsPersmission.map((ites, i) => {
-      ites.pages.forEach((rows) => {
-        if (item.module_id === ites.module_id) {
-          var obj = {
-            moduleName: item.moduleName,
-            module_id: item.module_id,
-            AddToJson: pushobj,
-            pages: [
-              {
-                pageName: row.pageName,
-                pageID: row.pageID,
-                pageURL: row.pageURL,
-                page_id: row.page_id,
-                AddPermission: !row.AddPermission,
-              },
-            ],
-          };
-          // console.log("object", obj);
-        }
-      });
-    });
-  };
-  const ctaDeletePermission = (item, row) => {
-    const newArray = state?.tabsPersmission.map((ites, i) => {
-      ites.pages.forEach((rows) => {
-        if (item.module_id === ites.module_id) {
-          var obj = {
-            moduleName: item.moduleName,
-            module_id: item.module_id,
-            AddToJson: pushobj,
-            pages: [
-              {
-                pageName: row.pageName,
-                pageID: row.pageID,
-                pageURL: row.pageURL,
-                page_id: row.page_id,
-                DelPermission: !row.DelPermission,
-              },
-            ],
-          };
-          // console.log("object", obj);
-        }
-      });
-    });
-  };
-  const ctaeditPermission = (item, row) => {
-    const newArray = state?.tabsPersmission.map((ites, i) => {
-      ites.pages.forEach((rows) => {
-        if (item.module_id === ites.module_id) {
-          var obj = {
-            moduleName: item.moduleName,
-            module_id: item.module_id,
-            AddToJson: pushobj,
-            pages: [
-              {
-                pageName: row.pageName,
-                pageID: row.pageID,
-                pageURL: row.pageURL,
-                page_id: row.page_id,
-                EditPermission: !row.EditPermission,
-              },
-            ],
-          };
-          // console.log("object", obj);
-        }
-      });
-    });
-  };
-  const ctaviewPermission = (item, row) => {
-    const newArray = state?.tabsPersmission.map((ites, i) => {
-      ites.pages.forEach((rows) => {
-        if (item.module_id === ites.module_id) {
-          var obj = {
-            moduleName: item.moduleName,
-            module_id: item.module_id,
-            AddToJson: pushobj,
-            pages: [
-              {
-                pageName: row.pageName,
-                pageID: row.pageID,
-                pageURL: row.pageURL,
-                page_id: row.page_id,
-                ViewPermission: !row.ViewPermission,
-              },
-            ],
-          };
-          // console.log("object", obj);
-        }
-      });
-    });
-  };
+  // const ctaCreatePermission = (item, row) => {
+  //   const newArray = state?.tabsPersmission.map((ites, i) => {
+  //     ites.pages.forEach((rows) => {
+  //       if (item.module_id === ites.module_id) {
+  //         var obj = {
+  //           moduleName: item.moduleName,
+  //           module_id: item.module_id,
+  //           AddToJson: pushobj,
+  //           pages: [
+  //             {
+  //               pageName: row.pageName,
+  //               pageID: row.pageID,
+  //               pageURL: row.pageURL,
+  //               page_id: row.page_id,
+  //               AddPermission: !row.AddPermission,
+  //             },
+  //           ],
+  //         };
+  //         // console.log("object", obj);
+  //       }
+  //     });
+  //   });
+  // };
+  // const ctaDeletePermission = (item, row) => {
+  //   const newArray = state?.tabsPersmission.map((ites, i) => {
+  //     ites.pages.forEach((rows) => {
+  //       if (item.module_id === ites.module_id) {
+  //         var obj = {
+  //           moduleName: item.moduleName,
+  //           module_id: item.module_id,
+  //           AddToJson: pushobj,
+  //           pages: [
+  //             {
+  //               pageName: row.pageName,
+  //               pageID: row.pageID,
+  //               pageURL: row.pageURL,
+  //               page_id: row.page_id,
+  //               DelPermission: !row.DelPermission,
+  //             },
+  //           ],
+  //         };
+  //         // console.log("object", obj);
+  //       }
+  //     });
+  //   });
+  // };
+  // const ctaeditPermission = (item, row) => {
+  //   const newArray = state?.tabsPersmission.map((ites, i) => {
+  //     ites.pages.forEach((rows) => {
+  //       if (item.module_id === ites.module_id) {
+  //         var obj = {
+  //           moduleName: item.moduleName,
+  //           module_id: item.module_id,
+  //           AddToJson: pushobj,
+  //           pages: [
+  //             {
+  //               pageName: row.pageName,
+  //               pageID: row.pageID,
+  //               pageURL: row.pageURL,
+  //               page_id: row.page_id,
+  //               EditPermission: !row.EditPermission,
+  //             },
+  //           ],
+  //         };
+  //         // console.log("object", obj);
+  //       }
+  //     });
+  //   });
+  // };
+  // const ctaviewPermission = (item, row) => {
+  //   const newArray = state?.tabsPersmission.map((ites, i) => {
+  //     ites.pages.forEach((rows) => {
+  //       if (item.module_id === ites.module_id) {
+  //         var obj = {
+  //           moduleName: item.moduleName,
+  //           module_id: item.module_id,
+  //           AddToJson: pushobj,
+  //           pages: [
+  //             {
+  //               pageName: row.pageName,
+  //               pageID: row.pageID,
+  //               pageURL: row.pageURL,
+  //               page_id: row.page_id,
+  //               ViewPermission: !row.ViewPermission,
+  //             },
+  //           ],
+  //         };
+  //         // console.log("object", obj);
+  //       }
+  //     });
+  //   });
+  // };
   
-  const ctaFullPermission = (item, row) => {
-    const newArray = state?.tabsPersmission.map((ites, i) => {
-      ites.pages.forEach((rows) => {
-        if (item.module_id === ites.module_id) {
-          var obj = {
-            moduleName: item.moduleName,
-            module_id: item.module_id,
-            AddToJson: pushobj,
-            pages: [
-              {
-                pageName: row.pageName,
-                pageID: row.pageID,
-                pageURL: row.pageURL,
-                page_id: row.page_id,
-                FullAccess: !row.FullAccess,
-              },
-            ],
-          };
-          // console.log("object", obj);
-        }
-      });
-    });
-  };
-  const test = [
-    {
-      moduleName: "Dashboard",
-      module_id: "",
-      module_icon: "",
-      pages: [
-        {
-          pageName: "staff",
-          pageID: "",
-          pageURL: "/",
-          page_id: "",
-          CreatePermission: false,
-          DelPermission: false,
-          EditPermission: false,
-          ViewPermission: false,
-          FullAccess: false,
-        },
-        {
-          pageName: "Admin",
-          pageID: "",
-          pageURL: "/",
-          page_id: "",
-          CreatePermission: false,
-          DelPermission: false,
-          EditPermission: false,
-          ViewPermission: false,
-          FullAccess: false,
-        },
-      ],
-    },
-    {
-      moduleName: "Staff",
-      module_id: "",
-      module_icon: "",
-      pages: [
-        {
-          pageName: "test",
-          pageID: "",
-          pageURL: "/staff",
-          page_id: "",
-          CreatePermission: false,
-          DelPermission: false,
-          EditPermission: false,
-          ViewPermission: false,
-          FullAccess: false,
-        },
-        {
-          pageName: "test1",
-          pageID: "",
-          pageURL: "/staff",
-          page_id: "",
-          CreatePermission: false,
-          DelPermission: false,
-          EditPermission: false,
-          ViewPermission: false,
-          FullAccess: false,
-        },
-        {
-          pageName: "test2",
-          pageID: "",
-          pageURL: "/staff",
-          page_id: "",
-          CreatePermission: false,
-          DelPermission: false,
-          EditPermission: false,
-          ViewPermission: false,
-          FullAccess: false,
-        },
-      ],
-    },
-  ];
-  const allData = [];
-  const handlingPermission = (item, pageIndex, permission) => {
-    const findModule = allData.filter((i) => i.moduleName === item.moduleName);
-    if (findModule.length === 1) {
-      const checkPageexist = findModule[0]?.pages.find(
-        (p) => p.pageName === item.pages[pageIndex].pageName
-      );
-      if (!checkPageexist) {
-        findModule[0]?.pages.push(item.pages[pageIndex]);
-      }
-      findModule[0].pages[pageIndex][permission] =
-        !findModule[0].pages[pageIndex][permission];
-    } else {
-      const test = {
-        moduleName: "",
-        module_icon: "",
-        pages: [],
-      };
-      test.pages.push(item.pages[pageIndex]);
-      test.moduleName = item.moduleName;
-      test.pages[pageIndex][permission] = !item.pages[pageIndex][permission];
-      allData.push(test);
-    }
-    console.log("allData", allData);
-  };
+  // const ctaFullPermission = (item, row) => {
+  //   const newArray = state?.tabsPersmission.map((ites, i) => {
+  //     ites.pages.forEach((rows) => {
+  //       if (item.module_id === ites.module_id) {
+  //         var obj = {
+  //           moduleName: item.moduleName,
+  //           module_id: item.module_id,
+  //           AddToJson: pushobj,
+  //           pages: [
+  //             {
+  //               pageName: row.pageName,
+  //               pageID: row.pageID,
+  //               pageURL: row.pageURL,
+  //               page_id: row.page_id,
+  //               FullAccess: !row.FullAccess,
+  //             },
+  //           ],
+  //         };
+  //         // console.log("object", obj);
+  //       }
+  //     });
+  //   });
+  // };
+  // const test = [
+  //   {
+  //     moduleName: "Dashboard",
+  //     module_id: "",
+  //     module_icon: "",
+  //     pages: [
+  //       {
+  //         pageName: "staff",
+  //         pageID: "",
+  //         pageURL: "/",
+  //         page_id: "",
+  //         CreatePermission: false,
+  //         DelPermission: false,
+  //         EditPermission: false,
+  //         ViewPermission: false,
+  //         FullAccess: false,
+  //       },
+  //       {
+  //         pageName: "Admin",
+  //         pageID: "",
+  //         pageURL: "/",
+  //         page_id: "",
+  //         CreatePermission: false,
+  //         DelPermission: false,
+  //         EditPermission: false,
+  //         ViewPermission: false,
+  //         FullAccess: false,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     moduleName: "Staff",
+  //     module_id: "",
+  //     module_icon: "",
+  //     pages: [
+  //       {
+  //         pageName: "test",
+  //         pageID: "",
+  //         pageURL: "/staff",
+  //         page_id: "",
+  //         CreatePermission: false,
+  //         DelPermission: false,
+  //         EditPermission: false,
+  //         ViewPermission: false,
+  //         FullAccess: false,
+  //       },
+  //       {
+  //         pageName: "test1",
+  //         pageID: "",
+  //         pageURL: "/staff",
+  //         page_id: "",
+  //         CreatePermission: false,
+  //         DelPermission: false,
+  //         EditPermission: false,
+  //         ViewPermission: false,
+  //         FullAccess: false,
+  //       },
+  //       {
+  //         pageName: "test2",
+  //         pageID: "",
+  //         pageURL: "/staff",
+  //         page_id: "",
+  //         CreatePermission: false,
+  //         DelPermission: false,
+  //         EditPermission: false,
+  //         ViewPermission: false,
+  //         FullAccess: false,
+  //       },
+  //     ],
+  //   },
+  // ];
+  
   // const getPermissionValue = (item, pageIndex, permission) => {
   //   console.log('getPermissionValue');
   //   const findModule = allData?.filter(
@@ -811,7 +782,7 @@ export default function UserGroup() {
           </Table>
         </TableContainer>
         <br />
-        <PButton title="Add User Group" />
+        <PButton title="Add User Group" ctaHandler={ctaHandler}/>
       </TabsStyle.TableDiv>
     </TabsStyle.MainDiv>
   )

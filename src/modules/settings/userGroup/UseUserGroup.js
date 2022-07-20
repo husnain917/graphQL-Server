@@ -46,11 +46,11 @@ export function UseUserGroup() {
     console.log(state?.user?.organizationLogin?.id)
     const ctaHandler = async (event) => {
 
-        event.preventDefault();
+        // event.preventDefault();
         if (userName === '') {
             ToastWarning('User Name Required')
         }
-        else if (userGroupRole === '') {
+        else if (select === '') {
             ToastWarning('User Group Role Required')
         }
         // else if (email === '') {

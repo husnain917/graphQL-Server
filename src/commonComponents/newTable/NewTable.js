@@ -49,6 +49,9 @@ function EnhancedTableHead(props) {
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
+
+
+
     return (
         <NewTableStyle.Tablehead>
             <TableRow>
@@ -110,6 +113,9 @@ EnhancedTableHead.propTypes = {
 const EnhancedTableToolbar = (props) => {
     const { width } = UseWindowDimensions();
     const { numSelected, toolBarTitle, handleAnchorClick, handleClickOpen, state, dispatch } = props;
+    const permissions = state.tabsPersmission.map((items) => {
+        return items.pages
+    })
     const svgIcon = (
         <Icon>
             <img alt="edit" src={CloudIcon} width={20} height={20} />
@@ -120,19 +126,24 @@ const EnhancedTableToolbar = (props) => {
         return (
             <>
                 {
-                    width > 600 ?
-                        <NewTableStyle.AddButton variant="outlined" startIcon={<AddIcon />} onClick={handleClickOpen}>
-                            Add
-                        </NewTableStyle.AddButton>
-                        :
-                        <IconButton
-                            color="inherit"
-                            aria-label="search"
-                            disableFocusRipple
-                            disableRipple
-                            onClick={handleClickOpen}                                >
-                            <NewTableStyle.AddIcon />
-                        </IconButton>
+
+                    (
+                        width > 600 ?
+                            <NewTableStyle.AddButton variant="outlined" startIcon={<AddIcon />} onClick={handleClickOpen}>
+                                Add
+                            </NewTableStyle.AddButton>
+                            :
+                            <IconButton
+                                color="inherit"
+                                aria-label="search"
+                                disableFocusRipple
+                                disableRipple
+                                onClick={handleClickOpen}                                >
+                                <NewTableStyle.AddIcon />
+                            </IconButton>
+                    )
+
+              
                 }
             </>
 
@@ -155,75 +166,91 @@ const EnhancedTableToolbar = (props) => {
                     {toolBarTitle}
                 </Typography>
 
-                {numSelected > 0 ? (
-                    <NewTableStyle.SelectedContainer>
-                        <NewTableStyle.Typography>
-                            {numSelected}&nbsp;selected
-                        </NewTableStyle.Typography>
+                {
+                    numSelected > 0 ?
+                        (
+                            permissions.map((item) => {
+                                return item.DelPermission ?
+                                    <NewTableStyle.SelectedContainer>
+                                        <NewTableStyle.Typography>
+                                            {numSelected}&nbsp;selected
+                                        </NewTableStyle.Typography>
 
-                        <Tooltip title="Delete">
-                            <NewTableStyle.DelButton variant="outlined" startIcon={<DeleteIcon />} >
-                                Delete
-                            </NewTableStyle.DelButton>
-                        </Tooltip>
-                    </NewTableStyle.SelectedContainer>
-                ) : (
-                    <div>
-                        {toolBarTitle === "FAQS" ? (
-                            ""
-                        ) : (
-                            <>
-                                {
-                                    width > 600 ?
-                                        <>
-                                            <NewTableStyle.FilterButton variant="outlined" startIcon={<FilterAltIcon />} onClick={handleAnchorClick}>
-                                                Filter
-                                            </NewTableStyle.FilterButton>
-                                            <NewTableStyle.ExportButton variant="outlined" startIcon={svgIcon} onClick={handleAnchorClick}>
-                                                Export
-                                            </NewTableStyle.ExportButton>
-                                        </>
-                                        :
-                                        <>
-                                            <IconButton
-                                                color="inherit"
-                                                aria-label="search"
-                                                disableFocusRipple
-                                                disableRipple
-                                                onClick={handleAnchorClick}
-                                            >
-                                                <NewTableStyle.FilterListIcon />
-                                            </IconButton>
-                                            <IconButton
-                                                color="inherit"
-                                                aria-label="search"
-                                                disableFocusRipple
-                                                disableRipple
-                                                onClick={handleAnchorClick}
-                                            >
-                                                <Icon>
-                                                    <img alt="edit" src={CloudIcon} width={23} height={22} />
-                                                </Icon>
-                                            </IconButton>
-                                        </>
-                                }
-                            </>
-                        )}
+                                        <Tooltip title="Delete">
+                                            <NewTableStyle.DelButton variant="outlined" startIcon={<DeleteIcon />} >
+                                                Delete
+                                            </NewTableStyle.DelButton>
+                                        </Tooltip>
+                                    </NewTableStyle.SelectedContainer>
+                                    : ""
+                            })
+                        )
+                        : (
+                            <div>
+                                {toolBarTitle === "FAQS" ? (
+                                    ""
+                                ) : (
+                                    <>
+                                        {
+                                            width > 600 ?
+                                                <>
+                                                    <NewTableStyle.FilterButton variant="outlined" startIcon={<FilterAltIcon />} onClick={handleAnchorClick}>
+                                                        Filter
+                                                    </NewTableStyle.FilterButton>
+                                                    <NewTableStyle.ExportButton variant="outlined" startIcon={svgIcon} onClick={handleAnchorClick}>
+                                                        Export
+                                                    </NewTableStyle.ExportButton>
+                                                </>
+                                                :
+                                                <>
+                                                    <IconButton
+                                                        color="inherit"
+                                                        aria-label="search"
+                                                        disableFocusRipple
+                                                        disableRipple
+                                                        onClick={handleAnchorClick}
+                                                    >
+                                                        <NewTableStyle.FilterListIcon />
+                                                    </IconButton>
+                                                    <IconButton
+                                                        color="inherit"
+                                                        aria-label="search"
+                                                        disableFocusRipple
+                                                        disableRipple
+                                                        onClick={handleAnchorClick}
+                                                    >
+                                                        <Icon>
+                                                            <img alt="edit" src={CloudIcon} width={23} height={22} />
+                                                        </Icon>
+                                                    </IconButton>
+                                                </>
+                                        }
+                                    </>
+                                )}
 
-                        {
-                            state.user?.role === 'OWNER' ?
-                                <AddButton handleClickOpen={handleClickOpen} />
-                                :
-                                state.user?.role === 'ADMIN' ?
-                                    toolBarTitle === "Courses" || toolBarTitle === "All Students" ?
-                                        <></>
-                                        :
+                                {/* {
+                                    state.user?.role === 'OWNER' ?
                                         <AddButton handleClickOpen={handleClickOpen} />
-                                    :
-                                    <AddButton handleClickOpen={handleClickOpen} />
-                        }
-                    </div>
-                )}
+                                        :
+                                        state.user?.role === 'ADMIN' ?
+                                            toolBarTitle === "Courses" || toolBarTitle === "All Students" ?
+                                                <></>
+                                                :
+                                                <AddButton handleClickOpen={handleClickOpen} />
+                                            :
+                                            <AddButton handleClickOpen={handleClickOpen} />
+                                } */}
+                                {/* {
+                                    permissions.map((items) => {
+                                        return items.CreatePermission ? */}
+                                        
+                                            <AddButton handleClickOpen={handleClickOpen} />
+                                            {/* :
+                                            ''
+                                    })
+                                } */}
+                            </div>
+                        )}
 
             </Toolbar>
             <Divider />
@@ -463,7 +490,9 @@ export default function NewTable({
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filterDataArray.length) : 0;
 
-
+    const permissions = state.tabsPersmission.map((items) => {
+        return items.pages
+    })
     return (
         <Box sx={{ width: '100%' }}>
             {/* Drop Down menu for filter Button */}
@@ -603,20 +632,26 @@ export default function NewTable({
                                                                                         ></p>
                                                                                     ) : subitem?.type === "crud" ? (
                                                                                         <>
-                                                                                            <NewTableStyle.IconDiv>
-                                                                                                {/* <Tooltip title="Delete">
+                                                                                            {
+                                                                                                permissions.map((items) => {
+                                                                                                    return items.EditPermission ?
+                                                                                                        <NewTableStyle.IconDiv>
+                                                                                                            {/* <Tooltip title="Delete">
                                                             <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
                                                         </Tooltip> */}
-                                                                                                <Tooltip title="Update">
-                                                                                                    <IconButton
-                                                                                                        aria-label="update"
-                                                                                                        size="small"
-                                                                                                        onClick={() => ctaEditButtonHandler(row)}
-                                                                                                    >
-                                                                                                        <NewTableStyle.EditIcon />
-                                                                                                    </IconButton>
-                                                                                                </Tooltip>
-                                                                                            </NewTableStyle.IconDiv>
+                                                                                                            <Tooltip title="Update">
+                                                                                                                <IconButton
+                                                                                                                    aria-label="update"
+                                                                                                                    size="small"
+                                                                                                                    onClick={() => ctaEditButtonHandler(row)}
+                                                                                                                >
+                                                                                                                    <NewTableStyle.EditIcon />
+                                                                                                                </IconButton>
+                                                                                                            </Tooltip>
+                                                                                                        </NewTableStyle.IconDiv>
+                                                                                                        : ''
+                                                                                                })
+                                                                                            }
                                                                                         </>
                                                                                     ) : subitem.key === 'role' || subitem.key === 'status' ? (
                                                                                         <NewTableStyle.Role variant="outlined"
@@ -634,7 +669,7 @@ export default function NewTable({
                                                                                             >{exactKey[0].toUpperCase()}</NewTableStyle.Avatar>
                                                                                             <NewTableStyle.EmailNameContainer >
                                                                                                 <NewTableStyle.PTagName>{exactKey}</NewTableStyle.PTagName>
-                                                                                                <NewTableStyle.PTagEmail>{}</NewTableStyle.PTagEmail>
+                                                                                                <NewTableStyle.PTagEmail>{ }</NewTableStyle.PTagEmail>
                                                                                             </NewTableStyle.EmailNameContainer>
                                                                                         </NewTableStyle.AvatarBox>
                                                                                     ) : subitem.key === 'createdAt' || subitem.key === 'updateAt' ? (

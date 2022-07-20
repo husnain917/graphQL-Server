@@ -10,7 +10,7 @@ export function UseUserGroup() {
     const [userName, setUserName] = useState('')
     const [userGroupRole, setuserGroupRole] = useState('')
     const [email, setEmail] = useState('')
-
+    const [select, setSelect] = useState('')
     const allData = {
         "navigationResults":[]
     };
@@ -64,7 +64,7 @@ export function UseUserGroup() {
 
                         data: {
                             userName: userName,
-                            userGroupRole: userGroupRole,
+                            userGroupRole: select,
                             tabsPermission: allData,
                             // Organizations: {
                             //     connect: {
@@ -94,5 +94,5 @@ export function UseUserGroup() {
         }
     };
 
-    return [userName, userGroupRole, email, setEmail, setUserName, setuserGroupRole, ctaHandler, handlingPermission]
+    return [{userName, userGroupRole, email, setEmail, setUserName,ctaHandler, setuserGroupRole, handlingPermission,ADD_LOADING,setSelect}]
 }

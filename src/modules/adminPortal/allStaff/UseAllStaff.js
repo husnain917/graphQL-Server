@@ -57,14 +57,19 @@ export function UseAllStaff() {
       type: "text",
     },
     {
-      label: "User Group",
-      name: "role",
-      type: "select",
-      dropDownContent: [
-        "ADMIN",
-        "TEACHER"
-      ],
+      label: "Role",
+      name: "userGroupRole",
+      type: "roleSelect",
     },
+    // {
+    //   label: "User Group",
+    //   name: "role",
+    //   type: "select",
+    //   dropDownContent: [
+    //     "ADMIN",
+    //     "TEACHER"
+    //   ],
+    // },
   ]
   const {
     state,
@@ -88,30 +93,17 @@ export function UseAllStaff() {
     //   role: "ATeacher"
     // },
   ];
-
   data?.users?.forEach((item) => {
-    if (item?.userRole === "ADMIN") {
-      refacteredData.push({
-        id: item?.id,
-        name: item?.name,
-        email: item?.email,
-        contact: item?.contact,
-        // address: item.address,
-        cnic: item?.cnic,
-        role: item?.userRole,
-      })
-    }
-    else if (item?.userRole === "TEACHER") {
-      refacteredData.push({
-        id: item.id,
-        name: item.name,
-        email: item.email,
-        contact: item.contact,
-        // address: item.address,
-        cnic: item.cnic,
-        role: item?.userRole,
-      })
-    }
+  
+    refacteredData.push({
+      id: item?.id,
+      name: item?.name,
+      email: item?.email,
+      contact: item?.contact,
+      // address: item.address,
+      cnic: item?.cnic,
+      role: item?.userRole,
+    })
     console.log(item);
   });
   console.log("sami", refacteredData);
@@ -119,7 +111,7 @@ export function UseAllStaff() {
   //ADD STAFF
 
   let [
-    CreateUser,
+    Register,
     {
       loading: ADD_LOADING
     }] = useMutation(ADD_USER);
@@ -142,9 +134,9 @@ export function UseAllStaff() {
     else if (!state.editData?.address) {
       ToastWarning('address required')
     }
-    else if (!state.editData?.role) {
-      ToastWarning('Role required')
-    }
+    // else if (!state.editData?.role) {
+    //   ToastWarning('Role required')
+    // }
     else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
       ToastWarning('Phone No Must be 10 digits')
     }
@@ -152,7 +144,7 @@ export function UseAllStaff() {
 
     else {
       try {
-        await CreateUser({
+        await Register({
           variables: {
 
             data: {
@@ -161,7 +153,6 @@ export function UseAllStaff() {
               password: state.editData?.password,
               cnic: state.editData?.cnic,
               contact: state.editData?.contact,
-              userRole: state.editData?.role,
             }
 
           },

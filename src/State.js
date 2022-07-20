@@ -56,6 +56,7 @@ let reducer = (state, action) => {
             }
         }
         case "tabsPermission": {
+            console.log("a",action.payload);
             return {
                 ...state,
                 tabsPersmission: action.payload

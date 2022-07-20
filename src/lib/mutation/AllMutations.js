@@ -121,17 +121,14 @@ mutation CreateFaq($data: FaqCreateInput!) {
 }`
 
 export const ADD_USER = gql`
-mutation CreateUser($data: UserCreateInput!) {
-  createUser(data: $data) {
+mutation Register($data: UserCreateInput!) {
+  register(data: $data) {
+    id
     name
     email
     cnic
     address
     contact
-    userRole
-    permission
-    id
-    userRole
   }
 }
 `

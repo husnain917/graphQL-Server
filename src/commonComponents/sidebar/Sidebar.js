@@ -35,11 +35,12 @@ function Sidebar(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
   //List Item 
   
+console.log(location?.pathname)
 
   const renderSidebarItems = (items, index) => {
     return (
       <>
-        <SidebarStyle.DomLink to={items.collapse === "true" ? '' : items.moduleUrl} key={index}>
+        <SidebarStyle.DomLink to={items.collapse === "true" ? location?.pathname : items.moduleUrl} key={index}>
           <ListItem
             key={index}
             ref={anchorRef}

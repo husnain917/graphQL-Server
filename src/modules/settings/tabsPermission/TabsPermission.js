@@ -42,21 +42,26 @@ export default function TabsPermissions() {
       <NewTable
         title={"Tabs Permissions"}
         tableHeadings={[
+
           {
-            id: "permissions",
-            Label: "permissions"
+            id: "name",
+            Label: "name"
           },
           {
             id: "role",
             Label: "role"
           },
           {
+            id: "permissions",
+            Label: "permissions"
+          },
+          {
             id: "createdAt",
             Label: "Created At"
           },
           {
-            id: "updatedAt",
-            Label: "updatedAt"
+            id: "updateAt",
+            Label: "updateAt"
           },
           {
             id: "actions",
@@ -65,17 +70,22 @@ export default function TabsPermissions() {
         ]}
         // ctaEditButtonHandler={ctaEditButtonHandler}
         printedKeys={[
+
           {
-            key: "permissions",
+            key: "name",
           },
           {
             key: "role",
           },
           {
+            key: "permissions",
+            type: "modalPermissions"
+          },
+          {
             key: "createdAt",
           },
           {
-            key: "UpdatedAt",
+            key: "updateAt",
           },
           {
             type: "crud",

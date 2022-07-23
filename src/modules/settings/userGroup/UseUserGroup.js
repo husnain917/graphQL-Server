@@ -3,6 +3,7 @@ import { ADD_USER_GROUP } from '../../../lib/mutation/AllMutations';
 import { useMutation, useQuery } from "@apollo/client";
 import { AppContext } from "../../../State";
 import { ToastError, ToastSuccess, ToastWarning } from '../../../commonComponents/commonFunction/CommonFunction';
+import { GET_USER_GROUP } from '../../../lib/queries/AllQueries';
 export function UseUserGroup() {
 
     const { state, dispatch } = useContext(AppContext)
@@ -74,6 +75,8 @@ export function UseUserGroup() {
                         }
 
                     },
+                    refetchQueries: [{ query: GET_USER_GROUP }],
+
                     onCompleted(data, cache) {
                         ToastSuccess('UserGroup Added')
 

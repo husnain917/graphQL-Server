@@ -18,7 +18,7 @@ const style = {
     p: 4,
 };
 
-export default function CommonModal({ question, answer, freelancingProfileUrl }) {
+export default function CommonModal({ question, answer, freelancingProfileUrl, modalPermissions }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -119,7 +119,46 @@ export default function CommonModal({ question, answer, freelancingProfileUrl })
                                         <>
                                             <p> {freelancingProfileUrl?.freelancingProfileUrl}</p>
                                         </>
-                                        : ''
+                                        :
+                                        modalPermissions ?
+                                            <>
+                                                <PButton ctaHandler={handleOpen} title="See tabs" />
+                                                <Modal
+                                                    aria-labelledby="transition-modal-title"
+                                                    aria-describedby="transition-modal-description"
+                                                    open={open}
+                                                    onClose={handleClose}
+                                                    closeAfterTransition
+                                                    BackdropComponent={Backdrop}
+                                                    BackdropProps={{
+                                                        timeout: 500,
+                                                    }}
+                                                >
+                                                    <Fade in={open}>
+                                                        <Box sx={style}>
+                                                            <Typography id="transition-modal-title" variant="h6" component="h2">
+                                                                Tabs Permissions
+                                                            </Typography>
+                                                            {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                                                                {modalPermissions?.permissions}
+                                                            </Typography> */}
+                                                            {
+                                                                modalPermissions?.permissions.map((permission) => {
+                                                                  return  permission.map((val) => {
+                                                                        return (
+                                                                            <ul>
+                                                                                <li style={{ fontSize: 15 }}>{val?.pageName}</li>
+                                                                            </ul>
+                                                                        )
+                                                                    })
+
+                                                                })
+                                                            }
+                                                        </Box>
+                                                    </Fade>
+                                                </Modal>
+                                            </>
+                                            : ''
 
             }
         </div>

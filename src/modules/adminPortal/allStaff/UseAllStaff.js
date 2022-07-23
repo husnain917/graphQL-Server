@@ -16,6 +16,7 @@ import {
 import {
   AppContext
 } from "../../../State";
+import FiltredData from '../../../constants/FiltredRoles'
 
 
 
@@ -24,6 +25,12 @@ import {
 
 
 export function UseAllStaff() {
+  let {
+    data,
+    loading: GET_LOADING,
+  } = useQuery(GET_USERS);
+  const [{ userGroup }] = FiltredData()
+
   const formInputs = [
     {
       label: "Name",
@@ -57,19 +64,11 @@ export function UseAllStaff() {
       type: "text",
     },
     {
-      label: "Role",
-      name: "userGroupRole",
+      label: "Select User Group",
+      name: "userGroup",
       type: "roleSelect",
+      dropDownUserGroup: userGroup
     },
-    // {
-    //   label: "User Group",
-    //   name: "role",
-    //   type: "select",
-    //   dropDownContent: [
-    //     "ADMIN",
-    //     "TEACHER"
-    //   ],
-    // },
   ]
   const {
     state,
@@ -77,140 +76,252 @@ export function UseAllStaff() {
   } = useContext(AppContext);
 
   //GET STAFF 
-
-  let {
-    data,
-    loading: GET_LOADING,
-  } = useQuery(GET_USERS);
-  const refacteredData = [
-    // {
-    //   id: 1,
-    //   name: 'Atest',
-    //   email: "Atest@gmail.com",
-    //   contact: "1234",
-    //   address: "ATest Address",
-    //   cnic: "112321212",
-    //   role: "ATeacher"
-    // },
-  ];
-  data?.users?.forEach((item) => {
   
-    refacteredData.push({
-      id: item?.id,
-      name: item?.name,
-      email: item?.email,
-      contact: item?.contact,
-      // address: item.address,
-      cnic: item?.cnic,
-      role: item?.userRole,
-    })
+  const refacteredData = [];
+  data?.users?.map((item) => {
+    if (item.userGroup.userGroupRole === "TEACHER") {
+      refacteredData.push({
+        id: item.id,
+        name: item.name,
+        email: item.email,
+        cnic: item.cnic,
+        address: item.address,
+        contact: item.contact,
+        role: item.userGroup.userGroupRole
+      });
+    }
+    if (item.userGroup.userGroupRole === "ADMIN") {
+      refacteredData.push({
+        id: item.id,
+        name: item.name,
+        email: item.email,
+        cnic: item.cnic,
+        address: item.address,
+        contact: item.contact,
+        role: item.userGroup.userGroupRole
+      });
+    }
+
     console.log(item);
   });
   console.log("sami", refacteredData);
 
   //ADD STAFF
 
+
+
   let [
+
     Register,
     {
+
       loading: ADD_LOADING
+
     }] = useMutation(ADD_USER);
 
 
-  const ctaFormHandler = async (event) => {
-    event.preventDefault();
-    if (!state.editData?.name) {
-      ToastWarning('Name required')
-    }
-    else if (!state.editData?.email) {
-      ToastWarning('Email required')
-    }
-    else if (!state.editData?.contact) {
-      ToastWarning('Contact required')
-    }
-    else if (!state.editData?.cnic) {
-      ToastWarning('cnic required')
-    }
-    else if (!state.editData?.address) {
-      ToastWarning('address required')
-    }
-    // else if (!state.editData?.role) {
-    //   ToastWarning('Role required')
-    // }
-    else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
-      ToastWarning('Phone No Must be 10 digits')
-    }
 
+    const ctaFormHandler = async (event) => {
 
-    else {
-      try {
-        await Register({
-          variables: {
+      event.preventDefault();
 
-            data: {
-              name: state.editData?.name,
-              email: state.editData?.email,
-              password: state.editData?.password,
-              cnic: state.editData?.cnic,
-              contact: state.editData?.contact,
-            }
+     
 
-          },
-          refetchQueries: [{ query: GET_USERS }],
+      if (!state.editData?.name) {
 
-          onCompleted() {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
-
-
-            ToastSuccess('Staff Added')
-          },
-          // update(cache, { data: { addItems } }) {
-          //   const { tados } = cache.readQuery({
-          //     query: GET_STAFF
-          //   })
-          //   cache.writeQuery({
-          //     query: GET_STAFF,
-          //     data: {
-          //       tados: [
-          //         data.CreateManyStaff,
-          //         ...tados
-
-          //       ]
-          //     }
-          //   })
-          // }
-
-          // update: (cache, { data: { addItem } }) => {
-          //   const data = cache.readQuery({ query: GET_STAFF });
-          //   console.log('sami',data);
-          //   data.items = [...data.items, addItem];
-          //   cache.writeQuery({ query: GET_STAFF }, data);
-          // },
-
-        });
-        // const queryResult = cache.readQuery({
-        //   query: GET_STAFF
-        // });
-        // console.log('sami', queryResult);
-      } catch (error) {
-        dispatch({
-          type: "setModal",
-          payload: {
-            openFormModal: false,
-          },
-        });
-        ToastError(error.message);
+        ToastWarning('Name required')
 
       }
-    }
 
-  };
+      else if (!state.editData?.email) {
+
+        ToastWarning('Email required')
+
+      }
+
+      else if (!state.editData?.contact) {
+
+        ToastWarning('Contact required')
+
+      }
+
+      else if (!state.editData?.cnic) {
+
+        ToastWarning('cnic required')
+
+      }
+
+      else if (!state.editData?.address) {
+
+        ToastWarning('address required')
+
+      }
+
+      else if (!state.editData?.userGroup) {
+
+        ToastWarning('User Group required')
+
+      }
+
+      else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
+
+        ToastWarning('Phone No Must be 11 digits')
+
+      }
+
+
+
+  
+
+      else {
+
+        try {
+
+          await Register({
+
+            variables: {
+
+  
+
+              data: {
+
+                name: state.editData?.name,
+
+                email: state.editData?.email,
+
+                password: state.editData?.password,
+
+                cnic: state.editData?.cnic,
+
+                contact: state.editData?.contact,
+
+                userGroup: {
+
+                  connect: {
+
+                    id: state.editData?.userGroup
+
+                  }
+
+                }
+
+              }
+
+  
+
+            },
+
+            refetchQueries: [{ query: GET_USERS }],
+
+  
+
+            onCompleted() {
+
+              dispatch({
+
+                type: "setModal",
+
+                payload: {
+
+                  modalUpdateFlag: false,
+
+                  openFormModal: false,
+
+                },
+
+              });
+
+  
+
+  
+
+              ToastSuccess('Staff Added')
+
+            },
+
+            // update(cache, { data: { addItems } }) {
+
+            //   const { tados } = cache.readQuery({
+
+            //     query: GET_STAFF
+
+            //   })
+
+            //   cache.writeQuery({
+
+            //     query: GET_STAFF,
+
+            //     data: {
+
+            //       tados: [
+
+            //         data.CreateManyStaff,
+
+            //         ...tados
+
+  
+
+            //       ]
+
+            //     }
+
+            //   })
+
+            // }
+
+  
+
+            // update: (cache, { data: { addItem } }) => {
+
+            //   const data = cache.readQuery({ query: GET_STAFF });
+
+            //   console.log('sami',data);
+
+            //   data.items = [...data.items, addItem];
+
+            //   cache.writeQuery({ query: GET_STAFF }, data);
+
+            // },
+
+  
+
+          });
+
+          // const queryResult = cache.readQuery({
+
+          //   query: GET_STAFF
+
+          // });
+
+          // console.log('sami', queryResult);
+
+        } catch (error) {
+
+          dispatch({
+
+            type: "setModal",
+
+            payload: {
+
+              openFormModal: false,
+
+            },
+
+          });
+
+          ToastError(error.message);
+
+  
+
+        }
+
+      }
+
+  
+
+    };
+
+  
 
 
 

@@ -143,7 +143,7 @@ const EnhancedTableToolbar = (props) => {
                             </IconButton>
                     )
 
-              
+
                 }
             </>
 
@@ -243,9 +243,9 @@ const EnhancedTableToolbar = (props) => {
                                 {/* {
                                     permissions.map((items) => {
                                         return items.CreatePermission ? */}
-                                        
-                                            <AddButton handleClickOpen={handleClickOpen} />
-                                            {/* :
+
+                                <AddButton handleClickOpen={handleClickOpen} />
+                                {/* :
                                             ''
                                     })
                                 } */}
@@ -616,6 +616,9 @@ export default function NewTable({
                                                                             subitem?.type === "modalProfileUrl" ? (
                                                                                 <CommonModal freelancingProfileUrl={row} />
                                                                             ) :
+                                                                            subitem?.type === "modalPermissions" ? (
+                                                                                <CommonModal modalPermissions={row} />
+                                                                            ) :
                                                                                 subitem?.type === "image" ? (
                                                                                     <>
                                                                                         {
@@ -632,26 +635,22 @@ export default function NewTable({
                                                                                         ></p>
                                                                                     ) : subitem?.type === "crud" ? (
                                                                                         <>
-                                                                                            {
-                                                                                                permissions.map((items) => {
-                                                                                                    return items.EditPermission ?
-                                                                                                        <NewTableStyle.IconDiv>
-                                                                                                            {/* <Tooltip title="Delete">
+
+                                                                                            <NewTableStyle.IconDiv>
+                                                                                                {/* <Tooltip title="Delete">
                                                             <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
                                                         </Tooltip> */}
-                                                                                                            <Tooltip title="Update">
-                                                                                                                <IconButton
-                                                                                                                    aria-label="update"
-                                                                                                                    size="small"
-                                                                                                                    onClick={() => ctaEditButtonHandler(row)}
-                                                                                                                >
-                                                                                                                    <NewTableStyle.EditIcon />
-                                                                                                                </IconButton>
-                                                                                                            </Tooltip>
-                                                                                                        </NewTableStyle.IconDiv>
-                                                                                                        : ''
-                                                                                                })
-                                                                                            }
+                                                                                                <Tooltip title="Update">
+                                                                                                    <IconButton
+                                                                                                        aria-label="update"
+                                                                                                        size="small"
+                                                                                                        onClick={() => ctaEditButtonHandler(row)}
+                                                                                                    >
+                                                                                                        <NewTableStyle.EditIcon />
+                                                                                                    </IconButton>
+                                                                                                </Tooltip>
+                                                                                            </NewTableStyle.IconDiv>
+
                                                                                         </>
                                                                                     ) : subitem.key === 'role' || subitem.key === 'status' ? (
                                                                                         <NewTableStyle.Role variant="outlined"
@@ -661,7 +660,7 @@ export default function NewTable({
                                                                                             {exactKey}
                                                                                         </NewTableStyle.Role>
 
-                                                                                    ) : subitem.key === 'name' ? (
+                                                                                    ) : subitem.key === 'name'?(
                                                                                         <NewTableStyle.AvatarBox>
                                                                                             <NewTableStyle.Avatar
                                                                                                 bgColor={AvatarBgColor(exactKey[0].toLowerCase())?.bg}

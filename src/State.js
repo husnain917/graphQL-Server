@@ -56,13 +56,14 @@ let reducer = (state, action) => {
             }
         }
         case "tabsPermission": {
-            console.log("a",action.payload);
+            console.log("a", action.payload);
             return {
                 ...state,
                 tabsPersmission: action.payload
             }
         }
         case "ORGlogin": {
+            console.log("org", action.payload)
             return {
                 ...state,
                 orgLogin: action.payload

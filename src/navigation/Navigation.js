@@ -32,6 +32,7 @@ import Speakers from '../modules/speakers/Speakers';
 import TabsPermission from '../modules/settings/tabsPermission/TabsPermission';
 import ApiPermissions from '../modules/settings/apiPermissions/ApiPermissions';
 import UserGroup from '../modules/settings/userGroup/UserGroup';
+import CreateOrganization from '../modules/settings/createOrganization/CreateOrganization';
 
 export default function Navigation() {
     const { state, dispatch } = useContext(AppContext);
@@ -51,9 +52,6 @@ export default function Navigation() {
                 <Route
                     path='/:pageName'
                     element={<PageNotFound />
-                        // <PublicRouting isAllowed={state.authState}>
-                        //     <Login />
-                        // </PublicRouting>
                     }
                 />
                 <Route 
@@ -95,47 +93,6 @@ export default function Navigation() {
                             </PrivateRouting>
                         }
                     />
-                    {
-                        state.user?.role === "OWNER" ?
-                            <Route
-                                path='/'
-                                element={
-                                    <PrivateRouting isAllowed={state.authState}>
-                                        <Dashboard />
-                                    </PrivateRouting>
-                                }
-                            />
-                            :
-                            state.user?.role === "ADMIN" ?
-                                <Route
-                                    path='/'
-                                    element={
-                                        <PrivateRouting isAllowed={state.authState}>
-                                            <Dashboard />
-                                        </PrivateRouting>
-                                    }
-                                />
-                                :
-                                state.user?.role === "STUDENT" ?
-                                    <Route
-                                        path='/'
-                                        element={
-                                            <PrivateRouting isAllowed={state.authState}>
-                                                <MyCourse />
-                                            </PrivateRouting>
-                                        }
-                                    />
-                                    :
-                                    state.user?.role === "TEACHER" ?
-                                        <Route
-                                            path='/'
-                                            element={
-                                                <PrivateRouting isAllowed={state.authState}>
-                                                    <AllStudents />
-                                                </PrivateRouting>
-                                            }
-                                        /> : ''
-                    }
                     <Route
                         path='/successStories'
                         element={
@@ -220,12 +177,6 @@ export default function Navigation() {
 
 
                     {/*Teacher routes*/}
-                    <Route path='/students'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <AllStudents />
-                            </PrivateRouting>}
-                    />
                     <Route path='/courseAssigned'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
@@ -266,6 +217,12 @@ export default function Navigation() {
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <ApiPermissions />
+                            </PrivateRouting>}
+                    />
+                     <Route path='/crate-organization'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <CreateOrganization />
                             </PrivateRouting>}
                     />
                     <Route path='/user-groups'

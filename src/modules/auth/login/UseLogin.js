@@ -92,7 +92,6 @@ export default function UseLogin() {
       ToastError(error.message)
     }
   }
-  const [orgLogin, setOrgLogin] = useState(false)
 
   let [OrganizationLogin, { loading: ORG_LOADING }] = useMutation(ORG_LOGIN)
   const organizationLoginHandler = async () => {
@@ -128,10 +127,13 @@ export default function UseLogin() {
       ToastError("Not Valid Member")
     }
   }
+  const [orgLogin, setOrgLogin] = useState(true)
+
   const ctaOrgHandler = (e) => {
+    setOrgLogin(!orgLogin)
     dispatch({
       type: "ORGlogin",
-      payload: true
+      payload: orgLogin
     })
   }
 

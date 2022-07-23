@@ -124,11 +124,22 @@ export const ADD_USER = gql`
 mutation Register($data: UserCreateInput!) {
   register(data: $data) {
     id
+    userGroup {
+      userGroupRole
+      userName
+      id
+      tabsPermission
+      updateAt
+    createdAt
+    }
     name
     email
     cnic
     address
     contact
+    status
+    permission
+    token
   }
 }
 `

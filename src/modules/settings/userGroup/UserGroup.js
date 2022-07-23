@@ -30,7 +30,7 @@ export default function UserGroup() {
 
   const { state, dispatch } = useContext(AppContext);
   const [stateArray, setStateArray] = useState(data);
-  
+
 
   const roles = [
     "ORGANIZATIONKEY", "ADMIN", "TEACHER", "STUDENT"
@@ -38,7 +38,7 @@ export default function UserGroup() {
   return (
     <TabsStyle.MainDiv>
       <Grid container>
-        <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
+        <Grid item xl={12} lg={12} mg={12} sm={12} xs={12}>
           <TabsStyle.InputLabel>
             <TabsStyle.MyInput
               User Group Name
@@ -48,15 +48,7 @@ export default function UserGroup() {
             />
           </TabsStyle.InputLabel>
         </Grid>
-        <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
-          {/* <TabsStyle.InputLabel>
-            <TabsStyle.MyInput
-              User Role
-              placeholder="Enter Role"
-              value={userGroupRole}
-              onChange={(e) => setuserGroupRole(e.target.value)}
-            />
-          </TabsStyle.InputLabel> */}
+        <Grid item xl={12} lg={12} mg={12} sm={12} xs={12}>
           <TabsStyle.InputLabel>
             <RadioGroup
               row

@@ -24,7 +24,7 @@ import FiltredData from "../../../constants/FiltredRoles";
 
 
 
-export  function UseTabsPermissions() {
+export function UseTabsPermissions() {
     const [{ courseBatch, COURSE_DATA }] = FiltredData()
     const formInputs = [
 
@@ -48,21 +48,35 @@ export  function UseTabsPermissions() {
 
 
 
-
     //GET STAFF 
 
     let { data, loading: GET_LOADING, error } = useQuery(GET_USERS);
+
+    const op = data?.users?.map((item) => {
+        return item.userGroup.tabsPermission.navigationResults.map((val) => {
+            return val.pages.map((val2)=>{
+                return val2.pageName
+            })
+          
+        })
+    })
+
+  
+
     console.log("error", error);
     const refacteredData = [];
     data?.users?.forEach((item) => {
-          refacteredData.push({
-            // permissions: item.userGroup.tabsPermission,
-            // updateAt: item.userGroup.updateAt,
-            // createdAt: item.userGroup.createdAt,
-            // role: item.userGroup.userGroupRole
-          });
-        
-      });
+        refacteredData.push({
+            name: item.name,
+            permissions: item.userGroup.tabsPermission.navigationResults.map((val) => {
+                return val.pages
+              
+            }),
+            updateAt: item.userGroup.updateAt,
+            createdAt: item.userGroup.createdAt,
+            role: item.userGroup.userGroupRole,
+        });
+    })
     console.log("refacteredData", refacteredData);
 
 

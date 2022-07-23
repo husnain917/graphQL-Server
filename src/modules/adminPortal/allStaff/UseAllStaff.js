@@ -189,9 +189,11 @@ export function UseAllStaff() {
 
                 email: state.editData?.email,
 
-                password: state.editData?.password,
-
                 cnic: state.editData?.cnic,
+
+                address: state.editData?.address,
+
+                password: state.editData?.password,
 
                 contact: state.editData?.contact,
 

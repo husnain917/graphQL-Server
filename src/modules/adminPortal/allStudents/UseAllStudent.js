@@ -24,6 +24,8 @@ import { AppContext } from "../../../State";
 
 export function UseAllStudents() {
   const [{ userGroupStudent }] = FiltredData()
+  var regexp = new RegExp('^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$');
+  // var regexp = new RegExp('');
  
   const formInputs = [
     {
@@ -46,6 +48,15 @@ export function UseAllStudents() {
       label: "Cnic",
       name: "cnic",
       type: "number",
+      pattern: regexp,
+      // sx: {
+      //   input : {
+      //     "&:invalid":{
+      //       border: "red solid 2px"
+      //     },
+      //     // "&:valid"
+      //   }
+      // }
     },
     {
       label: "Contact",
@@ -231,7 +242,7 @@ export function UseAllStudents() {
     else if (!state.editData?.address) {
       ToastWarning('address required')
     }
-    else if (!state.editData?.role) {
+    else if (!state.editData?.userGroup) {
       ToastWarning('Role required')
     }
     else {
@@ -261,9 +272,12 @@ export function UseAllStudents() {
               contact: {
                 set: state.editData?.contact,
               },
-              userRole: {
-                set: state.editData?.role,
+              userGroup: {
+                connect: {
+                  id: state.editData?.userGroup
+                }
               }
+              
             },
           },
           onCompleted() {

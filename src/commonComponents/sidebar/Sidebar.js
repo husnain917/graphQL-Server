@@ -34,8 +34,8 @@ function Sidebar(props) {
   const [dropDownOpen, setDropDownOpen] = useState(0);
   const container = window !== undefined ? () => window().document.body : undefined;
   //List Item 
-  
-console.log(location?.pathname)
+
+  console.log(location?.pathname)
 
   const renderSidebarItems = (items, index) => {
     return (
@@ -45,7 +45,15 @@ console.log(location?.pathname)
             key={index}
             ref={anchorRef}
             button
-            onClick={width < 600 ? handleDrawer : null || items.collapse === "true" ? () => setDropDownOpen(items.module_id) : ''}
+            onClick={width < 600 ? handleDrawer : null ||
+              dropDownOpen === 0 ?
+              items.collapse === "true" ?
+                () => setDropDownOpen(items.module_id)
+                : ''
+              : dropDownOpen === items.module_id ?
+                () => setDropDownOpen(0)
+                : ""
+                  || items.collapse === "true" ? () => setDropDownOpen(items.module_id) : ''}
             Active={location?.pathname === items?.moduleUrl}
             sx={location?.pathname === items?.moduleName ? { backgroundColor: '#E8F3FF', borderRadius: 2 } : null}
 
@@ -344,7 +352,7 @@ export default Sidebar;
 //   const anchorRef = React.useRef(null);
 //   const { state } = React.useContext(AppContext)
 //   const container = window !== undefined ? () => window().document.body : undefined;
-//   //List Item 
+//   //List Item
 //   const renderSidebarItems = (items, index) => {
 //     return (
 //       <>

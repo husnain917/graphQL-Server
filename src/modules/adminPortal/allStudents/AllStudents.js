@@ -89,6 +89,7 @@ export default function AllStudents() {
           },
         ]}
         formInputs={formInputs}
+        // sx={{input: {"&:invalid" :{border: "red solid 2px"}}}}
         filterdata={{
           key: "role",
           filterTag: [

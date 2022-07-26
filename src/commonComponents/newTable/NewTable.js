@@ -319,7 +319,7 @@ export default function NewTable({
     filterdata,
     data,
     date,
-
+    
     // Handlers
     ctaFormHandler,
     // ctaDeleteHandler,
@@ -658,6 +658,8 @@ export default function NewTable({
                                                                                             Color={AvatarBgColor(exactKey[0].toLowerCase())?.color}
                                                                                         >
                                                                                             {exactKey}
+                                                                                            
+                                                                                            
                                                                                         </NewTableStyle.Role>
 
                                                                                     ) : subitem.key === 'name'?(

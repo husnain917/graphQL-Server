@@ -68,7 +68,7 @@ export default function UseMyCourses() {
         refacteredData.push({
             id: item.id,
             coursesId: item.coursesId,
-            studentId: item.studentId,
+            // studentId: item.studentId,
             courseApproval: item.courseApproval,
             whyReject: item.whyReject,
             feeStatus: item.feeStatus,
@@ -77,7 +77,7 @@ export default function UseMyCourses() {
             createdAt: item.createdAt,
         });
     });
-    console.log("refacteredData", refacteredData);
+    console.log("refacteredData in useMyCourse", refacteredData);
 
     const [loader, setLoader] = useState(false);
 

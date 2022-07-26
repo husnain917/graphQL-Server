@@ -513,12 +513,22 @@ export const UPDATE_USER = gql`
 mutation UpdateUser($data: UserUpdateInput!, $where: UserWhereUniqueInput!) {
   updateUser(data: $data, where: $where) {
     id
+    userGroup {
+      userGroupRole
+      userName
+      id
+      tabsPermission
+      updateAt
+    createdAt
+    }
     name
     email
     cnic
     address
     contact
-    userRole
+    status
+    permission
+    token
   }
 }
 `

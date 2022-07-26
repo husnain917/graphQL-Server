@@ -58,8 +58,11 @@ export const FM = {
             paddingLeft: 10,
             paddingRight: 10,
             height: 35,
-
+            // '&:invalid' : {
+            //     border: "red solid 2px"
+            // }
         }
+        
         
 
     }))

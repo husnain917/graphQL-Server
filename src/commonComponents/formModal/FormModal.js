@@ -27,7 +27,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import { FM } from './FormModalStyle'
 import CloudinaryFunction from "../../constants/CloudinaryFunction";
 import { blue } from "@mui/material/colors";
-export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date }) {
+
+
+export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date,  }) {
   const { state, dispatch } = useContext(AppContext);
   const [ctaImageUpdateHandler] = CloudinaryFunction()
   const [open, setOpen] = useState(false)
@@ -78,7 +80,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                     item.type === "number" ? (
                       <FM.TextInput
                         InputLabelProps={{ shrink: true }}
-                        InputProps={{ disableUnderline: true, inputProps: {min:0} }}
+                        InputProps={{ disableUnderline: true, inputProps: {min:0}, }}
                         margin="dense"
                         id="file"
                         // min={0}

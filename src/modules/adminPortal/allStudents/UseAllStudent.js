@@ -231,8 +231,8 @@ export function UseAllStudents() {
     else if (!state.editData?.address) {
       ToastWarning('address required')
     }
-    else if (!state.editData?.role) {
-      ToastWarning('Role required')
+    else if (!state.editData?.userGroup) {
+      ToastWarning('User Group required')
     }
     else {
       try {
@@ -261,8 +261,10 @@ export function UseAllStudents() {
               contact: {
                 set: state.editData?.contact,
               },
-              userRole: {
-                set: state.editData?.role,
+              userGroup: {
+                connect: {
+                  id: state.editData?.userGroup
+                }
               }
             },
           },

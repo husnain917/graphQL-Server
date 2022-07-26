@@ -112,7 +112,7 @@ export default function UseLogin() {
           });
           ToastSuccess(`Welcome ${login.organizationLogin.name}`)
           login.organizationLogin?.userGroup.map((item) => {
-            if (item.userGroupRole === "ORGANIZATIONKEY")
+            if (login.organizationLogin.role === "ORGANIZATIONKEY")
               dispatch({
                 type: "tabsPermission",
                 payload: item.tabsPermission?.navigationResults

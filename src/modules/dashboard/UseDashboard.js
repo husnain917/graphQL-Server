@@ -30,11 +30,16 @@ export default function UseDashboard() {
         student,
         teacher,
         admin,
+        userGroupOrganization,
         speakerList,
         courseBatch,
+        allOrg,
+        USER_LOADING,
+        ALL_ORG_LOADING,
         USERS_LOADING,
         CATEGORY_LOADING,
         SPEAKERS_LOADING,
+        USER_GROUP_LOADING,
         BATCH_LOADING
     }] = FiltredData()
     let studentLength = student?.length
@@ -46,14 +51,20 @@ export default function UseDashboard() {
     let speakerListLength = speakerList?.length
     let courseBatchlength = courseBatch?.length
     let enrollement = ENROLLEMTENT?.enrollmentApprovals?.length
+    let userGroupOrganizationLength = userGroupOrganization?.length
+    let all_org = allOrg?.length
     return [{
         AdminLength,
         TeacherLength,
         studentLength,
         successLength,
         courseBatchlength,
+        all_org,
+        ALL_ORG_LOADING,
+        USER_LOADING,
         enrollement,
         eventLength,
+        userGroupOrganizationLength,
         state,
         courseLength,
         speakerListLength,
@@ -65,5 +76,6 @@ export default function UseDashboard() {
         SPEAKERS_LOADING,
         SUCCESS_LOADING,
         BATCH_LOADING,
+        USER_GROUP_LOADING
     }];
 }

@@ -28,6 +28,7 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import AddIcon from '@mui/icons-material/Add';
 import UseWindowDimensions from '../../customHooks/UseWindowDimensions';
 import moment from 'moment';
+import { useLocation } from 'react-router-dom';
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
@@ -493,6 +494,26 @@ export default function NewTable({
     const permissions = state.tabsPersmission.map((items) => {
         return items.pages
     })
+
+
+
+    //Permission Work
+    // const location = useLocation();
+    // const newArr = state.tabsPersmission.map((item) => item.pages.map((items) => {
+    //     return items
+    // }
+    // ))
+
+    // const obj = Object.fromEntries(newArr);
+    // const arrSet = () => {
+    //     setArr(newArr)
+    // }
+
+    // React.useEffect(() => {
+    //     console.log(newArr)
+    // }, [])
+
+    // console.log("samiiiiii", arr)
     return (
         <Box sx={{ width: '100%' }}>
             {/* Drop Down menu for filter Button */}
@@ -616,67 +637,77 @@ export default function NewTable({
                                                                             subitem?.type === "modalProfileUrl" ? (
                                                                                 <CommonModal freelancingProfileUrl={row} />
                                                                             ) :
-                                                                            subitem?.type === "modalPermissions" ? (
-                                                                                <CommonModal modalPermissions={row} />
-                                                                            ) :
-                                                                                subitem?.type === "image" ? (
-                                                                                    <>
-                                                                                        {
-                                                                                            row.eventImage ?
-                                                                                                <NewTableStyle.Image src={exactKey} />
-                                                                                                :
-                                                                                                <p>No Image</p>
-                                                                                        }
-                                                                                    </>
+                                                                                subitem?.type === "modalPermissions" ? (
+                                                                                    <CommonModal modalPermissions={row} />
                                                                                 ) :
-                                                                                    subitem?.type === "editor" ? (
-                                                                                        <p
-                                                                                            dangerouslySetInnerHTML={{ __html: exactKey }}
-                                                                                        ></p>
-                                                                                    ) : subitem?.type === "crud" ? (
+                                                                                    subitem?.type === "image" ? (
                                                                                         <>
+                                                                                            {
+                                                                                                row.eventImage ?
+                                                                                                    <NewTableStyle.Image src={exactKey} />
+                                                                                                    :
+                                                                                                    <p>No Image</p>
+                                                                                            }
+                                                                                        </>
+                                                                                    ) :
+                                                                                        subitem?.type === "editor" ? (
+                                                                                            <p
+                                                                                                dangerouslySetInnerHTML={{ __html: exactKey }}
+                                                                                            ></p>
+                                                                                        ) : subitem?.type === "crud" ? (
+                                                                                            <>
 
-                                                                                            <NewTableStyle.IconDiv>
-                                                                                                {/* <Tooltip title="Delete">
+                                                                                                <NewTableStyle.IconDiv>
+                                                                                                    {/* <Tooltip title="Delete">
                                                             <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
                                                         </Tooltip> */}
-                                                                                                <Tooltip title="Update">
-                                                                                                    <IconButton
-                                                                                                        aria-label="update"
-                                                                                                        size="small"
-                                                                                                        onClick={() => ctaEditButtonHandler(row)}
-                                                                                                    >
-                                                                                                        <NewTableStyle.EditIcon />
-                                                                                                    </IconButton>
-                                                                                                </Tooltip>
-                                                                                            </NewTableStyle.IconDiv>
+                                                                                                    {/* {
+                                                                                                        newArr.pageURL === location.pagename ?
+                                                                                                            newArr.EditPermission ?
+                                                                                                                
+                                                                                                                :
+                                                                                                                null
+                                                                                                            :
+                                                                                                            null
+                                                                                                    } */}
+                                                                                                    <Tooltip title="Update">
+                                                                                                        <IconButton
+                                                                                                            aria-label="update"
+                                                                                                            size="small"
+                                                                                                            onClick={() => ctaEditButtonHandler(row)}
+                                                                                                        >
+                                                                                                            <NewTableStyle.EditIcon />
+                                                                                                        </IconButton>
+                                                                                                    </Tooltip>
 
-                                                                                        </>
-                                                                                    ) : subitem.key === 'role' || subitem.key === 'status' ? (
-                                                                                        <NewTableStyle.Role variant="outlined"
-                                                                                            bgColor={AvatarBgColor(exactKey[0].toLowerCase())?.bg}
-                                                                                            Color={AvatarBgColor(exactKey[0].toLowerCase())?.color}
-                                                                                        >
-                                                                                            {exactKey}
-                                                                                        </NewTableStyle.Role>
+                                                                                                </NewTableStyle.IconDiv>
 
-                                                                                    ) : subitem.key === 'name'?(
-                                                                                        <NewTableStyle.AvatarBox>
-                                                                                            <NewTableStyle.Avatar
+                                                                                            </>
+                                                                                        ) : subitem.key === 'role' || subitem.key === 'status' ? (
+                                                                                            <NewTableStyle.Role variant="outlined"
                                                                                                 bgColor={AvatarBgColor(exactKey[0].toLowerCase())?.bg}
                                                                                                 Color={AvatarBgColor(exactKey[0].toLowerCase())?.color}
-                                                                                            >{exactKey[0].toUpperCase()}</NewTableStyle.Avatar>
-                                                                                            <NewTableStyle.EmailNameContainer >
-                                                                                                <NewTableStyle.PTagName>{exactKey}</NewTableStyle.PTagName>
-                                                                                                <NewTableStyle.PTagEmail>{ }</NewTableStyle.PTagEmail>
-                                                                                            </NewTableStyle.EmailNameContainer>
-                                                                                        </NewTableStyle.AvatarBox>
-                                                                                    ) : subitem.key === 'createdAt' || subitem.key === 'updateAt' ? (
-                                                                                        <NewTableStyle.PTime>{moment(exactKey).format('DD-MMM-YY hh:mm A')}</NewTableStyle.PTime>
-                                                                                    ) : (
-                                                                                        exactKey
+                                                                                            >
+                                                                                                {exactKey}
+                                                                                            </NewTableStyle.Role>
 
-                                                                                    )}
+                                                                                        ) : subitem.key === 'name' ? (
+                                                                                            <NewTableStyle.AvatarBox>
+                                                                                                <NewTableStyle.Avatar
+                                                                                                    bgColor={AvatarBgColor(exactKey[0].toLowerCase())?.bg}
+                                                                                                    Color={AvatarBgColor(exactKey[0].toLowerCase())?.color}
+                                                                                                >{exactKey[0].toUpperCase()}</NewTableStyle.Avatar>
+                                                                                                <NewTableStyle.EmailNameContainer >
+                                                                                                    <NewTableStyle.PTagName>{exactKey}</NewTableStyle.PTagName>
+                                                                                                    <NewTableStyle.PTagEmail>{ }</NewTableStyle.PTagEmail>
+                                                                                                </NewTableStyle.EmailNameContainer>
+                                                                                            </NewTableStyle.AvatarBox>
+                                                                                        ) : subitem.key === 'createdAt' || subitem.key === 'updateAt' ? (
+                                                                                            <NewTableStyle.PTime>{moment(exactKey).format('DD-MMM-YY hh:mm A')}</NewTableStyle.PTime>
+                                                                                        ) : (
+                                                                                            exactKey
+
+                                                                                        )}
                                                             </TableCell>
                                                         </>
                                                     );

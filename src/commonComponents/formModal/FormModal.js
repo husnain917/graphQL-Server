@@ -99,6 +99,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                           }}
 
                         >
+                          {console.log(item.dropDownUserGroup)}
                           {
                             item?.dropDownUserGroup.map((option) => (
 

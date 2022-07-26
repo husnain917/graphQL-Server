@@ -144,6 +144,28 @@ mutation Register($data: UserCreateInput!) {
 }
 `
 
+export const ADD_ORGANIZATION = gql`
+mutation CreateOrganization($data: OrganizationsCreateInput!) {
+  createOrganization(data: $data) {
+    id
+    name
+    email
+    role
+    address
+    contact
+    secretKeyId
+    userGroup {
+      id
+      userGroupRole
+      userName
+      tabsPermission
+      createdAt
+      updateAt
+    }
+  }
+}
+`
+
 export const ADD_MY_COURSES = gql`
 mutation Mutation($data: MyCourseCreateInput!) {
   createMyCourse(data: $data) {

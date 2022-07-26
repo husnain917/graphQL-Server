@@ -15,7 +15,7 @@ export default function TabsPermissions() {
   const [
     {
       // ADD_LOADING,
-      // GET_LOADING,
+      GET_LOADING,
       // DELETE_LOADING,
       // UPDATE_LOADING,
       refacteredData,
@@ -26,14 +26,14 @@ export default function TabsPermissions() {
       // ctaEditButtonHandler
     },
   ] = UseTabsPermissions();
-  // if (
-  //   GET_LOADING ||
-  //   // DELETE_LOADING ||
-  //   UPDATE_LOADING ||
-  //   ADD_LOADING
-  // ) {
-  //   return <CommonTableLoader />;
-  // }
+  if (
+    GET_LOADING 
+    // DELETE_LOADING ||
+    // UPDATE_LOADING ||
+    // ADD_LOADING
+  ) {
+    return <CommonTableLoader />;
+  }
   return (
     <>
       <ToastContainer />

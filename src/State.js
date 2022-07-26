@@ -43,6 +43,7 @@ let reducer = (state, action) => {
             }
         }
         case "setEditId": {
+            console.log(action.payload)
             return {
                 ...state,
                 editId: action.payload

@@ -69,10 +69,10 @@ export default function UseMyCourses() {
             id: item.id,
             coursesId: item.coursesId,
             studentId: item.studentId,
-            courseApproval: item.courseApproval,
-            whyReject: item.whyReject,
+            // courseApproval: item.courseApproval,
+            // whyReject: item.whyReject,
             feeStatus: item.feeStatus,
-            courseBatchesId: item.courseBatchesId,
+            // courseBatchesId: item.courseBatchesId,
             updateAt: item.updateAt,
             createdAt: item.createdAt,
         });

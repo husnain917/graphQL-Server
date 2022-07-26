@@ -143,7 +143,17 @@ mutation Register($data: UserCreateInput!) {
   }
 }
 `
-
+export const ADD_COURSE_CATEGORY = gql`
+mutation CreateCategory($data: CategoryCreateInput!) {
+  createCategory(data: $data) {
+    id
+    categoryName
+    imageUrl
+    createdAt
+    updateAt
+  }
+}
+`
 export const ADD_ORGANIZATION = gql`
 mutation CreateOrganization($data: OrganizationsCreateInput!) {
   createOrganization(data: $data) {
@@ -443,7 +453,17 @@ mutation UpdateSuccessStories($where: SuccessStoriesWhereUniqueInput!, $data: Su
 
 } `
 
-
+export const UPDATE_SINGLE_COURSE_CATEGORY = gql`
+mutation UpdateCategory($data: CategoryUpdateInput!, $where: CategoryWhereUniqueInput!) {
+  updateCategory(data: $data, where: $where) {
+    id
+    categoryName
+    imageUrl
+    createdAt
+    updateAt
+  }
+}
+`
 
 export const UPDATE_SINGLE_COURSE = gql`
 mutation UpdateCourses($data: CoursesUpdateInput!, $where: CoursesWhereUniqueInput!) {

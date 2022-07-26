@@ -188,7 +188,7 @@ const EnhancedTableToolbar = (props) => {
                         )
                         : (
                             <div>
-                                {toolBarTitle === "FAQS" ? (
+                                {toolBarTitle === "FAQS" || "Speakers" ? (
                                     ""
                                 ) : (
                                     <>

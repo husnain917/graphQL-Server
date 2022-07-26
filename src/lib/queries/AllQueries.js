@@ -157,6 +157,9 @@ query Categories {
   categories {
     id
     categoryName
+    imageUrl
+    createdAt
+    updateAt
   }
 }
 `

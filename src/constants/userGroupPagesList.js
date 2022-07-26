@@ -90,6 +90,28 @@ export const data=
                 "FullAccess": false
               },
               {
+                "pageName": "Course Category",
+                "pageID": "3",
+                "pageURL": "/courseCategory",
+                "page_id": "3",
+                "CreatePermission": false,
+                "DelPermission": false,
+                "EditPermission": false,
+                "ViewPermission": false,
+                "FullAccess": false
+              },
+              {
+                "pageName": "Lectures",
+                "pageID": "3",
+                "pageURL": "/lectures",
+                "page_id": "3",
+                "CreatePermission": false,
+                "DelPermission": false,
+                "EditPermission": false,
+                "ViewPermission": false,
+                "FullAccess": false
+              },
+              {
                 "pageName": "Assignments",
                 "pageID": "3",
                 "pageURL": "/assignments",

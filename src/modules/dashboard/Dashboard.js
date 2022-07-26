@@ -109,7 +109,7 @@ export default function Dashboard() {
                 {
                     userRole === "ORGANIZATIONKEY" || "OWNER" ?
                         <DS.CardsRow>
-                            <DS.CardContainer>
+                            {/* <DS.CardContainer>
                                 <Link to='/courseBatch' className="link">
                                     <Card
                                         value={courseBatchlength ? courseBatchlength : 0}
@@ -118,7 +118,7 @@ export default function Dashboard() {
                                         icon={<DS.Subscriptions />}
                                     />
                                 </Link>
-                            </DS.CardContainer>
+                            </DS.CardContainer> */}
                             <DS.CardContainer>
                                 <Link to='/approve-enrollment' className="link">
                                     <Card

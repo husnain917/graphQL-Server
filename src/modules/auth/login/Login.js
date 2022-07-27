@@ -6,6 +6,7 @@ import CommonTooltip from '../../../commonComponents/commonTooltip/CommonTooltip
 import { ToastContainer } from 'react-toastify';
 import { StageSpinner } from 'react-spinners-kit'
 import { Checkbox, FormControlLabel } from "@mui/material";
+
 import { colors } from "../../../constants/Color";
 export default function Login() {
     const [{ values, handleChange, handleClickShowPassword, state, orgLogin, email, setEmail, loginHandler, ORG_LOADING, organizationLoginHandler, loading, ctaOrgHandler, emailTyping, emaiTypingRemove, passwordTyping, passwordTypingRemove, showPassword }] = UseLogin();
@@ -47,9 +48,9 @@ export default function Login() {
                         <LoginStyle.InputFieldHeading>
                             Password<LoginStyle.Estaric>{'*'}</LoginStyle.Estaric>
                         </LoginStyle.InputFieldHeading>
-                        <LoginStyle.ForgotPassword>
-                            Forgot Password?
-                        </LoginStyle.ForgotPassword>
+                        <LoginStyle.ForgotPasswordLink to={"/forgotPassword"}>
+                            Forgot Password ?
+                        </LoginStyle.ForgotPasswordLink>
                     </LoginStyle.ForgotContainer>
 
                     <LoginStyle.IconAndInputField typing={values.passwordTyping} onClick={() => passwordTyping()}>

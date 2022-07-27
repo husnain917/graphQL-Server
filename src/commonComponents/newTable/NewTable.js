@@ -580,7 +580,7 @@ export default function NewTable({
                                                 aria-checked={isItemSelected}
                                                 tabIndex={-1}
                                                 key={row.name}
-                                                sx={{ height: 60 }}
+                                                sx={{ height: 60, Width: 100 }}
                                             >
                                                 <TableCell padding="checkbox">
                                                     <NewTableStyle.Checkbox

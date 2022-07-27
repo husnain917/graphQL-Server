@@ -54,8 +54,8 @@ function Sidebar(props) {
                 () => setDropDownOpen(0)
                 : ""
                   || items.collapse === "true" ? () => setDropDownOpen(items.module_id) : ''}
-            Active={location?.pathname === items?.moduleUrl}
-            sx={location?.pathname === items?.moduleName ? { backgroundColor: '#E8F3FF', borderRadius: 2 } : null}
+            // Active={location?.pathname === items?.moduleUrl}
+            // sx={location?.pathname === items?.moduleName ? { backgroundColor: '#E8F3FF', borderRadius: 2 } : null}
 
           >
             {
@@ -69,11 +69,11 @@ function Sidebar(props) {
                 }
               })
             }
-            <SidebarStyle.ListItemTextTag primary={items?.moduleName} />
+            <SidebarStyle.ListItemTextTag primary={items?.moduleName} Active={location?.pathname === items?.moduleUrl}/>
             {
               items?.collapse === 'true' ?
                 dropDownOpen === items.module_id ?
-                  <SidebarStyle.ListItemIconTag><KeyboardArrowDownIcon /></SidebarStyle.ListItemIconTag>
+                  <SidebarStyle.ListItemIconTag Active><KeyboardArrowDownIcon /></SidebarStyle.ListItemIconTag>
                   :
                   <SidebarStyle.ListItemIconTag ><KeyboardArrowRightIcon /></SidebarStyle.ListItemIconTag>
                 : null
@@ -95,8 +95,8 @@ function Sidebar(props) {
                             ref={anchorRef}
                             onClick={width < 600 ? handleDrawer : null}
                             button
-                            Active={location?.pathname === item?.pageURL}
-                            sx={location?.pathname === item?.pageURL ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
+                            // Active={location?.pathname === item?.pageURL}
+                            // sx={location?.pathname === item?.pageURL ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
                           >
                             {
                               MENU_ITEMS.map((val) => {
@@ -109,7 +109,7 @@ function Sidebar(props) {
                                 }
                               })
                             }
-                            <SidebarStyle.ListItemTextTagForDropDown primary={item?.pageName} />
+                            <SidebarStyle.ListItemTextTagForDropDown primary={item?.pageName} Active={location?.pathname === item?.pageURL} />
                           </ListItem>
                         </SidebarStyle.DomLink>
                         //   )
@@ -280,7 +280,9 @@ function Sidebar(props) {
         </SidebarStyle.DrawerHeader>
         <Divider />
         {drawer}
+        <SidebarStyle.ButtonContainer>
         <Link to='/login' className='link'><SidebarStyle.LogoutLink onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink></Link>
+        </SidebarStyle.ButtonContainer>
       </SidebarStyle.WebDrawer>
 
       <Hidden mdUp>
@@ -296,7 +298,9 @@ function Sidebar(props) {
         >
           <Toolbar />
           {drawer}
+          <SidebarStyle.ButtonContainer>
           <Link to='/login' className='link'> <SidebarStyle.LogoutLink onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink></Link>
+          </SidebarStyle.ButtonContainer>
         </SidebarStyle.MobileDrawer>
       </Hidden>
 

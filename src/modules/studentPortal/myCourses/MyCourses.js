@@ -35,10 +35,10 @@ export default function MyCourse() {
             id: "courseId",
             Label: "Course Id"
         },
-        // {
-        //     id: "studentId",
-        //     Label: "Student Id"
-        // },
+        {
+            id: "studentId",
+            Label: "Student Id"
+        },
         {
             id: "courseApproval",
             Label: "Course Approval"
@@ -75,12 +75,12 @@ export default function MyCourse() {
         {
           key: "coursesId",
         },
-        // {
-        //   key: "studentId",
-        // },
         {
-          key: "courseBatchesId",
+          key: "studentId",
         },
+        // {
+        //   key: "courseBatchesId",
+        // },
         {
           key: "courseApproval",
         },

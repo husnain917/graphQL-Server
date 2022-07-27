@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import Sidebar from '../commonComponents/sidebar/Sidebar';
 import { Route, Routes } from 'react-router-dom';
 import Login from '../modules/auth/login/Login';
+import ForgotPassword from '../modules/auth/forgotPassword/ForgotPassword';
 import Dashboard from '../modules/dashboard/Dashboard';
 import AllStudents from '../modules/adminPortal/allStudents/AllStudents';
 import SuccessStory from '../modules/successStory/SuccessStory';
@@ -46,6 +47,14 @@ export default function Navigation() {
                     element={
                         <PublicRouting isAllowed={state.authState}>
                             <Login />
+                        </PublicRouting>
+                    }
+                />
+                <Route
+                    path='/forgotPassword'
+                    element={
+                        <PublicRouting isAllowed={state.authState}>
+                            <ForgotPassword />
                         </PublicRouting>
                     }
                 />

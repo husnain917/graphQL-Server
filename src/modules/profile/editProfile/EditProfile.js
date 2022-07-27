@@ -86,7 +86,7 @@ export default function EditProfile() {
                     xs={12}>
                     <CommonEditField
                         Label='Phone No'
-                        type='number'
+                        type='tel'
                         placeholder={state?.orgLogin ?
                             state?.user?.organizationLogin.contact
                             :

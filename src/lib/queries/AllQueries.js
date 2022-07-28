@@ -58,10 +58,21 @@ query FindManySuccessStories {
   }
 }
 `
-
+export const GET_ALL_ORGANIZATION = gql`
+query FindManyOrganizations {
+  findManyOrganizations {
+    id
+    name
+    email
+    role
+    address
+    contact
+  }
+}
+`
 
 export const GET_USERS = gql`
-query Users {
+query Query {
   users {
     id
     name
@@ -70,21 +81,27 @@ query Users {
     address
     contact
     permission
-    emailApproval
-    userRole
-    successStoriesId
-    token
+    userGroup {
+      userGroupRole
+      id
+      userName
+      tabsPermission
+    }
+  }
+}
+
+`
+
+
+export const GET_USER_GROUP = gql`
+query UserGroups {
+  userGroups {
+    id
+    userName
+    userGroupRole
+    tabsPermission
     createdAt
     updateAt
-    status
-    userGroupId
-    userGroup {
-      userName
-      userGroupRole
-      tabsPermission
-      createdAt
-      updateAt
-    }
   }
 }
 `
@@ -140,6 +157,9 @@ query Categories {
   categories {
     id
     categoryName
+    imageUrl
+    createdAt
+    updateAt
   }
 }
 `

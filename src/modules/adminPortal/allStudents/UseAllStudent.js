@@ -5,6 +5,7 @@ import {
   ToastSuccess,
   ToastWarning,
 } from "../../../commonComponents/commonFunction/CommonFunction";
+import FiltredData from "../../../constants/FiltredRoles";
 import {
   ADD_USER,
   // DELETE_USER,
@@ -22,6 +23,8 @@ import { AppContext } from "../../../State";
 
 
 export function UseAllStudents() {
+  const [{ userGroupStudent }] = FiltredData()
+
   const formInputs = [
     {
       label: "Name",
@@ -45,20 +48,20 @@ export function UseAllStudents() {
       type: "number",
     },
     {
-      label: "Contact",
-      name: "contact",
-      type: "tel",
-    },
-    {
       label: "Address",
       name: "address",
       type: "text",
     },
     {
-      label: "Role",
-      name: "role",
-      type: "select",
-      dropDownContent: ["STUDENT"],
+      label: "Contact",
+      name: "contact",
+      type: "contact",
+    },
+    {
+      label: "Select User Group",
+      name: "userGroup",
+      type: "roleSelect",
+      dropDownUserGroup: userGroupStudent
     },
   ]
   const { state, dispatch } = useContext(AppContext);
@@ -76,24 +79,29 @@ export function UseAllStudents() {
     error
   } = useQuery(GET_USERS);
   const refacteredData = [];
-  data?.users?.forEach((item) => {
-    if (item.userRole === "STUDENT") {
+  data?.users?.map((item) => {
+    if (item.userGroup?.userGroupRole === "STUDENT") {
       refacteredData.push({
         id: item.id,
         name: item.name,
         email: item.email,
         cnic: item.cnic,
-        // address: item.address,
+        address: item.address,
         contact: item.contact,
-        role: item.userRole
+        role: item.userGroup.userGroupRole
       });
     }
+
   });
 
 
   //ADD STAFF
 
-  let [CreateUser, { loading: ADD_LOADING }] = useMutation(ADD_USER);
+  let [
+    Register,
+    {
+      loading: ADD_LOADING
+    }] = useMutation(ADD_USER);
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
@@ -103,7 +111,7 @@ export function UseAllStudents() {
     else if (!state.editData?.email) {
       ToastWarning('Email required')
     }
-    else if (!state.editData?.contact) {
+    else if (!state.valTel) {
       ToastWarning('Contact required')
     }
     else if (!state.editData?.cnic) {
@@ -112,29 +120,31 @@ export function UseAllStudents() {
     else if (!state.editData?.address) {
       ToastWarning('address required')
     }
-    else if (!state.editData?.role) {
-      ToastWarning('Role required')
+    else if (!state.editData?.userGroup) {
+      ToastWarning('User Group required')
     }
-    else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
-      ToastWarning('Phone No Must be 10 digits')
-      // setError('Phone Number Must be 10 digits')
-    }
-
     else {
       try {
-        await CreateUser({
+        await Register({
           variables: {
+
             data: {
               name: state.editData?.name,
               email: state.editData?.email,
               password: state.editData?.password,
               cnic: state.editData?.cnic,
-              contact: state.editData?.contact,
-              address: state.editData?.address,
-              userRole: state.editData?.role,
+              contact: state?.valTel,
+              userGroup: {
+                connect: {
+                  id: state.editData?.userGroup
+                }
+              }
             }
+
           },
-          onCompleted(data, cache) {
+          refetchQueries: [{ query: GET_USERS }],
+
+          onCompleted() {
             dispatch({
               type: "setModal",
               payload: {
@@ -142,10 +152,38 @@ export function UseAllStudents() {
                 openFormModal: false,
               },
             });
+
+
             ToastSuccess('Student Added')
           },
-          refetchQueries: [{ query: GET_USERS }],
+          // update(cache, { data: { addItems } }) {
+          //   const { tados } = cache.readQuery({
+          //     query: GET_STAFF
+          //   })
+          //   cache.writeQuery({
+          //     query: GET_STAFF,
+          //     data: {
+          //       tados: [
+          //         data.CreateManyStaff,
+          //         ...tados
+
+          //       ]
+          //     }
+          //   })
+          // }
+
+          // update: (cache, { data: { addItem } }) => {
+          //   const data = cache.readQuery({ query: GET_STAFF });
+          //   console.log('sami',data);
+          //   data.items = [...data.items, addItem];
+          //   cache.writeQuery({ query: GET_STAFF }, data);
+          // },
+
         });
+        // const queryResult = cache.readQuery({
+        //   query: GET_STAFF
+        // });
+        // console.log('sami', queryResult);
       } catch (error) {
         dispatch({
           type: "setModal",
@@ -157,32 +195,10 @@ export function UseAllStudents() {
 
       }
     }
+
   };
 
 
-
-
-
-  // DELETE STAFF
-
-  // let [DeleteUser, { loading: DELETE_LOADING }] = useMutation(DELETE_USER);
-  // const ctaDeleteHandler = async ({ ...data }) => {
-  //   try {
-  //     await DeleteUser({
-  //       variables: {
-  //         where: {
-  //           id: data.id,
-  //         },
-  //       },
-  //       onCompleted(data) {
-  //         ToastSuccess('Student Deleted')
-  //       },
-  //       refetchQueries: [{ query: GET_USERS }],
-  //     });
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
 
 
 
@@ -200,7 +216,7 @@ export function UseAllStudents() {
     else if (!state.editData?.email) {
       ToastWarning('Email required')
     }
-    else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
+    else if (!state.valTell) {
       ToastWarning('contact must be 11 characters')
     }
     else if (!state.editData?.cnic) {
@@ -209,8 +225,8 @@ export function UseAllStudents() {
     else if (!state.editData?.address) {
       ToastWarning('address required')
     }
-    else if (!state.editData?.role) {
-      ToastWarning('Role required')
+    else if (!state.editData?.userGroup) {
+      ToastWarning('User Group required')
     }
     else {
       try {
@@ -237,10 +253,12 @@ export function UseAllStudents() {
                 set: state.editData?.address,
               },
               contact: {
-                set: state.editData?.contact,
+                set: state.valTel
               },
-              userRole: {
-                set: state.editData?.role,
+              userGroup: {
+                connect: {
+                  id: state.editData?.userGroup
+                }
               }
             },
           },

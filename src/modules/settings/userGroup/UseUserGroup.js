@@ -3,6 +3,7 @@ import { ADD_USER_GROUP } from '../../../lib/mutation/AllMutations';
 import { useMutation, useQuery } from "@apollo/client";
 import { AppContext } from "../../../State";
 import { ToastError, ToastSuccess, ToastWarning } from '../../../commonComponents/commonFunction/CommonFunction';
+import { GET_USER_GROUP } from '../../../lib/queries/AllQueries';
 export function UseUserGroup() {
 
     const { state, dispatch } = useContext(AppContext)
@@ -12,7 +13,7 @@ export function UseUserGroup() {
     const [email, setEmail] = useState('')
     const [select, setSelect] = useState('')
     const allData = {
-        "navigationResults":[]
+        "navigationResults": []
     };
     const handlingPermission = (item, pageIndex, permission) => {
         const findModule = allData.navigationResults.filter((i) => i.moduleName === item.moduleName);
@@ -50,7 +51,7 @@ export function UseUserGroup() {
         if (userName === '') {
             ToastWarning('User Name Required')
         }
-        else if (select === '') {
+        else if (userGroupRole === '') {
             ToastWarning('User Group Role Required')
         }
         // else if (email === '') {
@@ -64,7 +65,7 @@ export function UseUserGroup() {
 
                         data: {
                             userName: userName,
-                            userGroupRole: select,
+                            userGroupRole: userGroupRole.toUpperCase(),
                             tabsPermission: allData,
                             // Organizations: {
                             //     connect: {
@@ -74,8 +75,12 @@ export function UseUserGroup() {
                         }
 
                     },
+                    refetchQueries: [{ query: GET_USER_GROUP }],
+
                     onCompleted(data, cache) {
                         ToastSuccess('UserGroup Added')
+                        setuserGroupRole('')
+                        setUserName('')
 
                     },
                 });
@@ -94,5 +99,5 @@ export function UseUserGroup() {
         }
     };
 
-    return [{userName, userGroupRole, email, setEmail, setUserName,ctaHandler, setuserGroupRole, handlingPermission,ADD_LOADING,setSelect}]
+    return [{ userName, userGroupRole, email, setEmail, setUserName, ctaHandler, setuserGroupRole, handlingPermission, ADD_LOADING, setSelect }]
 }

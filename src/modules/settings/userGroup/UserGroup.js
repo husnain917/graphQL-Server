@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, FormLabel, Grid, Radio, RadioGroup } from "@mui/material";
+import { Checkbox, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, Tooltip } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { TabsStyle } from "./UserGroupStyle";
 import Table from "@mui/material/Table";
@@ -30,7 +30,7 @@ export default function UserGroup() {
 
   const { state, dispatch } = useContext(AppContext);
   const [stateArray, setStateArray] = useState(data);
-  
+
 
   const roles = [
     "ORGANIZATIONKEY", "ADMIN", "TEACHER", "STUDENT"
@@ -38,27 +38,27 @@ export default function UserGroup() {
   return (
     <TabsStyle.MainDiv>
       <Grid container>
-        <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
+        <Grid item xl={12} lg={12} mg={12} sm={12} xs={12}>
           <TabsStyle.InputLabel>
-            <TabsStyle.MyInput
-              User Group Name
-              placeholder="Enter Name"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-            />
+            User Name
+              <TabsStyle.MyInput
+                User Group Name
+                placeholder="Enter Name"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+              />
           </TabsStyle.InputLabel>
         </Grid>
-        <Grid item xl={6} lg={6} mg={12} sm={12} xs={12}>
-          {/* <TabsStyle.InputLabel>
-            <TabsStyle.MyInput
-              User Role
-              placeholder="Enter Role"
-              value={userGroupRole}
-              onChange={(e) => setuserGroupRole(e.target.value)}
-            />
-          </TabsStyle.InputLabel> */}
+        <Grid item xl={12} lg={12} mg={12} sm={12} xs={12}>
           <TabsStyle.InputLabel>
-            <RadioGroup
+            User Role
+              <TabsStyle.MyInput
+                User Group Name
+                placeholder="Enter Role"
+                value={userGroupRole}
+                onChange={(e) => setuserGroupRole(e.target.value)}
+              />
+            {/* <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
@@ -70,7 +70,7 @@ export default function UserGroup() {
               {roles.map((option, i) => (
                 <FormControlLabel key={i} value={option} control={<Radio />} label={option} />
               ))}
-            </RadioGroup>
+            </RadioGroup> */}
           </TabsStyle.InputLabel>
         </Grid>
       </Grid>

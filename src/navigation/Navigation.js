@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Sidebar from '../commonComponents/sidebar/Sidebar';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Login from '../modules/auth/login/Login';
 import Dashboard from '../modules/dashboard/Dashboard';
 import AllStudents from '../modules/adminPortal/allStudents/AllStudents';
@@ -32,9 +32,20 @@ import Speakers from '../modules/speakers/Speakers';
 import TabsPermission from '../modules/settings/tabsPermission/TabsPermission';
 import ApiPermissions from '../modules/settings/apiPermissions/ApiPermissions';
 import UserGroup from '../modules/settings/userGroup/UserGroup';
+import CreateOrganization from '../modules/settings/createOrganization/CreateOrganization';
+import CourseCategory from '../modules/adminPortal/courseCategory/CourseCategory';
 
 export default function Navigation() {
+    let location = useLocation();
+    let navigate = useNavigate()
     const { state, dispatch } = useContext(AppContext);
+
+
+    React.useEffect(() => {
+        if (!state.authState) {
+            navigate(location.pathname)
+        }
+    }, [])
     return (
         <>
 
@@ -51,24 +62,21 @@ export default function Navigation() {
                 <Route
                     path='/:pageName'
                     element={<PageNotFound />
-                        // <PublicRouting isAllowed={state.authState}>
-                        //     <Login />
-                        // </PublicRouting>
                     }
                 />
-                <Route 
-                    path='/' 
+                <Route
+                    path='/'
                     element={
-                    <PrivateRouting isAllowed={state.authState}>
-                        <Sidebar />
-                    </PrivateRouting>
-                }>
+                        <PrivateRouting isAllowed={state.authState}>
+                            <Sidebar />
+                        </PrivateRouting>
+                    }>
                     <Route
                         path='/'
                         element={
-                        <PrivateRouting isAllowed={state.authState}>
-                            <Dashboard />
-                        </PrivateRouting>
+                            <PrivateRouting isAllowed={state.authState}>
+                                <Dashboard />
+                            </PrivateRouting>
                         }
                     />
                     <Route
@@ -95,47 +103,6 @@ export default function Navigation() {
                             </PrivateRouting>
                         }
                     />
-                    {
-                        state.user?.role === "OWNER" ?
-                            <Route
-                                path='/'
-                                element={
-                                    <PrivateRouting isAllowed={state.authState}>
-                                        <Dashboard />
-                                    </PrivateRouting>
-                                }
-                            />
-                            :
-                            state.user?.role === "ADMIN" ?
-                                <Route
-                                    path='/'
-                                    element={
-                                        <PrivateRouting isAllowed={state.authState}>
-                                            <Dashboard />
-                                        </PrivateRouting>
-                                    }
-                                />
-                                :
-                                state.user?.role === "STUDENT" ?
-                                    <Route
-                                        path='/'
-                                        element={
-                                            <PrivateRouting isAllowed={state.authState}>
-                                                <MyCourse />
-                                            </PrivateRouting>
-                                        }
-                                    />
-                                    :
-                                    state.user?.role === "TEACHER" ?
-                                        <Route
-                                            path='/'
-                                            element={
-                                                <PrivateRouting isAllowed={state.authState}>
-                                                    <AllStudents />
-                                                </PrivateRouting>
-                                            }
-                                        /> : ''
-                    }
                     <Route
                         path='/successStories'
                         element={
@@ -220,19 +187,19 @@ export default function Navigation() {
 
 
                     {/*Teacher routes*/}
-                    <Route path='/students'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <AllStudents />
-                            </PrivateRouting>}
-                    />
                     <Route path='/courseAssigned'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <CourseAssigned />
                             </PrivateRouting>}
                     />
-                    <Route path='/lecture'
+                    <Route path='/courseCategory'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <CourseCategory />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/lectures'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <Lecture />
@@ -266,6 +233,12 @@ export default function Navigation() {
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <ApiPermissions />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/crate-organization'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <CreateOrganization />
                             </PrivateRouting>}
                     />
                     <Route path='/user-groups'

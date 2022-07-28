@@ -11,7 +11,7 @@ import {
     // DELETE_QUIZ,
     UPDATE_QUIZ
 } from "../../../lib/mutation/AllMutations";
-import { GET_QUIZ, GET_USERS } from "../../../lib/queries/AllQueries";
+import { GET_QUIZ, GET_USERS, GET_USER_GROUP } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
@@ -24,7 +24,7 @@ import FiltredData from "../../../constants/FiltredRoles";
 
 
 
-export  function UseTabsPermissions() {
+export function UseTabsPermissions() {
     const [{ courseBatch, COURSE_DATA }] = FiltredData()
     const formInputs = [
 
@@ -48,21 +48,26 @@ export  function UseTabsPermissions() {
 
 
 
-
     //GET STAFF 
 
-    let { data, loading: GET_LOADING, error } = useQuery(GET_USERS);
+    let { data, loading: GET_LOADING, error } = useQuery(GET_USER_GROUP);
+
+  
+
     console.log("error", error);
     const refacteredData = [];
-    data?.users?.forEach((item) => {
-          refacteredData.push({
-            // permissions: item.userGroup.tabsPermission,
-            // updateAt: item.userGroup.updateAt,
-            // createdAt: item.userGroup.createdAt,
-            // role: item.userGroup.userGroupRole
-          });
-        
-      });
+    data?.userGroups?.forEach((item) => {
+        refacteredData.push({
+            name: item.userName,
+            permissions: item.tabsPermission.navigationResults.map((val) => {
+                return val.pages
+              
+            }),
+            updateAt: item.updateAt,
+            createdAt: item.createdAt,
+            role: item.userGroupRole,
+        });
+    })
     console.log("refacteredData", refacteredData);
 
 

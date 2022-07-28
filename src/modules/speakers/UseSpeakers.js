@@ -80,7 +80,7 @@ export default function UseSpeakers() {
         else if (!state.editData?.spkearDesc) {
             ToastWarning('spkearDesc required')
         }
-        else if (state.imageUrl === "") {
+        else if (!state.imageUrl) {
             ToastWarning('Image required')
         }
         else {

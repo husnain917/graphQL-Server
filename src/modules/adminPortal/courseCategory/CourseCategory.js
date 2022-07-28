@@ -1,9 +1,9 @@
 import React from 'react';
 import Table from '../../../commonComponents/table/Table';
-import UseCourseBatch from './UseCourseBatch';
+import UseCourseCategory from './UseCourseCategory';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
 import NewTable from '../../../commonComponents/newTable/NewTable';
-export default function CourseBatch() {
+export default function CourseCategory() {
     const [
         {
             ADD_LOADING,
@@ -16,7 +16,7 @@ export default function CourseBatch() {
             ctaUpdateHandler,
             formInputs,
         },
-    ] = UseCourseBatch();
+    ] = UseCourseCategory();
     if (
         GET_LOADING ||
         // DELETE_LOADING ||
@@ -27,19 +27,15 @@ export default function CourseBatch() {
     }
     return (
         <NewTable
-            title={'Course Batch'}
+            title={'Course Category'}
             tableHeadings={[
                 {
-                    id: "name",
-                    Label: "Name"
+                    id: "categoryName",
+                    Label: "categoryName"
                 },
                 {
-                    id: "courseId",
-                    Label: "Course Id"
-                },
-                {
-                    id: "courseName",
-                    Label: "Course Name"
+                    id: "imageUrl",
+                    Label: "image"
                 },
                 {
                     id: "createdAt",
@@ -54,19 +50,16 @@ export default function CourseBatch() {
                     Label: "Action"
                 },
             ]}
-            
+
             ctaFormHandler={ctaFormHandler}
             // ctaDeleteHandler={ctaDeleteHandler}
             ctaUpdateHandler={ctaUpdateHandler}
             printedKeys={[
                 {
-                    key: "name",
+                    key: "categoryName",
                 },
                 {
-                    key: 'coursesId',
-                },
-                {
-                    key: 'courseName'
+                    key: 'imageUrl',
                 },
                 {
                     key: 'createdAt'

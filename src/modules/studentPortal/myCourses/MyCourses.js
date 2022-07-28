@@ -39,18 +39,14 @@ export default function MyCourse() {
             id: "studentId",
             Label: "Student Id"
         },
-        {
-            id: "courseApproval",
-            Label: "Course Approval"
-        },
-        {
-          id: 'whyReject',
-          Label: 'Why Reject' 
-        },
-        {
-          id: 'whyReject',
-          Label: 'Why Reject' 
-        },
+        // {
+        //     id: "courseApproval",
+        //     Label: "Course Approval"
+        // },
+        // {
+        //   id: 'whyReject',
+        //   Label: 'Why Reject' 
+        // },
         {
           id: 'feeStatus',
           Label: 'Fee status' 
@@ -78,16 +74,16 @@ export default function MyCourse() {
         {
           key: "studentId",
         },
-        {
-          key: "courseBatchesId",
-        },
-        {
-          key: "courseApproval",
-        },
+        // {
+        //   key: "courseBatchesId",
+        // },
+        // {
+        //   key: "courseApproval",
+        // },
 
-        {
-          key: "whyReject",
-        },
+        // {
+        //   key: "whyReject",
+        // },
         // {
         //   key: 'courseBatches',
         // },

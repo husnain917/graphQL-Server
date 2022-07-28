@@ -16,6 +16,7 @@ import {
 import {
   AppContext
 } from "../../../State";
+import FiltredData from '../../../constants/FiltredRoles'
 
 
 
@@ -24,6 +25,12 @@ import {
 
 
 export function UseAllStaff() {
+  let {
+    data,
+    loading: GET_LOADING,
+  } = useQuery(GET_USERS);
+  const [{ userGroup }] = FiltredData()
+
   const formInputs = [
     {
       label: "Name",
@@ -47,29 +54,21 @@ export function UseAllStaff() {
       type: "number",
     },
     {
-      label: "Contact",
-      name: "contact",
-      type: "tel",
-    },
-    {
       label: "Address",
       name: "address",
       type: "text",
     },
     {
-      label: "Role",
-      name: "userGroupRole",
-      type: "roleSelect",
+      label: "Contact",
+      name: "contact",
+      type: "contact",
     },
-    // {
-    //   label: "User Group",
-    //   name: "role",
-    //   type: "select",
-    //   dropDownContent: [
-    //     "ADMIN",
-    //     "TEACHER"
-    //   ],
-    // },
+    {
+      label: "Select User Group",
+      name: "userGroup",
+      type: "roleSelect",
+      dropDownUserGroup: userGroup
+    },
   ]
   const {
     state,
@@ -78,46 +77,46 @@ export function UseAllStaff() {
 
   //GET STAFF 
 
-  let {
-    data,
-    loading: GET_LOADING,
-  } = useQuery(GET_USERS);
-  const refacteredData = [
-    // {
-    //   id: 1,
-    //   name: 'Atest',
-    //   email: "Atest@gmail.com",
-    //   contact: "1234",
-    //   address: "ATest Address",
-    //   cnic: "112321212",
-    //   role: "ATeacher"
-    // },
-  ];
-  data?.users?.forEach((item) => {
-  
-    refacteredData.push({
-      id: item?.id,
-      name: item?.name,
-      email: item?.email,
-      contact: item?.contact,
-      // address: item.address,
-      cnic: item?.cnic,
-      role: item?.userRole,
-    })
+  const refacteredData = [];
+  data?.users?.map((item) => {
+    if (item.userGroup.userGroupRole === "TEACHER") {
+      refacteredData.push({
+        id: item.id,
+        name: item.name,
+        email: item.email,
+        cnic: item.cnic,
+        address: item.address,
+        contact: item.contact,
+        role: item.userGroup.userGroupRole
+      });
+    }
+    if (item.userGroup.userGroupRole === "ADMIN") {
+      refacteredData.push({
+        id: item.id,
+        name: item.name,
+        email: item.email,
+        cnic: item.cnic,
+        address: item.address,
+        contact: item.contact,
+        role: item.userGroup.userGroupRole
+      });
+    }
+
     console.log(item);
   });
   console.log("sami", refacteredData);
 
   //ADD STAFF
 
+
+
   let [
     Register,
     {
       loading: ADD_LOADING
     }] = useMutation(ADD_USER);
-
-
   const ctaFormHandler = async (event) => {
+
     event.preventDefault();
     if (!state.editData?.name) {
       ToastWarning('Name required')
@@ -125,7 +124,7 @@ export function UseAllStaff() {
     else if (!state.editData?.email) {
       ToastWarning('Email required')
     }
-    else if (!state.editData?.contact) {
+    else if (!state?.valTel) {
       ToastWarning('Contact required')
     }
     else if (!state.editData?.cnic) {
@@ -134,30 +133,34 @@ export function UseAllStaff() {
     else if (!state.editData?.address) {
       ToastWarning('address required')
     }
-    // else if (!state.editData?.role) {
-    //   ToastWarning('Role required')
-    // }
-    else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
-      ToastWarning('Phone No Must be 10 digits')
+    else if (!state.editData?.userGroup) {
+      ToastWarning('User Group required')
     }
-
 
     else {
       try {
+
         await Register({
           variables: {
-
             data: {
               name: state.editData?.name,
               email: state.editData?.email,
               password: state.editData?.password,
               cnic: state.editData?.cnic,
-              contact: state.editData?.contact,
+              contact: state?.valTel,
+              userGroup: {
+                connect: {
+                  id: state.editData?.userGroup
+                }
+              },
+              organizations: {
+                connect: {
+                  id: state?.user.id
+                }
+              },
             }
-
           },
           refetchQueries: [{ query: GET_USERS }],
-
           onCompleted() {
             dispatch({
               type: "setModal",
@@ -166,38 +169,66 @@ export function UseAllStaff() {
                 openFormModal: false,
               },
             });
-
-
             ToastSuccess('Staff Added')
+            console.log(state.user.id)
           },
+
           // update(cache, { data: { addItems } }) {
+
           //   const { tados } = cache.readQuery({
+
           //     query: GET_STAFF
+
           //   })
+
           //   cache.writeQuery({
+
           //     query: GET_STAFF,
+
           //     data: {
+
           //       tados: [
+
           //         data.CreateManyStaff,
+
           //         ...tados
 
+
+
           //       ]
+
           //     }
+
           //   })
+
           // }
 
+
+
           // update: (cache, { data: { addItem } }) => {
+
           //   const data = cache.readQuery({ query: GET_STAFF });
+
           //   console.log('sami',data);
+
           //   data.items = [...data.items, addItem];
+
           //   cache.writeQuery({ query: GET_STAFF }, data);
+
           // },
 
+
+
         });
+
         // const queryResult = cache.readQuery({
+
         //   query: GET_STAFF
+
         // });
+
         // console.log('sami', queryResult);
+
       } catch (error) {
         dispatch({
           type: "setModal",
@@ -206,11 +237,11 @@ export function UseAllStaff() {
           },
         });
         ToastError(error.message);
-
       }
     }
-
   };
+
+
 
 
 
@@ -261,8 +292,8 @@ export function UseAllStaff() {
     else if (!state.editData?.email) {
       ToastWarning('Email required')
     }
-    else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
-      ToastWarning('Phone No Must be 10 digit')
+    else if (state.valTel) {
+      ToastWarning('Contact Required')
     }
     else if (!state.editData?.cnic) {
       ToastWarning('cnic required')
@@ -298,7 +329,7 @@ export function UseAllStaff() {
                 set: state.editData?.address,
               },
               contact: {
-                set: state.editData?.contact,
+                set: state.valTel,
               },
               userRole: {
                 set: state.editData?.role,

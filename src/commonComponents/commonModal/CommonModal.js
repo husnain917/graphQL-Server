@@ -1,11 +1,6 @@
 import * as React from 'react';
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import PButton from '../Pbutton/Pbutton'
+import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -18,7 +13,7 @@ const style = {
     p: 4,
 };
 
-export default function CommonModal({ question, answer, freelancingProfileUrl }) {
+export default function CommonModal({ question, answer, freelancingProfileUrl, modalPermissions }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -29,55 +24,34 @@ export default function CommonModal({ question, answer, freelancingProfileUrl })
                 question?.faqQuestion.length > 30 ?
                     <>
                         <PButton ctaHandler={handleOpen} title="see more" />
-                        <Modal
-                            aria-labelledby="transition-modal-title"
-                            aria-describedby="transition-modal-description"
+                        <Dialog
                             open={open}
                             onClose={handleClose}
-                            closeAfterTransition
-                            BackdropComponent={Backdrop}
-                            BackdropProps={{
-                                timeout: 500,
-                            }}
                         >
-                            <Fade in={open}>
-                                <Box sx={style}>
-                                    <Typography id="transition-modal-title" variant="h6" component="h2">
-                                        Question
-                                    </Typography>
-                                    <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                                        {question?.faqQuestion}
-                                    </Typography>
-                                </Box>
-                            </Fade>
-                        </Modal>
+                            <DialogTitle>
+                                Question
+                            </DialogTitle>
+                            <DialogContent>
+                                {question?.faqQuestion}
+                            </DialogContent>
+                        </Dialog>
                     </>
                     :
                     answer?.faqAnswer.length > 30 ?
                         <>
                             <PButton ctaHandler={handleOpen} title="see more" />
-                            <Modal
-                                aria-labelledby="transition-modal-title"
-                                aria-describedby="transition-modal-description"
+                            <Dialog
                                 open={open}
                                 onClose={handleClose}
-                                closeAfterTransition
-                                BackdropComponent={Backdrop}
-                                BackdropProps={{
-                                    timeout: 500,
-                                }}
                             >
-                                <Fade in={open}>
-                                    <Box sx={style}>
-                                        <Typography id="transition-modal-title" variant="h6" component="h2">
-                                            Answer
-                                        </Typography>
-                                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                                            {answer?.faqAnswer}
-                                        </Typography>
-                                    </Box>
-                                </Fade>
-                            </Modal>
+
+                                <DialogTitle id="transition-modal-title" variant="h6" component="h2">
+                                    Answer
+                                </DialogTitle>
+                                <DialogContent>
+                                    {answer?.faqAnswer}
+                                </DialogContent>
+                            </Dialog>
                         </>
                         :
                         question?.faqQuestion.length < 30 ?
@@ -91,35 +65,51 @@ export default function CommonModal({ question, answer, freelancingProfileUrl })
                                 freelancingProfileUrl?.freelancingProfileUrl.length > 15 ?
                                     <>
                                         <PButton ctaHandler={handleOpen} title="see more" />
-                                        <Modal
-                                            aria-labelledby="transition-modal-title"
-                                            aria-describedby="transition-modal-description"
+                                        <Dialog
                                             open={open}
                                             onClose={handleClose}
-                                            closeAfterTransition
-                                            BackdropComponent={Backdrop}
-                                            BackdropProps={{
-                                                timeout: 500,
-                                            }}
                                         >
-                                            <Fade in={open}>
-                                                <Box sx={style}>
-                                                    <Typography id="transition-modal-title" variant="h6" component="h2">
-                                                        Freelancing Profile Url
-                                                    </Typography>
-                                                    <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                                                        {freelancingProfileUrl?.freelancingProfileUrl}
-                                                    </Typography>
-                                                </Box>
-                                            </Fade>
-                                        </Modal>
+                                            <DialogTitle >
+                                                Freelancing Profile Url
+                                            </DialogTitle>
+                                            <DialogContent>
+                                                {freelancingProfileUrl?.freelancingProfileUrl}
+                                            </DialogContent>
+
+                                        </Dialog>
                                     </>
                                     :
                                     freelancingProfileUrl?.freelancingProfileUrl.length < 15 ?
                                         <>
                                             <p> {freelancingProfileUrl?.freelancingProfileUrl}</p>
                                         </>
-                                        : ''
+                                        :
+                                        modalPermissions ?
+                                            <>
+                                                <PButton ctaHandler={handleOpen} title="See tabs" />
+                                                <Dialog
+                                                    onClose={handleClose} open={open}
+                                                >
+                                                    <DialogTitle >
+                                                        Tabs Permissions
+                                                    </DialogTitle>
+                                                    {
+                                                        modalPermissions?.permissions.map((permission) => {
+                                                            return permission.map((val) => {
+                                                                return (
+                                                                    <ul>
+                                                                        <li style={{ fontSize: 15, width: '100%' }}>{val?.pageName}</li>
+                                                                    </ul>
+                                                                )
+                                                            })
+
+                                                        })
+                                                    }
+
+
+                                                </Dialog>
+                                            </>
+                                            : ''
 
             }
         </div>

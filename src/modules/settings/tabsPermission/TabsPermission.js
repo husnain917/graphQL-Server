@@ -15,7 +15,7 @@ export default function TabsPermissions() {
   const [
     {
       // ADD_LOADING,
-      // GET_LOADING,
+      GET_LOADING,
       // DELETE_LOADING,
       // UPDATE_LOADING,
       refacteredData,
@@ -26,14 +26,14 @@ export default function TabsPermissions() {
       // ctaEditButtonHandler
     },
   ] = UseTabsPermissions();
-  // if (
-  //   GET_LOADING ||
-  //   // DELETE_LOADING ||
-  //   UPDATE_LOADING ||
-  //   ADD_LOADING
-  // ) {
-  //   return <CommonTableLoader />;
-  // }
+  if (
+    GET_LOADING 
+    // DELETE_LOADING ||
+    // UPDATE_LOADING ||
+    // ADD_LOADING
+  ) {
+    return <CommonTableLoader />;
+  }
   return (
     <>
       <ToastContainer />
@@ -42,21 +42,26 @@ export default function TabsPermissions() {
       <NewTable
         title={"Tabs Permissions"}
         tableHeadings={[
+
           {
-            id: "permissions",
-            Label: "permissions"
+            id: "name",
+            Label: "name"
           },
           {
             id: "role",
             Label: "role"
           },
           {
+            id: "permissions",
+            Label: "permissions"
+          },
+          {
             id: "createdAt",
             Label: "Created At"
           },
           {
-            id: "updatedAt",
-            Label: "updatedAt"
+            id: "updateAt",
+            Label: "updateAt"
           },
           {
             id: "actions",
@@ -65,17 +70,22 @@ export default function TabsPermissions() {
         ]}
         // ctaEditButtonHandler={ctaEditButtonHandler}
         printedKeys={[
+
           {
-            key: "permissions",
+            key: "name",
           },
           {
             key: "role",
           },
           {
+            key: "permissions",
+            type: "modalPermissions"
+          },
+          {
             key: "createdAt",
           },
           {
-            key: "UpdatedAt",
+            key: "updateAt",
           },
           {
             type: "crud",

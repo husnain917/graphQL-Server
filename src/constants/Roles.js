@@ -8,6 +8,7 @@ import {
     QuestionAnswerRounded,
     ContactMail,
 } from '@mui/icons-material';
+import AddIcon from '@mui/icons-material/Add';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
@@ -22,114 +23,109 @@ import SpeakerIcon from '@mui/icons-material/Speaker';
 import WebhookIcon from '@mui/icons-material/Webhook';
 import GroupIcon from '@mui/icons-material/Group';
 import StorageIcon from '@mui/icons-material/Storage';
+import CategoryIcon from '@mui/icons-material/Category';
+import DuoIcon from '@mui/icons-material/Duo';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 export var MENU_ITEMS = [
     {
         text: 'Dashboard',
         icon: <Dashboard />,
         path: '/',
-        role: 'ADMIN'
     },
     {
         text: 'Staff',
         icon: <PeopleAltIcon />,
         path: '/staff',
-        role: 'OWNER'
     },
     {
         text: 'Courses',
         icon: <Subscriptions />,
         path: '/courses',
-        role: 'ADMIN'
     },
     {
         text: 'Course Batch',
-        icon: <Subscriptions />,
+        icon: <LibraryBooksIcon />,
         path: '/courseBatch',
-        role: 'OWNER'
     },
     {
         text: 'Students',
         icon: <PeopleOutline />,
-        path: '/students',
-        role: 'ADMIN'
+        path: '/students'
     },
     {
         text: 'Enrollment Approval',
         icon: <LibraryAddCheck />,
-        path: '/approve-enrollment',
-        role: 'ADMIN'
+        path: '/approve-enrollment'
     },
     {
         text: 'Success Stories',
         icon: <LocalActivity />,
-        path: '/successStory',
-        role: 'ADMIN'
+        path: '/successStory'
     },
     {
         text: 'Events',
         icon: <EventAvailableIcon />,
-        path: '/events',
-        role: 'OWNER'
+        path: '/events'
     },
     {
         text: 'Contact',
         icon: <ContactMail />,
-        path: '/contactus',
-        role: 'OWNER'
+        path: '/contactus'
     },
     {
         text: 'FAQs',
         icon: <QuestionAnswerRounded />,
-        path: '/faq',
-        role: 'ADMIN'
+        path: '/faq'
     },
     {
         text: 'My Courses',
         icon: <Subscriptions />,
         path: '/myCourse',
-        role: 'OWNER'
+    },
+    {
+        text: 'Course Category',
+        icon: <CategoryIcon />,
+        path: '/courseCategory',
+    },
+    {
+        text: 'Lectures',
+        icon: <DuoIcon />,
+        path: '/lectures',
     },
     {
         text: 'Assignments',
         icon: <AssignmentIcon />,
         path: '/assignments',
-        role: 'STUDENT'
     },
     {
         text: 'Quiz',
         icon: <QuizIcon />,
         path: '/quiz',
-        role: 'STUDENT'
     },
     {
         text: 'Attandance',
         icon: <CoPresentIcon />,
         path: '/attandance',
-        role: 'OWNER'
     },
     {
         text: 'Lecture',
         icon: <LaptopChromebookIcon />,
         path: '/lecture',
-        role: 'OWNER'
     },
     {
-        text:'Speakers',
-        icon:<SpeakerIcon/>,
-        path:'/speakers',
-        role:'OWNER',
+        text: 'Speakers',
+        icon: <SpeakerIcon />,
+        path: '/speakers',
     },
     {
         text: 'Profile',
         icon: <Face />,
         path: `/profile/id`,
-        role: 'OWNER'
     },
     {
         text: 'settings',
         icon: <SettingsIcon />,
         path: '/settings',
-        role: 'OWNER'
     },
     {
         text: 'User Groups',
@@ -145,6 +141,11 @@ export var MENU_ITEMS = [
         text: 'Api Permission',
         path: '/api-permissions',
         icon: <StorageIcon />,
+    },
+    {
+        text: 'Create Organization',
+        path: '/crate-organization',
+        icon: <AddIcon />,
     }
 ];
 

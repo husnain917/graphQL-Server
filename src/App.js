@@ -57,6 +57,13 @@ function App() {
     } catch (error) {
       console.log(error.message);
       sessionStorage.clear()
+      dispatch({
+        type: "setAuthState",
+        payload: {
+          user: null,
+          authState: false
+        }
+      })
       ToastInfo('Session Expired')
     }
   }

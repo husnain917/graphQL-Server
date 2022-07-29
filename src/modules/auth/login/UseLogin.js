@@ -59,6 +59,8 @@ export default function UseLogin() {
         },
         onCompleted({ login }) {
           localStorage.setItem("token", login.token)
+          var userNameStr= login.name
+          var activeUserName=userNameStr.charAt(0).toUpperCase() + userNameStr.slice(1)
           dispatch({
             type: "setAuthState",
             payload: {
@@ -66,7 +68,7 @@ export default function UseLogin() {
               authState: true
             },
           });
-          ToastSuccess(`Welcome ${login.name}`)
+          ToastSuccess(`Welcome ${activeUserName}`)
           if (login.userGroup?.userGroupRole === "STUDENT") {
             dispatch({
               type: "tabsPermission",
@@ -103,6 +105,8 @@ export default function UseLogin() {
         },
         onCompleted(login) {
           localStorage.setItem("token", login.organizationLogin.token)
+          var orgNameStr= login.organizationLogin.name
+          var activeOrgUser=orgNameStr.charAt(0).toUpperCase() + orgNameStr.slice(1)
           dispatch({
             type: "setAuthState",
             payload: {
@@ -110,7 +114,7 @@ export default function UseLogin() {
               authState: true
             },
           });
-          ToastSuccess(`Welcome ${login.organizationLogin.name}`)
+          ToastSuccess(`Welcome ${activeOrgUser}`)
           login.organizationLogin?.userGroup.map((item) => {
             if (item.userGroupRole === "ORGANIZATIONKEY")
               dispatch({

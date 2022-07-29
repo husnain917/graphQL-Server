@@ -11,7 +11,8 @@ export function UseUserGroup() {
     const [userName, setUserName] = useState('')
     const [userGroupRole, setuserGroupRole] = useState('')
     const [email, setEmail] = useState('')
-    const [select, setSelect] = useState('')
+    // const [select, setSelect] = useState('')
+    const [role, setRole] = useState('')
     const allData = {
         "navigationResults":[]
     };
@@ -46,18 +47,15 @@ export function UseUserGroup() {
     };
     console.log(state?.user?.organizationLogin?.id)
     const ctaHandler = async (event) => {
-
+        
         // event.preventDefault();
         if (userName === '') {
             ToastWarning('User Name Required')
         }
-        else if (select === '') {
+        else if (role === '') {
             ToastWarning('User Group Role Required')
         }
-        // else if (email === '') {
-        //     ToastWarning('Email required')
-        // }
-        else {
+        else if(role === "ORGANIZATIONKEY" || role === "ADMIN" || role === "TEACHER" || role === "STUDENT"){
 
             try {
                 await CreateUserGroup({
@@ -65,7 +63,7 @@ export function UseUserGroup() {
 
                         data: {
                             userName: userName,
-                            userGroupRole: select,
+                            userGroupRole: role,
                             tabsPermission: allData,
                             // Organizations: {
                             //     connect: {
@@ -94,8 +92,10 @@ export function UseUserGroup() {
                 console.log(error.message)
 
             }
+        }else{
+            ToastWarning('Spelling Mistake')
         }
     };
 
-    return [{userName, userGroupRole, email, setEmail, setUserName,ctaHandler, setuserGroupRole, handlingPermission,ADD_LOADING,setSelect}]
+    return [{userName, userGroupRole, email, setEmail, setUserName,ctaHandler, setuserGroupRole, handlingPermission,ADD_LOADING,setRole, role}]
 }

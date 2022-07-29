@@ -42,7 +42,9 @@ function App() {
               })
 
           })
-          ToastSuccess(`Welcome ${login.getActiveUser?.name}`)
+          var nameStr = login.getActiveUser?.name
+          var activeUser=nameStr.charAt(0).toUpperCase() + nameStr.slice(1)
+          ToastSuccess(`Welcome ${activeUser}`)
           console.log("redirect", login);
         }
 

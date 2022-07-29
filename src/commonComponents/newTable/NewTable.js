@@ -194,15 +194,23 @@ const EnhancedTableToolbar = (props) => {
                                         {
                                             width > 600 ?
                                                 <>
+                                                    {toolBarTitle === "Speakers" || toolBarTitle === "Lectures" || toolBarTitle === "Course Category" ? (
+                                                        ""
+                                                    ):(
                                                     <NewTableStyle.FilterButton variant="outlined" startIcon={<FilterAltIcon />} onClick={handleAnchorClick}>
                                                         Filter
                                                     </NewTableStyle.FilterButton>
+                                                    )}
                                                     <NewTableStyle.ExportButton variant="outlined" startIcon={svgIcon} onClick={handleAnchorClick}>
                                                         Export
                                                     </NewTableStyle.ExportButton>
+                                                    
                                                 </>
                                                 :
                                                 <>
+                                                {toolBarTitle === "Speakers" || toolBarTitle === "Lectures" || toolBarTitle === "Course Category"  ? (
+                                                        ""
+                                                    ):(
                                                     <IconButton
                                                         color="inherit"
                                                         aria-label="search"
@@ -212,6 +220,7 @@ const EnhancedTableToolbar = (props) => {
                                                     >
                                                         <NewTableStyle.FilterListIcon />
                                                     </IconButton>
+                                                    )}
                                                     <IconButton
                                                         color="inherit"
                                                         aria-label="search"

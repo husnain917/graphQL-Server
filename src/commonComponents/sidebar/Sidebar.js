@@ -44,7 +44,7 @@ function Sidebar(props) {
             key={index}
             ref={anchorRef}
             button
-            onClick={width < 600 ? handleDrawer : null || items.collapse === "true" ? () => setDropDownOpen(items.module_id) : ''}
+            onClick={width < 600 ? null : null || items.collapse === "true" ? () => setDropDownOpen(items.module_id) : ''}
             Active={location?.pathname === items?.moduleUrl}
             sx={location?.pathname === items?.moduleName ? { backgroundColor: '#E8F3FF', borderRadius: 2 } : null}
 
@@ -84,7 +84,7 @@ function Sidebar(props) {
                         <SidebarStyle.DomLink to={item?.pageURL} key={index}>
                           <ListItem
                             ref={anchorRef}
-                            onClick={width < 600 ? handleDrawer : null}
+                            onClick={width < 600 ? null : null}
                             button
                             Active={location?.pathname === item?.pageURL}
                             sx={location?.pathname === item?.pageURL ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
@@ -109,7 +109,7 @@ function Sidebar(props) {
                     </SidebarStyle.ListItemsContainerForSettings >
                     : null
                 }
-               
+
               </>
             )
           })
@@ -153,7 +153,11 @@ function Sidebar(props) {
         </Toolbar>
       </SidebarStyle.AppBar>
 
-      <SidebarStyle.WebDrawer sx={{ '& .MuiDrawer-paper': { border: 'none' } }} variant="permanent" container={container} open={open}>
+      <SidebarStyle.WebDrawer
+        sx={{ '& .MuiDrawer-paper': { border: 'none' } }}
+        variant="permanent"
+        container={container}
+        open={open}>
         <SidebarStyle.DrawerHeader>
           <SidebarStyle.Image src={logo} />
         </SidebarStyle.DrawerHeader>
@@ -165,8 +169,8 @@ function Sidebar(props) {
       <Hidden mdUp>
         <SidebarStyle.MobileDrawer
           drawerWidth={drawerWidth}
+          variant="temoprary"
           container={container}
-          variant="temporary"
           open={open}
           onClose={handleDrawer}
           ModalProps={{

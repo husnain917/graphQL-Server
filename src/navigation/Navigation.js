@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Sidebar from '../commonComponents/sidebar/Sidebar';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Login from '../modules/auth/login/Login';
 import Dashboard from '../modules/dashboard/Dashboard';
 import AllStudents from '../modules/adminPortal/allStudents/AllStudents';
@@ -36,7 +36,16 @@ import CreateOrganization from '../modules/settings/createOrganization/CreateOrg
 import CourseCategory from '../modules/adminPortal/courseCategory/CourseCategory';
 
 export default function Navigation() {
+    let location = useLocation();
+    let navigate = useNavigate()
     const { state, dispatch } = useContext(AppContext);
+
+
+    React.useEffect(() => {
+        if (!state.authState) {
+            navigate(location.pathname)
+        }
+    }, [])
     return (
         <>
 

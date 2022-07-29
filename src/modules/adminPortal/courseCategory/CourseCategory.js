@@ -27,7 +27,7 @@ export default function CourseCategory() {
     }
     return (
         <NewTable
-            title={'Course Batch'}
+            title={'Course Category'}
             tableHeadings={[
                 {
                     id: "categoryName",
@@ -59,7 +59,7 @@ export default function CourseCategory() {
                     key: "categoryName",
                 },
                 {
-                    key: 'Image',
+                    key: 'imageUrl',
                 },
                 {
                     key: 'createdAt'

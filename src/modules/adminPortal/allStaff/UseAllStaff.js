@@ -54,14 +54,14 @@ export function UseAllStaff() {
       type: "number",
     },
     {
-      label: "Contact",
-      name: "contact",
-      type: "tel",
-    },
-    {
       label: "Address",
       name: "address",
       type: "text",
+    },
+    {
+      label: "Contact",
+      name: "contact",
+      type: "contact",
     },
     {
       label: "Select User Group",
@@ -76,7 +76,7 @@ export function UseAllStaff() {
   } = useContext(AppContext);
 
   //GET STAFF 
-  
+
   const refacteredData = [];
   data?.users?.map((item) => {
     if (item.userGroup.userGroupRole === "TEACHER") {
@@ -111,217 +111,137 @@ export function UseAllStaff() {
 
 
   let [
-
     Register,
     {
-
       loading: ADD_LOADING
-
     }] = useMutation(ADD_USER);
+  const ctaFormHandler = async (event) => {
 
+    event.preventDefault();
+    if (!state.editData?.name) {
+      ToastWarning('Name required')
+    }
+    else if (!state.editData?.email) {
+      ToastWarning('Email required')
+    }
+    else if (!state?.valTel) {
+      ToastWarning('Contact required')
+    }
+    else if (!state.editData?.cnic) {
+      ToastWarning('cnic required')
+    }
+    else if (!state.editData?.address) {
+      ToastWarning('address required')
+    }
+    else if (!state.editData?.userGroup) {
+      ToastWarning('User Group required')
+    }
 
+    else {
+      try {
 
-    const ctaFormHandler = async (event) => {
-
-      event.preventDefault();
-
-     
-
-      if (!state.editData?.name) {
-
-        ToastWarning('Name required')
-
-      }
-
-      else if (!state.editData?.email) {
-
-        ToastWarning('Email required')
-
-      }
-
-      else if (!state.editData?.contact) {
-
-        ToastWarning('Contact required')
-
-      }
-
-      else if (!state.editData?.cnic) {
-
-        ToastWarning('cnic required')
-
-      }
-
-      else if (!state.editData?.address) {
-
-        ToastWarning('address required')
-
-      }
-
-      else if (!state.editData?.userGroup) {
-
-        ToastWarning('User Group required')
-
-      }
-
-      else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
-
-        ToastWarning('Phone No Must be 11 digits')
-
-      }
-
-
-
-  
-
-      else {
-
-        try {
-
-          await Register({
-
-            variables: {
-
-  
-
-              data: {
-
-                name: state.editData?.name,
-
-                email: state.editData?.email,
-
-                password: state.editData?.password,
-
-                cnic: state.editData?.cnic,
-
-                contact: state.editData?.contact,
-
-                userGroup: {
-
-                  connect: {
-
-                    id: state.editData?.userGroup
-
-                  }
-
+        await Register({
+          variables: {
+            data: {
+              name: state.editData?.name,
+              email: state.editData?.email,
+              password: state.editData?.password,
+              cnic: state.editData?.cnic,
+              contact: state?.valTel,
+              userGroup: {
+                connect: {
+                  id: state.editData?.userGroup
                 }
+              },
+              organizations: {
+                connect: {
+                  id: state?.user.id
+                }
+              },
+            }
+          },
+          refetchQueries: [{ query: GET_USERS }],
+          onCompleted() {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+            ToastSuccess('Staff Added')
+            console.log(state.user.id)
+          },
 
-              }
+          // update(cache, { data: { addItems } }) {
 
-  
+          //   const { tados } = cache.readQuery({
 
-            },
+          //     query: GET_STAFF
 
-            refetchQueries: [{ query: GET_USERS }],
+          //   })
 
-  
+          //   cache.writeQuery({
 
-            onCompleted() {
+          //     query: GET_STAFF,
 
-              dispatch({
+          //     data: {
 
-                type: "setModal",
+          //       tados: [
 
-                payload: {
+          //         data.CreateManyStaff,
 
-                  modalUpdateFlag: false,
+          //         ...tados
 
-                  openFormModal: false,
 
-                },
 
-              });
+          //       ]
 
-  
+          //     }
 
-  
+          //   })
 
-              ToastSuccess('Staff Added')
+          // }
 
-            },
 
-            // update(cache, { data: { addItems } }) {
 
-            //   const { tados } = cache.readQuery({
+          // update: (cache, { data: { addItem } }) => {
 
-            //     query: GET_STAFF
+          //   const data = cache.readQuery({ query: GET_STAFF });
 
-            //   })
+          //   console.log('sami',data);
 
-            //   cache.writeQuery({
+          //   data.items = [...data.items, addItem];
 
-            //     query: GET_STAFF,
+          //   cache.writeQuery({ query: GET_STAFF }, data);
 
-            //     data: {
+          // },
 
-            //       tados: [
 
-            //         data.CreateManyStaff,
 
-            //         ...tados
+        });
 
-  
+        // const queryResult = cache.readQuery({
 
-            //       ]
+        //   query: GET_STAFF
 
-            //     }
+        // });
 
-            //   })
+        // console.log('sami', queryResult);
 
-            // }
-
-  
-
-            // update: (cache, { data: { addItem } }) => {
-
-            //   const data = cache.readQuery({ query: GET_STAFF });
-
-            //   console.log('sami',data);
-
-            //   data.items = [...data.items, addItem];
-
-            //   cache.writeQuery({ query: GET_STAFF }, data);
-
-            // },
-
-  
-
-          });
-
-          // const queryResult = cache.readQuery({
-
-          //   query: GET_STAFF
-
-          // });
-
-          // console.log('sami', queryResult);
-
-        } catch (error) {
-
-          dispatch({
-
-            type: "setModal",
-
-            payload: {
-
-              openFormModal: false,
-
-            },
-
-          });
-
-          ToastError(error.message);
-
-  
-
-        }
-
+      } catch (error) {
+        dispatch({
+          type: "setModal",
+          payload: {
+            openFormModal: false,
+          },
+        });
+        ToastError(error.message);
       }
+    }
+  };
 
-  
 
-    };
-
-  
 
 
 
@@ -372,8 +292,8 @@ export function UseAllStaff() {
     else if (!state.editData?.email) {
       ToastWarning('Email required')
     }
-    else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
-      ToastWarning('Phone No Must be 10 digit')
+    else if (state.valTel) {
+      ToastWarning('Contact Required')
     }
     else if (!state.editData?.cnic) {
       ToastWarning('cnic required')
@@ -409,7 +329,7 @@ export function UseAllStaff() {
                 set: state.editData?.address,
               },
               contact: {
-                set: state.editData?.contact,
+                set: state.valTel,
               },
               userRole: {
                 set: state.editData?.role,

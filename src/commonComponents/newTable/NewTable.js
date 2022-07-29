@@ -188,46 +188,67 @@ const EnhancedTableToolbar = (props) => {
                         )
                         : (
                             <div>
-                                {toolBarTitle === "FAQS" || "Speakers" ? (
-                                    ""
-                                ) : (
-                                    <>
-                                        {
-                                            width > 600 ?
-                                                <>
-                                                    <NewTableStyle.FilterButton variant="outlined" startIcon={<FilterAltIcon />} onClick={handleAnchorClick}>
-                                                        Filter
-                                                    </NewTableStyle.FilterButton>
-                                                    <NewTableStyle.ExportButton variant="outlined" startIcon={svgIcon} onClick={handleAnchorClick}>
-                                                        Export
-                                                    </NewTableStyle.ExportButton>
-                                                </>
-                                                :
-                                                <>
-                                                    <IconButton
-                                                        color="inherit"
-                                                        aria-label="search"
-                                                        disableFocusRipple
-                                                        disableRipple
-                                                        onClick={handleAnchorClick}
-                                                    >
-                                                        <NewTableStyle.FilterListIcon />
-                                                    </IconButton>
-                                                    <IconButton
-                                                        color="inherit"
-                                                        aria-label="search"
-                                                        disableFocusRipple
-                                                        disableRipple
-                                                        onClick={handleAnchorClick}
-                                                    >
-                                                        <Icon>
-                                                            <img alt="edit" src={CloudIcon} width={23} height={22} />
-                                                        </Icon>
-                                                    </IconButton>
-                                                </>
-                                        }
-                                    </>
-                                )}
+                                {
+                                    toolBarTitle === "FAQS"
+                                        ||
+                                        toolBarTitle === "Speakers"
+                                        ||
+                                        toolBarTitle === "Course Batch"
+                                        ||
+                                        toolBarTitle === "Course Category"
+                                        ||
+                                        toolBarTitle === "Lectures"
+                                         ? (
+                                        ""
+                                    ) : (
+                                        <>
+                                            {
+                                                width > 600 ?
+                                                    <>
+                                                        <NewTableStyle.FilterButton variant="outlined" startIcon={<FilterAltIcon />} onClick={handleAnchorClick}>
+                                                            Filter
+                                                        </NewTableStyle.FilterButton>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <IconButton
+                                                            color="inherit"
+                                                            aria-label="search"
+                                                            disableFocusRipple
+                                                            disableRipple
+                                                            onClick={handleAnchorClick}
+                                                        >
+                                                            <NewTableStyle.FilterListIcon />
+                                                        </IconButton>
+                                                    </>
+                                            }
+                                        </>
+                                    )}
+
+                                <>
+                                    {
+                                        width > 600 ?
+                                            <>
+                                                <NewTableStyle.ExportButton variant="outlined" startIcon={svgIcon} onClick={handleAnchorClick}>
+                                                    Export
+                                                </NewTableStyle.ExportButton>
+                                            </>
+                                            :
+                                            <>
+                                                <IconButton
+                                                    color="inherit"
+                                                    aria-label="search"
+                                                    disableFocusRipple
+                                                    disableRipple
+                                                    onClick={handleAnchorClick}
+                                                >
+                                                    <Icon>
+                                                        <img alt="edit" src={CloudIcon} width={23} height={22} />
+                                                    </Icon>
+                                                </IconButton>
+                                            </>
+                                    }
+                                </>
 
                                 {/* {
                                     state.user?.role === 'OWNER' ?

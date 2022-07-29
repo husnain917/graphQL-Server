@@ -36,35 +36,53 @@ export default function FiltredData() {
         data: USER_GROUPS,
         loading: USER_GROUP_LOADING
     } = useQuery(GET_USER_GROUP)
-    const { data: ALL_ORG, loading: ALL_ORG_LOADING } = useQuery(GET_ALL_ORGANIZATION)
+    const {
+        data: ALL_ORG,
+        loading: ALL_ORG_LOADING
+    } = useQuery(GET_ALL_ORGANIZATION)
+
     const student = USER_DATA?.users?.filter((role) => {
         return role.userGroup.userGroupRole === 'STUDENT'
     })
-    const teacher = USER_DATA?.users?.filter((role) => {
 
+
+
+    const teacher = USER_DATA?.users?.filter((role) => {
         return role?.userGroup?.userGroupRole === 'TEACHER'
     })
+
+
+
     const admin = USER_DATA?.users?.filter((role) => {
         return role?.userGroup?.userGroupRole === 'ADMIN'
     })
+
+
+
     const userGroup = USER_GROUPS?.userGroups?.filter((role) => {
-        if (role?.userGroupRole === "ADMIN") {
-            return role.userGroupRole
+        if (role?.userGroupRole.toUpperCase() !== "STUDENT") {
+            return role
         }
-        else if (role?.userGroupRole === "TEACHER") {
-            return role.userGroupRole
+        else if (role?.userGroupRole.toUpperCase() !== "ORGANIZATIONKEY") {
+            return role
+        }
+        else if (role?.userGroupRole.toUpperCase() !== "OWNER") {
+            return role
         }
     })
+
+
+
     const userGroupStudent = USER_GROUPS?.userGroups?.filter((role) => {
-        if (role?.userGroupRole === "STUDENT") {
-            return role.userGroupRole
+        if (role?.userGroupRole.toUpperCase() === "STUDENT") {
+            return role
         }
     })
     const userGroupOrganization = USER_GROUPS?.userGroups?.filter((role) => {
-        if (role?.userGroupRole === "ORGANIZATIONKEY") {
+        if (role?.userGroupRole.toUpperCase() === "ORGANIZATIONKEY") {
             return role
         }
-        else if (role?.userGroupRole === "OWNER") {
+        else if (role?.userGroupRole.toUpperCase() === "OWNER") {
             return role
         }
     })
@@ -77,6 +95,8 @@ export default function FiltredData() {
     const courseBatch = COURSE_BATCH?.findManyCourseBatches?.filter((item) => {
         return item
     })
+
+
 
 
     return [{

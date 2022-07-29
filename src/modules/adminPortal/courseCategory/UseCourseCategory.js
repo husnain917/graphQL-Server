@@ -138,14 +138,8 @@ export default function UseCourseCategory() {
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.name) {
-            ToastWarning('name required')
-        }
-        else if (!state.editData?.coursesId) {
-            ToastWarning('Course Id required')
-        }
-        else if (!state.editData?.courseName) {
-            ToastWarning('Course Name required')
+        if (!state.editData?.categoryName) {
+            ToastWarning('categoryName required')
         }
         else {
             try {

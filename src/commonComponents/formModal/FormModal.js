@@ -22,7 +22,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-
+import PhoneInput from 'react-phone-input-2'
 
 import { FM } from './FormModalStyle'
 import CloudinaryFunction from "../../constants/CloudinaryFunction";
@@ -33,10 +33,15 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
   const [open, setOpen] = useState(false)
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const [sami, setSami] = useState('')
-
-  console.log(sami);
-
+  const [contact, setContact] = useState('')
+  const handleChangePhone = (phone) => {
+    setContact(phone)
+    dispatch({
+      type: "setValTel",
+      payload: contact
+    })
+    console.log(contact)
+  }
   const handleCloseUpdate = () => {
     dispatch({
       type: "setModal",
@@ -99,37 +104,20 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                           }}
 
                         >
-                          {console.log(item.dropDownUserGroup)}
                           {
-                            item?.dropDownUserGroup.map((option) => (
+                            item?.dropDownUserGroup?.map((option) => (
 
-                              <MenuItem key={option.id} value={option.id}>
-                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" , width: "100%"}}>
-                                  <div>{option.userName}</div>
+                              <MenuItem key={option?.id} value={option?.id}>
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                                  <div>{option?.userName}</div>
                                   <div style={{ fontSize: '10px', color: "gray", float: "right" }}>
-                                    {option.userGroupRole}
+                                    {option?.userGroupRole}
                                   </div>
                                 </div>
                               </MenuItem>
                             ))}
-                            
-                        </FM.TextInput>
-                        {/* <Autocomplete
-                          disablePortal
-                          id="combo-box-demo"
-                          onChange={(e) => {
-                            test[item.name] = e.target.value;
-                            dispatch({
-                              type: "setEditData",
-                              payload: test,
-                            });
-                            console.log('pp', test);
-                          }}
 
-                          options={item?.dropDownUserGroup.map(option => ({ id: option.id, label: option.userName + ` (${option.userGroupRole})` }))}
-                          sx={{ width: "100%" }}
-                          renderInput={(params) => <TextField {...params} label="User Group Name" />}
-                        /> */}
+                        </FM.TextInput>
                       </>
                     ) :
                       item.type === "select" ? (
@@ -385,32 +373,48 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                               </>
                                             )
                                             :
-                                            (
-                                              <FM.TextInput
-                                                InputLabelProps={{ shrink: true }}
-                                                InputProps={{ disableUnderline: true }}
-                                                margin="dense"
-                                                id="file"
-                                                label={item.label}
-                                                name={item.name}
-                                                type={item.type}
-                                                required
-                                                fullWidth
-                                                variant="standard"
-                                                value={
-                                                  item.name === "file" ? "" : state.editData[item.name]
-                                                }
-                                                onChange={(e) => {
-                                                  test[item.name] = item.name === "file"
-                                                    ? e.target.files[0].name
-                                                    : e.target.value;
-                                                  dispatch({
-                                                    type: "setEditData",
-                                                    payload: test,
-                                                  });
-                                                }}
-                                              />
-                                            )
+                                            item.type === "contact" ?
+                                              (
+                                                <>
+                                                  <FM.PhoneField
+                                                    placeholder="Enter phone number"
+                                                    value={contact}
+                                                    onChange={phone => handleChangePhone(phone)}
+                                                    country='pk'
+                                                    inputStyle={{
+                                                      width: "100%"
+                                                    }}
+                                                  />
+                                                  {/* <input type="tel" /> */}
+                                                </>
+                                              )
+                                              :
+                                              (
+                                                <FM.TextInput
+                                                  InputLabelProps={{ shrink: true }}
+                                                  InputProps={{ disableUnderline: true }}
+                                                  margin="dense"
+                                                  id="file"
+                                                  label={item.label}
+                                                  name={item.name}
+                                                  type={item.type}
+                                                  required
+                                                  fullWidth
+                                                  variant="standard"
+                                                  value={
+                                                    item.name === "file" ? "" : state.editData[item.name]
+                                                  }
+                                                  onChange={(e) => {
+                                                    test[item.name] = item.name === "file"
+                                                      ? e.target.files[0].name
+                                                      : e.target.value;
+                                                    dispatch({
+                                                      type: "setEditData",
+                                                      payload: test,
+                                                    });
+                                                  }}
+                                                />
+                                              )
                   }
                   <br />
                 </>

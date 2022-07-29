@@ -3,6 +3,8 @@ import { FM } from './CreateOrganizationStyle'
 import { Grid, MenuItem } from "@mui/material";
 import { UseCreateOrganization } from './UseCreateOrganization';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
+import PhoneInput from 'react-phone-input-2'
+
 export default function CreateOrganization() {
   const [{
     state,
@@ -15,6 +17,7 @@ export default function CreateOrganization() {
     password,
     setPassword,
     address,
+    handleChangePhone,
     setAddress,
     contact,
     setContact,
@@ -29,7 +32,7 @@ export default function CreateOrganization() {
     return <CommonTableLoader />
   }
   return (
-    <div style={{ backgroundColor: "white", minHeight: "100vh", minWidth: "100%", padding: "20px" ,borderRadius:"20px"}}>
+    <div style={{ backgroundColor: "white", minHeight: "100vh", minWidth: "100%", padding: "20px", borderRadius: "20px" }}>
 
       {
         state.user.id === "62deef57d7afa35edb69f58c" ?
@@ -95,8 +98,21 @@ export default function CreateOrganization() {
                   variant="standard"
                 />
               </Grid>
-              <Grid item xl={6} lg={6} md={12} sm={12} xs={12}>
-                <FM.TextInput
+              <Grid item xl={6} lg={6} md={12} sm={12} xs={12} style={{ marginTop: 18 }}>
+                <PhoneInput
+                  placeholder="Enter phone number"
+                  value={contact}
+                  onChange={phone => handleChangePhone(phone)}
+                  country='pk'
+                  // country="pk"
+                  inputProps={{ "country": "pk", "enableAreaCodes": true }}
+                  countryCodeEditable={false}
+                  inputStyle={{
+                    width: "100%"
+                  }}
+                />
+                
+                {/* <FM.TextInput
                   InputLabelProps={{ shrink: true }}
                   label={"Contact"}
                   name={"Contact"}
@@ -108,7 +124,7 @@ export default function CreateOrganization() {
                   required
                   fullWidth
                   variant="standard"
-                />
+                /> */}
               </Grid>
               <Grid item xl={6} lg={6} md={12} sm={12} xs={12} style={{ marginTop: 10 }}>
                 <FM.TextInput
@@ -162,7 +178,7 @@ export default function CreateOrganization() {
 
 
             </Grid>
-            <br/>
+            <br />
             <FM.FormButton style={{ color: '#1E86FF' }} variant="outlined" onClick={ctaHandler}>
               Create Organization
             </FM.FormButton>

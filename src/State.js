@@ -14,7 +14,9 @@ const initialState = {
     orgLogin: false,
     editData: {},
     imageUrl: '',
-    tabsPersmission: []
+    tabsPersmission: [],
+    valTel: '',
+    usersObj: {}
 }
 let reducer = (state, action) => {
     // eslint-disable-next-line default-case
@@ -68,6 +70,20 @@ let reducer = (state, action) => {
             return {
                 ...state,
                 orgLogin: action.payload
+            }
+        }
+        case "setValTel": {
+            console.log("org", action.payload)
+            return {
+                ...state,
+                valTel: action.payload
+            }
+        }
+        case "setUsersObj": {
+            console.log("org", action.payload)
+            return {
+                ...state,
+                usersObj: action.payload
             }
         }
     }

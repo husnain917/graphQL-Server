@@ -19,6 +19,9 @@ export function UseCreateOrganization() {
     const [userGroup, setUserGroup] = useState('')
     console.log("userGroup", userGroup, role)
     const [{ userGroupOrganization }] = FiltredData()
+    const handleChangePhone = (phone) => {
+        setContact(phone)
+    }
     const ctaHandler = async (e) => {
         e.preventDefault();
         if (userGroup === '' || role === '' || name === '' || email === '' || password === '' || address === '' || contact === '') {
@@ -61,7 +64,7 @@ export function UseCreateOrganization() {
                         setAddress('')
                         setContact('')
                         setUserGroup('')
-                            
+
 
                     },
                     refetchQueries: [{ query: GET_USER_GROUP }],
@@ -74,5 +77,5 @@ export function UseCreateOrganization() {
         }
     }
 
-    return [{ state, name, setName, email, setEmail, role, setRole, password, setPassword, address, setAddress, contact, setContact, userGroup, setUserGroup, userGroupOrganization, ctaHandler, ADD_LOADING }]
+    return [{ state, name, setName, email, setEmail, role, setRole, password, setPassword, handleChangePhone, address, setAddress, contact, setContact, userGroup, setUserGroup, userGroupOrganization, ctaHandler, ADD_LOADING }]
 }

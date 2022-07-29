@@ -1,10 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../State';
-import { MENU_ITEMS } from '../../constants/Roles';
-import WebhookIcon from '@mui/icons-material/Webhook';
-import GroupIcon from '@mui/icons-material/Group';
-import StorageIcon from '@mui/icons-material/Storage';
 export const UseDrawer = () => {
     const [open, setOpen] = React.useState(true);
     const { state, dispatch } = useContext(AppContext);
@@ -12,7 +8,8 @@ export const UseDrawer = () => {
     const handleDrawer = () => {
         setOpen(!open);
     };
-    const ctaLogoutHandler = () => {
+    const ctaLogoutHandler = async () => {
+        await sessionStorage.clear()
         dispatch({
             type: "setAuthState",
             payload: {
@@ -20,16 +17,17 @@ export const UseDrawer = () => {
                 authState: false
             }
         })
-        localStorage.removeItem('token')
+        dispatch({
+            type: "ORGlogin",
+            payload: false
+        })
         navigate('/login')
-
-
     }
-    
-  
+
+
 
     return [{
-        
+
         open,
         handleDrawer,
         ctaLogoutHandler,

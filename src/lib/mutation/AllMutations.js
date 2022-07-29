@@ -715,12 +715,30 @@ mutation GetActiveUser($token: String!) {
     secretKeyId
     token
     users {
-      name
       id
+      name
       email
       cnic
       address
       contact
+      permission
+      emailApproval
+      successStoriesId
+      token
+      createdAt
+      updateAt
+      organizationsId
+      status
+      userGroupId
+      userGroup {
+        id
+        userName
+        userGroupRole
+        tabsPermission
+        createdAt
+        updateAt
+        organizationsId
+      }
     }
     userGroup {
       id
@@ -728,8 +746,9 @@ mutation GetActiveUser($token: String!) {
       userGroupRole
       tabsPermission
       createdAt
-      updateAt
       organizationsId
+      updateAt
     }
   }
-}`
+}
+`

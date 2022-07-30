@@ -26,7 +26,7 @@ export default function Profile() {
                     <CommonTableLoader />
                     :
 
-                    <>
+                    <div style={{ backgroundColor: "white", minHeight: "100vh", minWidth: "100%", padding: "20px", borderRadius: "20px" }}>
                         <P.MycontainerBorder>
                             <TypoHead>
                                 Profile
@@ -88,7 +88,7 @@ export default function Profile() {
                                 </Grid>
                             </Grid>
                         </P.Mycontainer>
-                    </>
+                    </div>
             }
         </>
     )

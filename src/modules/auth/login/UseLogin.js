@@ -1,8 +1,9 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { useState, useContext, useEffect } from 'react';
 import { LOGIN, ORG_LOGIN } from '../../../lib/mutation/LoginMutation';
 import { AppContext } from "../../../State";
 import { ToastError, ToastSuccess } from '../../../commonComponents/commonFunction/CommonFunction';
+import { GET_ALL_ORGANIZATION, GET_USERS } from '../../../lib/queries/AllQueries';
 export default function UseLogin() {
 
   const { state, dispatch } = useContext(AppContext);
@@ -68,7 +69,9 @@ export default function UseLogin() {
               authState: true
             },
           });
-          ToastSuccess(`Welcome ${activeUserName}`)
+          const str = login.name
+          const str2 = str.charAt(0).toUpperCase() + str.slice(1)
+          ToastSuccess(`Welcome ${str2}`)
           if (login.userGroup?.userGroupRole === "STUDENT") {
             dispatch({
               type: "tabsPermission",
@@ -95,8 +98,10 @@ export default function UseLogin() {
     }
   }
 
+
   let [OrganizationLogin, { loading: ORG_LOADING }] = useMutation(ORG_LOGIN)
   const organizationLoginHandler = async () => {
+
     try {
       await OrganizationLogin({
         variables: {
@@ -114,9 +119,11 @@ export default function UseLogin() {
               authState: true
             },
           });
-          ToastSuccess(`Welcome ${activeOrgUser}`)
+          const str = login.organizationLogin.name
+          const str2 = str.charAt(0).toUpperCase() + str.slice(1)
+          ToastSuccess(`Welcome ${str2}`)
           login.organizationLogin?.userGroup.map((item) => {
-            if (item.userGroupRole === "ORGANIZATIONKEY")
+            if (login.organizationLogin.role === "ORGANIZATIONKEY")
               dispatch({
                 type: "tabsPermission",
                 payload: item.tabsPermission?.navigationResults
@@ -124,6 +131,47 @@ export default function UseLogin() {
 
           })
 
+
+          // const student = USER_DATA?.users?.map((role) => {
+          //   if (role.userGroup.userGroupRole === 'STUDENT') {
+          //     return role
+          //   }
+          // })
+
+
+
+          // const teacher = USER_DATA?.users?.filter((role) => {
+          //   if (role.userGroup.userGroupRole === 'TEACHER') {
+          //     return role
+          //   }
+          // })
+
+
+
+          // const admin = USER_DATA?.users?.filter((role) => {
+          //   if (role.userGroup.userGroupRole === 'ADMIN') {
+          //     return role
+          //   }
+          // })
+
+          // const organizationDetails = ORG_DATA?.findManyOrganizations.map((item) => {
+          //   if (item.role === "ORGANIZATIONKEY") {
+          //     return item
+          //   }
+
+          // })
+
+          // dispatch({
+          //   type: "setUsersObj",
+          //   payload: {
+          //     students: student.length,
+          //     teachers: teacher.length,
+          //     admins: admin.length,
+          //     organizationDetails: organizationDetails.length,
+          //     ORG_DATA_LOGIN: ORG_DATA_LOGIN,
+          //     USER_LOADING: USER_LOADING
+          //   }
+          // })
 
         },
       })

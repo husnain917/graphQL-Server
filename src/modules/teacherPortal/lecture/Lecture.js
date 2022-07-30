@@ -32,6 +32,10 @@ export default function Lecture() {
       title={'Lectures'}
       tableHeadings={[
         {
+          id: 'courseId',
+          Label: 'Course Id'
+        },
+        {
           id: 'lectureTitle',
           Label: 'Lecture Title',
         },
@@ -39,10 +43,7 @@ export default function Lecture() {
           id: 'lectureVideo',
           Label: 'Lecture Video',
         },
-        {
-          id: 'courseId',
-          Label: 'Course Id'
-        },
+        
         {
           id: "createdAt",
           Label: "Created At"
@@ -61,13 +62,13 @@ export default function Lecture() {
       ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
         {
+          key: 'coursesId'
+        },
+        {
           key: "lectureTitle",
         },
         {
           key: 'lectureVideo',
-        },
-        {
-          key: 'coursesId'
         },
         {
           key: 'createdAt'

@@ -143,6 +143,38 @@ mutation Register($data: UserCreateInput!) {
   }
 }
 `
+export const ADD_COURSE_CATEGORY = gql`
+mutation CreateCategory($data: CategoryCreateInput!) {
+  createCategory(data: $data) {
+    id
+    categoryName
+    imageUrl
+    createdAt
+    updateAt
+  }
+}
+`
+export const ADD_ORGANIZATION = gql`
+mutation CreateOrganization($data: OrganizationsCreateInput!) {
+  createOrganization(data: $data) {
+    id
+    name
+    email
+    role
+    address
+    contact
+    secretKeyId
+    userGroup {
+      id
+      userGroupRole
+      userName
+      tabsPermission
+      createdAt
+      updateAt
+    }
+  }
+}
+`
 
 export const ADD_MY_COURSES = gql`
 mutation Mutation($data: MyCourseCreateInput!) {
@@ -421,7 +453,17 @@ mutation UpdateSuccessStories($where: SuccessStoriesWhereUniqueInput!, $data: Su
 
 } `
 
-
+export const UPDATE_SINGLE_COURSE_CATEGORY = gql`
+mutation UpdateCategory($data: CategoryUpdateInput!, $where: CategoryWhereUniqueInput!) {
+  updateCategory(data: $data, where: $where) {
+    id
+    categoryName
+    imageUrl
+    createdAt
+    updateAt
+  }
+}
+`
 
 export const UPDATE_SINGLE_COURSE = gql`
 mutation UpdateCourses($data: CoursesUpdateInput!, $where: CoursesWhereUniqueInput!) {
@@ -683,12 +725,30 @@ mutation GetActiveUser($token: String!) {
     secretKeyId
     token
     users {
-      name
       id
+      name
       email
       cnic
       address
       contact
+      permission
+      emailApproval
+      successStoriesId
+      token
+      createdAt
+      updateAt
+      organizationsId
+      status
+      userGroupId
+      userGroup {
+        id
+        userName
+        userGroupRole
+        tabsPermission
+        createdAt
+        updateAt
+        organizationsId
+      }
     }
     userGroup {
       id
@@ -696,8 +756,9 @@ mutation GetActiveUser($token: String!) {
       userGroupRole
       tabsPermission
       createdAt
-      updateAt
       organizationsId
+      updateAt
     }
   }
-}`
+}
+`

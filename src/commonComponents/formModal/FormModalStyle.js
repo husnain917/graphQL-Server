@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Dialog, IconButton, TextField } from "@mui/material";
 import { colors } from "../../constants/Color";
-
+import PhoneInput from 'react-phone-input-2'
 export const FM = {
 
     DialogBox: styled(Dialog)(()=> ({
@@ -24,6 +24,9 @@ export const FM = {
         marginTop: 10,
         marginBottom: 10
     
+    })),
+    PhoneField:styled(PhoneInput)(()=>({
+       marginTop: 20,
     })),
     Image: styled('input')(() => ({
         backgroundColor: colors.appBar,

@@ -22,7 +22,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-
+import PhoneInput from 'react-phone-input-2'
 
 import { FM } from './FormModalStyle'
 import CloudinaryFunction from "../../constants/CloudinaryFunction";
@@ -35,10 +35,15 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
   const [open, setOpen] = useState(false)
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const [sami, setSami] = useState('')
-
-  console.log(sami);
-
+  const [contact, setContact] = useState('')
+  const handleChangePhone = (phone) => {
+    setContact(phone)
+    dispatch({
+      type: "setValTel",
+      payload: contact
+    })
+    console.log(contact)
+  }
   const handleCloseUpdate = () => {
     dispatch({
       type: "setModal",
@@ -128,37 +133,49 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                               console.log('pp', test);
                             }}
 
-                          >
-                            {
-                              item?.dropDownUserGroup.map((option) => (
+                        >
+                          {
+                            item?.dropDownUserGroup?.map((option) => (
 
-                                <MenuItem key={option.id} value={option.id}>
-                                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-                                    <div>{option.userName}</div>
-                                    <div style={{ fontSize: '10px', color: "gray", float: "right" }}>
-                                      {option.userGroupRole}
-                                    </div>
+                              <MenuItem key={option?.id} value={option?.id}>
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                                  <div>{option?.userName}</div>
+                                  <div style={{ fontSize: '10px', color: "gray", float: "right" }}>
+                                    {option?.userGroupRole}
                                   </div>
-                                </MenuItem>
-                              ))}
+                                </div>
+                              </MenuItem>
+                            ))}
 
-                          </FM.TextInput>
-                          {/* <Autocomplete
-                          disablePortal
-                          id="combo-box-demo"
-                          onChange={(e) => {
-                            test[item.name] = e.target.value;
-                            dispatch({
-                              type: "setEditData",
-                              payload: test,
-                            });
-                            console.log('pp', test);
-                          }}
-
-                          options={item?.dropDownUserGroup.map(option => ({ id: option.id, label: option.userName + ` (${option.userGroupRole})` }))}
-                          sx={{ width: "100%" }}
-                          renderInput={(params) => <TextField {...params} label="User Group Name" />}
-                        /> */}
+                        </FM.TextInput>
+                      </>
+                    ) :
+                      item.type === "select" ? (
+                        <>
+                          <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
+                          <RadioGroup
+                            row
+                            aria-labelledby="demo-row-radio-buttons-group-label"
+                            name="row-radio-buttons-group"
+                            onChange={(e) => {
+                              test[item.name] = e.target.value;
+                              dispatch({
+                                type: "setEditData",
+                                payload: test,
+                              });
+                              console.log('pp', test);
+                            }}
+                          >
+                            {item?.dropDownContent?.map((option) => (
+                              <FormControlLabel
+                                value={option}
+                                control={
+                                  <Radio />
+                                }
+                                label={option}
+                              />
+                            ))}
+                          </RadioGroup>
                         </>
                       ) :
                         item.type === "select" ? (
@@ -394,23 +411,19 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
 
                                             )
                                             :
-                                            item.type === "calender" ?
+                                            item.type === "contact" ?
                                               (
                                                 <>
-                                                  <button onClick={() => setOpen(true)}>Select Date</button>
-                                                  <>
-                                                    {
-                                                      open ?
-                                                        <Calendar
-                                                          onChange={onDateChange}
-                                                          value={date}
-                                                          showNeighboringMonth={false}
-                                                          locale={"en-US"}
-                                                        />
-                                                        :
-                                                        ''
-                                                    }
-                                                  </>
+                                                  <FM.PhoneField
+                                                    placeholder="Enter phone number"
+                                                    value={contact}
+                                                    onChange={phone => handleChangePhone(phone)}
+                                                    country='pk'
+                                                    inputStyle={{
+                                                      width: "100%"
+                                                    }}
+                                                  />
+                                                  {/* <input type="tel" /> */}
                                                 </>
                                               )
                                               :

@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, FormLabel, Grid, Radio, RadioGroup } from "@mui/material";
+import { Checkbox, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, Tooltip } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { TabsStyle } from "./UserGroupStyle";
 import Table from "@mui/material/Table";
@@ -41,22 +41,24 @@ export default function UserGroup() {
       <Grid container>
         <Grid item xl={12} lg={12} mg={12} sm={12} xs={12}>
           <TabsStyle.InputLabel>
-            <TabsStyle.MyInput
-              User Group Name
-              placeholder="Enter Name"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-            />
+            User Name
+              <TabsStyle.MyInput
+                User Group Name
+                placeholder="Enter Name"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+              />
           </TabsStyle.InputLabel>
         </Grid>
         <Grid item xl={12} lg={12} mg={12} sm={12} xs={12}>
           <TabsStyle.InputLabel>
-          <TabsStyle.MyInput
-              
-              placeholder="Enter Role"
-              value={role}
-              onChange={(e) => setRole(e.target.value.toUpperCase())}
-            />
+            User Role
+              <TabsStyle.MyInput
+                User Group Name
+                placeholder="Enter Role"
+                value={userGroupRole}
+                onChange={(e) => setuserGroupRole(e.target.value)}
+              />
             {/* <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"

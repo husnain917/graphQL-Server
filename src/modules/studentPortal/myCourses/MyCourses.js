@@ -85,9 +85,9 @@ export default function MyCourse() {
           key: "courseApproval",
         },
 
-        {
-          key: "whyReject",
-        },
+        // {
+        //   key: "whyReject",
+        // },
         // {
         //   key: 'courseBatches',
         // },

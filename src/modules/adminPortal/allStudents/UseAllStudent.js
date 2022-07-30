@@ -24,9 +24,6 @@ import { AppContext } from "../../../State";
 
 export function UseAllStudents() {
   const [{ userGroupStudent }] = FiltredData()
-  var regexp = new RegExp('^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$');
-  // var regexp = new RegExp('');
- 
   const formInputs = [
     {
       label: "Name",
@@ -48,7 +45,6 @@ export function UseAllStudents() {
       label: "Cnic",
       name: "cnic",
       type: "number",
-      pattern: regexp,
       // sx: {
       //   input : {
       //     "&:invalid":{
@@ -59,14 +55,14 @@ export function UseAllStudents() {
       // }
     },
     {
-      label: "Contact",
-      name: "contact",
-      type: "tel",
-    },
-    {
       label: "Address",
       name: "address",
       type: "text",
+    },
+    {
+      label: "Contact",
+      name: "contact",
+      type: "contact",
     },
     {
       label: "Select User Group",
@@ -104,7 +100,7 @@ export function UseAllStudents() {
     }
 
   });
-  
+
 
   //ADD STAFF
 
@@ -114,108 +110,102 @@ export function UseAllStudents() {
       loading: ADD_LOADING
     }] = useMutation(ADD_USER);
 
-    const ctaFormHandler = async (event) => {
-      event.preventDefault();
-     
-      if (!state.editData?.name) {
-        ToastWarning('Name required')
-      }
-      else if (!state.editData?.email) {
-        ToastWarning('Email required')
-      }
-      else if (!state.editData?.contact) {
-        ToastWarning('Contact required')
-      }
-      else if (!state.editData?.cnic) {
-        ToastWarning('cnic required')
-      }
-      else if (!state.editData?.address) {
-        ToastWarning('address required')
-      }
-      else if (!state.editData?.userGroup) {
-        ToastWarning('User Group required')
-      }
-      else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
-        ToastWarning('Phone No Must be 11 digits')
-      }
+  const ctaFormHandler = async (event) => {
+    event.preventDefault();
+    if (!state.editData?.name) {
+      ToastWarning('Name required')
+    }
+    else if (!state.editData?.email) {
+      ToastWarning('Email required')
+    }
+    else if (!state.valTel) {
+      ToastWarning('Contact required')
+    }
+    else if (!state.editData?.cnic) {
+      ToastWarning('cnic required')
+    }
+    else if (!state.editData?.address) {
+      ToastWarning('address required')
+    }
+    else if (!state.editData?.userGroup) {
+      ToastWarning('User Group required')
+    }
+    else {
+      try {
+        await Register({
+          variables: {
 
-  
-      else {
-        try {
-          await Register({
-            variables: {
-  
-              data: {
-                name: state.editData?.name,
-                email: state.editData?.email,
-                password: state.editData?.password,
-                cnic: state.editData?.cnic,
-                contact: state.editData?.contact,
-                userGroup: {
-                  connect: {
-                    id: state.editData?.userGroup
-                  }
+            data: {
+              name: state.editData?.name,
+              email: state.editData?.email,
+              password: state.editData?.password,
+              cnic: state.editData?.cnic,
+              contact: state?.valTel,
+              userGroup: {
+                connect: {
+                  id: state.editData?.userGroup
                 }
               }
-  
-            },
-            refetchQueries: [{ query: GET_USERS }],
-  
-            onCompleted() {
-              dispatch({
-                type: "setModal",
-                payload: {
-                  modalUpdateFlag: false,
-                  openFormModal: false,
-                },
-              });
-  
-  
-              ToastSuccess('Student Added')
-            },
-            // update(cache, { data: { addItems } }) {
-            //   const { tados } = cache.readQuery({
-            //     query: GET_STAFF
-            //   })
-            //   cache.writeQuery({
-            //     query: GET_STAFF,
-            //     data: {
-            //       tados: [
-            //         data.CreateManyStaff,
-            //         ...tados
-  
-            //       ]
-            //     }
-            //   })
-            // }
-  
-            // update: (cache, { data: { addItem } }) => {
-            //   const data = cache.readQuery({ query: GET_STAFF });
-            //   console.log('sami',data);
-            //   data.items = [...data.items, addItem];
-            //   cache.writeQuery({ query: GET_STAFF }, data);
-            // },
-  
-          });
-          // const queryResult = cache.readQuery({
-          //   query: GET_STAFF
-          // });
-          // console.log('sami', queryResult);
-        } catch (error) {
-          dispatch({
-            type: "setModal",
-            payload: {
-              openFormModal: false,
-            },
-          });
-          ToastError(error.message);
-  
-        }
+            }
+
+          },
+          refetchQueries: [{ query: GET_USERS }],
+
+          onCompleted() {
+            dispatch({
+              type: "setModal",
+              payload: {
+                modalUpdateFlag: false,
+                openFormModal: false,
+              },
+            });
+
+
+            ToastSuccess('Student Added')
+          },
+          // update(cache, { data: { addItems } }) {
+          //   const { tados } = cache.readQuery({
+          //     query: GET_STAFF
+          //   })
+          //   cache.writeQuery({
+          //     query: GET_STAFF,
+          //     data: {
+          //       tados: [
+          //         data.CreateManyStaff,
+          //         ...tados
+
+          //       ]
+          //     }
+          //   })
+          // }
+
+          // update: (cache, { data: { addItem } }) => {
+          //   const data = cache.readQuery({ query: GET_STAFF });
+          //   console.log('sami',data);
+          //   data.items = [...data.items, addItem];
+          //   cache.writeQuery({ query: GET_STAFF }, data);
+          // },
+
+        });
+        // const queryResult = cache.readQuery({
+        //   query: GET_STAFF
+        // });
+        // console.log('sami', queryResult);
+      } catch (error) {
+        dispatch({
+          type: "setModal",
+          payload: {
+            openFormModal: false,
+          },
+        });
+        ToastError(error.message);
+
       }
-  
-    };
-  
-  
+    }
+
+  };
+
+
 
 
 
@@ -233,7 +223,7 @@ export function UseAllStudents() {
     else if (!state.editData?.email) {
       ToastWarning('Email required')
     }
-    else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
+    else if (!state.valTell) {
       ToastWarning('contact must be 11 characters')
     }
     else if (!state.editData?.cnic) {
@@ -243,7 +233,7 @@ export function UseAllStudents() {
       ToastWarning('address required')
     }
     else if (!state.editData?.userGroup) {
-      ToastWarning('Role required')
+      ToastWarning('User Group required')
     }
     else {
       try {
@@ -270,7 +260,7 @@ export function UseAllStudents() {
                 set: state.editData?.address,
               },
               contact: {
-                set: state.editData?.contact,
+                set: state.valTel
               },
               userGroup: {
                 connect: {

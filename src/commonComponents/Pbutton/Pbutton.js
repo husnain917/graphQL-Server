@@ -1,12 +1,12 @@
 import React from 'react'
-import { Ibutton } from './PButtonStyle'
+import { FM } from './PButtonStyle'
 
 export default function PButton({ title, iconEnd, iconStart, icon, ctaHandler }) {
     return (
-        <Ibutton startIcon={iconStart ? iconStart : ''} endIcon={iconEnd ? iconEnd : ''} onClick={()=>ctaHandler()}>
+        <FM.FormButton style={{ color: '#1E86FF' }} variant="outlined" startIcon={iconStart ? iconStart : ''} endIcon={iconEnd ? iconEnd : ''} onClick={()=>ctaHandler()}>
             {
                     title ? title : icon
             }
-        </Ibutton>
+        </FM.FormButton >
     )
 }

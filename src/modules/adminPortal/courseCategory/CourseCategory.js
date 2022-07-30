@@ -1,12 +1,11 @@
 import React from 'react';
-import Table from '../../commonComponents/table/Table';
-import UseSpeakers from './UseSpeakers';
-import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader';
-import NewTable from '../../commonComponents/newTable/NewTable';
-export default function Speakers() {
+import Table from '../../../commonComponents/table/Table';
+import UseCourseCategory from './UseCourseCategory';
+import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
+import NewTable from '../../../commonComponents/newTable/NewTable';
+export default function CourseCategory() {
     const [
         {
-            loader,
             ADD_LOADING,
             GET_LOADING,
             // DELETE_LOADING,
@@ -17,66 +16,50 @@ export default function Speakers() {
             ctaUpdateHandler,
             formInputs,
         },
-    ] = UseSpeakers();
+    ] = UseCourseCategory();
     if (
         GET_LOADING ||
         // DELETE_LOADING ||
         UPDATE_LOADING ||
-        ADD_LOADING ||
-        loader
+        ADD_LOADING
     ) {
         return <CommonTableLoader />;
     }
     return (
         <NewTable
-            title={'Speakers'}
+            title={'Course Category'}
             tableHeadings={[
-                // {
-                //     id: "Id",
-                //     Label: "Id"
-                // },
                 {
-                    id: "speakerName",
-                    Label: "speakerName"
+                    id: "categoryName",
+                    Label: "categoryName"
                 },
                 {
-                    id: "spkearDesc",
-                    Label: "speakerDesc"
-                },
-                {
-                    id: "speakerImage",
-                    Label: "speakerImage"
+                    id: "imageUrl",
+                    Label: "image"
                 },
                 {
                     id: "createdAt",
-                    Label: "createdAt"
+                    Label: "Created At"
                 },
                 {
                     id: "updateAt",
-                    Label: "updateAt"
+                    Label: "Update At"
                 },
                 {
                     id: "action",
                     Label: "Action"
-                }
+                },
             ]}
 
             ctaFormHandler={ctaFormHandler}
             // ctaDeleteHandler={ctaDeleteHandler}
             ctaUpdateHandler={ctaUpdateHandler}
             printedKeys={[
-                // {
-                //     key: "id",
-                // },
                 {
-                    key: "speakerName",
+                    key: "categoryName",
                 },
                 {
-                    key: 'spkearDesc',
-                },
-                {
-                    key: 'spekaerImage',
-                    type: 'image'
+                    key: 'imageUrl',
                 },
                 {
                     key: 'createdAt'
@@ -91,7 +74,11 @@ export default function Speakers() {
             formInputs={formInputs}
             filterdata={{
                 key: "status",
-                filterTag: ['All', 'Offline', 'Active'],
+                filterTag: [
+                    'All',
+                    'Offline',
+                    'Active'
+                ],
             }}
             data={refacteredData}
             disableAddIcon={true}

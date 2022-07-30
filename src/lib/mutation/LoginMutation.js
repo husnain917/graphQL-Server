@@ -3,10 +3,10 @@ import { gql } from "@apollo/client";
 export const LOGIN = gql`
 mutation Login($password: String!, $email: String!) {
   login(password: $password, email: $email) {
-    cnic
     id
     name
     email
+    cnic
     address
     contact
     permission
@@ -17,14 +17,36 @@ mutation Login($password: String!, $email: String!) {
     updateAt
     organizationsId
     status
-    userGroupId
     userGroup {
-      userName
       id
+      userName
       userGroupRole
       tabsPermission
       createdAt
       updateAt
+      organizationsId
+    }
+    userGroupId
+    organizations {
+      id
+      name
+      email
+      role
+      address
+      contact
+      secretKeyId
+      token
+      users {
+        id
+        name
+        cnic
+        email
+        address
+        contact
+        permission
+        emailApproval
+        successStoriesId
+      }
     }
   }
 }
@@ -32,41 +54,53 @@ mutation Login($password: String!, $email: String!) {
 
 
 export const ORG_LOGIN = gql`
-# mutation OrganizationLogin($password: String!, $email: String!) {
-#   organizationLogin(password: $password, email: $email) {
-#     id
-#     name
-#     email
-#     address
-#     contact
-#     secretKeyId
-#     token
-#     role
-    
-#   }
-mutation OrganizationLogin($password: String!, $email: String!) {
+mutation CreateOrganization($password: String!, $email: String!) {
   organizationLogin(password: $password, email: $email) {
-    name
     id
+    name
     email
     role
     address
     contact
     secretKeyId
     token
+    users {
+      id
+      name
+      email
+      cnic
+      address
+      contact
+      permission
+      emailApproval
+      successStoriesId
+      token
+      createdAt
+      updateAt
+      status
+      organizationsId
+      userGroupId
+      userGroup {
+        id
+        userName
+        userGroupRole
+        tabsPermission
+        createdAt
+        updateAt
+        organizationsId
+      }
+    }
     userGroup {
+      id
       userName
       userGroupRole
       tabsPermission
       createdAt
       updateAt
+      organizationsId
     }
-    users {
-      name
-      email
-      cnic
-    } 
   }
-}`
+}
+`
 
 

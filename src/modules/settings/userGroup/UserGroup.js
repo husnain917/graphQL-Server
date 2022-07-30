@@ -57,7 +57,7 @@ export default function UserGroup() {
                 User Group Name
                 placeholder="Enter Role"
                 value={userGroupRole}
-                onChange={(e) => setuserGroupRole(e.target.value)}
+                onChange={(e) => setuserGroupRole(e.target.value.toUpperCase())}
               />
             {/* <RadioGroup
               row

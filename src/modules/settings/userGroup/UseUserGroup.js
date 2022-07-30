@@ -11,8 +11,6 @@ export function UseUserGroup() {
     const [userName, setUserName] = useState('')
     const [userGroupRole, setuserGroupRole] = useState('')
     const [email, setEmail] = useState('')
-    // const [select, setSelect] = useState('')
-    const [role, setRole] = useState('')
     const allData = {
         "navigationResults": []
     };
@@ -55,15 +53,15 @@ export function UseUserGroup() {
         else if (userGroupRole === '') {
             ToastWarning('User Group Role Required')
         }
-        else if(role === "ORGANIZATIONKEY" || role === "ADMIN" || role === "TEACHER" || role === "STUDENT"){
-
+        else if(userGroupRole === "ORGANIZATIONKEY" || userGroupRole === "ADMIN" || userGroupRole === "TEACHER" || userGroupRole === "STUDENT"){
+            
             try {
                 await CreateUserGroup({
                     variables: {
 
                         data: {
                             userName: userName,
-                            userGroupRole: userGroupRole.toUpperCase(),
+                            userGroupRole: userGroupRole,
                             tabsPermission: allData,
                             // Organizations: {
                             //     connect: {

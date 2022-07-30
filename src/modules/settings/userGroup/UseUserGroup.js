@@ -14,7 +14,7 @@ export function UseUserGroup() {
     // const [select, setSelect] = useState('')
     const [role, setRole] = useState('')
     const allData = {
-        "navigationResults":[]
+        "navigationResults": []
     };
     const handlingPermission = (item, pageIndex, permission) => {
         const findModule = allData.navigationResults.filter((i) => i.moduleName === item.moduleName);
@@ -52,10 +52,10 @@ export function UseUserGroup() {
         if (userName === '') {
             ToastWarning('User Name Required')
         }
-        else if (role === '') {
+        else if (userGroupRole === '') {
             ToastWarning('User Group Role Required')
         }
-        else if(role === "ORGANIZATIONKEY" || role === "ADMIN" || role === "TEACHER" || role === "STUDENT"){
+        else {
 
             try {
                 await CreateUserGroup({
@@ -63,7 +63,7 @@ export function UseUserGroup() {
 
                         data: {
                             userName: userName,
-                            userGroupRole: role,
+                            userGroupRole: userGroupRole.toUpperCase(),
                             tabsPermission: allData,
                             // Organizations: {
                             //     connect: {
@@ -77,6 +77,8 @@ export function UseUserGroup() {
 
                     onCompleted(data, cache) {
                         ToastSuccess('UserGroup Added')
+                        setuserGroupRole('')
+                        setUserName('')
 
                     },
                 });
@@ -92,10 +94,8 @@ export function UseUserGroup() {
                 console.log(error.message)
 
             }
-        }else{
-            ToastWarning('Spelling Mistake')
         }
     };
 
-    return [{userName, userGroupRole, email, setEmail, setUserName,ctaHandler, setuserGroupRole, handlingPermission,ADD_LOADING,setRole, role}]
+    return [{ userName, userGroupRole, email, setEmail, setUserName, ctaHandler, setuserGroupRole, handlingPermission, ADD_LOADING }]
 }

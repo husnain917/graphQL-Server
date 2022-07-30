@@ -25,6 +25,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import StorageIcon from '@mui/icons-material/Storage';
 import CategoryIcon from '@mui/icons-material/Category';
 import DuoIcon from '@mui/icons-material/Duo';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 export var MENU_ITEMS = [
     {
         text: 'Dashboard',
@@ -53,7 +54,7 @@ export var MENU_ITEMS = [
     },
     {
         text: 'Course Batch',
-        icon: <Subscriptions />,
+        icon: <LibraryBooksIcon />,
         path: '/courseBatch',
     },
     {
@@ -90,6 +91,16 @@ export var MENU_ITEMS = [
         text: 'My Courses',
         icon: <Subscriptions />,
         path: '/myCourse',
+    },
+    {
+        text: 'Course Category',
+        icon: <CategoryIcon />,
+        path: '/courseCategory',
+    },
+    {
+        text: 'Lectures',
+        icon: <DuoIcon />,
+        path: '/lectures',
     },
     {
         text: 'Assignments',

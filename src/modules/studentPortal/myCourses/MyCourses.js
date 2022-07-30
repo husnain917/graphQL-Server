@@ -39,6 +39,7 @@ export default function MyCourse() {
             id: "studentId",
             Label: "Student Id"
         },
+<<<<<<< HEAD
         {
             id: "courseApproval",
             Label: "Course Approval"
@@ -47,6 +48,12 @@ export default function MyCourse() {
           id: 'whyReject',
           Label: 'Why Reject' 
         },
+=======
+        // {
+        //     id: "courseApproval",
+        //     Label: "Course Approval"
+        // },
+>>>>>>> origin/master
         // {
         //   id: 'whyReject',
         //   Label: 'Why Reject' 
@@ -81,13 +88,19 @@ export default function MyCourse() {
         // {
         //   key: "courseBatchesId",
         // },
+<<<<<<< HEAD
         {
           key: "courseApproval",
         },
+=======
+        // {
+        //   key: "courseApproval",
+        // },
+>>>>>>> origin/master
 
-        {
-          key: "whyReject",
-        },
+        // {
+        //   key: "whyReject",
+        // },
         // {
         //   key: 'courseBatches',
         // },

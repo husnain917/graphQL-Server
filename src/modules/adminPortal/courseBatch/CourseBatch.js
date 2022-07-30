@@ -27,7 +27,7 @@ export default function CourseBatch() {
     }
     return (
         <NewTable
-            title={'Lectures'}
+            title={'Course Batch'}
             tableHeadings={[
                 {
                     id: "name",

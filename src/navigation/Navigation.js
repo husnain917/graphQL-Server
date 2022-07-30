@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Sidebar from '../commonComponents/sidebar/Sidebar';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes,useLocation,useNavigate } from 'react-router-dom';
 import Login from '../modules/auth/login/Login';
 import ForgotPassword from '../modules/auth/forgotPassword/ForgotPassword';
 import Dashboard from '../modules/dashboard/Dashboard';
@@ -34,9 +34,18 @@ import TabsPermission from '../modules/settings/tabsPermission/TabsPermission';
 import ApiPermissions from '../modules/settings/apiPermissions/ApiPermissions';
 import UserGroup from '../modules/settings/userGroup/UserGroup';
 import CreateOrganization from '../modules/settings/createOrganization/CreateOrganization';
-
+import CourseCategory from '../modules/adminPortal/courseCategory/CourseCategory'
 export default function Navigation() {
+    let location = useLocation();
+    let navigate = useNavigate()
     const { state, dispatch } = useContext(AppContext);
+
+
+    React.useEffect(() => {
+        if (!state.authState) {
+            navigate(location.pathname)
+        }
+    }, [])
     return (
         <>
 
@@ -117,6 +126,18 @@ export default function Navigation() {
                                 <Courses />
                             </PrivateRouting>
                         }
+                    />
+                    <Route path='/courseCategory'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <CourseCategory />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/lectures'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <Lecture />
+                            </PrivateRouting>}
                     />
                     <Route
                         path='/enrollmentApproval'

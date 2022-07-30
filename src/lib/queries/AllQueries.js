@@ -58,7 +58,18 @@ query FindManySuccessStories {
   }
 }
 `
-
+export const GET_ALL_ORGANIZATION = gql`
+query FindManyOrganizations {
+  findManyOrganizations {
+    id
+    name
+    email
+    role
+    address
+    contact
+  }
+}
+`
 
 export const GET_USERS = gql`
 query Query {
@@ -91,7 +102,6 @@ query UserGroups {
     tabsPermission
     createdAt
     updateAt
-    organizationsId
   }
 }
 `
@@ -147,6 +157,9 @@ query Categories {
   categories {
     id
     categoryName
+    imageUrl
+    createdAt
+    updateAt
   }
 }
 `

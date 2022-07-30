@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { useEffect } from 'react'
 import {
+    GET_ALL_ORGANIZATION,
     GET_COURSES,
     GET_COURSE_BATCH,
     GET_COURSE_CATEGORY,
@@ -13,7 +14,7 @@ export default function FiltredData() {
     //ROLES OF STAFF AND STUDENTS
     const {
         data: USER_DATA,
-        loading: LOADING
+        loading: USER_LOADING
     } = useQuery(GET_USERS)
     const {
         data: COURSE_DATA,
@@ -35,53 +36,59 @@ export default function FiltredData() {
         data: USER_GROUPS,
         loading: USER_GROUP_LOADING
     } = useQuery(GET_USER_GROUP)
+    const {
+        data: ALL_ORG,
+        loading: ALL_ORG_LOADING
+    } = useQuery(GET_ALL_ORGANIZATION)
+
     const student = USER_DATA?.users?.filter((role) => {
         return role.userGroup.userGroupRole === 'STUDENT'
     })
+
+
+
     const teacher = USER_DATA?.users?.filter((role) => {
-
-        return role.userGroup.userGroupRole === 'TEACHER'
+        return role?.userGroup?.userGroupRole === 'TEACHER'
     })
+
+
+
     const admin = USER_DATA?.users?.filter((role) => {
-        return role.userGroup.userGroupRole === 'ADMIN'
+        return role?.userGroup?.userGroupRole === 'ADMIN'
     })
+
+
+
     const userGroup = USER_GROUPS?.userGroups?.filter((role) => {
-        if (role.userGroupRole === "ADMIN") {
+        if (role?.userGroupRole.toUpperCase() !== "STUDENT") {
             return role
         }
-        else if (role.userGroupRole === "TEACHER") {
+        else if (role?.userGroupRole.toUpperCase() !== "ORGANIZATIONKEY") {
             return role
         }
-        // else {
-        //     return role.userGroupRole
-        // }
+        else if (role?.userGroupRole.toUpperCase() !== "OWNER") {
+            return role
+        }
     })
+
+
+
     const userGroupStudent = USER_GROUPS?.userGroups?.filter((role) => {
-        if (role.userGroupRole === "STUDENT") {
+        if (role?.userGroupRole.toUpperCase() === "STUDENT") {
             return role
         }
-        // else {
-        //     return role.userGroupRole
-        // }
     })
-
-
-
-    // const student = USER_DATA?.users?.map((role) => {
-    //     return role?.userGroup?.map((item)=>{
-    //         return item?.userGroupRole === "STUDENT"
-    //     })
-    // })
-    // const teacher = USER_DATA?.users?.map((role) => {
-    //     return role?.userGroup?.map((item)=>{
-    //         return item?.userGroupRole === "TEACHER"
-    //     })
-    // })
-    // const admin = USER_DATA?.users?.map((role) => {
-    //     return role?.userGroup?.map((item)=>{
-    //         return item?.userGroupRole === "ADMIN"
-    //     })
-    // })
+    const userGroupOrganization = USER_GROUPS?.userGroups?.filter((role) => {
+        if (role?.userGroupRole.toUpperCase() === "ORGANIZATIONKEY") {
+            return role
+        }
+        else if (role?.userGroupRole.toUpperCase() === "OWNER") {
+            return role
+        }
+    })
+    const allOrg = ALL_ORG?.findManyOrganizations?.map((item) => {
+        return item
+    })
     const speakerList = SPEAKERS?.speakers?.filter((item) => {
         return item
     })
@@ -90,20 +97,26 @@ export default function FiltredData() {
     })
 
 
+
+
     return [{
         student,
         teacher,
         admin,
         speakerList,
         courseBatch,
-        LOADING,
+        allOrg,
+        ALL_ORG_LOADING,
+        USER_LOADING,
         CATEGORY_DATA,
         COURSE_LOADING,
         CATEGORY_LOADING,
         SPEAKERS_LOADING,
         COURSE_DATA,
         BATCH_LOADING,
+        USER_GROUP_LOADING,
         userGroup,
-        userGroupStudent
+        userGroupStudent,
+        userGroupOrganization
     }]
 }

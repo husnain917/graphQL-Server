@@ -23,6 +23,8 @@ import SpeakerIcon from '@mui/icons-material/Speaker';
 import WebhookIcon from '@mui/icons-material/Webhook';
 import GroupIcon from '@mui/icons-material/Group';
 import StorageIcon from '@mui/icons-material/Storage';
+import CategoryIcon from '@mui/icons-material/Category';
+import DuoIcon from '@mui/icons-material/Duo';
 export var MENU_ITEMS = [
     {
         text: 'Dashboard',
@@ -38,6 +40,16 @@ export var MENU_ITEMS = [
         text: 'Courses',
         icon: <Subscriptions />,
         path: '/courses',
+    },
+    {
+        text: 'Course Category',
+        icon: <CategoryIcon />,
+        path: '/courseCategory',
+    },
+    {
+        text: 'Lectures',
+        icon: <DuoIcon />,
+        path: '/lectures',
     },
     {
         text: 'Course Batch',

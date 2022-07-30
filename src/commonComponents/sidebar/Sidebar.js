@@ -35,7 +35,6 @@ function Sidebar(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
   //List Item 
 
-  console.log(location?.pathname)
 
   const renderSidebarItems = (items, index) => {
     return (
@@ -54,8 +53,8 @@ function Sidebar(props) {
                 () => setDropDownOpen(0)
                 : ""
                   || items.collapse === "true" ? () => setDropDownOpen(items.module_id) : ''}
-            // Active={location?.pathname === items?.moduleUrl}
-            // sx={location?.pathname === items?.moduleName ? { backgroundColor: '#E8F3FF', borderRadius: 2 } : null}
+            Active={location?.pathname === items?.moduleUrl}
+            sx={location?.pathname === items?.moduleName ? { backgroundColor: '#E8F3FF', borderRadius: 2 } : null}
 
           >
             {
@@ -95,8 +94,8 @@ function Sidebar(props) {
                             ref={anchorRef}
                             onClick={width < 600 ? handleDrawer : null}
                             button
-                            // Active={location?.pathname === item?.pageURL}
-                            // sx={location?.pathname === item?.pageURL ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
+                            Active={location?.pathname === item?.pageURL}
+                            sx={location?.pathname === item?.pageURL ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
                           >
                             {
                               MENU_ITEMS.map((val) => {

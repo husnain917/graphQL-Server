@@ -61,7 +61,7 @@ export function UseAllStudents() {
     {
       label: "Contact",
       name: "contact",
-      type: "tel",
+      type: "contact" ,
     },
     {
       label: "Address",
@@ -123,9 +123,10 @@ export function UseAllStudents() {
       else if (!state.editData?.email) {
         ToastWarning('Email required')
       }
-      else if (!state.editData?.contact) {
-        ToastWarning('Contact required')
-      }
+     
+    else if (!state?.valTel) {
+      ToastWarning('Contact required')
+    }
       else if (!state.editData?.cnic) {
         ToastWarning('cnic required')
       }
@@ -135,9 +136,7 @@ export function UseAllStudents() {
       else if (!state.editData?.userGroup) {
         ToastWarning('User Group required')
       }
-      else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
-        ToastWarning('Phone No Must be 11 digits')
-      }
+    
 
   
       else {
@@ -150,7 +149,7 @@ export function UseAllStudents() {
                 email: state.editData?.email,
                 password: state.editData?.password,
                 cnic: state.editData?.cnic,
-                contact: state.editData?.contact,
+                contact: state?.valTel,
                 userGroup: {
                   connect: {
                     id: state.editData?.userGroup

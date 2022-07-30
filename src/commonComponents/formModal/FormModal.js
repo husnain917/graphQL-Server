@@ -22,23 +22,26 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-
+import PhoneInput from 'react-phone-input-2'
 
 import { FM } from './FormModalStyle'
 import CloudinaryFunction from "../../constants/CloudinaryFunction";
 import { blue } from "@mui/material/colors";
-
-
-export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date,  }) {
+export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date }) {
   const { state, dispatch } = useContext(AppContext);
   const [ctaImageUpdateHandler] = CloudinaryFunction()
   const [open, setOpen] = useState(false)
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const [sami, setSami] = useState('')
-
-  console.log(sami);
-
+  const [contact, setContact] = useState('')
+  const handleChangePhone = (phone) => {
+    setContact(phone)
+    dispatch({
+      type: "setValTel",
+      payload: contact
+    })
+    console.log(contact)
+  }
   const handleCloseUpdate = () => {
     dispatch({
       type: "setModal",
@@ -77,75 +80,20 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
               return (
                 <>
                   {
-                    item.type === "number" ? (
-                      <FM.TextInput
-                        InputLabelProps={{ shrink: true }}
-                        InputProps={{ disableUnderline: true, inputProps: {min:0}, }}
-                        margin="dense"
-                        id="file"
-                        // min={0}
-                        label={item.label}
-                        // label="hello"
-                        name={item.name}
-                        type={item.type}
-                        required
-                        fullWidth
-                        variant="standard"
-                        value={
-                          item.name === "file" ? "" : state.editData[item.name]
-                        }
-                        onChange={(e) => {
-                          test[item.name] = item.name === "file"
-                            ? e.target.files[0].name
-                            : e.target.value;
-                          dispatch({
-                            type: "setEditData",
-                            payload: test,
-                          });
-                        }}
-                      />
-                    ) :
-                      item.type === "roleSelect" ? (
-                        <>
-                          <FM.TextInput
-                            InputLabelProps={{ shrink: true }}
-                            InputProps={{ disableUnderline: true }}
-                            margin="dense"
-                            select
-                            id="file"
-                            label={item.label}
-                            name={item.name}
-                            type={item.type}
-                            required
-                            fullWidth
-                            // variant="standard"
-                            onChange={(e) => {
-                              test[item.name] = e.target.value;
-                              dispatch({
-                                type: "setEditData",
-                                payload: test,
-                              });
-                              console.log('pp', test);
-                            }}
-
-                          >
-                            {
-                              item?.dropDownUserGroup.map((option) => (
-
-                                <MenuItem key={option.id} value={option.id}>
-                                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-                                    <div>{option.userName}</div>
-                                    <div style={{ fontSize: '10px', color: "gray", float: "right" }}>
-                                      {option.userGroupRole}
-                                    </div>
-                                  </div>
-                                </MenuItem>
-                              ))}
-
-                          </FM.TextInput>
-                          {/* <Autocomplete
-                          disablePortal
-                          id="combo-box-demo"
+                    item.type === "roleSelect" ? (
+                      <>
+                        <FM.TextInput
+                          InputLabelProps={{ shrink: true }}
+                          InputProps={{ disableUnderline: true }}
+                          margin="dense"
+                          select
+                          id="file"
+                          label={item.label}
+                          name={item.name}
+                          type={item.type}
+                          required
+                          fullWidth
+                          // variant="standard"
                           onChange={(e) => {
                             test[item.name] = e.target.value;
                             dispatch({
@@ -155,80 +103,115 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                             console.log('pp', test);
                           }}
 
-                          options={item?.dropDownUserGroup.map(option => ({ id: option.id, label: option.userName + ` (${option.userGroupRole})` }))}
-                          sx={{ width: "100%" }}
-                          renderInput={(params) => <TextField {...params} label="User Group Name" />}
-                        /> */}
-                        </>
-                      ) :
-                        item.type === "select" ? (
-                          <>
-                            <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
-                            <RadioGroup
-                              row
-                              aria-labelledby="demo-row-radio-buttons-group-label"
-                              name="row-radio-buttons-group"
-                              onChange={(e) => {
-                                test[item.name] = e.target.value;
-                                dispatch({
-                                  type: "setEditData",
-                                  payload: test,
-                                });
-                                console.log('pp', test);
-                              }}
-                            >
-                              {item?.dropDownContent?.map((option) => (
-                                <FormControlLabel
-                                  value={option}
-                                  control={
-                                    <Radio />
-                                  }
-                                  label={option}
-                                />
-                              ))}
-                            </RadioGroup>
-                          </>
+                        >
+                          {
+                            item?.dropDownUserGroup?.map((option) => (
 
-                        ) :
-                          item.type === "editor" ? (
-                            <Editor
-                              editorState={state.editData[item.name]}
-                              onEditorStateChange={(getText) => {
-                                test[item.name] = getText;
-                                dispatch({
-                                  type: "setEditData",
-                                  payload: test,
-                                });
-                              }}
-                              toolbarClassName="toolbarClassName"
-                              wrapperClassName="wrapperClassName"
-                              editorClassName="editorClassName"
-                              toolbar={{
-                                inline: { inDropdown: true },
-                                list: { inDropdown: true },
-                                textAlign: { inDropdown: true },
-                                link: { inDropdown: true },
-                                history: { inDropdown: true },
-                                blockType: {
-                                  className: "bordered-option-classname",
-                                },
-                                fontSize: {
-                                  className: "bordered-option-classname",
-                                },
-                                fontFamily: {
-                                  className: "bordered-option-classname",
-                                },
-                              }}
-                            />
-                          ) :
-                            item.type === "upload" ?
-                              (
-                                <div style={{ marginTop: 13, marginBottom: -30 }}>
-                                  <input type="file" onChange={ctaImageUpdateHandler} />
+                              <MenuItem key={option?.id} value={option?.id}>
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                                  <div>{option?.userName}</div>
+                                  <div style={{ fontSize: '10px', color: "gray", float: "right" }}>
+                                    {option?.userGroupRole}
+                                  </div>
                                 </div>
+                              </MenuItem>
+                            ))}
+
+                        </FM.TextInput>
+                      </>
+                    ) :
+                      item.type === "select" ? (
+                        <>
+                          <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
+                          <RadioGroup
+                            row
+                            aria-labelledby="demo-row-radio-buttons-group-label"
+                            name="row-radio-buttons-group"
+                            onChange={(e) => {
+                              test[item.name] = e.target.value;
+                              dispatch({
+                                type: "setEditData",
+                                payload: test,
+                              });
+                              console.log('pp', test);
+                            }}
+                          >
+                            {item?.dropDownContent?.map((option) => (
+                              <FormControlLabel
+                                value={option}
+                                control={
+                                  <Radio />
+                                }
+                                label={option}
+                              />
+                            ))}
+                          </RadioGroup>
+                        </>
+
+                      ) :
+                        item.type === "editor" ? (
+                          <Editor
+                            editorState={state.editData[item.name]}
+                            onEditorStateChange={(getText) => {
+                              test[item.name] = getText;
+                              dispatch({
+                                type: "setEditData",
+                                payload: test,
+                              });
+                            }}
+                            toolbarClassName="toolbarClassName"
+                            wrapperClassName="wrapperClassName"
+                            editorClassName="editorClassName"
+                            toolbar={{
+                              inline: { inDropdown: true },
+                              list: { inDropdown: true },
+                              textAlign: { inDropdown: true },
+                              link: { inDropdown: true },
+                              history: { inDropdown: true },
+                              blockType: {
+                                className: "bordered-option-classname",
+                              },
+                              fontSize: {
+                                className: "bordered-option-classname",
+                              },
+                              fontFamily: {
+                                className: "bordered-option-classname",
+                              },
+                            }}
+                          />
+                        ) :
+                          item.type === "upload" ?
+                            (
+                              <div style={{ marginTop: 13, marginBottom: -30 }}>
+                                <input type="file" onChange={ctaImageUpdateHandler} />
+                              </div>
+                            )
+                            :
+                            item.type === "selectCategory" ?
+                              (
+                                <>
+                                  <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
+                                  <RadioGroup
+                                    row
+                                    aria-labelledby="demo-row-radio-buttons-group-label"
+                                    name="row-radio-buttons-group"
+                                    onChange={(e) => {
+                                      test[item.name] = e.target.value;
+                                      dispatch({
+                                        type: "setEditData",
+                                        payload: test,
+                                      });
+                                    }}
+                                  >
+                                    {item?.dropDown?.categories?.map((option) => (
+                                      <FormControlLabel value={option.id} control={<Radio />} label={option.categoryName} />
+                                    ))}
+                                  </RadioGroup>
+                                </>
+
                               )
                               :
-                              item.type === "selectCategory" ?
+                              item.type === "selectInstructor" ?
                                 (
                                   <>
                                     <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
@@ -238,21 +221,21 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                       name="row-radio-buttons-group"
                                       onChange={(e) => {
                                         test[item.name] = e.target.value;
+                                        console.log("kk", item.name);
                                         dispatch({
                                           type: "setEditData",
                                           payload: test,
                                         });
                                       }}
                                     >
-                                      {item?.dropDown?.categories?.map((option) => (
-                                        <FormControlLabel value={option.id} control={<Radio />} label={option.categoryName} />
+                                      {item?.dropDown?.map((option) => (
+                                        <FormControlLabel value={option.id} control={<Radio />} label={option.name} />
                                       ))}
                                     </RadioGroup>
                                   </>
-
                                 )
                                 :
-                                item.type === "selectInstructor" ?
+                                item.type === "selectSpeaker" ?
                                   (
                                     <>
                                       <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
@@ -262,7 +245,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                         name="row-radio-buttons-group"
                                         onChange={(e) => {
                                           test[item.name] = e.target.value;
-                                          console.log("kk", item.name);
                                           dispatch({
                                             type: "setEditData",
                                             payload: test,
@@ -270,13 +252,13 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                         }}
                                       >
                                         {item?.dropDown?.map((option) => (
-                                          <FormControlLabel value={option.id} control={<Radio />} label={option.name} />
+                                          <FormControlLabel value={option.id} control={<Radio />} label={option.speakerName} />
                                         ))}
                                       </RadioGroup>
                                     </>
                                   )
                                   :
-                                  item.type === "selectSpeaker" ?
+                                  item.type === "selectCourse" ?
                                     (
                                       <>
                                         <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
@@ -292,14 +274,14 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                             });
                                           }}
                                         >
-                                          {item?.dropDown?.map((option) => (
-                                            <FormControlLabel value={option.id} control={<Radio />} label={option.speakerName} />
+                                          {item?.dropDown?.findManyCourses?.map((option) => (
+                                            <FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.courseName} />
                                           ))}
                                         </RadioGroup>
                                       </>
                                     )
                                     :
-                                    item.type === "selectCourse" ?
+                                    item.type === "selectBatch" ?
                                       (
                                         <>
                                           <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
@@ -315,14 +297,14 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                               });
                                             }}
                                           >
-                                            {item?.dropDown?.findManyCourses?.map((option) => (
+                                            {item?.dropDown?.map((option) => (
                                               <FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.courseName} />
                                             ))}
                                           </RadioGroup>
                                         </>
                                       )
                                       :
-                                      item.type === "selectBatch" ?
+                                      item.type === "selectUser" ?
                                         (
                                           <>
                                             <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
@@ -339,13 +321,14 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                               }}
                                             >
                                               {item?.dropDown?.map((option) => (
-                                                <FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.courseName} />
+                                                <FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.name} />
                                               ))}
                                             </RadioGroup>
                                           </>
+
                                         )
                                         :
-                                        item.type === "selectUser" ?
+                                        item.type === "booleanSelection" ?
                                           (
                                             <>
                                               <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
@@ -360,57 +343,49 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                     payload: test,
                                                   });
                                                 }}
+
                                               >
                                                 {item?.dropDown?.map((option) => (
-                                                  <FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.name} />
+                                                  <FormControlLabel key={option} value={option} control={<Radio />} label={option} />
                                                 ))}
                                               </RadioGroup>
                                             </>
 
                                           )
                                           :
-                                          item.type === "booleanSelection" ?
+                                          item.type === "calender" ?
                                             (
                                               <>
-                                                <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
-                                                <RadioGroup
-                                                  row
-                                                  aria-labelledby="demo-row-radio-buttons-group-label"
-                                                  name="row-radio-buttons-group"
-                                                  onChange={(e) => {
-                                                    test[item.name] = e.target.value;
-                                                    dispatch({
-                                                      type: "setEditData",
-                                                      payload: test,
-                                                    });
-                                                  }}
-
-                                                >
-                                                  {item?.dropDown?.map((option) => (
-                                                    <FormControlLabel key={option} value={option} control={<Radio />} label={option} />
-                                                  ))}
-                                                </RadioGroup>
+                                                <button onClick={() => setOpen(true)}>Select Date</button>
+                                                <>
+                                                  {
+                                                    open ?
+                                                      <Calendar
+                                                        onChange={onDateChange}
+                                                        value={date}
+                                                        showNeighboringMonth={false}
+                                                        locale={"en-US"}
+                                                      />
+                                                      :
+                                                      ''
+                                                  }
+                                                </>
                                               </>
-
                                             )
                                             :
-                                            item.type === "calender" ?
+                                            item.type === "contact" ?
                                               (
                                                 <>
-                                                  <button onClick={() => setOpen(true)}>Select Date</button>
-                                                  <>
-                                                    {
-                                                      open ?
-                                                        <Calendar
-                                                          onChange={onDateChange}
-                                                          value={date}
-                                                          showNeighboringMonth={false}
-                                                          locale={"en-US"}
-                                                        />
-                                                        :
-                                                        ''
-                                                    }
-                                                  </>
+                                                  <FM.PhoneField
+                                                    placeholder="Enter phone number"
+                                                    value={contact}
+                                                    onChange={phone => handleChangePhone(phone)}
+                                                    country='pk'
+                                                    inputStyle={{
+                                                      width: "100%"
+                                                    }}
+                                                  />
+                                                  {/* <input type="tel" /> */}
                                                 </>
                                               )
                                               :
@@ -421,7 +396,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                   margin="dense"
                                                   id="file"
                                                   label={item.label}
-                                                  // label="Hello"
                                                   name={item.name}
                                                   type={item.type}
                                                   required

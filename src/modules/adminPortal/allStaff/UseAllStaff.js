@@ -56,7 +56,7 @@ export function UseAllStaff() {
     {
       label: "Contact",
       name: "contact",
-      type: "tel",
+      type: "contact",
     },
     {
       label: "Address",
@@ -139,12 +139,9 @@ export function UseAllStaff() {
 
     }
 
-    else if (!state.editData?.contact) {
-
+    else if (!state?.valTel) {
       ToastWarning('Contact required')
-
     }
-
     else if (!state.editData?.cnic) {
 
       ToastWarning('cnic required')
@@ -160,12 +157,6 @@ export function UseAllStaff() {
     else if (!state.editData?.userGroup) {
 
       ToastWarning('User Group required')
-
-    }
-
-    else if (state.editData?.contact.length > 1 && state.editData?.contact.length < 11) {
-
-      ToastWarning('Phone No Must be 11 digits')
 
     }
 
@@ -195,7 +186,7 @@ export function UseAllStaff() {
 
               password: state.editData?.password,
 
-              contact: state.editData?.contact,
+              contact: state?.valTel,
 
               userGroup: {
 

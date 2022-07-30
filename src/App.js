@@ -9,7 +9,12 @@ import { useMutation } from '@apollo/client';
 import { ACTIVE_USER } from './lib/mutation/AllMutations';
 import { AppContext } from './State';
 import { ToastInfo, ToastSuccess } from './commonComponents/commonFunction/CommonFunction'
+import { createBrowserHistory } from "history";
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+
 function App() {
+
+  const history = createBrowserHistory({ window });
   const [loading, setLoading] = useState(true)
   setTimeout(function () {
     setLoading(false);
@@ -43,7 +48,7 @@ function App() {
 
           })
           var nameStr = login.getActiveUser?.name
-          var activeUser=nameStr.charAt(0).toUpperCase() + nameStr.slice(1)
+          var activeUser = nameStr.charAt(0).toUpperCase() + nameStr.slice(1)
           ToastSuccess(`Welcome ${activeUser}`)
           console.log("redirect", login);
         }
@@ -52,6 +57,13 @@ function App() {
 
     } catch (error) {
       console.log(error.message);
+      dispatch({
+        type: "setAuthState",
+        payload: {
+          user: null,
+          authState: false
+        }
+      })
       localStorage.clear()
       ToastInfo('Session Expired')
     }
@@ -72,10 +84,12 @@ function App() {
         loading || USER_Loading ?
           <SplashScreen />
           :
-          <Router>
+          <HistoryRouter history={history}>
+            {/* <Router> */}
             <ScrollToTop />
             <Navigation />
-          </Router>
+            {/* </Router> */}
+          </HistoryRouter>
       }
 
       {/* <SampleDataFetch /> */}

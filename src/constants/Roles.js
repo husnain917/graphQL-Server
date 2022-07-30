@@ -93,16 +93,6 @@ export var MENU_ITEMS = [
         path: '/myCourse',
     },
     {
-        text: 'Course Category',
-        icon: <CategoryIcon />,
-        path: '/courseCategory',
-    },
-    {
-        text: 'Lectures',
-        icon: <DuoIcon />,
-        path: '/lectures',
-    },
-    {
         text: 'Assignments',
         icon: <AssignmentIcon />,
         path: '/assignments',

@@ -6,14 +6,14 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { colors } from '../../../constants/Color';
 import LogIn from '../../../assets/LogIn.png'
 import { Link } from "react-router-dom";
-export const LoginStyle = {
+export const ForgotStyle = {
     MainPage: styled('div')(() => ({
         width: '100%',
         height: '100vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         overflowY: 'auto',
         backgroundImage: "url("+LogIn+")", 
         backgroundPosition: 'center',
@@ -22,7 +22,11 @@ export const LoginStyle = {
 
         
     })),
-    LoginContainer: styled('div')(() => ({
+    Image: styled('img')(() => ({
+        marginTop: 40,
+        marginBottom: 40,
+    })),
+    ForgotContainer: styled('div')(() => ({
         paddingTop: 48,
         paddingBottom: 48,
         borderRadius: 16,
@@ -30,7 +34,7 @@ export const LoginStyle = {
         maxWidth: 520,
         maxHeight: 'auto',
         width: '90%',
-        margin: '0 auto',
+        // margin: '0 auto',
         marginBottom: 40,
         "@media (max-width: 700px)": {
             width: '95%',
@@ -38,40 +42,30 @@ export const LoginStyle = {
     })),
     InlineHeaderContainer: styled('div')(() => ({
         display: 'flex',
-        marginBottom: 32,
-        flexDirection: 'row',
-        width: '80%',
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        // marginBottom: 32,
+        // flexDirection: 'row',
+        // width: '80%',
+        // marginLeft: 'auto',
+        // marginRight: 'auto',
         justifyContent: 'center',
         "@media (max-width: 700px)": {
             width: '90%',
         },
     })),
-    LeftBorder: styled('div')(() => ({
-        borderLeft: '4px solid #63Afff',
-        height: 110,
-        marginTop: 20,
-        marginRight: 10,
-    })),
     LoginHeading: styled('p')(() => ({
         color: '#000000',
         fontSize: 25,
         fontWeight: '500',
-        textAlign: 'center',
-        margin: 0,
+        // textAlign: 'center',
+        // margin: 0,
     })),
-    Image: styled('img')(() => ({
-        marginTop: 40,
-        marginBottom: 40,
-    })),
-
-    ForgotContainer: styled('div')(() => ({
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: 5,
+    InnerContainer: styled('div')(() => ({
+        // display: 'flex',
+        // alignItems: 'center',
+        // justifyContent: 'space-between',
+        // marginTop: 5,
         width: '80%',
+        // paddingLeft: 45,
         marginLeft: 'auto',
         marginRight: 'auto',
         "@media (max-width: 700px)": {
@@ -79,6 +73,9 @@ export const LoginStyle = {
         },
 
 
+    })),
+    Instruction: styled('p')(() => ({
+        fontSize: 15,
     })),
     InputFieldHeading: styled('p')(() => ({
         display: 'flex',
@@ -87,24 +84,24 @@ export const LoginStyle = {
         color: '#121F3E',
         fontWeight: '500',
     })),
-    ForgotPasswordLink: styled(Link)(() => ({
-        display: 'flex',
-        textDecoration: "none",
-        // alignItems: 'center',
-        fontSize: 13,
-        color: '#1E86FF',
-        fontWeight: 'bold',
+    Estaric: styled('span')(() => ({ 
+        
+        color: '#FF5963',
+        marginLeft: 2,
+        
     })),
     IconAndInputField: styled('div')(({typing}) => ({
-        width: '80%',
+        width: '100%',
         height: '55px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        // marginLeft: 'auto',
+        // marginRight: 'auto',
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center',
-        borderWidth: 1,
+        // alignItems: 'center',
+        // borderWidth: 1,
         border: typing? '1px solid #1E86FF' :'1px solid #E5EBF0' ,
+        
+        // border: '1px solid #E5EBF0' ,
         borderRadius: 8,
         "@media (max-width: 700px)": {
             width: '95%',
@@ -114,20 +111,17 @@ export const LoginStyle = {
         alignItems: 'center',
         marginLeft: 21,
         marginRight: 16,
+        // backgroundColor: "red",
         display: 'flex',
-        justifyContent: 'center',
+        // justifyContent: 'center',
         "@media (max-width: 700px)": {
             marginLeft: 10,
             marginRight: 14,
         },
     })),
-    PersonOutlineIcon: styled(MailIcon)(({typing}) => ({
+    MailIcon: styled(MailIcon)(({typing}) => ({
         color: typing ? '#1E86FF': 'grey',
         fontSize: 20,
-    })),
-    LockIcon: styled(LockIcon)(({typing}) => ({
-        width: 20,
-        color: typing ? '#1E86FF': 'grey',
     })),
     Input: styled('input')(() => ({
         width: '100%',
@@ -142,39 +136,7 @@ export const LoginStyle = {
             width: '100%',
         },
     })),
-    PasswordVisibleIconContainer: styled('div')(() => ({
-        alignItems: 'center',
-        height: 55,
-        position: 'relative',
-        // position: 'absolute',
-        // right: 16,
-        display: 'flex',
-        justifyContent: 'center',
-    })),
-    VisibilityIcon: styled(VisibilityIcon)(({ showPassword }) => ({
-        width: 20,
-        position: 'absolute',
-        right: 16,
-        cursor: 'pointer',
-        color: showPassword ? '#1E86FF' : 'grey'
-    })),
-    LoaderContainer: styled('div')(() => ({
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 30,
-    })),
-    ButtonContainer: styled('div')(() => ({
-        height: 52,
-        width: '80%',
-        // paddingRight: 25,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        "@media (max-width: 700px)": {
-            width: '95%',
-        },
-    })),
-    LoginButton: styled('button')(() => ({
+    RecoverButton: styled('button')(() => ({
         borderRadius: 8,
         height: 52,
         backgroundColor: '#1E86FF',
@@ -186,25 +148,19 @@ export const LoginStyle = {
         fontSize: '16px',
         cursor: 'pointer',
         marginTop: 20,
-    })),
-    OrgCheckbox: styled('div')(() => ({
-        width: "80%",
-        marginTop: '10px',
-        marginLeft: "auto",
-        marginRight: "auto",
-        height: "auto",
-        textAlign: "left",
         "@media (max-width: 700px)": {
             width: '95%',
         },
+    })),
+    ReturnToLoginLink: styled(Link)(() => ({
+        display: 'flex',
+        textDecoration: "none",
+        // alignItems: 'center',
+        fontSize: 13,
+        color: '#1E86FF',
+        fontWeight: 'bold',
+        marginTop: 25
+    })),
 
-    })),
-    
-    Estaric: styled('p')(() => ({ 
-        margin: 0,
-        color: '#FF5963',
-        marginLeft: 2,
-        marginTop: -2,
-    })),
 
 }

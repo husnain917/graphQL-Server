@@ -1,4 +1,6 @@
-
+// import { styled } from '@mui/material/styles';
+// import Button from '@mui/material/Button';
+// import { colors } from '../../constants/Color';
 // export const Ibutton = styled(Button)({
 //     border: '1px solid #00668B',
 //     paddingTop: '10px',
@@ -22,7 +24,8 @@
 //         fontSize:'13px !important'
 //     }
    
-// })\
+// })
+
 import { styled } from '@mui/material/styles';
 import { colors } from '../../constants/Color';
 export const FM={

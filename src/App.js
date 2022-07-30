@@ -23,7 +23,7 @@ function App() {
     GetActiveUser,
     { loading: USER_Loading }
   ] = useMutation(ACTIVE_USER)
-  const tokenId = sessionStorage.getItem('token')
+  const tokenId = localStorage.getItem('token')
   const user = async () => {
 
     try {
@@ -56,7 +56,7 @@ function App() {
       })
     } catch (error) {
       console.log(error.message);
-      sessionStorage.clear()
+      localStorage.clear()
       dispatch({
         type: "setAuthState",
         payload: {

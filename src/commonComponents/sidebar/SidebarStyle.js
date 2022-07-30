@@ -148,8 +148,8 @@ export const SidebarStyle = {
     color: Active ? '#1E86FF' : '#96A0B5',
     marginLeft: -2
   })),
-  ListItemTextTagForDropDown: styled(ListItemText)(() => ({
-    color: colors.black + 90,
+  ListItemTextTagForDropDown: styled(ListItemText)(({Active}) => ({
+    color: Active ? '#1E86FF' : colors.black + 90,
     marginLeft: -22
   })),
   ListItemsContainerForSettings: styled('div')(({ theme }) => ({
@@ -163,22 +163,36 @@ export const SidebarStyle = {
       float: 'left'
     }
   })),
+  ButtonContainer: styled('div')(() => ({
+    height: 52,
+    // width: '100%',
+    // paddingRight: 25,
+    marginTop: 20,
+    marginBottom: 20,
+    
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    // "@media (max-width: 700px)": {
+    //     width: '95%',
+    // },
+})),
   LogoutLink: styled(Button)(() => ({
     textDecoration: 'none',
-    position: 'relative',
-    bottom: 0,
+    // position: 'relative',
+    // bottom: 0,
     color: "white",
     padding: '10px',
-    borderRadius: 8,
+    borderRadius: 2,
     backgroundColor: colors.lightBlue,
     textAlign: 'center',
     transition: '0.5s',
-    marginTop: 60,
-    marginBottom: 10,
-    marginLeft: 16,
-    marginRight: 16,
+    // marginTop: 60,
+    // marginBottom: 10,
+    // marginX: "auto",
+    // marginLeft: "auto",
+    // marginRight: "auto",
     height: 44,
-    width: 244,
+    width: 150,
     '&:hover': {
       backgroundColor: colors.lightBlue,
       color: "white"

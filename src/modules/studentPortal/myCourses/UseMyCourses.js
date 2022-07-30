@@ -77,7 +77,7 @@ export default function UseMyCourses() {
             createdAt: item.createdAt,
         });
     });
-    console.log("refacteredData", refacteredData);
+    console.log("refacteredData in useMyCourse", refacteredData);
 
     const [loader, setLoader] = useState(false);
 

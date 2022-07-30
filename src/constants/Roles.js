@@ -43,6 +43,16 @@ export var MENU_ITEMS = [
         path: '/courses',
     },
     {
+        text: 'Course Category',
+        icon: <CategoryIcon />,
+        path: '/courseCategory',
+    },
+    {
+        text: 'Lectures',
+        icon: <DuoIcon />,
+        path: '/lectures',
+    },
+    {
         text: 'Course Batch',
         icon: <LibraryBooksIcon />,
         path: '/courseBatch',
@@ -81,16 +91,6 @@ export var MENU_ITEMS = [
         text: 'My Courses',
         icon: <Subscriptions />,
         path: '/myCourse',
-    },
-    {
-        text: 'Course Category',
-        icon: <CategoryIcon />,
-        path: '/courseCategory',
-    },
-    {
-        text: 'Lectures',
-        icon: <DuoIcon />,
-        path: '/lectures',
     },
     {
         text: 'Assignments',

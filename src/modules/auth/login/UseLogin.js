@@ -59,7 +59,9 @@ export default function UseLogin() {
           email: email,
         },
         onCompleted({ login }) {
-          sessionStorage.setItem("token", login.token)
+          localStorage.setItem("token", login.token)
+          var userNameStr= login.name
+          var activeUserName=userNameStr.charAt(0).toUpperCase() + userNameStr.slice(1)
           dispatch({
             type: "setAuthState",
             payload: {
@@ -107,7 +109,7 @@ export default function UseLogin() {
           email: email
         },
         onCompleted(login) {
-          sessionStorage.setItem("token", login.organizationLogin.token)
+          localStorage.setItem("token", login.organizationLogin.token)
           dispatch({
             type: "setAuthState",
             payload: {

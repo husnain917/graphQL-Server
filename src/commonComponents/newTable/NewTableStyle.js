@@ -47,39 +47,47 @@ export const NewTableStyle = {
         overflowX: 'auto',
         width: '98%',
         marginLeft: '1%',
-        mrginRight: '1%'
+        mrginRight: '1%',
+
     })),
 
     Tablehead: styled(TableHead)(({ theme }) => ({
         borderRadius: 8,
         backgroundColor: '#F8FAFB',
         height: 42,
+        // minWidth: "auto"
     })),
     EmailNameContainer: styled('div')(({ theme }) => ({
-        marginLeft: 12
+        marginLeft: 12,
+        
     })),
     PTime: styled('p')(({ theme }) => ({
         margin: 0,
+        
     })),
     PTagName: styled('p')(({ theme }) => ({
         fontSize: '14px',
         margin: 0,
         fontWeight: '500',
-        marginBottom: 4
+        marginBottom: 4,
+        
     })),
     PTagEmail: styled('p')(({ theme }) => ({
         fontSize: '12px',
         margin: 0,
         fontWeight: '500',
         color: '#96A0B5',
+        
     })),
     Image: styled('img')(({ theme }) => ({
         height: "50px",
         width: "100px",
+        
     })),
     AvatarBox: styled('div')(({ theme }) => ({
         display: 'flex',
         alignItems: 'center' 
+        
     })),
     Avatar: styled(Avatar)(({ bgColor , Color }) => ({
         backgroundColor: `${bgColor}`, 

@@ -246,7 +246,6 @@ export function UseAllStaff() {
 
 
 
-
   // DELETE STAFF
 
   // let [
@@ -301,7 +300,7 @@ export function UseAllStaff() {
     else if (!state.editData?.address) {
       ToastWarning('address required')
     }
-    else if (!state.editData?.role) {
+    else if (!state.editData?.userGroup) {
       ToastWarning('Role required')
     }
     else {
@@ -331,8 +330,10 @@ export function UseAllStaff() {
               contact: {
                 set: state.valTel,
               },
-              userRole: {
-                set: state.editData?.role,
+              userGroup: {
+                connect: {
+                  id: state.editData?.userGroup
+                }
               }
             },
           },

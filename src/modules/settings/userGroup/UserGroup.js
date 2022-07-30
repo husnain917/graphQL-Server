@@ -24,7 +24,8 @@ export default function UserGroup() {
       setuserGroupRole,
       ctaHandler,
       handlingPermission,
-      setSelect
+      setRole,
+      role
     }
   ] = UseUserGroup();
 
@@ -32,9 +33,9 @@ export default function UserGroup() {
   const [stateArray, setStateArray] = useState(data);
 
 
-  const roles = [
-    "ORGANIZATIONKEY", "ADMIN", "TEACHER", "STUDENT"
-  ]
+  // const roles = [
+  //   "ORGANIZATIONKEY", "ADMIN", "TEACHER", "STUDENT"
+  // ]
   return (
     <TabsStyle.MainDiv>
       <Grid container>
@@ -51,13 +52,12 @@ export default function UserGroup() {
         </Grid>
         <Grid item xl={12} lg={12} mg={12} sm={12} xs={12}>
           <TabsStyle.InputLabel>
-            User Role
-              <TabsStyle.MyInput
-                User Group Name
-                placeholder="Enter Role"
-                value={userGroupRole}
-                onChange={(e) => setuserGroupRole(e.target.value)}
-              />
+          <TabsStyle.MyInput
+              
+              placeholder="Enter Role"
+              value={role}
+              onChange={(e) => setRole(e.target.value.toUpperCase())}
+            />
             {/* <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"

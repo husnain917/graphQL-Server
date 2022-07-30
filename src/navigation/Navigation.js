@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import Sidebar from '../commonComponents/sidebar/Sidebar';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Login from '../modules/auth/login/Login';
+import ForgotPassword from '../modules/auth/forgotPassword/ForgotPassword';
 import Dashboard from '../modules/dashboard/Dashboard';
 import AllStudents from '../modules/adminPortal/allStudents/AllStudents';
 import SuccessStory from '../modules/successStory/SuccessStory';
@@ -56,6 +57,14 @@ export default function Navigation() {
                     element={
                         <PublicRouting isAllowed={state.authState}>
                             <Login />
+                        </PublicRouting>
+                    }
+                />
+                <Route
+                    path='/forgotPassword'
+                    element={
+                        <PublicRouting isAllowed={state.authState}>
+                            <ForgotPassword />
                         </PublicRouting>
                     }
                 />
@@ -118,6 +127,18 @@ export default function Navigation() {
                                 <Courses />
                             </PrivateRouting>
                         }
+                    />
+                    <Route path='/courseCategory'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <CourseCategory />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/lectures'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <Lecture />
+                            </PrivateRouting>}
                     />
                     <Route
                         path='/enrollmentApproval'

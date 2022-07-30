@@ -68,7 +68,8 @@ export default function AllStaff() {
           },
           {
             id: "action",
-            Label: "Action"
+            Label: "Action",
+            marginLeft: 5
           },
         ]}
         // ctaEditButtonHandler={ctaEditButtonHandler}

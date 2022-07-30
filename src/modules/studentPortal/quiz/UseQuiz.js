@@ -63,7 +63,7 @@ export default function UseQuiz() {
             updateAt: item.updateAt
         });
     });
-    console.log("refacteredData", refacteredData);
+    console.log("refacteredData in quiz section", refacteredData);
 
 
     //ADD STAFF

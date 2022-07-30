@@ -119,7 +119,9 @@ export const NewTableStyle = {
         color: '#f44336'
     })),
     EditIcon: styled(Edit)(({ theme }) => ({
-        color: '#96A0B5'
+        color: '#96A0B5',
+        
+    
     })),
     IconDiv: styled('div')(() => ({
         display: "flex",

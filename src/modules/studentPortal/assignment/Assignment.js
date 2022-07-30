@@ -51,6 +51,11 @@ export default function Assignment() {
             id: "updateAt",
             Label: "Update At"
         },
+        {
+          id: "action",
+          Label: "Action",
+          marginLeft: 3
+      },
       ]}
 
       ctaFormHandler={ctaFormHandler}

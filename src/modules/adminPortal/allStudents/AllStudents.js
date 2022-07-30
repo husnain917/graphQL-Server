@@ -62,7 +62,8 @@ export default function AllStudents() {
           },
           {
             id: "action",
-            Label: "Action"
+            Label: "Action",
+            marginLeft:6
           },
         ]}
         printedKeys={[

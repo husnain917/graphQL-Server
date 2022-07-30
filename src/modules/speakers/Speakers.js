@@ -57,7 +57,8 @@ export default function Speakers() {
                 },
                 {
                     id: "action",
-                    Label: "Action"
+                    Label: "Action",
+                    marginLeft: 6
                 }
             ]}
 

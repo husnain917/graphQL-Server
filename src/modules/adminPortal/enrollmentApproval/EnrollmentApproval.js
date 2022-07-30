@@ -62,7 +62,8 @@ function EnrollmentApproval() {
           },
           {
               id: "action",
-              Label: "Action"
+              Label: "Action",
+              marginLeft: 4
           },
           ]}
           printedKeys={[

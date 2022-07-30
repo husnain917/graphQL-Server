@@ -44,7 +44,7 @@ function Sidebar(props) {
             key={index}
             ref={anchorRef}
             button
-            onClick={width < 600 ? handleDrawer : null ||
+            onClick={
               dropDownOpen === 0 ?
               items.collapse === "true" ?
                 () => setDropDownOpen(items.module_id)

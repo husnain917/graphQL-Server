@@ -37,20 +37,21 @@ export default function MyCourse() {
         },
         {
             id: "studentId",
-            Label: "Student Id"
+            Label: "Student Id",
+            // marginLeft: 5
         },
         {
             id: "courseApproval",
             Label: "Course Approval"
         },
-        {
-          id: 'whyReject',
-          Label: 'Why Reject' 
-        },
         // {
         //   id: 'whyReject',
         //   Label: 'Why Reject' 
         // },
+        {
+          id: 'whyReject',
+          Label: 'Why Reject' 
+        },
         {
           id: 'feeStatus',
           Label: 'Fee status' 
@@ -65,7 +66,8 @@ export default function MyCourse() {
         },
         {
             id: "action",
-            Label: "Action"
+            Label: "Action",
+            
         },
       ]}
       ctaFormHandler={ctaFormHandler}
@@ -85,9 +87,9 @@ export default function MyCourse() {
           key: "courseApproval",
         },
 
-        // {
-        //   key: "whyReject",
-        // },
+        {
+          key: "whyReject",
+        },
         // {
         //   key: 'courseBatches',
         // },
@@ -101,19 +103,23 @@ export default function MyCourse() {
         //   key: 'student'
         // },
         {
+          key: "feeStatus",
+        },
+        {
           key: 'createdAt'
         },
         {
           key: 'updateAt'
         },
 
-        {
-          key: "feeStatus",
-        },
+        // {
+        //   key: "action"
+        // },
         {
           type: 'crud'
         }
       ]}
+      
       formInputs={formInputs}
       filterdata={{
         key: "feeStatus",

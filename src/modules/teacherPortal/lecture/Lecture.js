@@ -54,7 +54,8 @@ export default function Lecture() {
         },
         {
             id: "action",
-            Label: "Action"
+            Label: "Action",
+            marginLeft: 5,
         },
       ]}
       ctaFormHandler={ctaFormHandler}

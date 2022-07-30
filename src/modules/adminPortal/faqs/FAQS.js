@@ -56,8 +56,10 @@ export default function FAQS() {
                     },
                     {
                         id: "action",
-                        Label: "Action"
+                        Label: "Action",
+                        marginLeft: 5
                     },
+                    
                 ]}
                 printedKeys={[
                     {

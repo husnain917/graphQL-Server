@@ -7,6 +7,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Link } from "react-router-dom"
 import PButton from "../../../commonComponents/Pbutton/Pbutton";
 import { UseUserGroup } from "./UseUserGroup";
 import { AppContext } from "../../../State";
@@ -24,8 +25,8 @@ export default function UserGroup() {
       setuserGroupRole,
       ctaHandler,
       handlingPermission,
-      setRole,
-      role
+      flag,
+      ctaUpdateHandler
     }
   ] = UseUserGroup();
 
@@ -39,27 +40,36 @@ export default function UserGroup() {
   return (
     <TabsStyle.MainDiv>
       <Grid container>
+        {flag ?
+          ""
+          :
+          <Link to="/tabs-permission"><PButton title="View All User Group" sx={{ marginLeft: 2 }} /></Link>
+        }
         <Grid item xl={12} lg={12} mg={12} sm={12} xs={12}>
           <TabsStyle.InputLabel>
             User Name
-              <TabsStyle.MyInput
-                User Group Name
-                placeholder="Enter Name"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-              />
+            <TabsStyle.MyInput
+              User Group Name
+              placeholder="Enter Name"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+            />
           </TabsStyle.InputLabel>
         </Grid>
-        <Grid item xl={12} lg={12} mg={12} sm={12} xs={12}>
+        <Grid item xl={12} lg={12} mg={12} sm={12} xs={12} >
+
           <TabsStyle.InputLabel>
             User Role
-              <TabsStyle.MyInput
-                User Group Name
-                placeholder="Enter Role"
-                value={userGroupRole}
-                onChange={(e) => setuserGroupRole(e.target.value.toUpperCase())}
-              />
-            {/* <RadioGroup
+            <TabsStyle.MyInput
+              User Group Name
+              placeholder="Enter Role"
+              value={userGroupRole}
+              onChange={(e) => setuserGroupRole(e.target.value.toUpperCase())}
+            />
+          </TabsStyle.InputLabel>
+
+
+          {/* <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
@@ -72,7 +82,7 @@ export default function UserGroup() {
                 <FormControlLabel key={i} value={option} control={<Radio />} label={option} />
               ))}
             </RadioGroup> */}
-          </TabsStyle.InputLabel>
+
         </Grid>
       </Grid>
       <TabsStyle.TableDiv>
@@ -132,7 +142,9 @@ export default function UserGroup() {
                                     navPageIndex,
                                     "ViewPermission"
                                   )
+
                                 }
+
                               />
                             </TableCell>
                             <TableCell
@@ -201,7 +213,13 @@ export default function UserGroup() {
           </Table>
         </TableContainer>
         <br />
-        <PButton title="Add User Group" ctaHandler={ctaHandler} />
+        {flag ?
+          <PButton title="Update User Group" ctaHandler={ctaUpdateHandler} />
+          :
+          <PButton title="Add User Group" ctaHandler={ctaHandler} />
+        }
+
+
       </TabsStyle.TableDiv>
     </TabsStyle.MainDiv >
   )

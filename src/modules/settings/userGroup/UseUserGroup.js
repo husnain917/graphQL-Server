@@ -4,6 +4,8 @@ import { useMutation, useQuery } from "@apollo/client";
 import { AppContext } from "../../../State";
 import { ToastError, ToastSuccess, ToastWarning } from '../../../commonComponents/commonFunction/CommonFunction';
 import { GET_USER_GROUP } from '../../../lib/queries/AllQueries';
+import { useNavigate } from 'react-router-dom';
+
 export function UseUserGroup() {
 
     const { state, dispatch } = useContext(AppContext)
@@ -11,6 +13,8 @@ export function UseUserGroup() {
     const [userName, setUserName] = useState('')
     const [userGroupRole, setuserGroupRole] = useState('')
     const [email, setEmail] = useState('')
+    const [flag, setFlag] = useState(false)
+    const navigate=useNavigate()
     const allData = {
         "navigationResults": []
     };
@@ -97,5 +101,37 @@ export function UseUserGroup() {
         }
     };
 
-    return [{ userName, userGroupRole, email, setEmail, setUserName, ctaHandler, setuserGroupRole, handlingPermission, ADD_LOADING }]
+    let { data, loading: GET_LOADING, error } = useQuery(GET_USER_GROUP);
+
+    console.log("error", error);
+    const refacteredData = [];
+    data?.userGroups?.forEach((item) => {
+        refacteredData.push({
+            name: item.userName,
+            permissions: item.tabsPermission.navigationResults.map((val) => {
+                return val.pages
+              
+            }),
+            updateAt: item.updateAt,
+            createdAt: item.createdAt,
+            role: item.userGroupRole,
+        });
+    })
+    console.log("refacteredData", refacteredData);
+
+    const ctaEditButtonHandler=((name, role, permissions) => {
+        console.log("Name in useViewAllUser", name)
+        console.log("Role in useViewAllUser", role)
+        console.log("permissions in useViewAllUser", permissions)
+        setUserName(name)
+        setuserGroupRole(role)
+        setFlag(true)
+        // navigate("/user-groups")
+    })
+
+    const ctaUpdateHandler=()=>{
+        setFlag(false)
+    }
+
+    return [{ userName, userGroupRole, email, setEmail, setUserName, ctaHandler, setuserGroupRole, handlingPermission, ADD_LOADING, GET_LOADING, refacteredData, ctaEditButtonHandler, flag, ctaUpdateHandler}]
 }

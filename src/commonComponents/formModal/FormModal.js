@@ -27,6 +27,7 @@ import PhoneInput from 'react-phone-input-2'
 import { FM } from './FormModalStyle'
 import CloudinaryFunction from "../../constants/CloudinaryFunction";
 import { blue } from "@mui/material/colors";
+import UserGroupModal from "../userGroupModal/UserGroupModal";
 
 
 export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date,  }) {
@@ -315,6 +316,10 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                         </RadioGroup>
                                       </>
                                     )
+                                    : item.type === "tabsPermissions" ?
+                                    (
+                                      <UserGroupModal/>
+                                    ) 
                                     :
                                     item.type === "selectCourse" ?
                                       (
@@ -340,7 +345,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                       )
                                       :
                                       item.type === "selectBatch" ?
-                                        (
+                                        ( 
                                           <>
                                             <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
                                             <RadioGroup

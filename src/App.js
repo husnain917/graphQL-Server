@@ -23,7 +23,7 @@ function App() {
     GetActiveUser,
     { loading: USER_Loading }
   ] = useMutation(ACTIVE_USER)
-  const tokenId = sessionStorage.getItem('token')
+  const tokenId = localStorage.getItem('token')
   const user = async () => {
 
     try {
@@ -41,7 +41,7 @@ function App() {
           });
           const str = login.getActiveUser?.name
           const str2 = str.charAt(0).toUpperCase() + str.slice(1)
-          ToastSuccess(`Welcome ${str2}`)
+          ToastSuccess(`Welcome at ${str2}`)
           console.log("redirect", login);
           login.getActiveUser?.userGroup.map((item) => {
             // if (item.userGroupRole === "ORGANIZATIONKEY"){
@@ -54,13 +54,13 @@ function App() {
           })
           var nameStr = login.getActiveUser?.name
           var activeUser=nameStr.charAt(0).toUpperCase() + nameStr.slice(1)
-          ToastSuccess(`Welcome ${activeUser}`)
+          ToastSuccess(`Welcome at ${activeUser}`)
           console.log("redirect", login);
         }
       })
     } catch (error) {
       console.log(error.message);
-      sessionStorage.clear()
+      localStorage.clear()
       dispatch({
         type: "setAuthState",
         payload: {

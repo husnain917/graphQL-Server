@@ -35,6 +35,7 @@ import ApiPermissions from '../modules/settings/apiPermissions/ApiPermissions';
 import UserGroup from '../modules/settings/userGroup/UserGroup';
 import CreateOrganization from '../modules/settings/createOrganization/CreateOrganization';
 import CourseCategory from '../modules/adminPortal/courseCategory/CourseCategory';
+import ViewAllUserGroup from '../modules/settings/userGroup/ViewAllUserGroup';
 
 export default function Navigation() {
     let location = useLocation();
@@ -254,6 +255,12 @@ export default function Navigation() {
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <UserGroup />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/view-all-user-groups'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <ViewAllUserGroup />
                             </PrivateRouting>}
                     />
                 </Route>

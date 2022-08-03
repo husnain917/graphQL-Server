@@ -120,7 +120,7 @@ export function UseSuccessStory() {
       ToastWarning('Total earned amount required')
     }
     else if (!state.editData?.whyReject) {
-      ToastWarning('Why rejectrequired')
+      ToastWarning('Why reject required')
     }
     else if (!state.editData?.status) {
       ToastWarning('Status required')
@@ -224,7 +224,7 @@ export function UseSuccessStory() {
       ToastWarning('Total earned amount required')
     }
     else if (!state.editData?.whyReject) {
-      ToastWarning('Why rejectrequired')
+      ToastWarning('Why reject required')
     }
     else if (!state.editData?.status) {
       ToastWarning('Status required')

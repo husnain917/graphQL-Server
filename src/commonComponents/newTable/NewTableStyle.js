@@ -135,6 +135,7 @@ export const NewTableStyle = {
         marginLeft: 10,
         "@media (max-width: 600px)": {
             marginLeft: 20,
+            marginBottom: 20
         },
         marginRight: 10,
     })),

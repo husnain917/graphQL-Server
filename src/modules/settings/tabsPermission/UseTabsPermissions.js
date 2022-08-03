@@ -29,18 +29,18 @@ export function UseTabsPermissions() {
     const formInputs = [
 
         {
-            label: "Course Batches",
-            name: "courseBatchesId",
-            type: "selectBatch",
-            dropDown: courseBatch
+            // label: "Course Batches",
+            // name: "userGroupName",
+            type: "tabsPermissions",
+            // dropDown: courseBatch
         },
-        {
-            label: "Courses",
-            name: "coursesId",
-            type: "selectCourse",
-            dropDown: COURSE_DATA
+        // {
+        //     label: "Courses",
+        //     name: "coursesId",
+        //     type: "selectCourse",
+        //     dropDown: COURSE_DATA
 
-        },
+        // },
     ]
     const { state, dispatch } = useContext(AppContext);
 

@@ -13,6 +13,7 @@ const initialState = {
     modalUpdateFlag: false,
     orgLogin: false,
     editData: {},
+    editUserGroupData: {},
     imageUrl: '',
     tabsPersmission: [],
     valTel: '',
@@ -42,6 +43,13 @@ let reducer = (state, action) => {
             return {
                 ...state,
                 editData: action.payload
+            }
+        }
+        case "setEditUserGroupData": {
+            console.log("User Group edit data in state", action.payload);
+            return {
+                ...state,
+                editUserGroupData: action.payload
             }
         }
         case "setEditId": {

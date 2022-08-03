@@ -423,6 +423,9 @@ export default function NewTable({
 
     //open edit form modal
     const ctaEditButtonHandler = async (data) => {
+        // console.log("Name in editButtonHandler", data.name)
+        // console.log("Role in editButtonHandler", data.role)
+        // console.log("Permissions in editButtonHandler", data.permissions)
         const test = state.editData;
         dispatch({
             type: "setEditId",
@@ -442,7 +445,14 @@ export default function NewTable({
             type: "setEditData",
             payload: test,
         });
+        if(data.role === "ORGANIZATIONKEY" || data.role === "ADMIN" || data.role === "TEACHER" || data.role === "STUDENT"){
+            dispatch({
+                type: "setEditUserGroupData",
+                payload: data
+            })
+        }
         console.log(state.editId);
+
 
     };
 
@@ -657,9 +667,9 @@ export default function NewTable({
                                                                         subitem?.type === "modalAnswer" ? (
                                                                             <CommonModal answer={row} />
                                                                         ) :
-                                                                            subitem?.type === "modalProfileUrl" ? (
-                                                                                <CommonModal freelancingProfileUrl={row} />
-                                                                            ) :
+                                                                            // subitem?.type === "modalProfileUrl" ? (
+                                                                            //     <CommonModal freelancingProfileUrl={row} />
+                                                                            // ) :
                                                                                 subitem?.type === "modalPermissions" ? (
                                                                                     <CommonModal modalPermissions={row} />
                                                                                 ) :

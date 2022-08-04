@@ -36,6 +36,7 @@ import UserGroup from '../modules/settings/userGroup/UserGroup';
 import CreateOrganization from '../modules/settings/createOrganization/CreateOrganization';
 import CourseCategory from '../modules/adminPortal/courseCategory/CourseCategory';
 import ViewAllUserGroup from '../modules/settings/userGroup/ViewAllUserGroup';
+import Footer from '../commonComponents/footer/Footer';
 
 export default function Navigation() {
     let location = useLocation();
@@ -277,8 +278,8 @@ export default function Navigation() {
                     />
                 </Route>
 
-
             </Routes>
+            {/* <Footer/> */}
         </>
     );
 }

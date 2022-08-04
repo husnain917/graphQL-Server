@@ -24,7 +24,7 @@ function App() {
     { loading: USER_Loading }
   ] = useMutation(ACTIVE_USER)
   const tokenId = localStorage.getItem('token')
-  
+
   const user = async () => {
 
     try {

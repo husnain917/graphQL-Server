@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { ADD_USER_GROUP } from '../../../lib/mutation/AllMutations';
+import { ADD_USER_GROUP, UPDATE_USER_GROUP } from '../../../lib/mutation/AllMutations';
 import { useMutation, useQuery } from "@apollo/client";
 import { AppContext } from "../../../State";
 import { ToastError, ToastSuccess, ToastWarning } from '../../../commonComponents/commonFunction/CommonFunction';
@@ -7,6 +7,8 @@ import { GET_USER_GROUP } from '../../../lib/queries/AllQueries';
 import { useNavigate } from 'react-router-dom';
 
 export function UseUserGroup() {
+
+    
 
     const { state, dispatch } = useContext(AppContext)
     let [CreateUserGroup, { loading: ADD_LOADING }] = useMutation(ADD_USER_GROUP);
@@ -103,8 +105,9 @@ export function UseUserGroup() {
 
     console.log("error", error);
     const refacteredData = [];
-    data?.userGroups?.forEach((item) => {
+    data?.userGroups?.map((item) => {
         refacteredData.push({
+            id: item.id,
             name: item.userName,
             permissions: item.tabsPermission.navigationResults.map((val) => {
                 return val.pages
@@ -127,9 +130,71 @@ export function UseUserGroup() {
         // navigate("/user-groups")
     })
 
-    const ctaUpdateHandler=()=>{
-        setFlag(false)
-    }
+    // Update user group
+    let [
+        UpdateUserGroup,
+        {
+          loading: UPDATE_LOADING
+        }] = useMutation(UPDATE_USER_GROUP);
+
+    const ctaUpdateHandler=async()=>{
+        if (state?.editUserGroupData?.name === '') {
+            ToastWarning('User Name Required')
+        }
+        else if (state?.editUserGroupData?.role === '') {
+            ToastWarning('User Group Role Required')
+        }
+        else if(userGroupRole === "ORGANIZATIONKEY" || userGroupRole === "ADMIN" || userGroupRole === "TEACHER" || userGroupRole === "STUDENT"){
+            
+            try {
+                await UpdateUserGroup({
+                    variables: {
+                        where: {
+                            id: state.editId
+                          },
+                        data: {
+                            userName: {
+                                set: state?.editUserGroupData?.name
+                            },
+                            userGroupRole: {
+                                set: state?.editUserGroupData?.role
+                            },
+                            tabsPermission: {
+                                set: allData
+                            },
+                            // Organizations: {
+                            //     connect: {
+                            //         id: state?.user?.organizationLogin?.id && state?.getActiveUser.id
+                            //     }
+                            // }
+                        }
+
+                    },
+                    refetchQueries: [{ query: GET_USER_GROUP }],
+
+                    onCompleted(data, cache) {
+                        ToastSuccess('UserGroup Updated')
+                        setuserGroupRole('')
+                        setUserName('')
+
+                    },
+                });
+                // console.log(state.editData);
+            } catch (error) {
+                dispatch({
+                    type: "setModal",
+                    payload: {
+                        openFormModal: false,
+                    },
+                });
+                // ToastError(error.message);
+                console.log(error.message)
+
+            }
+        }
+    };
+
+    
 
     return [{ userName, userGroupRole, email, setEmail, setUserName, ctaHandler, setuserGroupRole, handlingPermission, ADD_LOADING, GET_LOADING, refacteredData, ctaEditButtonHandler, flag, ctaUpdateHandler}]
 }

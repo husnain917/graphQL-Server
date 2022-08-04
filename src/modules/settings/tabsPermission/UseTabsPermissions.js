@@ -58,6 +58,7 @@ export function UseTabsPermissions() {
     const refacteredData = [];
     data?.userGroups?.forEach((item) => {
         refacteredData.push({
+            id: item.id,
             name: item.userName,
             permissions: item.tabsPermission.navigationResults.map((val) => {
                 return val.pages

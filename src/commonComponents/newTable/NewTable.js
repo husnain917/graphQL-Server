@@ -422,10 +422,8 @@ export default function NewTable({
     };
 
     //open edit form modal
-    const ctaEditButtonHandler = async (data) => {
-        // console.log("Name in editButtonHandler", data.name)
-        // console.log("Role in editButtonHandler", data.role)
-        // console.log("Permissions in editButtonHandler", data.permissions)
+    const ctaEditButtonHandler = (data) => {
+        console.log("id in editButtonHandler", data.id)
         const test = state.editData;
         dispatch({
             type: "setEditId",

@@ -40,11 +40,8 @@ export default function UserGroup() {
   return (
     <TabsStyle.MainDiv>
       <Grid container>
-        {flag ?
-          ""
-          :
           <Link to="/tabs-permission"><PButton title="View All User Group" sx={{ marginLeft: 2 }} /></Link>
-        }
+  
         <Grid item xl={12} lg={12} mg={12} sm={12} xs={12}>
           <TabsStyle.InputLabel>
             User Name
@@ -212,11 +209,9 @@ export default function UserGroup() {
           </Table>
         </TableContainer>
         <br />
-        {flag ?
-          <PButton title="Update User Group" ctaHandler={ctaUpdateHandler} />
-          :
+        
           <PButton title="Add User Group" ctaHandler={ctaHandler} />
-        }
+        
 
 
       </TabsStyle.TableDiv>

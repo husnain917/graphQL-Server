@@ -551,6 +551,19 @@ mutation UpdateEvents($data: EventsUpdateInput!, $where: EventsWhereUniqueInput!
     id
   }
 } `
+
+export const UPDATE_USER_GROUP = gql`
+mutation UpdateUserGroup($data: UserGroupUpdateInput!, $where: UserGroupWhereUniqueInput!) {
+  updateUserGroup(data: $data, where: $where) {
+    id
+    userName
+    userGroupRole
+    tabsPermission
+    createdAt
+    updateAt
+  }
+}
+`
 export const UPDATE_USER = gql`
 mutation UpdateUser($data: UserUpdateInput!, $where: UserWhereUniqueInput!) {
   updateUser(data: $data, where: $where) {

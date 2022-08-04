@@ -1,6 +1,6 @@
 import { Checkbox, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, Tooltip } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import { TabsStyle } from "../../modules/settings/userGroup/UserGroupStyle";
+import { ModalTabsStyle } from "./UserGroupModalStyle";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -35,6 +35,21 @@ export default function UserGroupModal() {
     const { state, dispatch } = useContext(AppContext);
     const [stateArray, setStateArray] = useState(data);
 
+    const formInputs = [
+        {
+            label: "Name",
+            name: "name",
+            type: "text",
+            placeholder: "Enter Name"
+        },
+        {
+            label: "User Role",
+            name: "role",
+            type: "text",
+            placeholder: "Enter Role"
+        },
+    ]
+
     const handleCloseUpdate = () => {
         dispatch({
             type: "setModal",
@@ -50,96 +65,57 @@ export default function UserGroupModal() {
     return (
         <Dialog open={state.openFormModal} onClose={handleCloseUpdate} fullWidth={true} BackdropProps={{ style: { backgroundColor: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(8px)' } }}>
             <DialogTitle>Update User Group</DialogTitle>
-            <TabsStyle.MainDiv>
+            <ModalTabsStyle.MainDiv>
                 <Grid container>
-                    <Grid item xl={12} lg={12} mg={12} sm={12} xs={12}>
-                        <TabsStyle.InputLabel>
-                            User Name
-                            <TabsStyle.MyInput
-                                User Group Name
-                                placeholder="Enter Name"
-                                defaultValue={state?.editUserGroupData.name}
-                                onChange={(e) => setUserName(e.target.value)}
-                            />
-                        </TabsStyle.InputLabel>
-                    </Grid>
-                    <Grid item xl={12} lg={12} mg={12} sm={12} xs={12} >
 
-                        <TabsStyle.InputLabel>
-                            User Role
-                            <TabsStyle.MyInput
-                                User Group Name
-                                placeholder="Enter Role"
-                                defaultValue={state?.editUserGroupData?.role}
-                                onChange={(e) => setuserGroupRole(e.target.value.toUpperCase())}
-                            />
-                        </TabsStyle.InputLabel>
-
-                        {/* {state?.editUserGroupData?.permissions.map((permission) => {
-                            return permission.map((val) => {
-                                return (
-                                    <>
-                                        {val.ViewPermission === true ?
-                                            (
-
-                                                <ul>
-                                                    <li>true</li>
-                                                </ul>
-                                            ) : (
-                                                <p>hello</p>
-
-                                            )
-                                        }
-                                    </>
-                                )
-                            })
-
-
-                        })} */}
-
-
-
-                        {/* <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-              onChange={(e) => {
-                // test[item.name] = e.target.value;
-                setSelect(e.target.value)
-              }}
-            >
-              {roles.map((option, i) => (
-                <FormControlLabel key={i} value={option} control={<Radio />} label={option} />
-              ))}
-            </RadioGroup> */}
-
-                    </Grid>
+                    {formInputs.map((item) => {
+                        const test = state.editUserGroupData;
+                        return (
+                            <Grid item xl={12} lg={12} mg={12} sm={12} xs={12}>
+                                <ModalTabsStyle.InputLabel>
+                                    {item.label}
+                                    <ModalTabsStyle.MyInput
+                                        // User Group Name
+                                        placeholder={item.placeholder}
+                                        value={state?.editUserGroupData[item.name]}
+                                        onChange={(e) => {
+                                            test[item.name] = e.target.value
+                                            dispatch({
+                                                type: "setEditUserGroupData",
+                                                payload: test
+                                            })
+                                        }}
+                                    />
+                                </ModalTabsStyle.InputLabel>
+                            </Grid>
+                        )
+                    })}
                 </Grid>
-                <TabsStyle.TableDiv>
+                <ModalTabsStyle.TableDiv>
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 530 }} aria-label="simple table">
-                            <TabsStyle.PermissionsTableHead>
+                            <ModalTabsStyle.PermissionsTableHead>
                                 <TableRow>
-                                    <TabsStyle.PermissionTableTitleHead>
+                                    <ModalTabsStyle.PermissionTableTitleHead>
                                         Option
-                                    </TabsStyle.PermissionTableTitleHead>
-                                    <TabsStyle.PermissionTableTitleHead align="right">
+                                    </ModalTabsStyle.PermissionTableTitleHead>
+                                    <ModalTabsStyle.PermissionTableTitleHead align="right">
                                         View Only
-                                    </TabsStyle.PermissionTableTitleHead>
-                                    <TabsStyle.PermissionTableTitleHead align="right">
+                                    </ModalTabsStyle.PermissionTableTitleHead>
+                                    <ModalTabsStyle.PermissionTableTitleHead align="right">
                                         Create
-                                    </TabsStyle.PermissionTableTitleHead>
-                                    <TabsStyle.PermissionTableTitleHead align="right">
+                                    </ModalTabsStyle.PermissionTableTitleHead>
+                                    <ModalTabsStyle.PermissionTableTitleHead align="right">
                                         Update
-                                    </TabsStyle.PermissionTableTitleHead>
-                                    <TabsStyle.PermissionTableTitleHead align="right">
+                                    </ModalTabsStyle.PermissionTableTitleHead>
+                                    <ModalTabsStyle.PermissionTableTitleHead align="right">
                                         Delete
-                                    </TabsStyle.PermissionTableTitleHead>
+                                    </ModalTabsStyle.PermissionTableTitleHead>
                                     {/* <TabsStyle.PermissionTableTitleHead align="center">
                     Full Access
                   </TabsStyle.PermissionTableTitleHead> */}
                                 </TableRow>
-                            </TabsStyle.PermissionsTableHead>
+                            </ModalTabsStyle.PermissionsTableHead>
                             {
                                 ADD_LOADING ?
                                     <CommonTableLoader />
@@ -155,12 +131,12 @@ export default function UserGroupModal() {
                                                                 "&:last-child td, &:last-child th": { border: 0 },
                                                             }}
                                                         >
-                                                            <TabsStyle.PermissionTitletTxt
+                                                            <ModalTabsStyle.PermissionTitletTxt
                                                                 component="th"
                                                                 scope="row"
                                                             >
                                                                 {navPage.pageName}
-                                                            </TabsStyle.PermissionTitletTxt>
+                                                            </ModalTabsStyle.PermissionTitletTxt>
                                                             {/* {state?.editUserGroupData?.permissions.map((permission) => {
                                                                 return permission.map((val) => {
                                                                     return (
@@ -207,8 +183,8 @@ export default function UserGroupModal() {
                                                                     )
                                                                 })
                                                             })} */}
-                                                            
-                                                             <TableCell
+
+                                                            <TableCell
                                                                 style={{ paddingBottom: 10, paddingTop: 10 }}
                                                                 align="right"
                                                             >
@@ -225,61 +201,61 @@ export default function UserGroupModal() {
                                                                 />
                                                             </TableCell>
                                                             <TableCell
-                                                                    style={{ paddingBottom: 10, paddingTop: 10 }}
-                                                                    align="right"
-                                                                >
-                                                                    <Checkbox
-                                                                        onChange={() =>
-                                                                            handlingPermission(
-                                                                                navModule,
-                                                                                navPageIndex,
-                                                                                "CreatePermission"
-                                                                            )
-                                                                        }
-                                                                    />
-                                                                </TableCell>
-                                                                <TableCell
-                                                                    style={{ paddingBottom: 10, paddingTop: 10 }}
-                                                                    align="right"
-                                                                >
-                                                                    <Checkbox
-                                                                        onChange={() =>
-                                                                            handlingPermission(
-                                                                                navModule,
-                                                                                navPageIndex,
-                                                                                "EditPermission"
-                                                                            )
-                                                                        }
-                                                                    />
-                                                                </TableCell>
-                                                                <TableCell
-                                                                    style={{ paddingBottom: 10, paddingTop: 10 }}
-                                                                    align="right"
-                                                                >
-                                                                    <Checkbox
-                                                                        onChange={() =>
-                                                                            handlingPermission(
-                                                                                navModule,
-                                                                                navPageIndex,
-                                                                                "DelPermission"
-                                                                            )
-                                                                        }
-                                                                    />
-                                                                </TableCell>
+                                                                style={{ paddingBottom: 10, paddingTop: 10 }}
+                                                                align="right"
+                                                            >
+                                                                <Checkbox
+                                                                    onChange={() =>
+                                                                        handlingPermission(
+                                                                            navModule,
+                                                                            navPageIndex,
+                                                                            "CreatePermission"
+                                                                        )
+                                                                    }
+                                                                />
+                                                            </TableCell>
+                                                            <TableCell
+                                                                style={{ paddingBottom: 10, paddingTop: 10 }}
+                                                                align="right"
+                                                            >
+                                                                <Checkbox
+                                                                    onChange={() =>
+                                                                        handlingPermission(
+                                                                            navModule,
+                                                                            navPageIndex,
+                                                                            "EditPermission"
+                                                                        )
+                                                                    }
+                                                                />
+                                                            </TableCell>
+                                                            <TableCell
+                                                                style={{ paddingBottom: 10, paddingTop: 10 }}
+                                                                align="right"
+                                                            >
+                                                                <Checkbox
+                                                                    onChange={() =>
+                                                                        handlingPermission(
+                                                                            navModule,
+                                                                            navPageIndex,
+                                                                            "DelPermission"
+                                                                        )
+                                                                    }
+                                                                />
+                                                            </TableCell>
                                                             {/* <TableCell
-                          style={{ paddingBottom: 10, paddingTop: 10 }}
-                          align="center"
-                        >
-                          <Checkbox
-                            onChange={() =>
-                              handlingPermission(
-                                navModule,
-                                navPageIndex,
-                                "FullAccess"
-                              )
-                            }
-                          />
-                        </TableCell> */}
+                                                                style={{ paddingBottom: 10, paddingTop: 10 }}
+                                                                align="center"
+                                                            >
+                                                                <Checkbox
+                                                                    onChange={() =>
+                                                                        handlingPermission(
+                                                                            navModule,
+                                                                            navPageIndex,
+                                                                            "FullAccess"
+                                                                        )
+                                                                    }
+                                                                />
+                                                            </TableCell> */}
                                                         </TableRow>
                                                     </>
                                                 );
@@ -294,8 +270,8 @@ export default function UserGroupModal() {
 
 
 
-                </TabsStyle.TableDiv>
-            </TabsStyle.MainDiv >
+                </ModalTabsStyle.TableDiv>
+            </ModalTabsStyle.MainDiv >
         </Dialog>
     )
 

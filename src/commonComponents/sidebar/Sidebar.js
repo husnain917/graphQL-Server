@@ -18,6 +18,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Link } from "react-router-dom"
 import { MENU_ITEMS } from '../../constants/Roles'
+import Footer from '../footer/Footer';
 const drawerWidth = 240;
 function Sidebar(props) {
   const [{
@@ -199,6 +200,7 @@ function Sidebar(props) {
         <SidebarStyle.DrawerHeader />
         {/* {props.children} */}
         <Outlet />
+        <Footer/>
       </SidebarStyle.Main>
     </SidebarStyle.Box>
   );

@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
 import { TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Edit } from '@mui/icons-material'
 
 export const TabsStyle = {
     MainDiv: styled('div')((theme) => ({
-        width: '70%',
+        width: '100%',
         height: 'auto',
         marginTop: "20px",
         padding: "0px 5px 0px 5px",
@@ -51,7 +52,17 @@ export const TabsStyle = {
     })),
     TableDiv: styled('div')(() => ({
         padding: "10px"
-    }))
+    })),
+    EditIcon: styled(Edit)(({ theme }) => ({
+        color: '#96A0B5',
+        
+    
+    })),
+    IconDiv: styled('div')(() => ({
+        display: "flex",
+        justifyContent: "center",
+        flexWrap: "wrap"
+    })),
 
 
 }

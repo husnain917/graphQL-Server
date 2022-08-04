@@ -44,17 +44,17 @@ function Sidebar(props) {
             key={index}
             ref={anchorRef}
             button
-            onClick={width < 600 ? handleDrawer : null ||
-              dropDownOpen == 0 ?
-              items.collapse == "true" ?
+            onClick={
+              dropDownOpen === 0 ?
+              items.collapse === "true" ?
                 () => setDropDownOpen(items.module_id)
                 : ''
               : dropDownOpen == items.module_id ?
                 () => setDropDownOpen(0)
                 : ""
                   || items.collapse === "true" ? () => setDropDownOpen(items.module_id) : ''}
-            Active={location?.pathname == items?.moduleUrl}
-            sx={location?.pathname == items?.moduleName ? { backgroundColor: '#E8F3FF', borderRadius: 2 } : null}
+            // Active={location?.pathname === items?.moduleUrl}
+            // sx={location?.pathname === items?.moduleName ? { backgroundColor: '#E8F3FF', borderRadius: 2 } : null}
 
           >
             {

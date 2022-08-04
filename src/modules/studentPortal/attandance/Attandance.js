@@ -45,7 +45,8 @@ export default function Attandance() {
         },
         {
           id: "action",
-          Label: "Action"
+          Label: "Action",
+          marginLeft: 10
         },
       ]}
       // ctaDeleteHandler={ctaDeleteHandler}

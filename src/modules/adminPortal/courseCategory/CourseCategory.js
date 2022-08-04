@@ -31,11 +31,11 @@ export default function CourseCategory() {
             tableHeadings={[
                 {
                     id: "categoryName",
-                    Label: "categoryName"
+                    Label: "Category Name"
                 },
                 {
                     id: "imageUrl",
-                    Label: "image"
+                    Label: "Image"
                 },
                 {
                     id: "createdAt",
@@ -47,10 +47,11 @@ export default function CourseCategory() {
                 },
                 {
                     id: "action",
-                    Label: "Action"
+                    Label: "Action",
+                    marginLeft:11
                 },
             ]}
-
+            // sx={{marginLeft :6}}
             ctaFormHandler={ctaFormHandler}
             // ctaDeleteHandler={ctaDeleteHandler}
             ctaUpdateHandler={ctaUpdateHandler}
@@ -67,6 +68,9 @@ export default function CourseCategory() {
                 {
                     key: 'updateAt'
                 },
+                // {
+                //     key: "action"
+                // },
                 {
                     type: 'crud'
                 },

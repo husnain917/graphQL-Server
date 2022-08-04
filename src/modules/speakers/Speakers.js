@@ -41,11 +41,11 @@ export default function Speakers() {
                 },
                 {
                     id: "spkearDesc",
-                    Label: "spkearDesc"
+                    Label: "speakerDesc"
                 },
                 {
-                    id: "spekaerImage",
-                    Label: "spekaerImage"
+                    id: "speakerImage",
+                    Label: "speakerImage"
                 },
                 {
                     id: "createdAt",
@@ -57,7 +57,8 @@ export default function Speakers() {
                 },
                 {
                     id: "action",
-                    Label: "Action"
+                    Label: "Action",
+                    marginLeft: 6
                 }
             ]}
 

@@ -13,7 +13,7 @@ const style = {
     p: 4,
 };
 
-export default function CommonModal({ question, answer, freelancingProfileUrl, modalPermissions }) {
+export default function CommonModal({ question, answer, freelancingProfileUrl, modalPermissions, permissions }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -109,7 +109,33 @@ export default function CommonModal({ question, answer, freelancingProfileUrl, m
 
                                                 </Dialog>
                                             </>
-                                            : ''
+                                            :
+                                            permissions ?
+                                                <>
+                                                    <PButton ctaHandler={handleOpen} title="See tabs" />
+                                                    <Dialog
+                                                        onClose={handleClose} open={open}
+                                                    >
+                                                        <DialogTitle >
+                                                            Tabs Permissions
+                                                        </DialogTitle>
+                                                        {
+                                                            permissions.map((permission) => {
+                                                                return permission.map((val) => {
+                                                                    return (
+                                                                        <ul>
+                                                                            <li style={{ fontSize: 15, width: '100%' }}>{val?.pageName}</li>
+                                                                        </ul>
+                                                                    )
+                                                                })
+
+                                                            })
+                                                        }
+
+
+                                                    </Dialog>
+                                                </>
+                                                : ''
 
             }
         </div>

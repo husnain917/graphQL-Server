@@ -119,7 +119,9 @@ export const NewTableStyle = {
         color: '#f44336'
     })),
     EditIcon: styled(Edit)(({ theme }) => ({
-        color: '#96A0B5'
+        color: '#96A0B5',
+        
+    
     })),
     IconDiv: styled('div')(() => ({
         display: "flex",
@@ -133,6 +135,7 @@ export const NewTableStyle = {
         marginLeft: 10,
         "@media (max-width: 600px)": {
             marginLeft: 20,
+            marginBottom: 20
         },
         marginRight: 10,
     })),

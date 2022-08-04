@@ -59,9 +59,9 @@ export default function UseLecture() {
     data?.findManyLectures?.map((item) => {
         refacteredData.push({
             id: item.id,
+            coursesId: item.coursesId,
             lectureTitle: item.lectureTitle,
             lectureVideo: item.lectureVideo,
-            coursesId: item.coursesId,
             createdAt: item.createdAt,
             updateAt: item.updateAt,
         });

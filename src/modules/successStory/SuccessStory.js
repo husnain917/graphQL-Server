@@ -37,7 +37,7 @@ export default function SuccessStory() {
           tableHeadings={[
             {
               id: 'freelancingProfileUrl',
-              Label: 'FreelancingProfileUrl'
+              Label: 'Freelancing Profile Url'
             },
             {
               id: 'city',
@@ -53,7 +53,7 @@ export default function SuccessStory() {
             },
             {
               id: 'totalEarnedAmount',
-              Label: 'TotalEarnedAmount'
+              Label: 'Total Earned Amount'
             },
             {
               id: 'whyReject',
@@ -65,7 +65,8 @@ export default function SuccessStory() {
             },
             {
                 id: "action",
-                Label: "Action"
+                Label: "Action",
+                marginLeft:5
             },
           ]}
           printedKeys={[

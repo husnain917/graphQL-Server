@@ -71,7 +71,7 @@ export default function UseLogin() {
           });
           const str = login.name
           const str2 = str.charAt(0).toUpperCase() + str.slice(1)
-          ToastSuccess(`Welcome ${str2}`)
+          ToastSuccess(`Welcome at ${str2}`)
           if (login.userGroup?.userGroupRole === "STUDENT") {
             dispatch({
               type: "tabsPermission",
@@ -119,7 +119,7 @@ export default function UseLogin() {
           });
           const str = login.organizationLogin.name
           const str2 = str.charAt(0).toUpperCase() + str.slice(1)
-          ToastSuccess(`Welcome ${str2}`)
+          ToastSuccess(`Welcome at ${str2}`)
           login.organizationLogin?.userGroup.map((item) => {
             if (login.organizationLogin.role === "ORGANIZATIONKEY")
               dispatch({

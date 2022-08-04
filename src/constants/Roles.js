@@ -1,6 +1,6 @@
 import {
     Subscriptions,
-    PeopleOutline,
+    Groups,
     LocalActivity,
     Face,
     Dashboard,
@@ -59,7 +59,7 @@ export var MENU_ITEMS = [
     },
     {
         text: 'Students',
-        icon: <PeopleOutline />,
+        icon: <Groups/>,
         path: '/students'
     },
     {
@@ -114,7 +114,7 @@ export var MENU_ITEMS = [
     },
     {
         text: 'Speakers',
-        icon: <SpeakerIcon />,
+        icon: <SpeakerIcon fontSize='medium' />,
         path: '/speakers',
     },
     {

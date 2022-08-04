@@ -48,7 +48,6 @@ export function UseAllStudents() {
       label: "Cnic",
       name: "cnic",
       type: "number",
-      pattern: regexp,
       // sx: {
       //   input : {
       //     "&:invalid":{

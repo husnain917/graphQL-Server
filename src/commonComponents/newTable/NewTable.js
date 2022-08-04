@@ -45,7 +45,7 @@ function getComparator(order, orderBy) {
 }
 
 function EnhancedTableHead(props) {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, tableHeading } =
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, tableHeading, sx } =
         props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
@@ -80,7 +80,7 @@ function EnhancedTableHead(props) {
                                 active={orderBy === headCell?.id}
                                 direction={orderBy === headCell?.id ? order : 'asc'}
                                 onClick={createSortHandler(headCell?.id)}
-                                sx={{ fontSize: 12, color: '#6D7D93' }}
+                                sx={{marginLeft:headCell.id === 'action' ?  headCell.marginLeft: 0, fontSize: 12, color: '#6D7D93'  }}
                             >
                                 {headCell.Label}
                                 {orderBy === headCell?.id ? (
@@ -341,7 +341,7 @@ export default function NewTable({
     filterdata,
     data,
     date,
-    
+    sx,
     // Handlers
     ctaFormHandler,
     // ctaDeleteHandler,
@@ -423,6 +423,9 @@ export default function NewTable({
 
     //open edit form modal
     const ctaEditButtonHandler = async (data) => {
+        // console.log("Name in editButtonHandler", data.name)
+        // console.log("Role in editButtonHandler", data.role)
+        // console.log("Permissions in editButtonHandler", data.permissions)
         const test = state.editData;
         dispatch({
             type: "setEditId",
@@ -442,7 +445,14 @@ export default function NewTable({
             type: "setEditData",
             payload: test,
         });
+        if(data.role === "ORGANIZATIONKEY" || data.role === "ADMIN" || data.role === "TEACHER" || data.role === "STUDENT"){
+            dispatch({
+                type: "setEditUserGroupData",
+                payload: data
+            })
+        }
         console.log(state.editId);
+
 
     };
 
@@ -605,6 +615,7 @@ export default function NewTable({
                             onRequestSort={handleRequestSort}
                             rowCount={filterDataArray.length}
                             tableHeading={tableHeadings}
+                            sx={sx}
                         />
                         <TableBody>
                             {filterDataArray?.slice()
@@ -647,6 +658,7 @@ export default function NewTable({
                                                                 scope="row"
                                                                 padding="none"
                                                                 key={subIndex + 10}
+                                                                
                                                             >
                                                                 {
                                                                     subitem?.type === "modalQuestion" ? (
@@ -655,9 +667,9 @@ export default function NewTable({
                                                                         subitem?.type === "modalAnswer" ? (
                                                                             <CommonModal answer={row} />
                                                                         ) :
-                                                                            subitem?.type === "modalProfileUrl" ? (
-                                                                                <CommonModal freelancingProfileUrl={row} />
-                                                                            ) :
+                                                                            // subitem?.type === "modalProfileUrl" ? (
+                                                                            //     <CommonModal freelancingProfileUrl={row} />
+                                                                            // ) :
                                                                                 subitem?.type === "modalPermissions" ? (
                                                                                     <CommonModal modalPermissions={row} />
                                                                                 ) :
@@ -696,6 +708,7 @@ export default function NewTable({
                                                                                                             aria-label="update"
                                                                                                             size="small"
                                                                                                             onClick={() => ctaEditButtonHandler(row)}
+                                                                                                            
                                                                                                         >
                                                                                                             <NewTableStyle.EditIcon />
                                                                                                         </IconButton>

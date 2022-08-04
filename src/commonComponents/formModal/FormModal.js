@@ -27,7 +27,10 @@ import PhoneInput from 'react-phone-input-2'
 import { FM } from './FormModalStyle'
 import CloudinaryFunction from "../../constants/CloudinaryFunction";
 import { blue } from "@mui/material/colors";
-export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date }) {
+import UserGroupModal from "../userGroupModal/UserGroupModal";
+
+
+export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date,  }) {
   const { state, dispatch } = useContext(AppContext);
   const [ctaImageUpdateHandler] = CloudinaryFunction()
   const [open, setOpen] = useState(false)
@@ -280,6 +283,10 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                         </RadioGroup>
                                       </>
                                     )
+                                    : item.type === "tabsPermissions" ?
+                                    (
+                                      <UserGroupModal/>
+                                    ) 
                                     :
                                     item.type === "selectBatch" ?
                                       (

@@ -51,7 +51,8 @@ export default function CourseBatch() {
                 },
                 {
                     id: "action",
-                    Label: "Action"
+                    Label: "Action",
+                    marginLeft:5
                 },
             ]}
             

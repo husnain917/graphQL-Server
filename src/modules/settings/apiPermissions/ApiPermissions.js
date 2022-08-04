@@ -58,6 +58,10 @@ export default function ApiPermissions() {
             id: "updatedAt",
             Label: "updatedAt"
           },
+          {
+            id: "action",
+            Label: "Action"
+          }, 
         ]}
         // ctaEditButtonHandler={ctaEditButtonHandler}
         printedKeys={[
@@ -73,6 +77,7 @@ export default function ApiPermissions() {
           {
             key: "UpdatedAt",
           },
+          
           {
             type: "crud",
           },

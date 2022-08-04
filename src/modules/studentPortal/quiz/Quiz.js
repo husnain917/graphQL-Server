@@ -31,10 +31,10 @@ export default function Quiz() {
     <NewTable
       title={'Quiz'}
       tableHeadings={[
-        {
-          id: 'courseBatch',
-          Label: 'Course Batch'
-        },
+        // {
+        //   id: 'courseBatch',
+        //   Label: 'Course Batch'
+        // },
         {
           id: 'courseBatchesId',
           Label: 'Course Batch Id'
@@ -53,7 +53,8 @@ export default function Quiz() {
         },
         {
           id: "action",
-          Label: "Action"
+          Label: "Action",
+          marginLeft: 5
       },
 
       ]}
@@ -61,9 +62,9 @@ export default function Quiz() {
       // ctaDeleteHandler,
       ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
-        {
-          key: "courseBatch",
-        },
+        // {
+        //   key: "courseBatch",
+        // },
         {
           key: 'courseBatchesId',
         },

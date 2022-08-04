@@ -5,16 +5,16 @@ export default function CommonField({ Name, Label, Email, Address, Role, Passwor
 
     return (
         <>
-            <Stack spacing={2}>
-                <CF.ProfileFieldLabel >
-                    {Label}
-                </CF.ProfileFieldLabel>
+            <Stack spacing={0}>
+                {/* <CF.ProfileFieldLabel >
+                    // {Label}
+                </CF.ProfileFieldLabel> */}
                 {
                     Password ?
                         <>
                             {
                                 currentPassword ?
-                                    <CF.ProfileField type={passwordShown ? "text" : "password"} value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required
+                                    <CF.TextInput label={Label} type={passwordShown ? "text" : "password"} value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required
                                     />
                                     :
                                     ''
@@ -22,17 +22,33 @@ export default function CommonField({ Name, Label, Email, Address, Role, Passwor
                         </>
                         :
                         Address ?
-                            <CF.ProfileField defaultValue={Address}
-                                multiline
-                                rows={3}
+                            <CF.TextInput defaultValue={Address}
+                                // multiline
+                                // rows={3}
+                                InputLabelProps={{ shrink: true }}
+                                margin="dense"
+                                variant="standard"
+                                id='file'
+                                fullWidth
+                                label={Label}
                                 InputProps={{
                                     readOnly: true,
+                                    disableUnderline: true
                                 }} />
                             :
-                            <CF.ProfileField defaultValue={Name ? Name : Address ? Address : Email ? Email : Role ? Role : PhoneNo ? PhoneNo : ''}
+                            <CF.TextInput
+                                InputLabelProps={{ shrink: true }}
+                                margin="dense"
+                                variant="standard"
+                                id='file'
+                                fullWidth
+                                label={Label}
+                                defaultValue={Name ? Name : Address ? Address : Email ? Email : Role ? Role : PhoneNo ? PhoneNo : ''}
                                 InputProps={{
                                     readOnly: true,
-                                }} />
+                                    disableUnderline: true
+                                }}
+                                 />
 
                 }
 

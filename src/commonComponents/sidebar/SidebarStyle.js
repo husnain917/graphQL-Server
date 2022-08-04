@@ -146,7 +146,8 @@ export const SidebarStyle = {
   })),
   ListItemTextTag: styled(ListItemText)(({ Active }) => ({
     color: Active ? '#1E86FF' : '#96A0B5',
-    marginLeft: -2
+    marginLeft: -2,
+    marginRight: 15
   })),
   ListItemTextTagForDropDown: styled(ListItemText)(({Active}) => ({
     color: Active ? '#1E86FF' : colors.black + 90,

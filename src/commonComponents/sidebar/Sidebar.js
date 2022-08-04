@@ -49,7 +49,7 @@ function Sidebar(props) {
               items.collapse === "true" ?
                 () => setDropDownOpen(items.module_id)
                 : ''
-              : dropDownOpen === items.module_id ?
+              : dropDownOpen == items.module_id ?
                 () => setDropDownOpen(0)
                 : ""
                   || items.collapse === "true" ? () => setDropDownOpen(items.module_id) : ''}
@@ -94,8 +94,8 @@ function Sidebar(props) {
                             ref={anchorRef}
                             onClick={width < 600 ? null : null}
                             button
-                            // Active={location?.pathname === item?.pageURL}
-                            // sx={location?.pathname === item?.pageURL ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
+                            Active={location?.pathname === item?.pageURL}
+                            sx={location?.pathname === item?.pageURL ? { borderRight: 3, borderColor: '#5003b7', borderRightWidth: 2 } : null}
                           >
                             {
                               MENU_ITEMS.map((val) => {

@@ -34,8 +34,8 @@ export default function CreateOrganization() {
   return (
     <div style={{ backgroundColor: "white", minHeight: "100vh", minWidth: "100%", padding: "20px", borderRadius: "20px" }}>
 
-      {
-        state.user.id === "62deef57d7afa35edb69f58c" ?
+      {/* {
+        state.user.id === "62deef57d7afa35edb69f58c" ? */}
           <>
             <Grid container spacing={2}>
               <Grid item xl={6} lg={6} md={12} sm={12} xs={12}>
@@ -183,8 +183,8 @@ export default function CreateOrganization() {
               Create Organization
             </FM.FormButton>
           </>
-          :
-          "you dont have permission to create other organization"}
+          {/* :
+          "you dont have permission to create other organization"} */}
 
     </div >
   )

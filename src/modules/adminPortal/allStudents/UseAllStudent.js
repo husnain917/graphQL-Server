@@ -24,6 +24,9 @@ import { AppContext } from "../../../State";
 
 export function UseAllStudents() {
   const [{ userGroupStudent }] = FiltredData()
+  var regexp = new RegExp('^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$');
+  // var regexp = new RegExp('');
+ 
   const formInputs = [
     {
       label: "Name",

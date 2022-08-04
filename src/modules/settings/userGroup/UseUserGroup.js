@@ -96,8 +96,6 @@ export function UseUserGroup() {
                 console.log(error.message)
 
             }
-        }else{
-            ToastWarning('Spelling Mistake')
         }
     };
 

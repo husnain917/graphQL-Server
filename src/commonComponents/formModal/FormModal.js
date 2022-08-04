@@ -83,56 +83,28 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
               return (
                 <>
                   {
-                    item.type === "number" ? (
-                      <FM.TextInput
-                        InputLabelProps={{ shrink: true }}
-                        InputProps={{ disableUnderline: true, inputProps: {min:0}, }}
-                        margin="dense"
-                        id="file"
-                        // min={0}
-                        label={item.label}
-                        // label="hello"
-                        name={item.name}
-                        type={item.type}
-                        required
-                        fullWidth
-                        variant="standard"
-                        value={
-                          item.name === "file" ? "" : state.editData[item.name]
-                        }
-                        onChange={(e) => {
-                          test[item.name] = item.name === "file"
-                            ? e.target.files[0].name
-                            : e.target.value;
-                          dispatch({
-                            type: "setEditData",
-                            payload: test,
-                          });
-                        }}
-                      />
-                    ) :
-                      item.type === "roleSelect" ? (
-                        <>
-                          <FM.TextInput
-                            InputLabelProps={{ shrink: true }}
-                            InputProps={{ disableUnderline: true }}
-                            margin="dense"
-                            select
-                            id="file"
-                            label={item.label}
-                            name={item.name}
-                            type={item.type}
-                            required
-                            fullWidth
-                            // variant="standard"
-                            onChange={(e) => {
-                              test[item.name] = e.target.value;
-                              dispatch({
-                                type: "setEditData",
-                                payload: test,
-                              });
-                              console.log('pp', test);
-                            }}
+                    item.type === "roleSelect" ? (
+                      <>
+                        <FM.TextInput
+                          InputLabelProps={{ shrink: true }}
+                          InputProps={{ disableUnderline: true }}
+                          margin="dense"
+                          select
+                          id="file"
+                          label={item.label}
+                          name={item.name}
+                          type={item.type}
+                          required
+                          fullWidth
+                          // variant="standard"
+                          onChange={(e) => {
+                            test[item.name] = e.target.value;
+                            dispatch({
+                              type: "setEditData",
+                              payload: test,
+                            });
+                            console.log('pp', test);
+                          }}
 
                         >
                           {
@@ -178,75 +150,71 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                             ))}
                           </RadioGroup>
                         </>
-                      ) :
-                        item.type === "select" ? (
-                          <>
-                            <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
-                            <RadioGroup
-                              row
-                              aria-labelledby="demo-row-radio-buttons-group-label"
-                              name="row-radio-buttons-group"
-                              onChange={(e) => {
-                                test[item.name] = e.target.value;
-                                dispatch({
-                                  type: "setEditData",
-                                  payload: test,
-                                });
-                                console.log('pp', test);
-                              }}
-                            >
-                              {item?.dropDownContent?.map((option) => (
-                                <FormControlLabel
-                                  value={option}
-                                  control={
-                                    <Radio />
-                                  }
-                                  label={option}
-                                />
-                              ))}
-                            </RadioGroup>
-                          </>
 
+                      ) :
+                        item.type === "editor" ? (
+                          <Editor
+                            editorState={state.editData[item.name]}
+                            onEditorStateChange={(getText) => {
+                              test[item.name] = getText;
+                              dispatch({
+                                type: "setEditData",
+                                payload: test,
+                              });
+                            }}
+                            toolbarClassName="toolbarClassName"
+                            wrapperClassName="wrapperClassName"
+                            editorClassName="editorClassName"
+                            toolbar={{
+                              inline: { inDropdown: true },
+                              list: { inDropdown: true },
+                              textAlign: { inDropdown: true },
+                              link: { inDropdown: true },
+                              history: { inDropdown: true },
+                              blockType: {
+                                className: "bordered-option-classname",
+                              },
+                              fontSize: {
+                                className: "bordered-option-classname",
+                              },
+                              fontFamily: {
+                                className: "bordered-option-classname",
+                              },
+                            }}
+                          />
                         ) :
-                          item.type === "editor" ? (
-                            <Editor
-                              editorState={state.editData[item.name]}
-                              onEditorStateChange={(getText) => {
-                                test[item.name] = getText;
-                                dispatch({
-                                  type: "setEditData",
-                                  payload: test,
-                                });
-                              }}
-                              toolbarClassName="toolbarClassName"
-                              wrapperClassName="wrapperClassName"
-                              editorClassName="editorClassName"
-                              toolbar={{
-                                inline: { inDropdown: true },
-                                list: { inDropdown: true },
-                                textAlign: { inDropdown: true },
-                                link: { inDropdown: true },
-                                history: { inDropdown: true },
-                                blockType: {
-                                  className: "bordered-option-classname",
-                                },
-                                fontSize: {
-                                  className: "bordered-option-classname",
-                                },
-                                fontFamily: {
-                                  className: "bordered-option-classname",
-                                },
-                              }}
-                            />
-                          ) :
-                            item.type === "upload" ?
+                          item.type === "upload" ?
+                            (
+                              <div style={{ marginTop: 13, marginBottom: -30 }}>
+                                <input type="file" onChange={ctaImageUpdateHandler} />
+                              </div>
+                            )
+                            :
+                            item.type === "selectCategory" ?
                               (
-                                <div style={{ marginTop: 13, marginBottom: -30 }}>
-                                  <input type="file" onChange={ctaImageUpdateHandler} />
-                                </div>
+                                <>
+                                  <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
+                                  <RadioGroup
+                                    row
+                                    aria-labelledby="demo-row-radio-buttons-group-label"
+                                    name="row-radio-buttons-group"
+                                    onChange={(e) => {
+                                      test[item.name] = e.target.value;
+                                      dispatch({
+                                        type: "setEditData",
+                                        payload: test,
+                                      });
+                                    }}
+                                  >
+                                    {item?.dropDown?.categories?.map((option) => (
+                                      <FormControlLabel value={option.id} control={<Radio />} label={option.categoryName} />
+                                    ))}
+                                  </RadioGroup>
+                                </>
+
                               )
                               :
-                              item.type === "selectCategory" ?
+                              item.type === "selectInstructor" ?
                                 (
                                   <>
                                     <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
@@ -256,21 +224,21 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                       name="row-radio-buttons-group"
                                       onChange={(e) => {
                                         test[item.name] = e.target.value;
+                                        console.log("kk", item.name);
                                         dispatch({
                                           type: "setEditData",
                                           payload: test,
                                         });
                                       }}
                                     >
-                                      {item?.dropDown?.categories?.map((option) => (
-                                        <FormControlLabel value={option.id} control={<Radio />} label={option.categoryName} />
+                                      {item?.dropDown?.map((option) => (
+                                        <FormControlLabel value={option.id} control={<Radio />} label={option.name} />
                                       ))}
                                     </RadioGroup>
                                   </>
-
                                 )
                                 :
-                                item.type === "selectInstructor" ?
+                                item.type === "selectSpeaker" ?
                                   (
                                     <>
                                       <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
@@ -280,7 +248,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                         name="row-radio-buttons-group"
                                         onChange={(e) => {
                                           test[item.name] = e.target.value;
-                                          console.log("kk", item.name);
                                           dispatch({
                                             type: "setEditData",
                                             payload: test,
@@ -288,13 +255,13 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                         }}
                                       >
                                         {item?.dropDown?.map((option) => (
-                                          <FormControlLabel value={option.id} control={<Radio />} label={option.name} />
+                                          <FormControlLabel value={option.id} control={<Radio />} label={option.speakerName} />
                                         ))}
                                       </RadioGroup>
                                     </>
                                   )
                                   :
-                                  item.type === "selectSpeaker" ?
+                                  item.type === "selectCourse" ?
                                     (
                                       <>
                                         <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
@@ -310,8 +277,8 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                             });
                                           }}
                                         >
-                                          {item?.dropDown?.map((option) => (
-                                            <FormControlLabel value={option.id} control={<Radio />} label={option.speakerName} />
+                                          {item?.dropDown?.findManyCourses?.map((option) => (
+                                            <FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.courseName} />
                                           ))}
                                         </RadioGroup>
                                       </>
@@ -321,7 +288,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                       <UserGroupModal/>
                                     ) 
                                     :
-                                    item.type === "selectCourse" ?
+                                    item.type === "selectBatch" ?
                                       (
                                         <>
                                           <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
@@ -337,15 +304,15 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                               });
                                             }}
                                           >
-                                            {item?.dropDown?.findManyCourses?.map((option) => (
+                                            {item?.dropDown?.map((option) => (
                                               <FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.courseName} />
                                             ))}
                                           </RadioGroup>
                                         </>
                                       )
                                       :
-                                      item.type === "selectBatch" ?
-                                        ( 
+                                      item.type === "selectUser" ?
+                                        (
                                           <>
                                             <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
                                             <RadioGroup
@@ -361,13 +328,14 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                               }}
                                             >
                                               {item?.dropDown?.map((option) => (
-                                                <FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.courseName} />
+                                                <FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.name} />
                                               ))}
                                             </RadioGroup>
                                           </>
+
                                         )
                                         :
-                                        item.type === "selectUser" ?
+                                        item.type === "booleanSelection" ?
                                           (
                                             <>
                                               <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
@@ -382,38 +350,34 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                     payload: test,
                                                   });
                                                 }}
+
                                               >
                                                 {item?.dropDown?.map((option) => (
-                                                  <FormControlLabel key={option.id} value={option.id} control={<Radio />} label={option.name} />
+                                                  <FormControlLabel key={option} value={option} control={<Radio />} label={option} />
                                                 ))}
                                               </RadioGroup>
                                             </>
 
                                           )
                                           :
-                                          item.type === "booleanSelection" ?
+                                          item.type === "calender" ?
                                             (
                                               <>
-                                                <FormLabel required id="demo-row-radio-buttons-group-label">{item.label}</FormLabel>
-                                                <RadioGroup
-                                                  row
-                                                  aria-labelledby="demo-row-radio-buttons-group-label"
-                                                  name="row-radio-buttons-group"
-                                                  onChange={(e) => {
-                                                    test[item.name] = e.target.value;
-                                                    dispatch({
-                                                      type: "setEditData",
-                                                      payload: test,
-                                                    });
-                                                  }}
-
-                                                >
-                                                  {item?.dropDown?.map((option) => (
-                                                    <FormControlLabel key={option} value={option} control={<Radio />} label={option} />
-                                                  ))}
-                                                </RadioGroup>
+                                                <button onClick={() => setOpen(true)}>Select Date</button>
+                                                <>
+                                                  {
+                                                    open ?
+                                                      <Calendar
+                                                        onChange={onDateChange}
+                                                        value={date}
+                                                        showNeighboringMonth={false}
+                                                        locale={"en-US"}
+                                                      />
+                                                      :
+                                                      ''
+                                                  }
+                                                </>
                                               </>
-
                                             )
                                             :
                                             item.type === "contact" ?
@@ -439,7 +403,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                   margin="dense"
                                                   id="file"
                                                   label={item.label}
-                                                  // label="Hello"
                                                   name={item.name}
                                                   type={item.type}
                                                   required

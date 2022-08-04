@@ -110,8 +110,6 @@ export default function UseLogin() {
         },
         onCompleted(login) {
           localStorage.setItem("token", login.organizationLogin.token)
-          var orgNameStr= login.organizationLogin.name
-          var activeOrgUser=orgNameStr.charAt(0).toUpperCase() + orgNameStr.slice(1)
           dispatch({
             type: "setAuthState",
             payload: {

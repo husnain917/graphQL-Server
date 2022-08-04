@@ -129,6 +129,18 @@ export default function Navigation() {
                             </PrivateRouting>
                         }
                     />
+                    <Route path='/courseCategory'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <CourseCategory />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/lectures'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <Lecture />
+                            </PrivateRouting>}
+                    />
                     <Route
                         path='/enrollmentApproval'
                         element={

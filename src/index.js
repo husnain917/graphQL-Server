@@ -10,8 +10,6 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-phone-input-2/lib/material.css'
 import {
   ApolloProvider,
-  gql
-
 } from "@apollo/client";
 
 ReactDOM.render(

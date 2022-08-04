@@ -59,9 +59,8 @@ export default function UserGroup() {
         <Grid item xl={12} lg={12} mg={12} sm={12} xs={12} >
 
           <TabsStyle.InputLabel>
-            User Role
-            <TabsStyle.MyInput
-              User Group Name
+          <TabsStyle.MyInput
+              
               placeholder="Enter Role"
               value={userGroupRole}
               onChange={(e) => setuserGroupRole(e.target.value.toUpperCase())}

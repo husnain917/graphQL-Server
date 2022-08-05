@@ -55,21 +55,21 @@ function Sidebar(props) {
                 : ""
                   || items.collapse === "true" ? () => setDropDownOpen(items.module_id) : ''}
             // Active={location?.pathname === items?.moduleUrl}
-            // sx={location?.pathname === items?.moduleName ? { backgroundColor: '#E8F3FF', borderRadius: 2 } : null}
+            // sx={location?.pathname === items?.moduleName ? { backgroundColor: '#E8F3FF', borderRadius: 2, color: "blue" } : null}
 
           >
             {
               MENU_ITEMS.map((val) => {
                 if (val.text === items.moduleName) {
                   return (
-                    <SidebarStyle.ListItemIconTag Active={location?.pathname === items?.moduleUrl} >
+                    <SidebarStyle.ListItemIconTag Active={location?.pathname === items?.moduleUrl || dropDownOpen === items.module_id} >
                       {val.icon}
                     </SidebarStyle.ListItemIconTag>
                   )
                 }
               })
             }
-            <SidebarStyle.ListItemTextTag primary={items?.moduleName} Active={location?.pathname === items?.moduleUrl}/>
+            <SidebarStyle.ListItemTextTag primary={items?.moduleName} Active={location?.pathname === items?.moduleUrl || dropDownOpen === items.module_id}/>
             {
               items?.collapse === 'true' ?
                 dropDownOpen === items.module_id ?

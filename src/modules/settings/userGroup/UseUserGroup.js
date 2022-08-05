@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 export function UseUserGroup() {
 
-    
+
 
     const { state, dispatch } = useContext(AppContext)
     let [CreateUserGroup, { loading: ADD_LOADING }] = useMutation(ADD_USER_GROUP);
@@ -16,7 +16,7 @@ export function UseUserGroup() {
     const [userGroupRole, setuserGroupRole] = useState('')
     const [email, setEmail] = useState('')
     const [flag, setFlag] = useState(false)
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const allData = {
         "navigationResults": []
     };
@@ -51,7 +51,7 @@ export function UseUserGroup() {
     };
     console.log(state?.user?.organizationLogin?.id)
     const ctaHandler = async (event) => {
-        
+
         // event.preventDefault();
         if (userName === '') {
             ToastWarning('User Name Required')
@@ -59,8 +59,8 @@ export function UseUserGroup() {
         else if (userGroupRole === '') {
             ToastWarning('User Group Role Required')
         }
-        else if(userGroupRole === "ORGANIZATIONKEY" || userGroupRole === "ADMIN" || userGroupRole === "TEACHER" || userGroupRole === "STUDENT"){
-            
+        else {
+
             try {
                 await CreateUserGroup({
                     variables: {
@@ -103,24 +103,26 @@ export function UseUserGroup() {
 
     let { data, loading: GET_LOADING, error } = useQuery(GET_USER_GROUP);
 
-    console.log("error", error);
+
     const refacteredData = [];
+   
     data?.userGroups?.map((item) => {
         refacteredData.push({
             id: item.id,
             name: item.userName,
-            permissions: item.tabsPermission.navigationResults.map((val) => {
+            permissions: item?.tabsPermission?.navigationResults?.map((val) => {
                 return val.pages
-              
+
             }),
+            tabs:item,
             updateAt: item.updateAt,
             createdAt: item.createdAt,
             role: item.userGroupRole,
         });
     })
-    console.log("refacteredData", refacteredData);
+    console.log("refacteredData111", refacteredData);
 
-    const ctaEditButtonHandler=((name, role, permissions) => {
+    const ctaEditButtonHandler = ((name, role, permissions) => {
         console.log("Name in useViewAllUser", name)
         console.log("Role in useViewAllUser", role)
         console.log("permissions in useViewAllUser", permissions)
@@ -134,10 +136,10 @@ export function UseUserGroup() {
     let [
         UpdateUserGroup,
         {
-          loading: UPDATE_LOADING
+            loading: UPDATE_LOADING
         }] = useMutation(UPDATE_USER_GROUP);
 
-    const ctaUpdateHandler=async()=>{
+    const ctaUpdateHandler = async () => {
         if (state?.editUserGroupData?.name === '') {
             ToastWarning('User Name Required')
         }
@@ -151,7 +153,7 @@ export function UseUserGroup() {
                     variables: {
                         where: {
                             id: state.editId
-                          },
+                        },
                         data: {
                             userName: {
                                 set: state?.editUserGroupData?.name
@@ -194,7 +196,7 @@ export function UseUserGroup() {
         }
     };
 
-    
 
-    return [{ userName, userGroupRole, email, setEmail, setUserName, ctaHandler, setuserGroupRole, handlingPermission, ADD_LOADING, GET_LOADING, refacteredData, ctaEditButtonHandler, flag, ctaUpdateHandler}]
+
+    return [{ userName, userGroupRole, email, setEmail, setUserName, ctaHandler, setuserGroupRole, handlingPermission, ADD_LOADING, GET_LOADING, refacteredData, ctaEditButtonHandler, flag, ctaUpdateHandler }]
 }

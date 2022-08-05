@@ -14,10 +14,11 @@ const initialState = {
     orgLogin: false,
     editData: {},
     editUserGroupData: {},
+    editUserGroupDataBool:false,
     imageUrl: '',
     tabsPersmission: [],
     valTel: '',
-    usersObj: {}
+    usersObj: {},
 }
 let reducer = (state, action) => {
     // eslint-disable-next-line default-case
@@ -49,7 +50,8 @@ let reducer = (state, action) => {
             console.log("User Group edit data in state", action.payload);
             return {
                 ...state,
-                editUserGroupData: action.payload
+                editUserGroupData: action.payload.editUserGroupData,
+                editUserGroupDataBool:action.payload.editUserGroupDataBool
             }
         }
         case "setEditId": {

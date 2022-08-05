@@ -94,6 +94,7 @@ export default function Table({
         openFormModal: true,
       },
     });
+  
   };
   //open edit form modal
   const ctaEditButtonHandler = async (data) => {

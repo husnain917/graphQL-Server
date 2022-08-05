@@ -11,6 +11,13 @@ export const FM = {
         alignItems: 'center',
 
     })),
+    DialogBox1: styled(Dialog)(()=> ({
+        width: 712,
+        backgroundColor: 'green',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    })),
     FormButton: styled('button')(() => ({
         color: `${colors.white}`,
         border: 'none',

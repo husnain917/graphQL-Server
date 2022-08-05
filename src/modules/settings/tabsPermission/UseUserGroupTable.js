@@ -56,14 +56,15 @@ export function UseTabsPermissions() {
 
     console.log("error", error);
     const refacteredData = [];
-    data?.userGroups?.forEach((item) => {
+    data?.userGroups?.map((item) => {
         refacteredData.push({
             id: item.id,
             name: item.userName,
-            permissions: item.tabsPermission.navigationResults.map((val) => {
+            permissions: item?.tabsPermission?.navigationResults?.map((val) => {
                 return val.pages
               
             }),
+            tabs:item.tabsPermission,
             updateAt: item.updateAt,
             createdAt: item.createdAt,
             role: item.userGroupRole,

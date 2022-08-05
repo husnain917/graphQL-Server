@@ -28,6 +28,7 @@ import { FM } from './FormModalStyle'
 import CloudinaryFunction from "../../constants/CloudinaryFunction";
 import { blue } from "@mui/material/colors";
 import UserGroupModal from "../userGroupModal/UserGroupModal";
+import UserGroup from "../../modules/settings/userGroup/UserGroup";
 
 
 export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date,  }) {
@@ -285,7 +286,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                     )
                                     : item.type === "tabsPermissions" ?
                                     (
-                                      <UserGroupModal/>
+                                      <UserGroup/>
                                     ) 
                                     :
                                     item.type === "selectBatch" ?

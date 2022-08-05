@@ -64,6 +64,7 @@ export function UseTabsPermissions() {
                 return val.pages
               
             }),
+            tabs:item.tabsPermission,
             updateAt: item.updateAt,
             createdAt: item.createdAt,
             role: item.userGroupRole,

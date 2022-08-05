@@ -30,7 +30,7 @@ import Lecture from '../modules/teacherPortal/lecture/Lecture'
 import FilesOrAssignment from '../modules/teacherPortal/filesOrAssignment/FilesOrAssignment'
 import CourseBatch from '../modules/adminPortal/courseBatch/CourseBatch';
 import Speakers from '../modules/speakers/Speakers';
-import TabsPermission from '../modules/settings/tabsPermission/TabsPermission';
+import UserGroupTable from '../modules/settings/tabsPermission/UserGroupTable';
 import ApiPermissions from '../modules/settings/apiPermissions/ApiPermissions';
 import UserGroup from '../modules/settings/userGroup/UserGroup';
 import CreateOrganization from '../modules/settings/createOrganization/CreateOrganization';
@@ -246,10 +246,16 @@ export default function Navigation() {
                                 <Speakers />
                             </PrivateRouting>}
                     />
-                    <Route path='/tabs-permission'
+                      {/* <Route path='/user-groups'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
-                                <TabsPermission />
+                                <UserGroupTable />
+                            </PrivateRouting>}
+                    /> */}
+                    <Route path='/user-groups'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <UserGroupTable />
                             </PrivateRouting>}
                     />
                     <Route path='/api-permissions'
@@ -264,18 +270,7 @@ export default function Navigation() {
                                 <CreateOrganization />
                             </PrivateRouting>}
                     />
-                    <Route path='/user-groups'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <UserGroup />
-                            </PrivateRouting>}
-                    />
-                    <Route path='/view-all-user-groups'
-                        element={
-                            <PrivateRouting isAllowed={state.authState}>
-                                <ViewAllUserGroup />
-                            </PrivateRouting>}
-                    />
+                  
                 </Route>
 
             </Routes>

@@ -4,7 +4,7 @@ import { Edit } from '@mui/icons-material'
 
 export const TabsStyle = {
     MainDiv: styled('div')((theme) => ({
-        width: '70%',
+        width: '100%',
         height: 'auto',
         marginTop: "20px",
         padding: "0px 5px 0px 5px",

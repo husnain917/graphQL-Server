@@ -10,8 +10,8 @@ import NewTable from "../../../commonComponents/newTable/NewTable";
 import Table from "../../../commonComponents/table/Table";
 import {
   UseTabsPermissions
-} from "./UseTabsPermissions";
-export default function TabsPermissions() {
+} from "./UseUserGroupTable";
+export default function UserGroupTable() {
   const [
     {
       // ADD_LOADING,
@@ -40,7 +40,7 @@ export default function TabsPermissions() {
 
       {/* <Table */}
       <NewTable
-        title={"Tabs Permissions"}
+        title={"All User Groups"}
         tableHeadings={[
 
           {

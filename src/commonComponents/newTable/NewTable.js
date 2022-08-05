@@ -419,15 +419,28 @@ export default function NewTable({
                 openFormModal: true,
             },
         });
+        dispatch({
+            type:"setEditUserGroupData",
+            payload:{
+              editUserGroupData:"",
+              editUserGroupDataBool:false
+            }
+          })
     };
 
     //open edit form modal
-    const ctaEditButtonHandler = (data) => {
-        console.log("id in editButtonHandler", data.id)
+    const ctaEditButtonHandler = ({...data}) => {
         const test = state.editData;
         dispatch({
             type: "setEditId",
             payload: data.id
+        })
+        dispatch({
+            type:"setEditUserGroupData",
+            payload:{
+                editUserGroupData:data,
+                editUserGroupDataBool:true
+            }
         })
         dispatch({
             type: "setModal",
@@ -443,12 +456,12 @@ export default function NewTable({
             type: "setEditData",
             payload: test,
         });
-        if(data.role === "ORGANIZATIONKEY" || data.role === "ADMIN" || data.role === "TEACHER" || data.role === "STUDENT"){
-            dispatch({
-                type: "setEditUserGroupData",
-                payload: data
-            })
-        }
+        // if(data.role === "ORGANIZATIONKEY" || data.role === "ADMIN" || data.role === "TEACHER" || data.role === "STUDENT"){
+        //     dispatch({
+        //         type: "setEditUserGroupData",
+        //         payload: data
+        //     })
+        // }
         console.log(state.editId);
 
 

@@ -144,7 +144,7 @@ export function UseUserGroup() {
         else if (state?.editUserGroupData?.role === '') {
             ToastWarning('User Group Role Required')
         }
-        else if(userGroupRole === "ORGANIZATIONKEY" || userGroupRole === "ADMIN" || userGroupRole === "TEACHER" || userGroupRole === "STUDENT"){
+        else if(state?.editUserGroupData?.role === "ORGANIZATIONKEY" || state?.editUserGroupData?.role === "ADMIN" || state?.editUserGroupData?.role === "TEACHER" || state?.editUserGroupData?.role === "STUDENT"){
             
             try {
                 await UpdateUserGroup({

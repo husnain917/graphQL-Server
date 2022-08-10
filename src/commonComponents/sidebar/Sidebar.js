@@ -166,7 +166,8 @@ function Sidebar(props) {
         sx={{ '& .MuiDrawer-paper': { border: 'none' } }}
         variant="permanent"
         container={container}
-        open={open}>
+        open={open}
+        >
         <SidebarStyle.DrawerHeader>
           <SidebarStyle.Image src={logo} />
         </SidebarStyle.DrawerHeader>
@@ -186,6 +187,7 @@ function Sidebar(props) {
           onClose={handleDrawer}
           ModalProps={{
             keepMounted: true,
+            hideBackdrop: true
           }}
         >
           <Toolbar />

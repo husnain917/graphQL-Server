@@ -122,15 +122,15 @@ export function UseUserGroup() {
     })
     console.log("refacteredData111", refacteredData);
 
-    const ctaEditButtonHandler = ((name, role, permissions) => {
-        console.log("Name in useViewAllUser", name)
-        console.log("Role in useViewAllUser", role)
-        console.log("permissions in useViewAllUser", permissions)
-        setUserName(name)
-        setuserGroupRole(role)
-        setFlag(true)
-        // navigate("/user-groups")
-    })
+    // const ctaEditButtonHandler = ((name, role, permissions) => {
+    //     console.log("Name in useViewAllUser", name)
+    //     console.log("Role in useViewAllUser", role)
+    //     console.log("permissions in useViewAllUser", permissions)
+    //     setUserName(name)
+    //     setuserGroupRole(role)
+    //     setFlag(true)
+    //     // navigate("/user-groups")
+    // })
 
     // Update user group
     let [
@@ -198,5 +198,5 @@ export function UseUserGroup() {
 
 
 
-    return [{ userName, userGroupRole, email, setEmail, setUserName, ctaHandler, setuserGroupRole, handlingPermission, ADD_LOADING, GET_LOADING, refacteredData, ctaEditButtonHandler, flag, ctaUpdateHandler }]
+    return [{ userName, userGroupRole, email, setEmail, setUserName, ctaHandler, setuserGroupRole, handlingPermission, ADD_LOADING, GET_LOADING, refacteredData, flag, ctaUpdateHandler }]
 }

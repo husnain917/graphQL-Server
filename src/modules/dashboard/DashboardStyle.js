@@ -11,7 +11,11 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import SurroundSoundIcon from '@mui/icons-material/SurroundSound';
 import { colors } from '../../constants/Color';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
+const drawerWidth = 276;
+
 export const DS = {
+    
     MainPageContainer: styled('div')(() => ({
         width: '100%',
         paddingTop: 7,
@@ -28,6 +32,11 @@ export const DS = {
         marginBottom: 20,
         "@media (max-width: 900px)": {
             width: '100%',
+        // marginLeft: "auto",
+        // marginRight:"auto",
+        // flexWrap: "wrap",
+        // width: `calc(100% - ${drawerWidth}px)`,
+
         },
     })),
     PeopleOutline: styled(PeopleOutline)(() => ({

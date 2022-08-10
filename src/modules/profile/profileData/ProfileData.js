@@ -63,11 +63,13 @@ export default function ProfileData() {
               />
             </Grid>
             <Grid item
-              xl={6}
-              lg={6}
-              md={6}
+              xl={12}
+              lg={12}
+              md={12}
               sm={12}
-              xs={12}>
+              xs={12}
+              sx={{marginLeft: 5}}
+              >
               <CommonField
                 Label='Phone No'
                 PhoneNo={state?.orgLogin ?

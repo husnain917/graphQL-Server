@@ -290,10 +290,12 @@ export default function UserGroup() {
           </Table>
         </TableContainer>
         <br />
-
+        {state.editUserGroupDataBool ?
+        <PButton title="Update User Group" ctaHandler={ctaUpdateHandler} />
+        :
         <PButton title="Add User Group" ctaHandler={ctaHandler} />
 
-
+        }
 
       </TabsStyle.TableDiv>
     </TabsStyle.MainDiv >

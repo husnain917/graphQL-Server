@@ -84,12 +84,15 @@ export const SidebarStyle = {
     height: '100%',
     minHeight: '100vh',
     [theme.breakpoints.up('xs')]: {
-      display: 'block'
+      display: 'block',
+      
     },
     [theme.breakpoints.up('md')]: {
-      display: 'none'
+      display: 'none',
     },
-    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+    "@media(max-width: 415px)":{
+    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: "100%" },
+    }
   })),
   //IconButton 
   IconButton: styled(IconButton)(({ theme }) => ({

@@ -56,8 +56,9 @@ export default function ContactUs() {
                         },
                         {
                           id: "action",
-                          Label: "Action"
-                        },
+                          Label: "Action",
+                        //   marginLeft: 10
+                        }
                       ]}
                     printedKeys={[
                         {

@@ -297,17 +297,6 @@ export const data =
           "FullAccess": false
         },
         {
-          "pageName": "Tabs Permission",
-          "pageID": "11",
-          "pageURL": "/tabs-permission",
-          "page_id": "11",
-          "CreatePermission": false,
-          "DelPermission": false,
-          "EditPermission": false,
-          "ViewPermission": false,
-          "FullAccess": false
-        },
-        {
           "pageName": "Api Permission",
           "pageID": "11",
           "pageURL": "/api-permissions",

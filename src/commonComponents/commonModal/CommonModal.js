@@ -94,7 +94,7 @@ export default function CommonModal({ question, answer, freelancingProfileUrl, m
                                                         Tabs Permissions
                                                     </DialogTitle>
                                                     {
-                                                        modalPermissions?.permissions.map((permission) => {
+                                                        modalPermissions?.permissions?.map((permission) => {
                                                             return permission.map((val) => {
                                                                 return (
                                                                     <ul>

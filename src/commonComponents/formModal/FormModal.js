@@ -54,13 +54,21 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
         openFormModal: false,
       },
     });
+    dispatch({
+      type: "setEditUserGroupDataBool",
+      payload: false
+    });
   };
 
   return (
     <div>
       <Dialog open={state.openFormModal} onClose={handleCloseUpdate} fullScreen={fullScreen} fullWidth={true} BackdropProps={{ style: { backgroundColor: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(8px)' } }}>
         <DialogTitle>
-          Add
+        {state.modalUpdateFlag ? 
+          <p>Update</p>
+          :
+          <p>Add</p>
+        }
           <IconButton
             aria-label="close"
             onClick={handleCloseUpdate}

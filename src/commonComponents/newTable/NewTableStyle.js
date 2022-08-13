@@ -35,6 +35,8 @@ export const NewTableStyle = {
     })),
     Table: styled(Table)(({ theme }) => ({
         // minWidth: 'auto',
+        // overflow: "scroll",
+        // overflowY: "auto",
         [`& .${tableCellClasses.root}`]: {
             borderBottom: "none"
         },
@@ -45,6 +47,8 @@ export const NewTableStyle = {
     TableContainer: styled(TableContainer)(({ theme }) => ({
         overflow: 'scroll',
         overflowX: 'auto',
+        // overflowY: 'auto',
+        // height: "100%",
         width: '98%',
         marginLeft: '1%',
         mrginRight: '1%',

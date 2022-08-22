@@ -11,7 +11,7 @@ import {
   UPDATE_SINGLE_COURSE,
   // DELETE_SINGLE_COURSE
 } from "../../lib/mutation/AllMutations";
-import { GET_COURSES } from "../../lib/queries/AllQueries";
+import { CASHED_COURSES, GET_COURSES } from "../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
@@ -79,7 +79,37 @@ export function UseCourses() {
 
 
 
-  //GET STAFF 
+//GET Courses
+
+//   let { data } = useQuery(CASHED_COURSES);
+//   let [ getCourses, {data: networkCourses, loading: GET_LOADING, error} ] = useLazyQuery(GET_COURSES);
+//   useEffect(() => {
+//     getCourses();
+//   }, []);
+
+//   useEffect(()=> {
+//     client.writeQuery({
+//       query: CASHED_COURSES,
+//       data: {
+//         courses: networkCourses
+//       }
+//     })
+//   }, [networkCourses])
+//   console.log("coursesData", data);
+//   const refacteredData = [];
+//   data?.courses?.findManyCourses?.map((item) => {
+//     refacteredData.push({
+//       id: item.id,
+//       courseName: item.courseName,
+//       courseDesc: item.courseDesc,
+//       courseIntro: item.courseIntro,
+//       courseStatus: item.courseStatus,
+//       coursePrice: item.coursePrice,
+//       instructorId: item.instructorId,
+//       courseCategoryId: item.courseCategoryId,
+//     });
+//   });
+//   console.log("refacteredData", refacteredData);
 
   let { data, loading: GET_LOADING, error } = useQuery(GET_COURSES);
   console.log("error", error);
@@ -94,10 +124,6 @@ export function UseCourses() {
       coursePrice: item.coursePrice,
       instructorId: item.instructorId,
       courseCategoryId: item.courseCategoryId,
-
-
-
-
     });
   });
   console.log("refacteredData", refacteredData);
@@ -105,6 +131,14 @@ export function UseCourses() {
   const [loader, setLoader] = useState(false);
 
   //ADD STAFF
+  const handleClickOpen = () => {
+    dispatch({
+      type: "setModal",
+      payload: {
+        openFormModal: true,
+      },
+    });
+  };
 
   let [CreateCourses, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
 
@@ -312,6 +346,7 @@ export function UseCourses() {
       //,
       ctaUpdateHandler,
       formInputs,
+      handleClickOpen
     },
   ];
 }

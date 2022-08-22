@@ -50,8 +50,14 @@ let reducer = (state, action) => {
             console.log("User Group edit data in state", action.payload);
             return {
                 ...state,
-                editUserGroupData: action.payload.editUserGroupData,
-                editUserGroupDataBool:action.payload.editUserGroupDataBool
+                editUserGroupData: action.payload
+            }
+        }
+        case "setEditUserGroupDataBool": {
+            console.log("User Group edit data Bool in state", action.payload);
+            return {
+                ...state,
+                editUserGroupDataBool: action.payload
             }
         }
         case "setEditId": {

@@ -119,6 +119,11 @@ query Query {
   }
 }`
 
+export const CASHED_COURSES = gql`
+query cashedCourses {
+  courses @client
+}
+`
 
 export const GET_COURSES = gql`
 query Query{
@@ -252,3 +257,5 @@ query FindManyCourseBatches {
   }
 }
 `
+
+

@@ -60,6 +60,10 @@ export default function FormModal({
         openFormModal: false,
       },
     });
+    dispatch({
+      type: "setEditUserGroupDataBool",
+      payload: false
+    });
   };
 
   return (
@@ -77,7 +81,11 @@ export default function FormModal({
         }}
       >
         <DialogTitle>
-          Add
+        {state.modalUpdateFlag ? 
+          <p>Update</p>
+          :
+          <p>Add</p>
+        }
           <IconButton
             aria-label="close"
             onClick={handleCloseUpdate}

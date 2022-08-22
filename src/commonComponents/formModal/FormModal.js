@@ -92,9 +92,9 @@ export default function FormModal({
           </IconButton>
         </DialogTitle>
         <DialogContent dividers>
-          {/* <DialogContentText>
-            Please read carefully and fill all required fields.
-          </DialogContentText> */}
+              {/* <DialogContentText>
+                Please read carefully and fill all required fields.
+              </DialogContentText> */}
           <Box>
             {formInputs.map((item, index) => {
               const test = state.editData;

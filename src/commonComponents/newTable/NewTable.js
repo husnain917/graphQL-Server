@@ -460,7 +460,7 @@ export default function NewTable({
 
   //open edit form modal
   const ctaEditButtonHandler = (data) => {
-    console.log("id in editButtonHandler", data.id);
+    // console.log("id in editButtonHandler", data.id);
     const test = state.editData;
     dispatch({
       type: "setEditId",

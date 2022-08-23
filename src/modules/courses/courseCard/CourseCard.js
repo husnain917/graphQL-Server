@@ -7,60 +7,90 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import { Close, Delete, Edit } from '@mui/icons-material'
-import { IconButton, Tooltip } from '@mui/material';
+import { Divider, IconButton, Paper, Toolbar, Tooltip } from '@mui/material';
 import useCourseCard from './useCourseCard';
 import FormModal from '../../../commonComponents/formModal/FormModal';
-import Logo from "../../../assets/logo192.ico"
+import moment from 'moment';
 
-export default function CourseCard( {data, formInputs, ctaFormHandler, ctaUpdateHandler}) {
+
+
+export default function CourseCard({ data, title, formInputs, ctaFormHandler, ctaUpdateHandler, handleClickOpen }) {
     const { ctaEditButtonHandler } = useCourseCard()
-    console.log("data in coureCard", data);
     return (
-        <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-            {
-                data?.map((item) => {
-                    return (
-                        <Card sx={{ width: 250, margin: 2 }}>
-                            <CardMedia
-                                component="img"
-                                height="140"
-                                image={Logo}
-                                alt="Course_pic"
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h6" component="div">
-                                    {item.courseName}
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {item.courseDesc}
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {item.coursePrice}
-                                </Typography>
-                            </CardContent>
-                            <CardActions>
-                                <Tooltip title="Update" sx={{marginTop: -3}}>
-                                    <IconButton
-                                        aria-label="update"
-                                        size="small"
-                                        onClick={() =>
-                                            ctaEditButtonHandler(item)
-                                        }
-                                    >
-                                        <Edit sx={{ color: '#96A0B5' }} />
-                                    </IconButton>
-                                </Tooltip>
-                            </CardActions>
-                        </Card>
+        <Paper sx={{ borderRadius: 10, }}>
+            <Toolbar
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                }}
+            >
+                <h2>{title}</h2>
+                <div>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleClickOpen}
+                    >
+                        +Add
+                    </Button>
+                </div>
+            </Toolbar>
+            <Divider />
+            <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around", alignItems: "center", padding: 2, marginTop: 3 }}>
+                {
+                    data?.map((item) => {
+                        return (
+                            <Card sx={{ width: 270, margin: 2, borderRadius: 2, boxShadow: "rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px" }}>
+                                <CardMedia
+                                    component="img"
+                                    height="140"
+                                    image="https://robohash.org/random.png"
+                                    alt="Course_pic"
+                                />
+                                <CardContent >
+                                    <Box sx={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                    }}>
+                                        <Typography gutterBottom variant="h6" component="div">
+                                            {item.courseName}
+                                        </Typography>
+                                        <Typography variant='caption'>{moment(item.createdAt).fromNow()}</Typography>
+                                    </Box>
 
-                    );
-                })
-            }
+                                    <Typography variant="body2" color="text.secondary">
+                                        {item.courseDesc}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        {item.coursePrice}
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <Tooltip title="Update" sx={{ marginTop: -3 }}>
+                                        <IconButton
+                                            aria-label="update"
+                                            size="small"
+                                            onClick={() =>
+                                                ctaEditButtonHandler(item)
+                                            }
+                                        >
+                                            <Edit sx={{ color: '#96A0B5' }} />
+                                        </IconButton>
+                                    </Tooltip>
+                                </CardActions>
+                            </Card>
+
+                        );
+                    })
+                }
+            </Box>
             <FormModal
                 formInputs={formInputs}
                 ctaFormHandler={ctaFormHandler}
                 ctaUpdateHandler={ctaUpdateHandler}
             />
-        </Box>
+        </Paper>
     )
 }

@@ -110,9 +110,9 @@ export const SidebarStyle = {
   })),
   //Image
   Image: styled('img')(({ theme }) => ({
-    height: 70,
-    width: 140,
-    // marginTop: 4
+    height: 40,
+    width: 170,
+    marginTop: 4
   })),
   //Childrens Render
   Main: styled('main')(({ theme }) => ({

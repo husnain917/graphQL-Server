@@ -16,6 +16,7 @@ import {
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
 import { GET_COURSES, GET_FAQS } from "../../../lib/queries/AllQueries";
+import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
 
 
 
@@ -99,24 +100,27 @@ export function UseFaqs() {
 
           },
           onCompleted(data, cache) {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //   type: "setModal",
+            //   payload: {
+            //     modalUpdateFlag: false,
+            //     openFormModal: false,
+            //   },
+            // });
+            openModal(false)
+            updateFlag(false)
             ToastSuccess('FAQ Added')
           },
           refetchQueries: [{ query: GET_FAQS }],
         });
       } catch (error) {
-        dispatch({
-          type: "setModal",
-          payload: {
-            openFormModal: false,
-          },
-        });
+        // dispatch({
+        //   type: "setModal",
+        //   payload: {
+        //     openFormModal: false,
+        //   },
+        // });
+        openModal(false)
         setLoader(false);
         ToastError(error.message);
 
@@ -191,13 +195,15 @@ export function UseFaqs() {
 
           },
           onCompleted() {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //   type: "setModal",
+            //   payload: {
+            //     modalUpdateFlag: false,
+            //     openFormModal: false,
+            //   },
+            // });
+            openModal(false)
+            updateFlag(false)
             ToastSuccess('FAQ Updated')
           },
           refetchQueries: [{ query: GET_FAQS }],

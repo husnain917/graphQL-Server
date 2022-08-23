@@ -28,7 +28,11 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import AddIcon from "@mui/icons-material/Add";
 import UseWindowDimensions from "../../customHooks/UseWindowDimensions";
 import moment from "moment";
+import { makeVar } from '@apollo/client';
 import { useLocation } from "react-router-dom";
+
+  export const openModal= makeVar(false);
+  export const updateFlag= makeVar(false)
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -368,6 +372,7 @@ export default function NewTable({
   disableAddIcon,
   onDateChange,
 }) {
+  
   const { state, dispatch } = React.useContext(AppContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [filterValue, setFilterValue] = React.useState("");
@@ -381,6 +386,7 @@ export default function NewTable({
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  
 
   const handleAnchorClose = (value) => {
     setAnchorEl(null);
@@ -450,12 +456,13 @@ export default function NewTable({
   };
 
   const handleClickOpen = () => {
-    dispatch({
-      type: "setModal",
-      payload: {
-        openFormModal: true,
-      },
-    });
+    // dispatch({
+    //   type: "setModal",
+    //   payload: {
+    //     openFormModal: true,
+    //   },
+    // });
+    openModal(true)
   };
 
   //open edit form modal
@@ -466,13 +473,15 @@ export default function NewTable({
       type: "setEditId",
       payload: data.id,
     });
-    dispatch({
-      type: "setModal",
-      payload: {
-        openFormModal: true,
-        modalUpdateFlag: true,
-      },
-    });
+    // dispatch({
+    //   type: "setModal",
+    //   payload: {
+    //     openFormModal: true,
+    //     modalUpdateFlag: true,
+    //   },
+    // });
+    openModal(true)
+    updateFlag(true)
     formInputs.map((item) => {
       test[item.name] = data[item.name];
     });
@@ -490,10 +499,10 @@ export default function NewTable({
         type: "setEditUserGroupData",
         payload: data
       });
-      dispatch({
-        type: "setEditUserGroupDataBool",
-        payload: true
-      });
+      // dispatch({
+      //   type: "setEditUserGroupDataBool",
+      //   payload: true
+      // });
     }
     console.log(state.editId);
   };

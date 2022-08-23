@@ -15,6 +15,7 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSE_BATCH, GET_COURSE_CATEGORY } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
+import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
 
 
 
@@ -78,25 +79,28 @@ export default function UseCourseCategory() {
 
                     },
                     onCompleted(data, cache) {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Category Added')
 
                     },
                     refetchQueries: [{ query: GET_COURSE_CATEGORY }],
                 });
             } catch (error) {
-                dispatch({
-                    type: "setModal",
-                    payload: {
-                        openFormModal: false,
-                    },
-                });
+                // dispatch({
+                //     type: "setModal",
+                //     payload: {
+                //         openFormModal: false,
+                //     },
+                // });
+                openModal(false)
                 ToastError(error.message);
 
             }
@@ -162,13 +166,15 @@ export default function UseCourseCategory() {
 
                     },
                     onCompleted() {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Course Updated')
                     },
                     refetchQueries: [{ query: GET_COURSE_BATCH }],

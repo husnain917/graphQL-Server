@@ -64,6 +64,8 @@ export const LoginStyle = {
     Image: styled('img')(() => ({
         marginTop: 40,
         marginBottom: 40,
+        width: 200,
+        height: 130
     })),
 
     ForgotContainer: styled('div')(() => ({

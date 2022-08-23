@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useReactiveVar } from "@apollo/client";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -29,6 +30,7 @@ import CloudinaryFunction from "../../constants/CloudinaryFunction";
 import { blue } from "@mui/material/colors";
 import UserGroupModal from "../userGroupModal/UserGroupModal";
 import UserGroup from "../../modules/settings/userGroup/UserGroup";
+import { openModal, updateFlag } from "../newTable/NewTable";
 
 
 export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date, }) {
@@ -38,6 +40,8 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [contact, setContact] = useState('')
+  var openFormModal = useReactiveVar(openModal)
+  var modalUpdateFlag = useReactiveVar(updateFlag)
   const handleChangePhone = (phone) => {
     setContact(phone)
     dispatch({
@@ -47,28 +51,30 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
     console.log(contact)
   }
   const handleCloseUpdate = () => {
-    dispatch({
-      type: "setModal",
-      payload: {
-        modalUpdateFlag: false,
-        openFormModal: false,
-      },
-    });
-    dispatch({
-      type: "setEditUserGroupDataBool",
-      payload: false
-    });
+    // dispatch({
+    //   type: "setModal",
+    //   payload: {
+    //     modalUpdateFlag: false,
+    //     openFormModal: false,
+    //   },
+    // });
+    openModal(false)
+    updateFlag(false)
+    // dispatch({
+    //   type: "setEditUserGroupDataBool",
+    //   payload: false
+    // });
   };
 
   return (
     <div>
-      <Dialog open={state.openFormModal} onClose={handleCloseUpdate} fullScreen={fullScreen} fullWidth={true} BackdropProps={{ style: { backgroundColor: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(8px)' } }}>
+      <Dialog open={openFormModal} onClose={handleCloseUpdate} fullScreen={fullScreen} fullWidth={true} BackdropProps={{ style: { backgroundColor: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(8px)' } }}>
         <DialogTitle>
-        {state.modalUpdateFlag ? 
-          <p>Update</p>
-          :
-          <p>Add</p>
-        }
+          {modalUpdateFlag ? 
+            <p>Update</p>
+            :
+            <p>Add</p>
+          }
           <IconButton
             aria-label="close"
             onClick={handleCloseUpdate}
@@ -96,7 +102,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                       (
                         <FM.TextInput
                           InputLabelProps={{ shrink: true }}
-                          InputProps={{ disableUnderline: true, inputProps: {min: 0} }}
+                          InputProps={{ disableUnderline: true, inputProps: { min: 0 } }}
                           margin="dense"
                           id="file"
                           label={item.label}
@@ -106,7 +112,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                           fullWidth
                           variant="standard"
                           value={
-                            item.name === "file" ? "" : state.editData[item.name]
+                            modalUpdateFlag ? item.name === "file" ? "" : state.editData[item.name] : null
                           }
                           onChange={(e) => {
                             test[item.name] = item.name === "file"
@@ -446,7 +452,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                       fullWidth
                                                       variant="standard"
                                                       value={
-                                                        item.name === "file" ? "" : state.editData[item.name]
+                                                        modalUpdateFlag ? item.name === "file" ? "" : state.editData[item.name] : null
                                                       }
                                                       onChange={(e) => {
                                                         test[item.name] = item.name === "file"
@@ -473,7 +479,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
             <FM.FormButton style={{ color: '#1E86FF' }} variant="outlined" onClick={handleCloseUpdate}>
               Cancel
             </FM.FormButton>
-            {state.modalUpdateFlag ? (
+            {modalUpdateFlag ? (
               <FM.FormButton style={{ backgroundColor: '#1E86FF' }} type="submit" variant="outlined" onClick={ctaUpdateHandler}>
                 Update
               </FM.FormButton>

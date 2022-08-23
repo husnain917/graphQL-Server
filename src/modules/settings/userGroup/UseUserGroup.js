@@ -5,6 +5,7 @@ import { AppContext } from "../../../State";
 import { ToastError, ToastSuccess, ToastWarning } from '../../../commonComponents/commonFunction/CommonFunction';
 import { GET_USER_GROUP } from '../../../lib/queries/AllQueries';
 import { useNavigate } from 'react-router-dom';
+import { openModal, updateFlag } from '../../../commonComponents/newTable/NewTable';
 
 export function UseUserGroup() {
 
@@ -80,6 +81,8 @@ export function UseUserGroup() {
                     refetchQueries: [{ query: GET_USER_GROUP }],
 
                     onCompleted(data, cache) {
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('UserGroup Added')
                         setuserGroupRole('')
                         setUserName('')
@@ -88,12 +91,13 @@ export function UseUserGroup() {
                 });
                 console.log(state.editData);
             } catch (error) {
-                dispatch({
-                    type: "setModal",
-                    payload: {
-                        openFormModal: false,
-                    },
-                });
+                // dispatch({
+                //     type: "setModal",
+                //     payload: {
+                //         openFormModal: false,
+                //     },
+                // });
+                openModal(false)
                 // ToastError(error.message);
                 console.log(error.message)
 
@@ -168,6 +172,8 @@ export function UseUserGroup() {
                     refetchQueries: [{ query: GET_USER_GROUP }],
 
                     onCompleted(data, cache) {
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('UserGroup Updated')
                         setuserGroupRole('')
                         setUserName('')
@@ -176,12 +182,13 @@ export function UseUserGroup() {
                 });
                 // console.log(state.editData);
             } catch (error) {
-                dispatch({
-                    type: "setModal",
-                    payload: {
-                        openFormModal: false,
-                    },
-                });
+                // dispatch({
+                //     type: "setModal",
+                //     payload: {
+                //         openFormModal: false,
+                //     },
+                // });
+                openModal(false)
                 // ToastError(error.message);
                 console.log(error.message)
 

@@ -3,6 +3,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import { FooterStyle } from "./FooterStyle";
 
 export default function Footer() {
   return (
@@ -17,9 +18,9 @@ export default function Footer() {
             padding: 2
           }}
         >
-          <Typography variant="caption" color="initial">
+          <FooterStyle.footerContent variant="caption" color="initial" >
             COPYRIGHT © 2021 TECHLOSET. ALL RIGHTS RESERVED.
-          </Typography>
+          </FooterStyle.footerContent>
         </Box>
       </Container>
     </Paper>

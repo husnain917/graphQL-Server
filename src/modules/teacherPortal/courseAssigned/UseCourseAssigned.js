@@ -16,6 +16,7 @@ import { GET_COURSES } from "../../../lib/queries/AllQueries";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
+import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
 
 
 
@@ -163,25 +164,28 @@ export default function UseCourseAssigned() {
                         },
                     },
                     onCompleted(data, cache) {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Course Added')
 
                     },
                     refetchQueries: [{ query: GET_COURSES }],
                 });
             } catch (error) {
-                dispatch({
-                    type: "setModal",
-                    payload: {
-                        openFormModal: false,
-                    },
-                });
+                // dispatch({
+                //     type: "setModal",
+                //     payload: {
+                //         openFormModal: false,
+                //     },
+                // });
+                openModal(false)
                 setLoader(false);
                 ToastError(error.message);
 
@@ -271,13 +275,15 @@ export default function UseCourseAssigned() {
                         }
                     },
                     onCompleted() {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Course Updated')
                     },
                     refetchQueries: [{ query: GET_COURSES }],

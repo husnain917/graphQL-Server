@@ -17,6 +17,7 @@ import { GET_QUIZ, GET_USERS, GET_USER_GROUP } from "../../../lib/queries/AllQue
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
 import FiltredData from "../../../constants/FiltredRoles";
+import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
 
 
 
@@ -105,25 +106,28 @@ export function UseTabsPermissions() {
 
                     },
                     onCompleted(data, cache) {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Quiz Added')
 
                     },
                     refetchQueries: [{ query: GET_QUIZ }],
                 });
             } catch (error) {
-                dispatch({
-                    type: "setModal",
-                    payload: {
-                        openFormModal: false,
-                    },
-                });
+                // dispatch({
+                //     type: "setModal",
+                //     payload: {
+                //         openFormModal: false,
+                //     },
+                // });
+                openModal(false)
                 ToastError(error.message);
 
             }
@@ -194,13 +198,15 @@ export function UseTabsPermissions() {
 
                     },
                     onCompleted() {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Quiz Updated')
                     },
                     refetchQueries: [{ query: GET_QUIZ }],

@@ -19,6 +19,7 @@ import { AppContext } from "../../State";
 
 
 import FiltredRoles from '../../constants/FiltredRoles'
+import { openModal, updateFlag } from "../../commonComponents/newTable/NewTable";
 
 
 
@@ -148,24 +149,27 @@ export function UseSuccessStory() {
 
           },
           onCompleted(data, cache) {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //   type: "setModal",
+            //   payload: {
+            //     modalUpdateFlag: false,
+            //     openFormModal: false,
+            //   },
+            // });
+            openModal(false)
+            updateFlag(false)
             ToastSuccess('Story Added')
           },
           refetchQueries: [{ query: GET_SUCCESS_STORIES }],
         });
       } catch (error) {
-        dispatch({
-          type: "setModal",
-          payload: {
-            openFormModal: false,
-          },
-        });
+        // dispatch({
+        //   type: "setModal",
+        //   payload: {
+        //     openFormModal: false,
+        //   },
+        // });
+        openModal(false)
         setLoader(false);
         ToastError(error.message);
 
@@ -268,13 +272,15 @@ export function UseSuccessStory() {
             },
           },
           onCompleted() {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //   type: "setModal",
+            //   payload: {
+            //     modalUpdateFlag: false,
+            //     openFormModal: false,
+            //   },
+            // });
+            openModal(false)
+            updateFlag(false)
             ToastSuccess('Story Updated')
           },
           refetchQueries: [{ query: GET_SUCCESS_STORIES }],

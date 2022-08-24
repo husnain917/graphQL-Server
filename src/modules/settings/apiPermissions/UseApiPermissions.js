@@ -16,6 +16,7 @@ import {
 import {
     AppContext
 } from "../../../State";
+import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
 
 
 
@@ -89,14 +90,14 @@ export function UseApiPermissions() {
             id: 2,
             title: 'Stest',
             route: "Stest@gmail.com",
-            createdAt:  new Date(),
+            createdAt: new Date(),
             UpdatedAt: "--/--/--"
         },
         {
             id: 3,
             title: 'Stest',
             route: "Stest@gmail.com",
-            createdAt:  new Date(),
+            createdAt: new Date(),
             UpdatedAt: "--/--/--"
         },
     ];
@@ -177,20 +178,23 @@ export function UseApiPermissions() {
                         }
 
                     },
-                    refetchQueries: [{ query: GET_USERS }],
+                    
 
                     onCompleted() {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
 
 
                         ToastSuccess('Staff Added')
                     },
+                    refetchQueries: [{ query: GET_USERS }],
                     // update(cache, { data: { addItems } }) {
                     //   const { tados } = cache.readQuery({
                     //     query: GET_STAFF
@@ -220,12 +224,13 @@ export function UseApiPermissions() {
                 // });
                 // console.log('sami', queryResult);
             } catch (error) {
-                dispatch({
-                    type: "setModal",
-                    payload: {
-                        openFormModal: false,
-                    },
-                });
+                // dispatch({
+                //     type: "setModal",
+                //     payload: {
+                //         openFormModal: false,
+                //     },
+                // });
+                openModal(false)
                 ToastError(error.message);
 
             }
@@ -328,13 +333,15 @@ export function UseApiPermissions() {
                     },
                     refetchQueries: [{ query: GET_USERS }],
                     onCompleted() {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Staff Updated')
 
                     },

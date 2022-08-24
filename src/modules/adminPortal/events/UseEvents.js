@@ -13,6 +13,7 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_EVENTS } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
+import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
 
 
 
@@ -103,7 +104,7 @@ export function UseEvents() {
         else if (!state.editData?.speakerId) {
             ToastWarning('Speaker Id required')
         }
-        else if (state.imageUrl==="") {
+        else if (state.imageUrl === "") {
             ToastWarning('Image required')
             console.log(state.imageUrl);
         }
@@ -130,25 +131,28 @@ export function UseEvents() {
                         }
                     },
                     onCompleted(data, cache) {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Event Added')
                     },
                     refetchQueries: [{ query: GET_EVENTS }],
                 });
                 console.log(state.editData);
             } catch (error) {
-                dispatch({
-                    type: "setModal",
-                    payload: {
-                        openFormModal: false,
-                    },
-                });
+                // dispatch({
+                //     type: "setModal",
+                //     payload: {
+                //         openFormModal: false,
+                //     },
+                // });
+                openModal(false)
                 setLoader(false);
                 ToastError(error.message);
 
@@ -236,13 +240,15 @@ export function UseEvents() {
 
                     },
                     onCompleted() {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Event Updated')
                     },
                     refetchQueries: [{ query: GET_EVENTS }],

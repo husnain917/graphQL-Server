@@ -13,6 +13,8 @@ import { UseUserGroup } from "./UseUserGroup";
 import { AppContext } from "../../../State";
 import { data } from '../../../constants/userGroupPagesList'
 import CommonTableLoader from "../../../commonComponents/commonTableLoader/CommonTableLoader";
+import { updateFlag } from "../../../commonComponents/newTable/NewTable";
+import { useReactiveVar } from "@apollo/client";
 export default function UserGroup() {
   const [
     {
@@ -32,6 +34,7 @@ export default function UserGroup() {
 
   const { state, dispatch } = useContext(AppContext);
   const [stateArray, setStateArray] = useState(data);
+  const userGroupUpdateFlag= useReactiveVar(updateFlag)
 
   return (
     <TabsStyle.MainDiv>
@@ -42,10 +45,12 @@ export default function UserGroup() {
             <TabsStyle.MyInput
               User Group Name
               placeholder="Enter Name"
-              defaultValue={state.editUserGroupDataBool ? state.editUserGroupData.name : userName}
+              // defaultValue={state.editUserGroupDataBool ? state.editUserGroupData.name : userName}
+              defaultValue={userGroupUpdateFlag ? state.editUserGroupData.name : userName}
               // onChange={(e) => setUserName(e.target.value)}
               onChange={((e) => {
-                state.editUserGroupDataBool ?
+                // state.editUserGroupDataBool ?
+                userGroupUpdateFlag ?
                   state.editUserGroupData.name = e.target.value
                   :
                   setUserName(e.target.value)
@@ -59,7 +64,8 @@ export default function UserGroup() {
             <TabsStyle.MyInput
 
               placeholder="Enter Role"
-              defaultValue={state.editUserGroupDataBool ? state.editUserGroupData.role : userGroupRole}
+              // defaultValue={state.editUserGroupDataBool ? state.editUserGroupData.role : userGroupRole}
+              defaultValue={userGroupUpdateFlag ? state.editUserGroupData.role : userGroupRole}
               // onChange={(e) => setuserGroupRole(e.target.value.toUpperCase())}
               onChange={((e) => {
                 state.editUserGroupDataBool ?
@@ -448,7 +454,8 @@ export default function UserGroup() {
           </Table>
         </TableContainer>
         <br />
-        {state.editUserGroupDataBool ?
+        {/* {state.editUserGroupDataBool ? */}
+        {userGroupUpdateFlag ?
           <PButton title="Update User Group" ctaHandler={ctaUpdateHandler} />
           :
           <PButton title="Add User Group" ctaHandler={ctaHandler} />

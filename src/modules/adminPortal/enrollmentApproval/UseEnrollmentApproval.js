@@ -13,6 +13,7 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSES, GET_ENROLLMENT } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
+import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
 
 
 
@@ -134,13 +135,15 @@ export function UseEnrollmentApproval() {
             },
           },
           onCompleted(data, cache) {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //   type: "setModal",
+            //   payload: {
+            //     modalUpdateFlag: false,
+            //     openFormModal: false,
+            //   },
+            // });
+            openModal(false)
+            updateFlag(false)
             ToastSuccess('Enrollment Added')
 
           },
@@ -148,12 +151,13 @@ export function UseEnrollmentApproval() {
         });
         console.log(state.editData);
       } catch (error) {
-        dispatch({
-          type: "setModal",
-          payload: {
-            openFormModal: false,
-          },
-        });
+        // dispatch({
+        //   type: "setModal",
+        //   payload: {
+        //     openFormModal: false,
+        //   },
+        // });
+        openModal(false)
         setLoader(false);
         ToastError(error.message);
 
@@ -247,13 +251,15 @@ export function UseEnrollmentApproval() {
             },
           },
           onCompleted() {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //   type: "setModal",
+            //   payload: {
+            //     modalUpdateFlag: false,
+            //     openFormModal: false,
+            //   },
+            // });
+            openModal(false)
+            updateFlag(false)
             ToastSuccess('Enrollment Updated')
           },
           refetchQueries: [{ query: GET_ENROLLMENT }],

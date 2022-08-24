@@ -32,11 +32,8 @@ export default function Course() {
     return <CommonTableLoader />;
   }
   return (
-
-        <>
-        <PButton title="Add Course" sx={{marginLeft: 2}} ctaHandler={handleClickOpen}/>
-        <CourseCard data={refacteredData} formInputs={formInputs} ctaFormHandler={ctaFormHandler} ctaUpdateHandler={ctaUpdateHandler}/>
-        </>
+        <CourseCard title="Courses" data={refacteredData} formInputs={formInputs} handleClickOpen={handleClickOpen} ctaFormHandler={ctaFormHandler} ctaUpdateHandler={ctaUpdateHandler}/>
+      
 
     // {/*
     //   <>

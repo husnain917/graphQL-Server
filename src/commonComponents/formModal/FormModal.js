@@ -31,6 +31,8 @@ import { blue } from "@mui/material/colors";
 import UserGroupModal from "../userGroupModal/UserGroupModal";
 import UserGroup from "../../modules/settings/userGroup/UserGroup";
 import { openModal, updateFlag } from "../newTable/NewTable";
+import { GET_EDIT_DATA } from "../../lib/queries/AllQueries";
+import { useQuery } from "@apollo/client"
 
 
 export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date, }) {
@@ -42,6 +44,10 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
   const [contact, setContact] = useState('')
   var openFormModal = useReactiveVar(openModal)
   var modalUpdateFlag = useReactiveVar(updateFlag)
+  let {
+    data,
+    loading: GET_LOADING,
+  } = useQuery(GET_EDIT_DATA);
   const handleChangePhone = (phone) => {
     setContact(phone)
     dispatch({
@@ -113,6 +119,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                           variant="standard"
                           value={
                             modalUpdateFlag ? item.name === "file" ? "" : state.editData[item.name] : null
+                            // modalUpdateFlag ? item.name === "file" ? "" : data?.editData[item.name] : null
                           }
                           onChange={(e) => {
                             test[item.name] = item.name === "file"
@@ -453,6 +460,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                       variant="standard"
                                                       value={
                                                         modalUpdateFlag ? item.name === "file" ? "" : state.editData[item.name] : null
+                                                        // modalUpdateFlag ? item.name === "file" ? "" : data?.editData[item.name] : null
                                                       }
                                                       onChange={(e) => {
                                                         test[item.name] = item.name === "file"

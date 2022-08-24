@@ -78,7 +78,7 @@ export function UseUserGroup() {
                         }
 
                     },
-                    refetchQueries: [{ query: GET_USER_GROUP }],
+                    
 
                     onCompleted(data, cache) {
                         openModal(false)
@@ -88,6 +88,7 @@ export function UseUserGroup() {
                         setUserName('')
 
                     },
+                    refetchQueries: [{ query: GET_USER_GROUP }],
                 });
                 console.log(state.editData);
             } catch (error) {
@@ -169,7 +170,7 @@ export function UseUserGroup() {
                         }
 
                     },
-                    refetchQueries: [{ query: GET_USER_GROUP }],
+                    
 
                     onCompleted(data, cache) {
                         openModal(false)
@@ -179,6 +180,7 @@ export function UseUserGroup() {
                         setUserName('')
 
                     },
+                    refetchQueries: [{ query: GET_USER_GROUP }],
                 });
                 // console.log(state.editData);
             } catch (error) {

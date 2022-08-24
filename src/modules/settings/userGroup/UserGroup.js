@@ -46,10 +46,9 @@ export default function UserGroup() {
               User Group Name
               placeholder="Enter Name"
               // defaultValue={state.editUserGroupDataBool ? state.editUserGroupData.name : userName}
-              defaultValue={userGroupUpdateFlag ? state.editUserGroupData.name : userName}
+              defaultValue={userGroupUpdateFlag ? state?.editUserGroupData?.name : userName}
               // onChange={(e) => setUserName(e.target.value)}
               onChange={((e) => {
-                // state.editUserGroupDataBool ?
                 userGroupUpdateFlag ?
                   state.editUserGroupData.name = e.target.value
                   :
@@ -65,10 +64,10 @@ export default function UserGroup() {
 
               placeholder="Enter Role"
               // defaultValue={state.editUserGroupDataBool ? state.editUserGroupData.role : userGroupRole}
-              defaultValue={userGroupUpdateFlag ? state.editUserGroupData.role : userGroupRole}
+              defaultValue={userGroupUpdateFlag ? state?.editUserGroupData?.role : userGroupRole}
               // onChange={(e) => setuserGroupRole(e.target.value.toUpperCase())}
               onChange={((e) => {
-                state.editUserGroupDataBool ?
+                userGroupUpdateFlag ?
                   state.editUserGroupData.role = e.target.value.toUpperCase()
                   :
                   setuserGroupRole(e.target.value.toUpperCase())

@@ -70,6 +70,10 @@ query FindManyOrganizations {
   }
 }
 `
+export const GET_EDIT_DATA = gql`
+  query getEditData{
+    editData @client
+  }`
 
 export const GET_USERS = gql`
 query Query {

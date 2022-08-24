@@ -30,6 +30,7 @@ import UseWindowDimensions from "../../customHooks/UseWindowDimensions";
 import moment from "moment";
 import { makeVar } from '@apollo/client';
 import { useLocation } from "react-router-dom";
+import { editData } from "../../lib/reactivities/reactiveVarables";
 
   export const openModal= makeVar(false);
   export const updateFlag= makeVar(false)
@@ -489,6 +490,7 @@ export default function NewTable({
       type: "setEditData",
       payload: test,
     });
+    editData(test)
     if (
       data.role === "ORGANIZATIONKEY" ||
       data.role === "ADMIN" ||
@@ -805,11 +807,11 @@ export default function NewTable({
                                     <NewTableStyle.Role
                                       variant="outlined"
                                       bgColor={
-                                        AvatarBgColor(exactKey[0].toLowerCase())
+                                        AvatarBgColor(exactKey[0]?.toLowerCase())
                                           ?.bg
                                       }
                                       Color={
-                                        AvatarBgColor(exactKey[0].toLowerCase())
+                                        AvatarBgColor(exactKey[0]?.toLowerCase())
                                           ?.color
                                       }
                                     >
@@ -819,15 +821,15 @@ export default function NewTable({
                                     <NewTableStyle.AvatarBox>
                                       <NewTableStyle.Avatar
                                         bgColor={
-                                          AvatarBgColor(exactKey[0].toLowerCase())
+                                          AvatarBgColor(exactKey[0]?.toLowerCase())
                                             ?.bg
                                         }
                                         Color={
-                                          AvatarBgColor(exactKey[0].toLowerCase())
+                                          AvatarBgColor(exactKey[0]?.toLowerCase())
                                             ?.color
                                         }
                                       >
-                                        {exactKey[0].toUpperCase()}
+                                        {exactKey[0]?.toUpperCase()}
                                       </NewTableStyle.Avatar>
                                       <NewTableStyle.EmailNameContainer>
                                         <NewTableStyle.PTagName>

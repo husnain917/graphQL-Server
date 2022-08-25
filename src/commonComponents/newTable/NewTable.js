@@ -739,7 +739,7 @@ export default function NewTable({
                           />
                         </TableCell>
                         {printedKeys?.map((subitem, subIndex) => {
-                          const exactKey = row[subitem?.key];
+                          const exactKey = [subitem?.key];
                           return (
                             <>
                               <TableCell
@@ -826,7 +826,7 @@ export default function NewTable({
                                           AvatarBgColor(exactKey[0].toLowerCase())
                                             ?.color
                                         }
-                                      >
+                                      > 
                                         {exactKey[0].toUpperCase()}
                                       </NewTableStyle.Avatar>
                                       <NewTableStyle.EmailNameContainer>

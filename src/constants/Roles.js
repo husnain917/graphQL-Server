@@ -129,7 +129,7 @@ export var MENU_ITEMS = [
     },
     {
         text: 'User Groups',
-        path: '/user-group',
+        path: '/user-groups',
         icon: <GroupIcon />,
     },
     {

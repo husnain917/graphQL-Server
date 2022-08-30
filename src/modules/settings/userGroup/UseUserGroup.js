@@ -5,7 +5,7 @@ import { AppContext } from "../../../State";
 import { ToastError, ToastSuccess, ToastWarning } from '../../../commonComponents/commonFunction/CommonFunction';
 import { GET_USER_GROUP } from '../../../lib/queries/AllQueries';
 import { useNavigate } from 'react-router-dom';
-import { openModal, updateFlag } from '../../../commonComponents/newTable/NewTable';
+import { openModal, updateFlag } from '../../../lib/reactivities/reactiveVarables';
 
 export function UseUserGroup() {
 
@@ -60,7 +60,7 @@ export function UseUserGroup() {
         else if (userGroupRole === '') {
             ToastWarning('User Group Role Required')
         }
-        else if(userGroupRole === "ORGANIZATIONKEY" || userGroupRole === "ADMIN" || userGroupRole === "TEACHER" || userGroupRole === "STUDENT" ){
+        else if (userGroupRole === "ORGANIZATIONKEY" || userGroupRole === "ADMIN" || userGroupRole === "TEACHER" || userGroupRole === "STUDENT") {
 
             try {
                 await CreateUserGroup({
@@ -78,7 +78,7 @@ export function UseUserGroup() {
                         }
 
                     },
-                    
+
 
                     onCompleted(data, cache) {
                         openModal(false)
@@ -103,7 +103,7 @@ export function UseUserGroup() {
                 console.log(error.message)
 
             }
-        }else{
+        } else {
             ToastError("Spelling mistake in role")
         }
     };
@@ -112,7 +112,7 @@ export function UseUserGroup() {
 
 
     // const refacteredData = [];
-   
+
     // data?.userGroups?.map((item) => {
     //     refacteredData.push({
     //         id: item.id,
@@ -143,8 +143,8 @@ export function UseUserGroup() {
         else if (state?.editUserGroupData?.role === '') {
             ToastWarning('User Group Role Required')
         }
-        else if(state?.editUserGroupData?.role === "ORGANIZATIONKEY" || state?.editUserGroupData?.role === "ADMIN" || state?.editUserGroupData?.role === "TEACHER" || state?.editUserGroupData?.role === "STUDENT"){
-            
+        else if (state?.editUserGroupData?.role === "ORGANIZATIONKEY" || state?.editUserGroupData?.role === "ADMIN" || state?.editUserGroupData?.role === "TEACHER" || state?.editUserGroupData?.role === "STUDENT") {
+
             try {
                 await UpdateUserGroup({
                     variables: {
@@ -170,7 +170,7 @@ export function UseUserGroup() {
                         }
 
                     },
-                    
+
 
                     onCompleted(data, cache) {
                         openModal(false)
@@ -195,7 +195,7 @@ export function UseUserGroup() {
                 console.log(error.message)
 
             }
-        }else{
+        } else {
             ToastError("Spelling mistake in role")
         }
     };

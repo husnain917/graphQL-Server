@@ -13,7 +13,8 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSES, GET_ENROLLMENT } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
-import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+
 
 
 
@@ -25,7 +26,7 @@ export function UseEnrollmentApproval() {
   const [{ student }] = FiltredRoles()
   const { data: Courses } = useQuery(GET_COURSES)
   const formInputs = [
- 
+
     {
       label: "Payment Method",
       name: "paymentMethod",

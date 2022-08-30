@@ -16,8 +16,7 @@ import { GET_COURSES } from "../../../lib/queries/AllQueries";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
-
-import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
 
 
 

@@ -15,7 +15,7 @@ import { GET_SPEAKERS } from "../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { AppContext } from "../../State";
-import { openModal, updateFlag } from "../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag } from "../../lib/reactivities/reactiveVarables";
 
 
 

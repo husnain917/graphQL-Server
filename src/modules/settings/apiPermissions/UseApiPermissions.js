@@ -16,7 +16,7 @@ import {
 import {
     AppContext
 } from "../../../State";
-import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -178,7 +178,7 @@ export function UseApiPermissions() {
                         }
 
                     },
-                    
+
 
                     onCompleted() {
                         // dispatch({

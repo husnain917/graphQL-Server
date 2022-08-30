@@ -19,7 +19,8 @@ import { AppContext } from "../../State";
 
 
 import FiltredRoles from '../../constants/FiltredRoles'
-import { openModal, updateFlag } from "../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag } from "../../lib/reactivities/reactiveVarables";
+
 
 
 

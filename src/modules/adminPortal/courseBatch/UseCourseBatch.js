@@ -13,7 +13,8 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSE_BATCH } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
-import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+
 
 
 
@@ -180,7 +181,7 @@ export default function UseCourseBatch() {
                         where: {
                             id: state.editId
                         },
-                        
+
                         data: {
                             name: {
                                 set: state?.editData?.name,

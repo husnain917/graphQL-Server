@@ -16,7 +16,8 @@ import {
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
 import { GET_COURSES, GET_FAQS } from "../../../lib/queries/AllQueries";
-import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+
 
 
 

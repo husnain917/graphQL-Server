@@ -12,6 +12,7 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_CONTACT_US } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
+import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -116,26 +117,30 @@ export function UseContactUs() {
                             reply: state.editData?.reply,
                         },
                     },
-                    refetchQueries: [{ query: GET_CONTACT_US }],
+
                     onCompleted(data, cache) {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Contact Added')
                     },
+                    refetchQueries: [{ query: GET_CONTACT_US }],
 
                 });
             } catch (error) {
-                dispatch({
-                    type: "setModal",
-                    payload: {
-                        openFormModal: false,
-                    },
-                });
+                // dispatch({
+                //     type: "setModal",
+                //     payload: {
+                //         openFormModal: false,
+                //     },
+                // });
+                openModal(false)
                 ToastError("Contact not added");
 
             }

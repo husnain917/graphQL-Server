@@ -17,7 +17,8 @@ import { GET_QUIZ, GET_USERS, GET_USER_GROUP } from "../../../lib/queries/AllQue
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
 import FiltredData from "../../../constants/FiltredRoles";
-import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+
 
 
 
@@ -53,7 +54,7 @@ export function UseTabsPermissions() {
 
     let { data, loading: GET_LOADING, error } = useQuery(GET_USER_GROUP);
 
-  
+
 
     console.log("error", error);
     const refacteredData = [];
@@ -63,9 +64,9 @@ export function UseTabsPermissions() {
             name: item.userName,
             permissions: item?.tabsPermission?.navigationResults?.map((val) => {
                 return val.pages
-              
+
             }),
-            tabs:item.tabsPermission,
+            tabs: item.tabsPermission,
             updateAt: item.updateAt,
             createdAt: item.createdAt,
             role: item.userGroupRole,

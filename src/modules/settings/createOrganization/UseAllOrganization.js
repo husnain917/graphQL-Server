@@ -15,6 +15,8 @@ import {
 import { GET_ALL_ORGANIZATION } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
 import FiltredData from "../../../constants/FiltredRoles";
+import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+
 
 export function UseAllOrganization() {
   let { data, loading: GET_LOADING } = useQuery(GET_ALL_ORGANIZATION);
@@ -133,13 +135,15 @@ export function UseAllOrganization() {
           },
           refetchQueries: [{ query: GET_ALL_ORGANIZATION }],
           onCompleted() {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //   type: "setModal",
+            //   payload: {
+            //     modalUpdateFlag: false,
+            //     openFormModal: false,
+            //   },
+            // });
+            openModal(false)
+            updateFlag(false)
             ToastSuccess("Staff Added");
             console.log(state.user.id);
           },
@@ -281,15 +285,17 @@ export function UseAllOrganization() {
               },
             },
           },
-          refetchQueries: [{ query:  GET_ALL_ORGANIZATION }],
+          refetchQueries: [{ query: GET_ALL_ORGANIZATION }],
           onCompleted() {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //   type: "setModal",
+            //   payload: {
+            //     modalUpdateFlag: false,
+            //     openFormModal: false,
+            //   },
+            // });
+            openModal(false)
+            updateFlag(false)
             ToastSuccess(" Updated");
           },
         });

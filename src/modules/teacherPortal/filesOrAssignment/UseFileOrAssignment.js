@@ -13,7 +13,8 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSES } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
-import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+
 
 
 
@@ -76,24 +77,24 @@ export default function UseFileOrAssignment() {
             name: 'JS PROGRAMS',
             courseBatches: '2',
             courseBatchesId: '21213333',
-            courses:'Flutter',
-            courseId:'23232'
+            courses: 'Flutter',
+            courseId: '23232'
         },
         {
             id: '92739237293729793',
             name: 'JS PROGRAMS',
             courseBatches: '2',
             courseBatchesId: '21213333',
-            courses:'Flutter',
-            courseId:'23232'
+            courses: 'Flutter',
+            courseId: '23232'
         },
         {
             id: '92739237293729793',
             name: 'JS PROGRAMS',
             courseBatches: '2',
             courseBatchesId: '21213333',
-            courses:'Flutter',
-            courseId:'23232'
+            courses: 'Flutter',
+            courseId: '23232'
         },
     ];
     //   data?.findManyCourses?.map((item) => {

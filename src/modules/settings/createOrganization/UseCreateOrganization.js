@@ -6,6 +6,8 @@ import { AppContext } from '../../../State';
 import { ToastError, ToastSuccess, ToastWarning } from '../../../commonComponents/commonFunction/CommonFunction';
 import { GET_USER_GROUP } from '../../../lib/queries/AllQueries';
 import FiltredData from '../../../constants/FiltredRoles';
+import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+
 
 export function UseCreateOrganization() {
     let [CreateOrganization, { loading: ADD_LOADING }] = useMutation(ADD_ORGANIZATION);
@@ -49,13 +51,15 @@ export function UseCreateOrganization() {
                         },
                     },
                     onCompleted(data, cache) {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Organization Added')
                         setName('')
                         setEmail('')

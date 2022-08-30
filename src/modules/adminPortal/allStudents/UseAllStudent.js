@@ -15,6 +15,7 @@ import {
   GET_USERS
 } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
+import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -26,7 +27,7 @@ export function UseAllStudents() {
   const [{ userGroupStudent }] = FiltredData()
   var regexp = new RegExp('^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$');
   // var regexp = new RegExp('');
- 
+
   const formInputs = [
     {
       label: "Name",
@@ -152,20 +153,22 @@ export function UseAllStudents() {
             }
 
           },
-          refetchQueries: [{ query: GET_USERS }],
-
           onCompleted() {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //   type: "setModal",
+            //   payload: {
+            //     modalUpdateFlag: false,
+            //     openFormModal: false,
+            //   },
+            // });
+            openModal(false)
+            updateFlag(false)
 
 
             ToastSuccess('Student Added')
           },
+          refetchQueries: [{ query: GET_USERS }],
+
           // update(cache, { data: { addItems } }) {
           //   const { tados } = cache.readQuery({
           //     query: GET_STAFF
@@ -195,12 +198,13 @@ export function UseAllStudents() {
         // });
         // console.log('sami', queryResult);
       } catch (error) {
-        dispatch({
-          type: "setModal",
-          payload: {
-            openFormModal: false,
-          },
-        });
+        // dispatch({
+        //   type: "setModal",
+        //   payload: {
+        //     openFormModal: false,
+        //   },
+        // });
+        openModal(false)
         ToastError(error.message);
 
       }
@@ -270,7 +274,7 @@ export function UseAllStudents() {
                   id: state.editData?.userGroup
                 }
               }
-              
+
             },
           },
           onCompleted() {

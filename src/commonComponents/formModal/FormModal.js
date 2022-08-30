@@ -30,7 +30,7 @@ import CloudinaryFunction from "../../constants/CloudinaryFunction";
 import { blue } from "@mui/material/colors";
 import UserGroupModal from "../userGroupModal/UserGroupModal";
 import UserGroup from "../../modules/settings/userGroup/UserGroup";
-import { openModal, updateFlag } from "../newTable/NewTable";
+import { openModal, updateFlag } from "../../lib/reactivities/reactiveVarables";
 import { GET_EDIT_DATA } from "../../lib/queries/AllQueries";
 import { useQuery } from "@apollo/client"
 
@@ -76,7 +76,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
     <div>
       <Dialog open={openFormModal} onClose={handleCloseUpdate} fullScreen={fullScreen} fullWidth={true} BackdropProps={{ style: { backgroundColor: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(8px)' } }}>
         <DialogTitle>
-          {modalUpdateFlag ? 
+          {modalUpdateFlag ?
             <p>Update</p>
             :
             <p>Add</p>

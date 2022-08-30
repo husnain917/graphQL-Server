@@ -1,7 +1,7 @@
 import React from 'react'
 import { UseCourses } from '../useCourses';
 import { AppContext } from '../../../State';
-import { openModal, updateFlag } from '../../../commonComponents/newTable/NewTable';
+import { openModal, updateFlag } from '../../../lib/reactivities/reactiveVarables';
 
 export default function useCourseCard() {
     const [{ formInputs }] = UseCourses()

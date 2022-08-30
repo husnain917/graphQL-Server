@@ -19,7 +19,7 @@ import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../State";
 import FiltredData from "../../constants/FiltredRoles";
 import { useApolloClient } from "@apollo/client";
-import { openModal, updateFlag } from "../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag } from "../../lib/reactivities/reactiveVarables";
 
 
 
@@ -47,7 +47,7 @@ export function UseCourses() {
   // console.log("Courses data in cache", findManyCourses);
   const formInputs = [
     {
-      label: "Name", 
+      label: "Name",
       name: "courseName",
       type: "text",
     },
@@ -90,37 +90,37 @@ export function UseCourses() {
 
 
 
-//GET Courses
+  //GET Courses
 
-//   let { data } = useQuery(CASHED_COURSES);
-//   let [ getCourses, {data: networkCourses, loading: GET_LOADING, error} ] = useLazyQuery(GET_COURSES);
-//   useEffect(() => {
-//     getCourses();
-//   }, []);
+  //   let { data } = useQuery(CASHED_COURSES);
+  //   let [ getCourses, {data: networkCourses, loading: GET_LOADING, error} ] = useLazyQuery(GET_COURSES);
+  //   useEffect(() => {
+  //     getCourses();
+  //   }, []);
 
-//   useEffect(()=> {
-//     client.writeQuery({
-//       query: CASHED_COURSES,
-//       data: {
-//         courses: networkCourses
-//       }
-//     })
-//   }, [networkCourses])
-//   console.log("coursesData", data);
-//   const refacteredData = [];
-//   data?.courses?.findManyCourses?.map((item) => {
-//     refacteredData.push({
-//       id: item.id,
-//       courseName: item.courseName,
-//       courseDesc: item.courseDesc,
-//       courseIntro: item.courseIntro,
-//       courseStatus: item.courseStatus,
-//       coursePrice: item.coursePrice,
-//       instructorId: item.instructorId,
-//       courseCategoryId: item.courseCategoryId,
-//     });
-//   });
-//   console.log("refacteredData", refacteredData);
+  //   useEffect(()=> {
+  //     client.writeQuery({
+  //       query: CASHED_COURSES,
+  //       data: {
+  //         courses: networkCourses
+  //       }
+  //     })
+  //   }, [networkCourses])
+  //   console.log("coursesData", data);
+  //   const refacteredData = [];
+  //   data?.courses?.findManyCourses?.map((item) => {
+  //     refacteredData.push({
+  //       id: item.id,
+  //       courseName: item.courseName,
+  //       courseDesc: item.courseDesc,
+  //       courseIntro: item.courseIntro,
+  //       courseStatus: item.courseStatus,
+  //       coursePrice: item.coursePrice,
+  //       instructorId: item.instructorId,
+  //       courseCategoryId: item.courseCategoryId,
+  //     });
+  //   });
+  //   console.log("refacteredData", refacteredData);
 
   let { data, loading: GET_LOADING, error } = useQuery(GET_COURSES);
   console.log("error", error);

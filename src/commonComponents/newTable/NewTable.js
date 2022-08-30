@@ -82,7 +82,7 @@ function EnhancedTableHead(props) {
           return (
             <TableCell
               key={headCell?.id}
-              align={"left"}
+              align={headCell.id === "action" ?"center":"left"}
               padding={"none"}
               sortDirection={orderBy === headCell?.id ? order : false}
             >
@@ -91,8 +91,8 @@ function EnhancedTableHead(props) {
                 direction={orderBy === headCell?.id ? order : "asc"}
                 onClick={createSortHandler(headCell?.id)}
                 sx={{
-                  marginLeft:
-                    headCell.id === "action" ? headCell.marginLeft : 0,
+                  // marginLeft:
+                  //   headCell.id === "action" ? headCell.marginLeft : 0,
                   fontSize: 12,
                   color: "#6D7D93",
                 }}

@@ -82,7 +82,7 @@ function EnhancedTableHead(props) {
           return (
             <TableCell
               key={headCell?.id}
-              align={headCell.id === "action" ?"center":"left"}
+              align={headCell.id === "action" || headCell.id === "actions" ?"center":"left"}
               padding={"none"}
               sortDirection={orderBy === headCell?.id ? order : false}
             >

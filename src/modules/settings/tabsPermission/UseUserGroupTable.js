@@ -53,25 +53,25 @@ export function UseTabsPermissions() {
 
     let { data, loading: GET_LOADING, error } = useQuery(GET_USER_GROUP);
 
-  
+    // console.log('data')
 
     console.log("error", error);
     const refacteredData = [];
-    // data?.userGroups?.map((item) => {
-    //     refacteredData.push({
-    //         id: item.id,
-    //         name: item.userName,
-    //         permissions: item?.tabsPermission?.navigationResults?.map((val) => {
-    //             return val.pages
+    data?.userGroups?.map((item) => {
+        refacteredData.push({
+            id: item.id,
+            name: item.userName,
+            permissions: item?.tabsPermission?.navigationResults?.map((val) => {
+                return val.pages
               
-    //         }),
-    //         tabs:item.tabsPermission,
-    //         updateAt: item.updateAt,
-    //         createdAt: item.createdAt,
-    //         role: item.userGroupRole,
-    //     });
-    // })
-    // console.log("refacteredData", refacteredData);
+            }),
+            tabs:item.tabsPermission,
+            updateAt: item.updateAt,
+            createdAt: item.createdAt,
+            role: item.userGroupRole,
+        });
+    })
+    console.log("refacteredData", refacteredData);
 
 
     //ADD STAFF

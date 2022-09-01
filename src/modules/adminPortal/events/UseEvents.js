@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { useState, useContext } from "react";
 import {
     ToastError,
@@ -13,7 +13,7 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_EVENTS } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
-import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, imageUrl } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -23,6 +23,10 @@ import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarable
 
 
 export function UseEvents() {
+    const useEditData = useReactiveVar(editData)
+    const useImageUrl = useReactiveVar(imageUrl)
+    // console.log("Edit Data in events", useEditData);
+    // console.log("Image Url in events", useImageUrl);
     const [date, setDate] = useState(new Date());
     const [{ speakerList }] = FiltredData()
     const onDateChange = (newDate) => {
@@ -96,20 +100,25 @@ export function UseEvents() {
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.eventName) {
+        // if (!state.editData?.eventName) {
+        if (!useEditData?.eventName) {
             ToastWarning('Event name required')
         }
-        else if (!state.editData?.eventDesc) {
+        // else if (!state.editData?.eventDesc) {
+        else if (!useEditData?.eventDesc) {
             ToastWarning('Event description  required')
         }
-        else if (!state.editData?.speakerId) {
+        // else if (!state.editData?.speakerId) {
+        else if (!useEditData?.speakerId) {
             ToastWarning('Speaker Id required')
         }
-        else if (state.imageUrl === "") {
+        // else if (state.imageUrl === "") {
+        else if (useImageUrl === "") {
             ToastWarning('Image required')
             console.log(state.imageUrl);
         }
-        else if (!state.editData?.eventStatus) {
+        // else if (!state.editData?.eventStatus) {
+        else if (!useEditData?.eventStatus) {
             ToastWarning('Status required')
         }
         else {
@@ -119,16 +128,21 @@ export function UseEvents() {
                     variables: {
 
                         data: {
-                            eventName: state.editData?.eventName,
-                            eventDesc: state.editData?.eventDesc,
-                            eventImage: state?.imageUrl,
+                            // eventName: state.editData?.eventName,
+                            eventName: useEditData?.eventName,
+                            // eventDesc: state.editData?.eventDesc,
+                            eventDesc: useEditData?.eventDesc,
+                            // eventImage: state?.imageUrl,
+                            eventImage: useImageUrl,
                             eventDate: new Date(),
                             Speaker: {
                                 connect: {
-                                    id: state.editData?.speakerId
+                                    // id: state.editData?.speakerId
+                                    id: useEditData?.speakerId
                                 }
                             },
-                            eventStatus: state.editData?.eventStatus
+                            // eventStatus: state.editData?.eventStatus
+                            eventStatus: useEditData?.eventStatus
                         }
                     },
                     onCompleted(data, cache) {
@@ -141,11 +155,12 @@ export function UseEvents() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
+                        imageUrl("")
                         ToastSuccess('Event Added')
                     },
                     refetchQueries: [{ query: GET_EVENTS }],
                 });
-                console.log(state.editData);
             } catch (error) {
                 // dispatch({
                 //     type: "setModal",
@@ -196,16 +211,19 @@ export function UseEvents() {
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.eventName) {
+        // if (!state.editData?.eventName) {
+        if (!useEditData?.eventName) {
             ToastWarning('Event name required')
         }
-        else if (!state.editData?.eventDesc) {
+        // else if (!state.editData?.eventDesc) {
+        else if (!useEditData?.eventDesc) {
             ToastWarning('Event description  required')
         }
-        else if (!state.editData?.speakerId) {
+        // else if (!state.editData?.speakerId) {
+        else if (!useEditData?.speakerId) {
             ToastWarning('Speaker Id required')
         }
-        else if (!state.editData?.eventStatus) {
+        else if (!useEditData?.eventStatus) {
             ToastWarning('Status required')
         }
         else {
@@ -218,24 +236,29 @@ export function UseEvents() {
 
                         data: {
                             eventName: {
-                                set: state.editData?.eventName
+                                // set: state.editData?.eventName
+                                set: useEditData?.eventName
                             },
                             eventDesc: {
-                                set: state.editData?.eventDesc
+                                // set: state.editData?.eventDesc
+                                set: useEditData?.eventDesc
                             },
                             eventImage: {
-                                set: state?.imageUrl,
+                                // set: state?.imageUrl,
+                                set: useImageUrl,
                             },
                             eventDate: {
                                 set: new Date()
                             },
                             Speaker: {
                                 connect: {
-                                    id: state.editData?.speakerId
+                                    // id: state.editData?.speakerId
+                                    id: useEditData?.speakerId
                                 }
                             },
                             eventStatus: {
-                                set: state.editData?.eventStatus
+                                // set: state.editData?.eventStatus
+                                set: useEditData?.eventStatus
                             }
                         }
 
@@ -250,6 +273,8 @@ export function UseEvents() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
+                        imageUrl("")
                         ToastSuccess('Event Updated')
                     },
                     refetchQueries: [{ query: GET_EVENTS }],

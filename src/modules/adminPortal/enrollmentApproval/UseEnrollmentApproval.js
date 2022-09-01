@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import React, { useState, useContext } from "react";
 import {
   ToastError,
@@ -13,7 +13,7 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSES, GET_ENROLLMENT } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
-import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -23,6 +23,8 @@ import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarable
 
 
 export function UseEnrollmentApproval() {
+  const useEditData = useReactiveVar(editData)
+  console.log("Edit data in approval", useEditData);
   const [{ student }] = FiltredRoles()
   const { data: Courses } = useQuery(GET_COURSES)
   const formInputs = [
@@ -95,22 +97,28 @@ export function UseEnrollmentApproval() {
   const ctaFormHandler = async (event) => {
 
     event.preventDefault();
-    if (!state.editData?.userId) {
+    // if (!state.editData?.userId) {
+    if (!useEditData?.userId) {
       ToastWarning('User Id required')
     }
-    else if (!state.editData?.coursesId) {
+    // else if (!state.editData?.coursesId) {
+    else if (!useEditData?.coursesId) {
       ToastWarning('Courses Id required')
     }
-    else if (!state.editData?.paymentMethod) {
+    // else if (!state.editData?.paymentMethod) {
+    else if (!useEditData?.paymentMethod) {
       ToastWarning('Payment method required')
     }
-    else if (!state.editData?.amount) {
+    // else if (!state.editData?.amount) {
+    else if (!useEditData?.amount) {
       ToastWarning('Amount required')
     }
-    else if (!state.editData?.transactionId) {
+    // else if (!state.editData?.transactionId) {
+    else if (!useEditData?.transactionId) {
       ToastWarning('Transaction Id required')
     }
-    else if (!state.editData?.status) {
+    // else if (!state.editData?.status) {
+    else if (!useEditData?.status) {
       ToastWarning('Status required')
     }
     else {
@@ -120,18 +128,24 @@ export function UseEnrollmentApproval() {
             data: {
               user: {
                 connect: {
-                  id: state.editData?.userId
+                  // id: state.editData?.userId
+                  id: useEditData?.userId
                 }
               },
               courses: {
                 connect: {
-                  id: state.editData?.coursesId
+                  // id: state.editData?.coursesId
+                  id: useEditData?.coursesId
                 }
               },
-              status: state.editData?.status,
-              paymentMethod: state.editData?.paymentMethod,
-              amount: state.editData?.amount,
-              transactionId: state.editData?.transactionId,
+              // status: state.editData?.status,
+              status: useEditData?.status,
+              // paymentMethod: state.editData?.paymentMethod,
+              paymentMethod: useEditData?.paymentMethod,
+              // amount: state.editData?.amount,
+              amount: useEditData?.amount,
+              // transactionId: state.editData?.transactionId,
+              transactionId: useEditData?.transactionId,
 
             },
           },
@@ -145,12 +159,13 @@ export function UseEnrollmentApproval() {
             // });
             openModal(false)
             updateFlag(false)
+            editData({})
             ToastSuccess('Enrollment Added')
 
           },
           refetchQueries: [{ query: GET_ENROLLMENT }],
         });
-        console.log(state.editData);
+        // console.log("Edit data in state", state.editData);
       } catch (error) {
         // dispatch({
         //   type: "setModal",
@@ -201,22 +216,28 @@ export function UseEnrollmentApproval() {
 
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
-    if (!state.editData?.userId) {
+    // if (!state.editData?.userId) {
+    if (!useEditData?.userId) {
       ToastWarning('user required')
     }
-    else if (!state.editData?.coursesId) {
+    // else if (!state.editData?.coursesId) {
+    else if (!useEditData?.coursesId) {
       ToastWarning('courses required')
     }
-    else if (!state.editData?.paymentMethod) {
+    // else if (!state.editData?.paymentMethod) {
+    else if (!useEditData?.paymentMethod) {
       ToastWarning('Payment method required')
     }
-    else if (!state.editData?.amount) {
+    // else if (!state.editData?.amount) {
+    else if (!useEditData?.amount) {
       ToastWarning('Amount required')
     }
-    else if (!state.editData?.transactionId) {
+    // else if (!state.editData?.transactionId) {
+    else if (!useEditData?.transactionId) {
       ToastWarning('Transaction Id required')
     }
-    else if (!state.editData?.status) {
+    // else if (!state.editData?.status) {
+    else if (!useEditData?.status) {
       ToastWarning('Status required')
     }
     else {
@@ -229,25 +250,31 @@ export function UseEnrollmentApproval() {
             data: {
               user: {
                 connect: {
-                  id: state.editData?.userId
+                  // id: state.editData?.userId
+                  id: useEditData?.userId
                 }
               },
               courses: {
                 connect: {
-                  id: state.editData?.coursesId
+                  // id: state.editData?.coursesId
+                  id: useEditData?.coursesId
                 }
               },
               status: {
-                set: state.editData?.status,
+                // set: state.editData?.status,
+                set: useEditData?.status,
               },
               paymentMethod: {
-                set: state.editData?.paymentMethod,
+                // set: state.editData?.paymentMethod,
+                set: useEditData?.paymentMethod,
               },
               amount: {
-                set: state.editData?.amount,
+                // set: state.editData?.amount,
+                set: useEditData?.amount,
               },
               transactionId: {
-                set: state.editData?.transactionId,
+                // set: state.editData?.transactionId,
+                set: useEditData?.transactionId,
               }
             },
           },
@@ -261,6 +288,7 @@ export function UseEnrollmentApproval() {
             // });
             openModal(false)
             updateFlag(false)
+            editData({})
             ToastSuccess('Enrollment Updated')
           },
           refetchQueries: [{ query: GET_ENROLLMENT }],

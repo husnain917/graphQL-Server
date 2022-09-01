@@ -28,7 +28,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import AddIcon from "@mui/icons-material/Add";
 import UseWindowDimensions from "../../customHooks/UseWindowDimensions";
 import moment from "moment";
-import { makeVar } from '@apollo/client';
+import { makeVar, useReactiveVar } from '@apollo/client';
 import { useLocation } from "react-router-dom";
 import { editData } from "../../lib/reactivities/reactiveVarables";
 import { openModal, updateFlag } from "../../lib/reactivities/reactiveVarables"
@@ -388,6 +388,7 @@ export default function NewTable({
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const useEditData = useReactiveVar(editData)
 
 
     const handleAnchorClose = (value) => {
@@ -470,7 +471,8 @@ export default function NewTable({
     //open edit form modal
     const ctaEditButtonHandler = (data) => {
         console.log("id in editButtonHandler", data.id);
-        const test = state.editData;
+        // const test = state.editData;
+        const test = useEditData;
         dispatch({
             type: "setEditId",
             payload: data.id,
@@ -487,11 +489,11 @@ export default function NewTable({
         formInputs.map((item) => {
             test[item.name] = data[item.name];
         });
+        editData(test)
         dispatch({
             type: "setEditData",
             payload: test,
         });
-        editData(test)
         if (
             data.role === "ORGANIZATIONKEY" ||
             data.role === "ADMIN" ||

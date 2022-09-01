@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { useState, useContext } from "react";
 import {
     ToastError,
@@ -15,7 +15,7 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSE_BATCH, GET_COURSE_CATEGORY } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
-import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -25,6 +25,8 @@ import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarable
 
 
 export default function UseCourseCategory() {
+    const useEditData = useReactiveVar(editData)
+    // console.log("Edit data in approval", useEditData);
     const [{ COURSE_DATA }] = FiltredData()
     const formInputs = [
         {
@@ -66,16 +68,22 @@ export default function UseCourseCategory() {
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.categoryName) {
-            ToastWarning('categoryName required')
+        // if (!state.editData?.categoryName) {
+        if (!useEditData?.categoryName) {
+            ToastWarning('category Name required')
+            // } else if (!state.editData?.imageUrl) {
+        } else if (!useEditData?.imageUrl) {
+            ToastWarning('Image URL required')
         }
         else {
             try {
                 await CreateCategory({
                     variables: {
                         data: {
-                            categoryName: state?.editData.categoryName,
-                            imageUrl: state?.editData.imageUrl
+                            // categoryName: state?.editData.categoryName,
+                            categoryName: useEditData.categoryName,
+                            // imageUrl: state?.editData.imageUrl
+                            imageUrl: useEditData.imageUrl
                         }
 
                     },
@@ -89,6 +97,7 @@ export default function UseCourseCategory() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
                         ToastSuccess('Category Added')
 
                     },
@@ -143,8 +152,11 @@ export default function UseCourseCategory() {
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.categoryName) {
+        // if (!state.editData?.categoryName) {
+        if (!useEditData?.categoryName) {
             ToastWarning('categoryName required')
+        } else if (!useEditData?.imageUrl) {
+            ToastWarning('Image URL required')
         }
         else {
             try {
@@ -153,10 +165,12 @@ export default function UseCourseCategory() {
 
                         data: {
                             categoryName: {
-                                set: state?.editData.categoryName
+                                // set: state?.editData.categoryName
+                                set: useEditData?.categoryName
                             },
                             imageUrl: {
-                                set: state?.editData.imageUrl
+                                // set: state?.editData.imageUrl
+                                set: useEditData?.imageUrl
                             }
                         },
                         where: {
@@ -176,6 +190,7 @@ export default function UseCourseCategory() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
                         ToastSuccess('Course Updated')
                     },
                     refetchQueries: [{ query: GET_COURSE_BATCH }],

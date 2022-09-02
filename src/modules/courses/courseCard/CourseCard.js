@@ -11,6 +11,7 @@ import { Divider, IconButton, Paper, Toolbar, Tooltip } from '@mui/material';
 import useCourseCard from './useCourseCard';
 import FormModal from '../../../commonComponents/formModal/FormModal';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 
 
@@ -42,31 +43,36 @@ export default function CourseCard({ data, title, formInputs, ctaFormHandler, ct
                     data?.map((item) => {
                         return (
                             <Card sx={{ width: 270, margin: 2, borderRadius: 2, boxShadow: "rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px" }}>
-                                <CardMedia
-                                    component="img"
-                                    height="140"
-                                    image="https://robohash.org/random.png"
-                                    alt="Course_pic"
-                                />
-                                <CardContent >
-                                    <Box sx={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                    }}>
-                                        <Typography gutterBottom variant="h6" component="div">
-                                            {item.courseName}
-                                        </Typography>
-                                        <Typography variant='caption'>{moment(item.createdAt).fromNow()}</Typography>
-                                    </Box>
+                                <Link to='/course-detail' state={item} style={{
+                                    textDecoration: 'none',
+                                    color: 'inherit'
+                                }}>
+                                    <CardMedia
+                                        component="img"
+                                        height="140"
+                                        image="https://robohash.org/random.png"
+                                        alt="Course_pic"
+                                    />
+                                    <CardContent >
+                                        <Box sx={{
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                        }}>
+                                            <Typography gutterBottom variant="h6" component="div">
+                                                {item.courseName}
+                                            </Typography>
+                                            <Typography variant='caption'>{moment(item.createdAt).fromNow()}</Typography>
+                                        </Box>
 
-                                    <Typography variant="body2" color="text.secondary">
-                                        {item.courseDesc}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {item.coursePrice}
-                                    </Typography>
-                                </CardContent>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {item.courseDesc}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {item.coursePrice}
+                                        </Typography>
+                                    </CardContent>
+                                </Link>
                                 <CardActions>
                                     <Tooltip title="Update" sx={{ marginTop: -3 }}>
                                         <IconButton
@@ -81,7 +87,6 @@ export default function CourseCard({ data, title, formInputs, ctaFormHandler, ct
                                     </Tooltip>
                                 </CardActions>
                             </Card>
-
                         );
                     })
                 }
@@ -91,6 +96,6 @@ export default function CourseCard({ data, title, formInputs, ctaFormHandler, ct
                 ctaFormHandler={ctaFormHandler}
                 ctaUpdateHandler={ctaUpdateHandler}
             />
-        </Paper>
+        </Paper >
     )
 }

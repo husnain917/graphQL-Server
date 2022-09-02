@@ -37,12 +37,12 @@ import CreateOrganization from '../modules/settings/createOrganization/CreateOrg
 import CourseCategory from '../modules/adminPortal/courseCategory/CourseCategory';
 import ViewAllUserGroup from '../modules/settings/userGroup/ViewAllUserGroup';
 import Footer from '../commonComponents/footer/Footer';
+import CourseDetail from '../modules/courseDetail/CourseDetail';
 
 export default function Navigation() {
     let location = useLocation();
     let navigate = useNavigate()
     const { state, dispatch } = useContext(AppContext);
-
 
     React.useEffect(() => {
         if (!state.authState) {
@@ -268,6 +268,12 @@ export default function Navigation() {
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <CreateOrganization />
+                            </PrivateRouting>}
+                    />
+                    <Route path='/course-detail'
+                        element={
+                            <PrivateRouting isAllowed={state.authState}>
+                                <CourseDetail />
                             </PrivateRouting>}
                     />
                   

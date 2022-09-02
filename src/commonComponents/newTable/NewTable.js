@@ -28,7 +28,11 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import AddIcon from "@mui/icons-material/Add";
 import UseWindowDimensions from "../../customHooks/UseWindowDimensions";
 import moment from "moment";
+import { makeVar } from "@apollo/client";
 import { useLocation } from "react-router-dom";
+
+export const openModal = makeVar(false);
+export const updateFlag = makeVar(false);
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -81,6 +85,7 @@ function EnhancedTableHead(props) {
               align={"left"}
               padding={"none"}
               sortDirection={orderBy === headCell?.id ? order : false}
+              style={{ paddingLeft: 10 }}
             >
               <TableSortLabel
                 active={orderBy === headCell?.id}
@@ -450,12 +455,13 @@ export default function NewTable({
   };
 
   const handleClickOpen = () => {
-    dispatch({
-      type: "setModal",
-      payload: {
-        openFormModal: true,
-      },
-    });
+    // dispatch({
+    //   type: "setModal",
+    //   payload: {
+    //     openFormModal: true,
+    //   },
+    // });
+    openModal(true);
   };
 
   //open edit form modal
@@ -466,13 +472,15 @@ export default function NewTable({
       type: "setEditId",
       payload: data.id,
     });
-    dispatch({
-      type: "setModal",
-      payload: {
-        openFormModal: true,
-        modalUpdateFlag: true,
-      },
-    });
+    // dispatch({
+    //   type: "setModal",
+    //   payload: {
+    //     openFormModal: true,
+    //     modalUpdateFlag: true,
+    //   },
+    // });
+    openModal(true);
+    updateFlag(true);
     formInputs.map((item) => {
       test[item.name] = data[item.name];
     });
@@ -490,6 +498,10 @@ export default function NewTable({
         type: "setEditUserGroupData",
         payload: data,
       });
+      // dispatch({
+      //   type: "setEditUserGroupDataBool",
+      //   payload: true
+      // });
     }
     console.log(state.editId);
   };
@@ -735,6 +747,7 @@ export default function NewTable({
                                 scope="row"
                                 padding="none"
                                 key={subIndex + 10}
+                                style={{ padding: 10 }}
                               >
                                 {subitem?.type === "modalQuestion" ? (
                                   <CommonModal question={row} />

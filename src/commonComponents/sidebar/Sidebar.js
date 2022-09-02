@@ -7,7 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ListItem from '@mui/material/ListItem';
 import { UseDrawer } from './UseSidebar';
 import { SidebarStyle } from './SidebarStyle';
-import logo from '../../assets/logo.png'
+import Logo from '../../assets/logo.png'
 import { Divider, Grid } from '@mui/material';
 import { Outlet, useLocation } from 'react-router-dom';
 import CommonProfileDropDown from '../commonProfileDropdown/CommonProfileDropDown';
@@ -38,6 +38,7 @@ function Sidebar(props) {
 
 
   const renderSidebarItems = (items, index) => {
+
     return (
       <>
         <SidebarStyle.DomLink to={items.collapse === "true" ? location?.pathname : items.moduleUrl} key={index}>
@@ -47,15 +48,15 @@ function Sidebar(props) {
             button
             onClick={
               dropDownOpen === 0 ?
-              items.collapse === "true" ?
-                () => setDropDownOpen(items.module_id)
-                : ''
-              : dropDownOpen == items.module_id ?
-                () => setDropDownOpen(0)
-                : ""
-                  || items.collapse === "true" ? () => setDropDownOpen(items.module_id) : ''}
-            // Active={location?.pathname === items?.moduleUrl}
-            // sx={location?.pathname === items?.moduleName ? { backgroundColor: '#E8F3FF', borderRadius: 2, color: "blue" } : null}
+                items.collapse === "true" ?
+                  () => setDropDownOpen(items.module_id)
+                  : ''
+                : dropDownOpen == items.module_id ?
+                  () => setDropDownOpen(0)
+                  : ""
+                    || items.collapse === "true" ? () => setDropDownOpen(items.module_id) : ''}
+          // Active={location?.pathname === items?.moduleUrl}
+          // sx={location?.pathname === items?.moduleName ? { backgroundColor: '#E8F3FF', borderRadius: 2, color: "blue" } : null}
 
           >
             {
@@ -69,7 +70,7 @@ function Sidebar(props) {
                 }
               })
             }
-            <SidebarStyle.ListItemTextTag primary={items?.moduleName} Active={location?.pathname === items?.moduleUrl || dropDownOpen === items.module_id}/>
+            <SidebarStyle.ListItemTextTag primary={items?.moduleName} Active={location?.pathname === items?.moduleUrl || dropDownOpen === items.module_id} />
             {
               items?.collapse === 'true' ?
                 dropDownOpen === items.module_id ?
@@ -149,7 +150,8 @@ function Sidebar(props) {
     <SidebarStyle.Box >
       <CssBaseline />
       <SidebarStyle.AppBar elevation={0} position="fixed" open={open}>
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Toolbar >
+          
           <SidebarStyle.IconButton
             aria-label="open drawer"
             onClick={handleDrawer}
@@ -158,8 +160,13 @@ function Sidebar(props) {
             <MenuIcon />
           </SidebarStyle.IconButton>
 
+          {/* Site Logo */}
+          <SidebarStyle.Image src={Logo} />
+
           <CommonProfileDropDown />
+
         </Toolbar>
+
       </SidebarStyle.AppBar>
 
       <SidebarStyle.WebDrawer
@@ -167,14 +174,15 @@ function Sidebar(props) {
         variant="permanent"
         container={container}
         open={open}
-        >
-        <SidebarStyle.DrawerHeader>
+      >
+        {/* <SidebarStyle.DrawerHeader>
           <SidebarStyle.Image src={logo} />
-        </SidebarStyle.DrawerHeader>
+        </SidebarStyle.DrawerHeader> */}
         <Divider />
+        <Toolbar />
         {drawer}
         <SidebarStyle.ButtonContainer>
-        <Link to='/login' className='link'><SidebarStyle.LogoutLink onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink></Link>
+          <Link to='/login' className='link'><SidebarStyle.LogoutLink onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink></Link>
         </SidebarStyle.ButtonContainer>
       </SidebarStyle.WebDrawer>
 
@@ -193,7 +201,7 @@ function Sidebar(props) {
           <Toolbar />
           {drawer}
           <SidebarStyle.ButtonContainer>
-          <Link to='/login' className='link'> <SidebarStyle.LogoutLink onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink></Link>
+            <Link to='/login' className='link'> <SidebarStyle.LogoutLink onClick={ctaLogoutHandler}>Logout</SidebarStyle.LogoutLink></Link>
           </SidebarStyle.ButtonContainer>
         </SidebarStyle.MobileDrawer>
       </Hidden>
@@ -202,7 +210,7 @@ function Sidebar(props) {
         <SidebarStyle.DrawerHeader />
         {/* {props.children} */}
         <Outlet />
-        <Footer/>
+        <Footer />
       </SidebarStyle.Main>
     </SidebarStyle.Box>
   );

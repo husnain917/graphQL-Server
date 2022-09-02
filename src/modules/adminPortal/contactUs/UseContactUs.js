@@ -5,6 +5,7 @@ import {
     ToastSuccess,
     ToastWarning,
 } from "../../../commonComponents/commonFunction/CommonFunction";
+import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
 import {
     ADD_CONTACT_US,
     // DELETE_CONTACT,
@@ -118,14 +119,17 @@ export function UseContactUs() {
                     },
                     refetchQueries: [{ query: GET_CONTACT_US }],
                     onCompleted(data, cache) {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Contact Added')
+
                     },
 
                 });
@@ -226,15 +230,28 @@ export function UseContactUs() {
                         }
                     },
                     refetchQueries: [{ query: GET_CONTACT_US }],
+                    // onCompleted() {
+                    //     dispatch({
+                    //         type: "setModal",
+                    //         payload: {
+                    //             modalUpdateFlag: false,
+                    //             openFormModal: false,
+                    //         },
+                    //     });
+                    //     ToastSuccess('Contact Updated')
+                    // },
                     onCompleted() {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Contact Updated')
+
                     },
 
                 })

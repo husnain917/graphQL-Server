@@ -47,8 +47,9 @@ export const SidebarStyle = {
     }),
     [theme.breakpoints.up('md')]: {
       ...(open && {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
+        // marginLeft: drawerWidth,
+        // width: `calc(100% - ${drawerWidth}px)`,
+        width: "100%",
         transition: theme.transitions.create(['width', 'margin'], {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.enteringScreen,
@@ -60,7 +61,7 @@ export const SidebarStyle = {
   WebDrawer: styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
       [theme.breakpoints.down('md')]: {
-        display: 'none'
+        display: 'none',
       },
       width: drawerWidth,
       flexShrink: 0,
@@ -77,11 +78,11 @@ export const SidebarStyle = {
         '& .MuiDrawer-paper': closedMixin(theme),
       }),
     }),
-
+    
   ),
   //Mobile Drawer
   MobileDrawer: styled(MuiDrawer)(({ theme, drawerWidth }) => ({
-    height: '100%',
+    // height: '100%',
     minHeight: '100vh',
     [theme.breakpoints.up('xs')]: {
       display: 'block',
@@ -109,8 +110,8 @@ export const SidebarStyle = {
   })),
   //Image
   Image: styled('img')(({ theme }) => ({
-    height: 50,
-    width: 180,
+    height: 40,
+    width: 170,
     marginTop: 4
   })),
   //Childrens Render

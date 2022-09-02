@@ -18,6 +18,10 @@ import { GET_ASSIGNMENT, GET_COURSES } from "../../../lib/queries/AllQueries";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
 import FiltredData from "../../../constants/FiltredRoles";
+import {
+  openModal,
+  updateFlag,
+} from "../../../commonComponents/newTable/NewTable";
 
 export default function UseAssignment() {
   const [{ courseBatch, COURSE_DATA }] = FiltredData();
@@ -45,7 +49,7 @@ export default function UseAssignment() {
   //GET STAFF
 
   let { data, loading: GET_LOADING, error } = useQuery(GET_ASSIGNMENT);
-  //   console.log("error", error);
+  console.log("error", error);
   const refacteredData = [];
   data?.courseAssignments?.map((item) => {
     refacteredData.push({
@@ -93,24 +97,27 @@ export default function UseAssignment() {
             },
           },
           onCompleted(data, cache) {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //     type: "setModal",
+            //     payload: {
+            //         modalUpdateFlag: false,
+            //         openFormModal: false,
+            //     },
+            // });
+            openModal(false);
+            updateFlag(false);
             ToastSuccess("Assignment Added");
           },
           refetchQueries: [{ query: GET_ASSIGNMENT }],
         });
       } catch (error) {
-        dispatch({
-          type: "setModal",
-          payload: {
-            openFormModal: false,
-          },
-        });
+        // dispatch({
+        //     type: "setModal",
+        //     payload: {
+        //         openFormModal: false,
+        //     },
+        // });
+        openModal(false);
         setLoader(false);
         ToastError(error.message);
       }
@@ -176,13 +183,14 @@ export default function UseAssignment() {
             },
           },
           onCompleted() {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //     type: "setModal",
+            //     payload: {
+            //         modalUpdateFlag: false,
+            //         openFormModal: false,
+            //     },
+            // });
+            openModal(false);
             ToastSuccess("Course Updated");
           },
           refetchQueries: [{ query: GET_ASSIGNMENT }],

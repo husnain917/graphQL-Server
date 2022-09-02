@@ -1,13 +1,13 @@
 import React from 'react'
 import { ForgotStyle } from './ForgotPasswordStyle';
-import logo from '../../../assets/loginPageLogo.png';
+import Logo from '../../../assets/logo.png';
 import UseForgotPassword from './UseForgotPassword';
 
 export default function ForgotPassword() {
     const [{ email, setEmail, emailTyping, handleTyping, handleRemoveTyping }] = UseForgotPassword()
     return (
         <ForgotStyle.MainPage>
-            <ForgotStyle.Image src={logo} />
+            <ForgotStyle.Image src={Logo} />
             <ForgotStyle.ForgotContainer>
                 <ForgotStyle.InlineHeaderContainer>
                     <ForgotStyle.LoginHeading>Recover Your Acccount</ForgotStyle.LoginHeading>

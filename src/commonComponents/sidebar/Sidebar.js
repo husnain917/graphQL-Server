@@ -7,8 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ListItem from '@mui/material/ListItem';
 import { UseDrawer } from './UseSidebar';
 import { SidebarStyle } from './SidebarStyle';
-// import logo from '../../assets/logo.png'
-import logo from '../../assets/logo2.png'
+import Logo from '../../assets/logo.png'
 import { Divider, Grid } from '@mui/material';
 import { Outlet, useLocation } from 'react-router-dom';
 import CommonProfileDropDown from '../commonProfileDropdown/CommonProfileDropDown';
@@ -39,6 +38,7 @@ function Sidebar(props) {
 
 
   const renderSidebarItems = (items, index) => {
+
     return (
       <>
         <SidebarStyle.DomLink to={items.collapse === "true" ? location?.pathname : items.moduleUrl} key={index}>
@@ -161,7 +161,7 @@ function Sidebar(props) {
           </SidebarStyle.IconButton>
 
           {/* Site Logo */}
-          <SidebarStyle.Image src={logo} />
+          <SidebarStyle.Image src={Logo} />
 
           <CommonProfileDropDown />
 

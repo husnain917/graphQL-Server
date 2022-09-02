@@ -9,7 +9,7 @@ export const UseDrawer = () => {
         setOpen(!open);
     };
     const ctaLogoutHandler = async () => {
-        await sessionStorage.clear()
+        await localStorage.clear()
         dispatch({
             type: "setAuthState",
             payload: {

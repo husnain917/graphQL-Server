@@ -1,6 +1,7 @@
 import React from 'react'
 import { UseCourses } from '../useCourses';
 import { AppContext } from '../../../State';
+import { openModal, updateFlag } from '../../../commonComponents/newTable/NewTable';
 
 export default function useCourseCard() {
     const [{ formInputs }] = UseCourses()
@@ -12,13 +13,15 @@ export default function useCourseCard() {
             type: "setEditId",
             payload: data.id,
         });
-        dispatch({
-            type: "setModal",
-            payload: {
-                openFormModal: true,
-                modalUpdateFlag: true,
-            },
-        });
+        // dispatch({
+        //     type: "setModal",
+        //     payload: {
+        //         openFormModal: true,
+        //         modalUpdateFlag: true,
+        //     },
+        // });
+        openModal(true)
+        updateFlag(true)
         formInputs.map((item) => {
             test[item.name] = data[item.name];
         });

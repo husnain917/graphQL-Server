@@ -1,4 +1,5 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, readQuery } from "@apollo/client";
+
 import React, { useState, useContext } from "react";
 import Axios from "axios";
 import {
@@ -17,6 +18,8 @@ import { CASHED_COURSES, GET_COURSES } from "../../lib/queries/AllQueries";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../State";
 import FiltredData from "../../constants/FiltredRoles";
+import { useApolloClient } from "@apollo/client";
+import { openModal, updateFlag } from "../../commonComponents/newTable/NewTable";
 
 
 
@@ -31,12 +34,20 @@ export function UseCourses() {
   //GET_CATEGORIES
   const [{ teacher, CATEGORY_DATA }] = FiltredData()
   const { state, dispatch } = useContext(AppContext);
+  // const client = useApolloClient()
+  // const { findManyCourses:{
+  //   courseName,
+  // } } = client.readQuery({
+  //   query: GET_COURSES,
+  //   // variables: { // Provide any required variables here.  Variables of mismatched types will return `null`.
+  //   //   id: 5,
+  //   // },
+  // });
 
-
-
+  // console.log("Courses data in cache", findManyCourses);
   const formInputs = [
     {
-      label: "Name",
+      label: "Name", 
       name: "courseName",
       type: "text",
     },
@@ -124,20 +135,22 @@ export function UseCourses() {
       coursePrice: item.coursePrice,
       instructorId: item.instructorId,
       courseCategoryId: item.courseCategoryId,
+      createdAt: item.createdAt
     });
   });
   console.log("refacteredData", refacteredData);
 
   const [loader, setLoader] = useState(false);
 
-  //ADD STAFF
+  //ADD Course
   const handleClickOpen = () => {
-    dispatch({
-      type: "setModal",
-      payload: {
-        openFormModal: true,
-      },
-    });
+    // dispatch({
+    //   type: "setModal",
+    //   payload: {
+    //     openFormModal: true,
+    //   },
+    // });
+    openModal(true)
   };
 
   let [CreateCourses, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
@@ -189,29 +202,33 @@ export function UseCourses() {
                 }
               },
               coursePrice: state.editData?.coursePrice,
+              createdAt: new Date()
             }
 
           },
           onCompleted(data, cache) {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //   type: "setModal",
+            //   payload: {
+            //     modalUpdateFlag: false,
+            //     openFormModal: false,
+            //   },
+            // });
+            openModal(false)
+            updateFlag(false)
             ToastSuccess('Course Added')
 
           },
           refetchQueries: [{ query: GET_COURSES }],
         });
       } catch (error) {
-        dispatch({
-          type: "setModal",
-          payload: {
-            openFormModal: false,
-          },
-        });
+        // dispatch({
+        //   type: "setModal",
+        //   payload: {
+        //     openFormModal: false,
+        //   },
+        // });
+        openModal(false)
         setLoader(false);
         ToastError(error.message);
 
@@ -317,13 +334,15 @@ export function UseCourses() {
           },
 
           onCompleted() {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //   type: "setModal",
+            //   payload: {
+            //     modalUpdateFlag: false,
+            //     openFormModal: false,
+            //   },
+            // });
+            openModal(false)
+            updateFlag(false)
             ToastSuccess('Course Updated')
           },
           refetchQueries: [{ query: GET_COURSES }],

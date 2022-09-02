@@ -1,6 +1,7 @@
 import React from "react";
 import { LoginStyle } from "./LoginStyle";
-import loginPageLogo from '../../../assets/loginPageLogo.png';
+// import loginPageLogo from '../../../assets/loginPageLogo.png';
+import Logo from '../../../assets/logo.png';
 import UseLogin from './UseLogin';
 import CommonTooltip from '../../../commonComponents/commonTooltip/CommonTooltip';
 import { ToastContainer } from 'react-toastify';
@@ -16,7 +17,7 @@ export default function Login() {
     return (
         <div>
             <LoginStyle.MainPage>
-                <LoginStyle.Image src={loginPageLogo} />
+                <LoginStyle.Image src={Logo} />
 
                 <LoginStyle.LoginContainer>
                     {/* Below Code for toastify   */}

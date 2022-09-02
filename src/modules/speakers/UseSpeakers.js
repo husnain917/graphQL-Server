@@ -15,6 +15,7 @@ import { GET_SPEAKERS } from "../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { AppContext } from "../../State";
+import { openModal, updateFlag } from "../../commonComponents/newTable/NewTable";
 
 
 
@@ -94,25 +95,28 @@ export default function UseSpeakers() {
                         }
                     },
                     onCompleted(data, cache) {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Speaker Added')
 
                     },
                     refetchQueries: [{ query: GET_SPEAKERS }],
                 });
             } catch (error) {
-                dispatch({
-                    type: "setModal",
-                    payload: {
-                        openFormModal: false,
-                    },
-                });
+                // dispatch({
+                //     type: "setModal",
+                //     payload: {
+                //         openFormModal: false,
+                //     },
+                // });
+                openModal(false)
                 setLoader(false);
                 ToastError(error.message);
 
@@ -184,13 +188,15 @@ export default function UseSpeakers() {
                         },
                     },
                     onCompleted() {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
                         ToastSuccess('Speaker Updated')
                     },
                     refetchQueries: [{ query: GET_SPEAKERS }],

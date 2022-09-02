@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import React, { useState, useContext } from "react";
 import Axios from "axios";
 import {
@@ -15,7 +15,7 @@ import { GET_SPEAKERS } from "../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { AppContext } from "../../State";
-import { openModal, updateFlag } from "../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, imageUrl, editId } from "../../lib/reactivities/reactiveVarables";
 
 
 
@@ -24,6 +24,12 @@ import { openModal, updateFlag } from "../../lib/reactivities/reactiveVarables";
 
 
 export default function UseSpeakers() {
+    const useEditData = useReactiveVar(editData)
+    const useImageUrl = useReactiveVar(imageUrl)
+    const useEditId = useReactiveVar(editId)
+
+    console.log("Edit data in speaker", useEditData);
+    console.log("imageUrl in speaker", useImageUrl);
 
     const formInputs = [
         {
@@ -75,13 +81,13 @@ export default function UseSpeakers() {
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.speakerName) {
+        if (!useEditData?.speakerName) {
             ToastWarning('speakerName required')
         }
-        else if (!state.editData?.spkearDesc) {
+        else if (!useEditData?.spkearDesc) {
             ToastWarning('spkearDesc required')
         }
-        else if (!state.imageUrl) {
+        else if (useImageUrl == "") {
             ToastWarning('Image required')
         }
         else {
@@ -89,9 +95,9 @@ export default function UseSpeakers() {
                 await CreateSpeaker({
                     variables: {
                         data: {
-                            speakerName: state.editData?.speakerName,
-                            spkearDesc: state.editData?.spkearDesc,
-                            spekaerImage: state.imageUrl
+                            speakerName: useEditData?.speakerName,
+                            spkearDesc: useEditData?.spkearDesc,
+                            spekaerImage: useImageUrl
                         }
                     },
                     onCompleted(data, cache) {
@@ -104,6 +110,8 @@ export default function UseSpeakers() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
+                        imageUrl("")
                         ToastSuccess('Speaker Added')
 
                     },
@@ -149,41 +157,37 @@ export default function UseSpeakers() {
     //     }
     // };
 
-
-
-
-    console.log("ijmage22", state.imageUrl);
     //Update staff
 
     let [UpdateSpeaker, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SPEAKER);
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.speakerName) {
+        if (!useEditData?.speakerName) {
             ToastWarning('Speaker Name required')
         }
-        else if (!state.editData?.spkearDesc) {
+        else if (!useEditData?.spkearDesc) {
             ToastWarning('Speaker Desc required')
         }
-        // else if (!state?.imageUrl) {
-        //     ToastWarning('Image required')
-        // }
+        else if (useImageUrl == "") {
+            ToastWarning('Image required')
+        }
         else {
             try {
                 await UpdateSpeaker({
                     variables: {
                         where: {
-                            id: state.editId
+                            id: useEditId
                         },
                         data: {
                             speakerName: {
-                                set: state.editData?.speakerName,
+                                set: useEditData?.speakerName,
                             },
                             spkearDesc: {
-                                set: state.editData?.spkearDesc,
+                                set: useEditData?.spkearDesc,
                             },
                             spekaerImage: {
-                                set: state.imageUrl
+                                set: useImageUrl
                             }
                         },
                     },
@@ -197,6 +201,8 @@ export default function UseSpeakers() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData("")
+                        imageUrl("")
                         ToastSuccess('Speaker Updated')
                     },
                     refetchQueries: [{ query: GET_SPEAKERS }],

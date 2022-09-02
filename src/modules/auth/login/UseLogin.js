@@ -60,8 +60,8 @@ export default function UseLogin() {
         },
         onCompleted({ login }) {
           localStorage.setItem("token", login.token)
-          var userNameStr= login.name
-          var activeUserName=userNameStr.charAt(0).toUpperCase() + userNameStr.slice(1)
+          var userNameStr = login.name
+          var activeUserName = userNameStr.charAt(0).toUpperCase() + userNameStr.slice(1)
           dispatch({
             type: "setAuthState",
             payload: {

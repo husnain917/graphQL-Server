@@ -26,7 +26,7 @@ import { openModal, updateFlag, editData } from "../../../lib/reactivities/react
 
 export default function UseCourseCategory() {
     const useEditData = useReactiveVar(editData)
-    // console.log("Edit data in approval", useEditData);
+    console.log("Edit data in approval", useEditData);
     const [{ COURSE_DATA }] = FiltredData()
     const formInputs = [
         {

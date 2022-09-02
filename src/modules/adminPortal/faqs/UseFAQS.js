@@ -16,7 +16,7 @@ import {
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
 import { GET_COURSES, GET_FAQS } from "../../../lib/queries/AllQueries";
-import { openModal, updateFlag, editData } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -26,6 +26,7 @@ import { openModal, updateFlag, editData } from "../../../lib/reactivities/react
 
 
 export function UseFaqs() {
+  const useEditId = useReactiveVar(editId)
   const useEditData = useReactiveVar(editData)
   console.log("Edit Data in FAQ's", useEditData);
   const { data: COURSE_LIST } = useQuery(GET_COURSES)
@@ -185,7 +186,7 @@ export function UseFaqs() {
         await UpdateFaq({
           variables: {
             where: {
-              id: state.editId
+              id: useEditId
             },
             data: {
               faqQuestion: {

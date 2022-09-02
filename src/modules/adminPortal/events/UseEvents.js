@@ -13,7 +13,7 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_EVENTS } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
-import { openModal, updateFlag, editData, imageUrl } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, imageUrl, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -23,6 +23,7 @@ import { openModal, updateFlag, editData, imageUrl } from "../../../lib/reactivi
 
 
 export function UseEvents() {
+    const useEditId = useReactiveVar(editId)
     const useEditData = useReactiveVar(editData)
     const useImageUrl = useReactiveVar(imageUrl)
     // console.log("Edit Data in events", useEditData);
@@ -231,7 +232,7 @@ export function UseEvents() {
                 await UpdateEvents({
                     variables: {
                         where: {
-                            id: state.editId
+                            id: useEditId
                         },
 
                         data: {

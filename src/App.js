@@ -54,7 +54,7 @@ function App() {
 
           })
           var nameStr = login.getActiveUser?.name
-          var activeUser=nameStr.charAt(0).toUpperCase() + nameStr.slice(1)
+          var activeUser = nameStr.charAt(0).toUpperCase() + nameStr.slice(1)
           ToastSuccess(`Welcome at ${activeUser}`)
           console.log("redirect", login);
         }

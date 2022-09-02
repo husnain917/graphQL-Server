@@ -30,7 +30,7 @@ import CloudinaryFunction from "../../constants/CloudinaryFunction";
 import { blue } from "@mui/material/colors";
 import UserGroupModal from "../userGroupModal/UserGroupModal";
 import UserGroup from "../../modules/settings/userGroup/UserGroup";
-import { openModal, updateFlag, editData, imageUrl } from "../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, imageUrl, userGroupData, valTel } from "../../lib/reactivities/reactiveVarables";
 import { useQuery } from "@apollo/client"
 
 
@@ -46,29 +46,18 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
   var useEditData = useReactiveVar(editData)
 
   const handleChangePhone = (phone) => {
-    setContact(phone)
-    dispatch({
-      type: "setValTel",
-      payload: contact
-    })
-    console.log(contact)
+    valTel(phone)
+
   }
   const handleCloseUpdate = () => {
-    // dispatch({
-    //   type: "setModal",
-    //   payload: {
-    //     modalUpdateFlag: false,
-    //     openFormModal: false,
-    //   },
-    // });
+
     openModal(false)
     updateFlag(false)
     editData({})
+    userGroupData({})
     imageUrl("")
-    // dispatch({
-    //   type: "setEditUserGroupDataBool",
-    //   payload: false
-    // });
+    valTel("")
+
   };
 
   return (
@@ -118,8 +107,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                           fullWidth
                           variant="standard"
                           value={
-                            modalUpdateFlag ? item.name === "file" ? "" : state.editData[item.name] : null
-                            // modalUpdateFlag ? item.name === "file" ? "" : data?.editData[item.name] : null
+                            modalUpdateFlag ? item.name === "file" ? "" : useEditData[item.name] : null
                           }
                           onChange={(e) => {
                             test[item.name] = item.name === "file"
@@ -150,6 +138,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                             // variant="standard"
                             onChange={(e) => {
                               test[item.name] = e.target.value;
+                              editData(test)
                               dispatch({
                                 type: "setEditData",
                                 payload: test,
@@ -206,13 +195,15 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                         ) :
                           item.type === "editor" ? (
                             <Editor
-                              editorState={state.editData[item.name]}
+                              // editorState={state.editData[item.name]}
+                              editorState={useEditData[item.name]}
                               onEditorStateChange={(getText) => {
                                 test[item.name] = getText;
-                                dispatch({
-                                  type: "setEditData",
-                                  payload: test,
-                                });
+                                editData(test)
+                                //   dispatch({
+                                //     type: "setEditData",
+                                //     payload: test,
+                                //   });
                               }}
                               toolbarClassName="toolbarClassName"
                               wrapperClassName="wrapperClassName"
@@ -252,6 +243,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                       name="row-radio-buttons-group"
                                       onChange={(e) => {
                                         test[item.name] = e.target.value;
+                                        editData(test)
                                         dispatch({
                                           type: "setEditData",
                                           payload: test,
@@ -276,7 +268,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                         name="row-radio-buttons-group"
                                         onChange={(e) => {
                                           test[item.name] = e.target.value;
-                                          console.log("kk", item.name);
+                                          editData(test)
                                           dispatch({
                                             type: "setEditData",
                                             payload: test,
@@ -352,6 +344,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                 name="row-radio-buttons-group"
                                                 onChange={(e) => {
                                                   test[item.name] = e.target.value;
+                                                  editData(test)
                                                   dispatch({
                                                     type: "setEditData",
                                                     payload: test,
@@ -400,6 +393,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                     name="row-radio-buttons-group"
                                                     onChange={(e) => {
                                                       test[item.name] = e.target.value;
+                                                      editData(test)
                                                       dispatch({
                                                         type: "setEditData",
                                                         payload: test,
@@ -464,7 +458,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                       fullWidth
                                                       variant="standard"
                                                       value={
-                                                        modalUpdateFlag ? item.name === "file" ? "" : state.editData[item.name] : null
+                                                        modalUpdateFlag ? item.name === "file" ? "" : useEditData[item.name] : null
                                                         // modalUpdateFlag ? item.name === "file" ? "" : data?.editData[item.name] : null
                                                       }
                                                       onChange={(e) => {

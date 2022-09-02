@@ -1,4 +1,4 @@
-import { useMutation, useQuery, readQuery } from "@apollo/client";
+import { useMutation, useQuery, readQuery, useReactiveVar } from "@apollo/client";
 
 import React, { useState, useContext } from "react";
 import Axios from "axios";
@@ -19,7 +19,7 @@ import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../State";
 import FiltredData from "../../constants/FiltredRoles";
 import { useApolloClient } from "@apollo/client";
-import { openModal, updateFlag } from "../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, editId } from "../../lib/reactivities/reactiveVarables";
 
 
 
@@ -30,7 +30,11 @@ import { openModal, updateFlag } from "../../lib/reactivities/reactiveVarables";
 export function UseCourses() {
 
 
+  const useEditData = useReactiveVar(editData)
+  const useEditId = useReactiveVar(editId)
 
+  console.log("Edit data in courses", useEditData);
+  console.log("Edit id in courses", useEditId);
   //GET_CATEGORIES
   const [{ teacher, CATEGORY_DATA }] = FiltredData()
   const { state, dispatch } = useContext(AppContext);
@@ -144,12 +148,7 @@ export function UseCourses() {
 
   //ADD Course
   const handleClickOpen = () => {
-    // dispatch({
-    //   type: "setModal",
-    //   payload: {
-    //     openFormModal: true,
-    //   },
-    // });
+
     openModal(true)
   };
 
@@ -157,25 +156,25 @@ export function UseCourses() {
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    if (!state.editData?.courseName) {
+    if (!useEditData?.courseName) {
       ToastWarning('Course name required')
     }
-    else if (!state.editData?.courseDesc) {
+    else if (!useEditData?.courseDesc) {
       ToastWarning('Course description required')
     }
-    else if (!state.editData?.courseIntro) {
+    else if (!useEditData?.courseIntro) {
       ToastWarning('Intro required')
     }
-    else if (!state.editData?.coursePrice) {
+    else if (!useEditData?.coursePrice) {
       ToastWarning('Price required')
     }
-    else if (!state.editData?.instructorId) {
+    else if (!useEditData?.instructorId) {
       ToastWarning('Instructor Id required')
     }
-    else if (!state.editData?.courseCategoryId) {
+    else if (!useEditData?.courseCategoryId) {
       ToastWarning('Course category Id required')
     }
-    else if (!state.editData?.courseStatus) {
+    else if (!useEditData?.courseStatus) {
       ToastWarning('Status required')
     }
     else {
@@ -183,17 +182,17 @@ export function UseCourses() {
         await CreateCourses({
           variables: {
             data: {
-              courseName: state.editData?.courseName,
-              courseDesc: state.editData?.courseDesc,
+              courseName: useEditData?.courseName,
+              courseDesc: useEditData?.courseDesc,
               instructor: {
                 connect: {
-                  id: state.editData?.instructorId,
+                  id: useEditData?.instructorId,
                 }
               },
-              courseIntro: state.editData?.courseIntro,
+              courseIntro: useEditData?.courseIntro,
               courseCategory: {
                 connect: {
-                  id: state.editData?.courseCategoryId,
+                  id: useEditData?.courseCategoryId,
                 }
               },
               organization: {
@@ -201,7 +200,7 @@ export function UseCourses() {
                   id: state.user?.id,
                 }
               },
-              coursePrice: state.editData?.coursePrice,
+              coursePrice: useEditData?.coursePrice,
               createdAt: new Date()
             }
 
@@ -216,6 +215,7 @@ export function UseCourses() {
             // });
             openModal(false)
             updateFlag(false)
+            editData({})
             ToastSuccess('Course Added')
 
           },
@@ -271,25 +271,25 @@ export function UseCourses() {
 
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
-    if (!state.editData?.courseName) {
+    if (!useEditData?.courseName) {
       ToastWarning('Course name required')
     }
-    else if (!state.editData?.courseDesc) {
+    else if (!useEditData?.courseDesc) {
       ToastWarning('Course description required')
     }
-    else if (!state.editData?.courseIntro) {
+    else if (!useEditData?.courseIntro) {
       ToastWarning('Intro required')
     }
-    else if (!state.editData?.coursePrice) {
+    else if (!useEditData?.coursePrice) {
       ToastWarning('Price required')
     }
-    else if (!state.editData?.instructorId) {
+    else if (!useEditData?.instructorId) {
       ToastWarning('Instructor Id required')
     }
-    else if (!state.editData?.courseCategoryId) {
+    else if (!useEditData?.courseCategoryId) {
       ToastWarning('Course category Id required')
     }
-    else if (!state.editData?.courseStatus) {
+    else if (!useEditData?.courseStatus) {
       ToastWarning('Status required')
     }
     else {
@@ -297,26 +297,26 @@ export function UseCourses() {
         await UpdateCourses({
           variables: {
             where: {
-              id: state.editId
+              id: useEditId
             },
             data: {
               courseName: {
-                set: state.editData?.courseName
+                set: useEditData?.courseName
               },
               courseDesc: {
-                set: state.editData?.courseDesc
+                set: useEditData?.courseDesc
               },
               courseIntro: {
-                set: state.editData?.courseIntro
+                set: useEditData?.courseIntro
               },
               instructor: {
                 connect: {
-                  id: state.editData?.instructorId,
+                  id: useEditData?.instructorId,
                 }
               },
               courseCategory: {
                 connect: {
-                  id: state.editData?.courseCategoryId,
+                  id: useEditData?.courseCategoryId,
                 }
               },
               organization: {
@@ -325,10 +325,10 @@ export function UseCourses() {
                 }
               },
               coursePrice: {
-                set: state.editData?.coursePrice
+                set: useEditData?.coursePrice
               },
               courseStatus: {
-                set: state.editData?.courseStatus
+                set: useEditData?.courseStatus
               },
             },
           },
@@ -343,6 +343,7 @@ export function UseCourses() {
             // });
             openModal(false)
             updateFlag(false)
+            editData({})
             ToastSuccess('Course Updated')
           },
           refetchQueries: [{ query: GET_COURSES }],

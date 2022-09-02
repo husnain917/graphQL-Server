@@ -30,8 +30,7 @@ import UseWindowDimensions from "../../customHooks/UseWindowDimensions";
 import moment from "moment";
 import { makeVar, useReactiveVar } from '@apollo/client';
 import { useLocation } from "react-router-dom";
-import { editData } from "../../lib/reactivities/reactiveVarables";
-import { openModal, updateFlag } from "../../lib/reactivities/reactiveVarables"
+import { openModal, updateFlag, editData, userGroupData, editId } from "../../lib/reactivities/reactiveVarables"
 
 // export const openModal = makeVar(false);
 // export const updateFlag = makeVar(false)
@@ -389,6 +388,7 @@ export default function NewTable({
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const useEditData = useReactiveVar(editData)
+    const useUserGroupData = useReactiveVar(userGroupData)
 
 
     const handleAnchorClose = (value) => {
@@ -470,44 +470,26 @@ export default function NewTable({
 
     //open edit form modal
     const ctaEditButtonHandler = (data) => {
-        console.log("id in editButtonHandler", data.id);
-        // const test = state.editData;
+        console.log("id in editButtonHandler", data);
         const test = useEditData;
         dispatch({
             type: "setEditId",
             payload: data.id,
         });
-        // dispatch({
-        //   type: "setModal",
-        //   payload: {
-        //     openFormModal: true,
-        //     modalUpdateFlag: true,
-        //   },
-        // });
+        editId(data.id)
         openModal(true)
         updateFlag(true)
         formInputs.map((item) => {
             test[item.name] = data[item.name];
         });
         editData(test)
-        dispatch({
-            type: "setEditData",
-            payload: test,
-        });
         if (
             data.role === "ORGANIZATIONKEY" ||
             data.role === "ADMIN" ||
             data.role === "TEACHER" ||
             data.role === "STUDENT"
         ) {
-            dispatch({
-                type: "setEditUserGroupData",
-                payload: data
-            });
-            // dispatch({
-            //   type: "setEditUserGroupDataBool",
-            //   payload: true
-            // });
+            userGroupData(data)
         }
         console.log(state.editId);
     };

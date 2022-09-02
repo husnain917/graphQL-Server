@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import React, { useState, useContext } from "react";
 import Axios from "axios";
 import {
@@ -17,7 +17,7 @@ import { GET_QUIZ } from "../../../lib/queries/AllQueries";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
 import FiltredData from "../../../constants/FiltredRoles";
-import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -28,6 +28,9 @@ import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarable
 
 
 export default function UseQuiz() {
+    const useEditId = useReactiveVar(editId)
+    const useEditData = useReactiveVar(editData)
+    console.log("Edit data in Quiz", useEditData);
     const [{ courseBatch, COURSE_DATA }] = FiltredData()
     const formInputs = [
 
@@ -75,10 +78,10 @@ export default function UseQuiz() {
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.courseBatchesId) {
+        if (!useEditData?.courseBatchesId) {
             ToastWarning('Course Batches required')
         }
-        else if (!state.editData?.coursesId) {
+        else if (!useEditData?.coursesId) {
             ToastWarning('Courses required')
         }
         else {
@@ -89,12 +92,12 @@ export default function UseQuiz() {
                         data: {
                             courseBatches: {
                                 connect: {
-                                    id: state?.editData?.courseBatchesId
+                                    id: useEditData?.courseBatchesId
                                 }
                             },
                             courses: {
                                 connect: {
-                                    id: state?.editData?.coursesId
+                                    id: useEditData?.coursesId
                                 }
                             },
                         }
@@ -110,6 +113,7 @@ export default function UseQuiz() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
                         ToastSuccess('Quiz Added')
 
                     },
@@ -164,10 +168,10 @@ export default function UseQuiz() {
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.courseBatchesId) {
+        if (!useEditData?.courseBatchesId) {
             ToastWarning('Course Batches required')
         }
-        else if (!state.editData?.coursesId) {
+        else if (!useEditData?.coursesId) {
             ToastWarning('Courses required')
         }
         else {
@@ -175,18 +179,18 @@ export default function UseQuiz() {
                 await UpdateCourseQuiz({
                     variables: {
                         where: {
-                            id: state.editId
+                            id: useEditId
                         },
 
                         data: {
                             courseBatches: {
                                 connect: {
-                                    id: state?.editData?.courseBatchesId
+                                    id: useEditData?.courseBatchesId
                                 }
                             },
                             courses: {
                                 connect: {
-                                    id: state?.editData?.coursesId
+                                    id: useEditData?.coursesId
                                 }
                             }
                         }
@@ -202,6 +206,7 @@ export default function UseQuiz() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
                         ToastSuccess('Quiz Updated')
                     },
                     refetchQueries: [{ query: GET_QUIZ }],

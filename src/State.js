@@ -14,7 +14,7 @@ const initialState = {
     orgLogin: false,
     editData: {},
     editUserGroupData: {},
-    editUserGroupDataBool:false,
+    editUserGroupDataBool: false,
     imageUrl: '',
     tabsPersmission: [],
     valTel: '',
@@ -61,7 +61,7 @@ let reducer = (state, action) => {
             }
         }
         case "setEditId": {
-            console.log("Edit Id in state",action.payload)
+            console.log("Edit Id in state", action.payload)
             return {
                 ...state,
                 editId: action.payload

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import React, { useState, useContext } from "react";
 import Axios from "axios";
 import {
@@ -17,7 +17,7 @@ import { GET_COURSES, GET_LECTURES } from "../../../lib/queries/AllQueries";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
 import FiltredData from "../../../constants/FiltredRoles";
-import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -27,6 +27,9 @@ import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarable
 
 
 export default function UseLecture() {
+    const useEditId = useReactiveVar(editId)
+    const useEditData = useReactiveVar(editData)
+    console.log("Lectures edit data", useEditData);
     const [{ COURSE_DATA }] = FiltredData()
     const formInputs = [
         {
@@ -78,13 +81,13 @@ export default function UseLecture() {
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.lectureTitle) {
+        if (!useEditData?.lectureTitle) {
             ToastWarning('Lecture Title required')
         }
-        else if (!state.editData?.lectureVideo) {
+        else if (!useEditData?.lectureVideo) {
             ToastWarning('Lecture Video required')
         }
-        else if (!state.editData?.coursesId) {
+        else if (!useEditData?.coursesId) {
             ToastWarning('Course required')
         }
         else {
@@ -93,11 +96,11 @@ export default function UseLecture() {
                     variables: {
 
                         data: {
-                            lectureTitle: state.editData?.lectureTitle,
-                            lectureVideo: state.editData?.lectureVideo,
+                            lectureTitle: useEditData?.lectureTitle,
+                            lectureVideo: useEditData?.lectureVideo,
                             courses: {
                                 connect: {
-                                    id: state.editData?.coursesId
+                                    id: useEditData?.coursesId
                                 }
                             }
                         }
@@ -113,6 +116,7 @@ export default function UseLecture() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
                         ToastSuccess('Lecture Added')
 
                     },
@@ -127,6 +131,7 @@ export default function UseLecture() {
                 // });
                 openModal(false)
                 setLoader(false);
+
                 ToastError(error.message);
 
             }
@@ -168,13 +173,13 @@ export default function UseLecture() {
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.lectureTitle) {
+        if (!useEditData?.lectureTitle) {
             ToastWarning('Lecture Title required')
         }
-        else if (!state.editData?.lectureVideo) {
+        else if (!useEditData?.lectureVideo) {
             ToastWarning('Lecture Video required')
         }
-        else if (!state.editData?.coursesId) {
+        else if (!useEditData?.coursesId) {
             ToastWarning('Course required')
         }
         else {
@@ -182,18 +187,18 @@ export default function UseLecture() {
                 await UpdateLectures({
                     variables: {
                         where: {
-                            id: state.editId
+                            id: useEditId
                         },
                         data: {
                             lectureTitle: {
-                                set: state.editData?.lectureTitle
+                                set: useEditData?.lectureTitle
                             },
                             lectureVideo: {
-                                set: state.editData?.lectureVideo
+                                set: useEditData?.lectureVideo
                             },
                             courses: {
                                 connect: {
-                                    id: state.editData?.coursesId
+                                    id: useEditData?.coursesId
                                 }
                             }
                         }
@@ -208,6 +213,7 @@ export default function UseLecture() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
                         ToastSuccess('Course Updated')
                     },
                     refetchQueries: [{ query: GET_COURSES }],

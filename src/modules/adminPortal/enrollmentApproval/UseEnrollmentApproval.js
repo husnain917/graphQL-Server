@@ -13,7 +13,7 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSES, GET_ENROLLMENT } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
-import { openModal, updateFlag, editData } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -23,6 +23,7 @@ import { openModal, updateFlag, editData } from "../../../lib/reactivities/react
 
 
 export function UseEnrollmentApproval() {
+  const useEditId = useReactiveVar(editId)
   const useEditData = useReactiveVar(editData)
   console.log("Edit data in approval", useEditData);
   const [{ student }] = FiltredRoles()
@@ -245,7 +246,7 @@ export function UseEnrollmentApproval() {
         await UpdateEnrollmentApproval({
           variables: {
             where: {
-              id: state.editId
+              id: useEditId
             },
             data: {
               user: {

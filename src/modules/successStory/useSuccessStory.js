@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import React, { useState, useContext } from "react";
 import Axios from "axios";
 import {
@@ -19,13 +19,16 @@ import { AppContext } from "../../State";
 
 
 import FiltredRoles from '../../constants/FiltredRoles'
-import { openModal, updateFlag } from "../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, editId } from "../../lib/reactivities/reactiveVarables";
 
 
 
 
 
 export function UseSuccessStory() {
+  const useEditId = useReactiveVar(editId)
+  const useEditData = useReactiveVar(editData)
+  console.log("Edit data in useSuccessStories", useEditData);
   const [{ student }] = FiltredRoles()
   const formInputs = [
     {
@@ -57,12 +60,6 @@ export function UseSuccessStory() {
       label: "Why Reject",
       name: "whyReject",
       type: "text",
-    },
-    {
-      label: "Select User",
-      name: "user",
-      type: "selectUser",
-      dropDown: student,
     },
     {
       label: "Status",
@@ -106,25 +103,32 @@ export function UseSuccessStory() {
   let [CreateSuccessStories, { loading: ADD_LOADING }] = useMutation(ADD_SUCCESS_STORY);
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    if (!state.editData?.city) {
+    // if (!state.editData?.city) {
+    if (!useEditData?.city) {
       ToastWarning('City name required')
     }
-    else if (!state.editData?.freelancingProfileUrl) {
+    // else if (!state.editData?.freelancingProfileUrl) {
+    else if (!useEditData?.freelancingProfileUrl) {
       ToastWarning('Freelancing profile url required')
     }
-    else if (!state.editData?.paymentProof) {
+    // else if (!state.editData?.paymentProof) {
+    else if (!useEditData?.paymentProof) {
       ToastWarning('Payment proof required')
     }
-    else if (!state.editData?.description) {
+    // else if (!state.editData?.description) {
+    else if (!useEditData?.description) {
       ToastWarning('Description required')
     }
-    else if (!state.editData?.totalEarnedAmount) {
+    // else if (!state.editData?.totalEarnedAmount) {
+    else if (!useEditData?.totalEarnedAmount) {
       ToastWarning('Total earned amount required')
     }
-    else if (!state.editData?.whyReject) {
+    // else if (!state.editData?.whyReject) {
+    else if (!useEditData?.whyReject) {
       ToastWarning('Why reject required')
     }
-    else if (!state.editData?.status) {
+    // else if (!state.editData?.status) {
+    else if (!useEditData?.status) {
       ToastWarning('Status required')
     }
     else {
@@ -132,17 +136,25 @@ export function UseSuccessStory() {
         await CreateSuccessStories({
           variables: {
             data: {
-              freelancingProfileUrl: state.editData?.freelancingProfileUrl,
-              paymentProof: state.editData?.paymentProof,
-              description: state.editData?.description,
-              status: state.editData?.status,
-              totalEarnedAmount: state.editData?.totalEarnedAmount,
-              city: state.editData?.city,
-              whyReject: state.editData?.whyReject,
+              // freelancingProfileUrl: state.editData?.freelancingProfileUrl,
+              freelancingProfileUrl: useEditData?.freelancingProfileUrl,
+              // paymentProof: state.editData?.paymentProof,
+              paymentProof: useEditData?.paymentProof,
+              // description: state.editData?.description,
+              description: useEditData?.description,
+              // status: state.editData?.status,
+              status: useEditData?.status,
+              // totalEarnedAmount: state.editData?.totalEarnedAmount,
+              totalEarnedAmount: useEditData?.totalEarnedAmount,
+              // city: state.editData?.city,
+              city: useEditData?.city,
+              // whyReject: state.editData?.whyReject,
+              whyReject: useEditData?.whyReject,
               user: {
                 connect: [
                   {
-                    id: state.editData?.user
+                    // id: state.editData?.user
+                    id: useEditData?.user
                   }
                 ]
               }
@@ -159,6 +171,7 @@ export function UseSuccessStory() {
             // });
             openModal(false)
             updateFlag(false)
+            editData({})
             ToastSuccess('Story Added')
           },
           refetchQueries: [{ query: GET_SUCCESS_STORIES }],
@@ -212,26 +225,33 @@ export function UseSuccessStory() {
   let [UpdateSuccessStories, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_SUCCESS);
 
   const ctaUpdateHandler = async (event) => {
-    event.preventDefault()
-    if (!state.editData?.city) {
+    event.preventDefault();
+    // if (!state.editData?.city) {
+    if (!useEditData?.city) {
       ToastWarning('City name required')
     }
-    else if (!state.editData?.freelancingProfileUrl) {
+    // else if (!state.editData?.freelancingProfileUrl) {
+    else if (!useEditData?.freelancingProfileUrl) {
       ToastWarning('Freelancing profile url required')
     }
-    else if (!state.editData?.paymentProof) {
+    // else if (!state.editData?.paymentProof) {
+    else if (!useEditData?.paymentProof) {
       ToastWarning('Payment proof required')
     }
-    else if (!state.editData?.description) {
+    // else if (!state.editData?.description) {
+    else if (!useEditData?.description) {
       ToastWarning('Description required')
     }
-    else if (!state.editData?.totalEarnedAmount) {
+    // else if (!state.editData?.totalEarnedAmount) {
+    else if (!useEditData?.totalEarnedAmount) {
       ToastWarning('Total earned amount required')
     }
-    else if (!state.editData?.whyReject) {
+    // else if (!state.editData?.whyReject) {
+    else if (!useEditData?.whyReject) {
       ToastWarning('Why reject required')
     }
-    else if (!state.editData?.status) {
+    // else if (!state.editData?.status) {
+    else if (!useEditData?.status) {
       ToastWarning('Status required')
     }
     else {
@@ -239,34 +259,40 @@ export function UseSuccessStory() {
         await UpdateSuccessStories({
           variables: {
             where: {
-              id: state.editId
+              id: useEditId
             },
             data: {
               freelancingProfileUrl: {
-                set: state.editData?.freelancingProfileUrl
+                // set: state.editData?.freelancingProfileUrl
+                set: useEditData?.freelancingProfileUrl
               },
               paymentProof: {
-                set: state.editData?.paymentProof
+                // set: state.editData?.paymentProof
+                set: useEditData?.paymentProof
               },
               description: {
-                set: state.editData?.description
+                // set: state.editData?.description
+                set: useEditData?.description
               },
               status: {
-                set: state.editData?.status
+                // set: state.editData?.status
+                set: useEditData?.status
               },
               totalEarnedAmount: {
-                set: state.editData?.totalEarnedAmount
+                // set: state.editData?.totalEarnedAmount
+                set: useEditData?.totalEarnedAmount
               },
               city: {
-                set: state.editData?.city
+                // set: state.editData?.city
+                set: useEditData?.city
               },
               whyReject: {
-                set: state.editData?.whyReject
+                set: useEditData?.whyReject
               },
               user: {
                 connect: [
                   {
-                    id: state.editData?.user
+                    id: useEditData?.user
                   }
                 ]
               }
@@ -282,6 +308,7 @@ export function UseSuccessStory() {
             // });
             openModal(false)
             updateFlag(false)
+            editData({})
             ToastSuccess('Story Updated')
           },
           refetchQueries: [{ query: GET_SUCCESS_STORIES }],

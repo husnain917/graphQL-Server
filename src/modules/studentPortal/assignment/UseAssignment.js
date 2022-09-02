@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import React, { useState, useContext } from "react";
 import Axios from "axios";
 import {
@@ -18,7 +18,7 @@ import { GET_ASSIGNMENT, GET_COURSES } from "../../../lib/queries/AllQueries";
 import { Slide, toast } from "react-toastify";
 import { AppContext } from "../../../State";
 import FiltredData from "../../../constants/FiltredRoles";
-import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -27,6 +27,9 @@ import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarable
 
 
 export default function UseAssignment() {
+    const useEditId = useReactiveVar(editId)
+    const useEditData = useReactiveVar(editData)
+    console.log("Edit data in my assignments", useEditData);
     const [{ courseBatch, COURSE_DATA }] = FiltredData()
     const formInputs = [
         {
@@ -79,13 +82,13 @@ export default function UseAssignment() {
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.courseBatchesId) {
+        if (!useEditData?.courseBatchesId) {
             ToastWarning('Course Batches required')
         }
-        else if (!state.editData?.name) {
+        else if (!useEditData?.name) {
             ToastWarning('Name required')
         }
-        else if (!state.editData?.coursesId) {
+        else if (!useEditData?.coursesId) {
             ToastWarning('Courses required')
         }
         else {
@@ -93,15 +96,15 @@ export default function UseAssignment() {
                 await CreateCourseAssignment({
                     variables: {
                         data: {
-                            name: state.editData?.name,
+                            name: useEditData?.name,
                             CourseBatches: {
                                 connect: {
-                                    id: state.editData?.courseBatchesId
+                                    id: useEditData?.courseBatchesId
                                 }
                             },
                             courses: {
                                 connect: {
-                                    id: state.editData?.coursesId
+                                    id: useEditData?.coursesId
                                 }
                             }
                         }
@@ -116,6 +119,7 @@ export default function UseAssignment() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
                         ToastSuccess('Assignment Added')
 
                     },
@@ -171,13 +175,13 @@ export default function UseAssignment() {
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.courseBatchesId) {
+        if (!useEditData?.courseBatchesId) {
             ToastWarning('Course Batches required')
         }
-        else if (!state.editData?.name) {
+        else if (!useEditData?.name) {
             ToastWarning('Name required')
         }
-        else if (!state.editData?.coursesId) {
+        else if (!useEditData?.coursesId) {
             ToastWarning('Courses required')
         }
         else {
@@ -185,21 +189,21 @@ export default function UseAssignment() {
                 await UpdateCourseAssignment({
                     variables: {
                         where: {
-                            id: state.editId
+                            id: useEditId
                         },
 
                         data: {
                             name: {
-                                set: state.editData?.name
+                                set: useEditData?.name
                             },
                             CourseBatches: {
                                 connect: {
-                                    id: state.editData?.courseBatchesId
+                                    id: useEditData?.courseBatchesId
                                 }
                             },
                             courses: {
                                 connect: {
-                                    id: state.editData?.coursesId
+                                    id: useEditData?.coursesId
                                 }
                             }
                         }
@@ -214,6 +218,8 @@ export default function UseAssignment() {
                         //     },
                         // });
                         openModal(false)
+                        updateFlag(false)
+                        editData({})
                         ToastSuccess('Course Updated')
                     },
                     refetchQueries: [{ query: GET_ASSIGNMENT }],

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { useState, useContext } from "react";
 import {
     ToastError,
@@ -12,7 +12,7 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_CONTACT_US } from "../../../lib/queries/AllQueries";
 import { AppContext } from "../../../State";
-import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -21,6 +21,9 @@ import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarable
 
 
 export function UseContactUs() {
+    const useEditId = useReactiveVar(editId)
+    const useEditData = useReactiveVar(editData)
+    console.log("Edit data in contact", useEditData);
     const formInputs = [
         {
             label: "Name",
@@ -90,19 +93,24 @@ export function UseContactUs() {
         }] = useMutation(ADD_CONTACT_US);
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.name) {
+        // if (!state.editData?.name) {
+        if (!useEditData?.name) {
             ToastWarning('Name required')
         }
-        else if (!state.editData?.subject) {
+        // else if (!state.editData?.subject) {
+        else if (!useEditData?.subject) {
             ToastWarning('Subject  required')
         }
-        else if (!state.editData?.message) {
+        // else if (!state.editData?.message) {
+        else if (!useEditData?.message) {
             ToastWarning('Message required')
         }
-        else if (!state.editData?.reply) {
+        // else if (!state.editData?.reply) {
+        else if (!useEditData?.reply) {
             ToastWarning('Reply required')
         }
-        else if (!state.editData?.status) {
+        // else if (!state.editData?.status) {
+        else if (!useEditData?.status) {
             ToastWarning('Status required')
         }
         else {
@@ -110,11 +118,16 @@ export function UseContactUs() {
                 await CreateContactUs({
                     variables: {
                         data: {
-                            name: state.editData?.name,
-                            subject: state.editData?.subject,
-                            message: state.editData?.message,
-                            status: state.editData?.status,
-                            reply: state.editData?.reply,
+                            // name: state.editData?.name,
+                            name: useEditData?.name,
+                            // subject: state.editData?.subject,
+                            subject: useEditData?.subject,
+                            // message: state.editData?.message,
+                            message: useEditData?.message,
+                            // status: state.editData?.status,
+                            status: useEditData?.status,
+                            // reply: state.editData?.reply,
+                            reply: useEditData?.reply,
                         },
                     },
 
@@ -128,6 +141,7 @@ export function UseContactUs() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
                         ToastSuccess('Contact Added')
                     },
                     refetchQueries: [{ query: GET_CONTACT_US }],
@@ -189,20 +203,25 @@ export function UseContactUs() {
         }] = useMutation(UPDATE_SINGLE_CONTACT);
 
     const ctaUpdateHandler = async (event) => {
-        event.preventDefault()
-        if (!state.editData?.name) {
+        event.preventDefault();
+        // if (!state.editData?.name) {
+        if (!useEditData?.name) {
             ToastWarning('Name required')
         }
-        else if (!state.editData?.subject) {
+        // else if (!state.editData?.subject) {
+        else if (!useEditData?.subject) {
             ToastWarning('Subject  required')
         }
-        else if (!state.editData?.message) {
+        // else if (!state.editData?.message) {
+        else if (!useEditData?.message) {
             ToastWarning('Message required')
         }
-        else if (!state.editData?.reply) {
+        // else if (!state.editData?.reply) {
+        else if (!useEditData?.reply) {
             ToastWarning('Reply required')
         }
-        else if (!state.editData?.status) {
+        // else if (!state.editData?.status) {
+        else if (!useEditData?.status) {
             ToastWarning('Status required')
         }
         else {
@@ -210,35 +229,43 @@ export function UseContactUs() {
                 await UpdateContactUs({
                     variables: {
                         where: {
-                            id: state.editId
+                            id: useEditId
                         },
                         data: {
                             name: {
-                                set: state.editData?.name
+                                // set: state.editData?.name
+                                set: useEditData?.name
                             },
                             subject: {
-                                set: state.editData?.subject
+                                // set: state.editData?.subject
+                                set: useEditData?.subject
                             },
                             message: {
-                                set: state.editData?.message
+                                // set: state.editData?.message
+                                set: useEditData?.message
                             },
                             reply: {
-                                set: state.editData?.reply
+                                // set: state.editData?.reply
+                                set: useEditData?.reply
                             },
                             status: {
-                                set: state.editData?.status
+                                // set: state.editData?.status
+                                set: useEditData?.status
                             }
                         }
                     },
                     refetchQueries: [{ query: GET_CONTACT_US }],
                     onCompleted() {
-                        dispatch({
-                            type: "setModal",
-                            payload: {
-                                modalUpdateFlag: false,
-                                openFormModal: false,
-                            },
-                        });
+                        // dispatch({
+                        //     type: "setModal",
+                        //     payload: {
+                        //         modalUpdateFlag: false,
+                        //         openFormModal: false,
+                        //     },
+                        // });
+                        openModal(false)
+                        updateFlag(false)
+                        editData({})
                         ToastSuccess('Contact Updated')
                     },
 

@@ -93,9 +93,9 @@ export default function UseDashboard() {
             if (item.role === "ORGANIZATIONKEY") {
                 return item
             }
-
         })
 
+        
         dispatch({
             type: "setUsersObj",
             payload: {

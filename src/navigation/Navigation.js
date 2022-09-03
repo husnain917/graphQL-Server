@@ -19,7 +19,7 @@ import { AppContext } from '../State';
 import AllStaff from '../modules/adminPortal/allStaff/AllStaff';
 import { PublicRouting } from './PublicRouting';
 import { PrivateRouting } from './PrivateRouting';
-import PageNotFound from '../commonComponents/PageNotFound';
+import PageNotFound from '../commonComponents/pageNotFound/PageNotFound';
 import MyCourse from '../modules/studentPortal/myCourses/MyCourses';
 import Assignment from '../modules/studentPortal/assignment/Assignment';
 import Quiz from '../modules/studentPortal/quiz/Quiz';

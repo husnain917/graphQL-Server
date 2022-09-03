@@ -466,7 +466,7 @@ export default function NewTable({
 
   //open edit form modal
   const ctaEditButtonHandler = (data) => {
-    console.log("id in editButtonHandler", data.id);
+    // console.log("id in editButtonHandler", data.id);
     const test = state.editData;
     dispatch({
       type: "setEditId",
@@ -718,7 +718,7 @@ export default function NewTable({
                   return (
                     <>
                       <TableRow
-                        // onClick={(event) => handleClick(event, row.id)}
+                        onClick={(event) => handleClick(event, row.id)}
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}

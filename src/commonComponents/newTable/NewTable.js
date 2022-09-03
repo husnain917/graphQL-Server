@@ -82,7 +82,7 @@ function EnhancedTableHead(props) {
           return (
             <TableCell
               key={headCell?.id}
-              align={"left"}
+              align={headCell.id === "action" || headCell.id === "actions" ?"center":"left"}
               padding={"none"}
               sortDirection={orderBy === headCell?.id ? order : false}
               style={{ paddingLeft: 10 }}
@@ -92,8 +92,8 @@ function EnhancedTableHead(props) {
                 direction={orderBy === headCell?.id ? order : "asc"}
                 onClick={createSortHandler(headCell?.id)}
                 sx={{
-                  marginLeft:
-                    headCell.id === "action" ? headCell.marginLeft : 0,
+                  // marginLeft:
+                  //   headCell.id === "action" ? headCell.marginLeft : 0,
                   fontSize: 12,
                   color: "#6D7D93",
                 }}
@@ -211,10 +211,10 @@ const EnhancedTableToolbar = (props) => {
         ) : (
           <div>
             {toolBarTitle === "FAQS" ||
-            toolBarTitle === "Speakers" ||
-            toolBarTitle === "Course Batch" ||
-            toolBarTitle === "Course Category" ||
-            toolBarTitle === "Lectures" ? (
+              toolBarTitle === "Speakers" ||
+              toolBarTitle === "Course Batch" ||
+              toolBarTitle === "Course Category" ||
+              toolBarTitle === "Lectures" ? (
               ""
             ) : (
               <>
@@ -466,7 +466,7 @@ export default function NewTable({
 
   //open edit form modal
   const ctaEditButtonHandler = (data) => {
-    console.log("id in editButtonHandler", data.id);
+    // console.log("id in editButtonHandler", data.id);
     const test = state.editData;
     dispatch({
       type: "setEditId",
@@ -652,7 +652,7 @@ export default function NewTable({
               onRowsPerPageChange={handleChangeRowsPerPage}
               nextIconButtonProps={{ style: { display: "none" } }}
               backIconButtonProps={{ style: { display: "none" } }}
-              labelDisplayedRows={({}) => ``}
+              labelDisplayedRows={({ }) => ``}
               SelectProps={{
                 style: {
                   borderWidth: 1,
@@ -754,31 +754,31 @@ export default function NewTable({
                                 ) : subitem?.type === "modalAnswer" ? (
                                   <CommonModal answer={row} />
                                 ) : // subitem?.type === "modalProfileUrl" ? (
-                                //     <CommonModal freelancingProfileUrl={row} />
-                                // ) :
-                                subitem?.type === "modalPermissions" ? (
-                                  <CommonModal modalPermissions={row} />
-                                ) : subitem?.type === "image" ? (
-                                  <>
-                                    {row.eventImage ? (
-                                      <NewTableStyle.Image src={exactKey} />
-                                    ) : (
-                                      <p>No Image</p>
-                                    )}
-                                  </>
-                                ) : subitem?.type === "editor" ? (
-                                  <p
-                                    dangerouslySetInnerHTML={{
-                                      __html: exactKey,
-                                    }}
-                                  ></p>
-                                ) : subitem?.type === "crud" ? (
-                                  <>
-                                    <NewTableStyle.IconDiv>
-                                      {/* <Tooltip title="Delete">
+                                  //     <CommonModal freelancingProfileUrl={row} />
+                                  // ) :
+                                  subitem?.type === "modalPermissions" ? (
+                                    <CommonModal modalPermissions={row} />
+                                  ) : subitem?.type === "image" ? (
+                                    <>
+                                      {row.eventImage ? (
+                                        <NewTableStyle.Image src={exactKey} />
+                                      ) : (
+                                        <p>No Image</p>
+                                      )}
+                                    </>
+                                  ) : subitem?.type === "editor" ? (
+                                    <p
+                                      dangerouslySetInnerHTML={{
+                                        __html: exactKey,
+                                      }}
+                                    ></p>
+                                  ) : subitem?.type === "crud" ? (
+                                    <>
+                                      <NewTableStyle.IconDiv>
+                                        {/* <Tooltip title="Delete">
                                                             <CommonConfirmModal ctaDeleteHandler={ctaDeleteHandler} row={row} title={title} />
                                                         </Tooltip> */}
-                                      {/* {
+                                        {/* {
                                                                                                         newArr.pageURL === location.pagename ?
                                                                                                             newArr.EditPermission ?
                                                                                                                 
@@ -787,37 +787,23 @@ export default function NewTable({
                                                                                                             :
                                                                                                             null
                                                                                                     } */}
-                                      <Tooltip title="Update">
-                                        <IconButton
-                                          aria-label="update"
-                                          size="small"
-                                          onClick={() =>
-                                            ctaEditButtonHandler(row)
-                                          }
-                                        >
-                                          <NewTableStyle.EditIcon />
-                                        </IconButton>
-                                      </Tooltip>
-                                    </NewTableStyle.IconDiv>
-                                  </>
-                                ) : subitem.key === "role" ||
-                                  subitem.key === "status" ? (
-                                  <NewTableStyle.Role
-                                    variant="outlined"
-                                    bgColor={
-                                      AvatarBgColor(exactKey[0].toLowerCase())
-                                        ?.bg
-                                    }
-                                    Color={
-                                      AvatarBgColor(exactKey[0].toLowerCase())
-                                        ?.color
-                                    }
-                                  >
-                                    {exactKey}
-                                  </NewTableStyle.Role>
-                                ) : subitem.key === "name" ? (
-                                  <NewTableStyle.AvatarBox>
-                                    <NewTableStyle.Avatar
+                                        <Tooltip title="Update">
+                                          <IconButton
+                                            aria-label="update"
+                                            size="small"
+                                            onClick={() =>
+                                              ctaEditButtonHandler(row)
+                                            }
+                                          >
+                                            <NewTableStyle.EditIcon />
+                                          </IconButton>
+                                        </Tooltip>
+                                      </NewTableStyle.IconDiv>
+                                    </>
+                                  ) : subitem.key === "role" ||
+                                    subitem.key === "status" ? (
+                                    <NewTableStyle.Role
+                                      variant="outlined"
                                       bgColor={
                                         AvatarBgColor(exactKey[0].toLowerCase())
                                           ?.bg
@@ -827,27 +813,41 @@ export default function NewTable({
                                           ?.color
                                       }
                                     >
-                                      {exactKey[0].toUpperCase()}
-                                    </NewTableStyle.Avatar>
-                                    <NewTableStyle.EmailNameContainer>
-                                      <NewTableStyle.PTagName>
-                                        {exactKey}
-                                      </NewTableStyle.PTagName>
-                                      <NewTableStyle.PTagEmail>
-                                        {}
-                                      </NewTableStyle.PTagEmail>
-                                    </NewTableStyle.EmailNameContainer>
-                                  </NewTableStyle.AvatarBox>
-                                ) : subitem.key === "createdAt" ||
-                                  subitem.key === "updateAt" ? (
-                                  <NewTableStyle.PTime>
-                                    {moment(exactKey).format(
-                                      "DD-MMM-YY hh:mm A"
-                                    )}
-                                  </NewTableStyle.PTime>
-                                ) : (
-                                  exactKey
-                                )}
+                                      {exactKey}
+                                    </NewTableStyle.Role>
+                                  ) : subitem.key === "name" ? (
+                                    <NewTableStyle.AvatarBox>
+                                      <NewTableStyle.Avatar
+                                        bgColor={
+                                          AvatarBgColor(exactKey[0].toLowerCase())
+                                            ?.bg
+                                        }
+                                        Color={
+                                          AvatarBgColor(exactKey[0].toLowerCase())
+                                            ?.color
+                                        }
+                                      >
+                                        {exactKey[0].toUpperCase()}
+                                      </NewTableStyle.Avatar>
+                                      <NewTableStyle.EmailNameContainer>
+                                        <NewTableStyle.PTagName>
+                                          {exactKey}
+                                        </NewTableStyle.PTagName>
+                                        <NewTableStyle.PTagEmail>
+                                          { }
+                                        </NewTableStyle.PTagEmail>
+                                      </NewTableStyle.EmailNameContainer>
+                                    </NewTableStyle.AvatarBox>
+                                  ) : subitem.key === "createdAt" ||
+                                    subitem.key === "updateAt" ? (
+                                    <NewTableStyle.PTime>
+                                      {moment(exactKey).format(
+                                        "DD-MMM-YY hh:mm A"
+                                      )}
+                                    </NewTableStyle.PTime>
+                                  ) : (
+                                    exactKey
+                                  )}
                               </TableCell>
                             </>
                           );

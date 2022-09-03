@@ -130,7 +130,7 @@ export const NewTableStyle = {
     IconDiv: styled('div')(() => ({
         display: "flex",
         justifyContent: "center",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
     })),
     MobileViewTableHeader: styled(Toolbar)(({ searchShow }) => ({
         display: searchShow ? 'block' : 'flex',

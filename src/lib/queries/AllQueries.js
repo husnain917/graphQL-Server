@@ -97,7 +97,7 @@ export const GET_USER_GROUP = gql`
 query UserGroups {
   userGroups {
     id
-    userName
+    userName  
     userGroupRole
     tabsPermission
     createdAt

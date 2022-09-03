@@ -53,6 +53,7 @@ export function UseAllStaff() {
       label: "Cnic",
       name: "cnic",
       type: "number",
+
     },
     {
       label: "Address",
@@ -78,6 +79,8 @@ export function UseAllStaff() {
 
   //GET STAFF 
 
+
+
   const refacteredData = [];
   data?.users?.map((item) => {
     if (item.userGroup.userGroupRole === "TEACHER") {
@@ -91,6 +94,8 @@ export function UseAllStaff() {
         role: item.userGroup.userGroupRole
       });
     }
+ 
+
     if (item.userGroup.userGroupRole === "ADMIN") {
       refacteredData.push({
         id: item.id,
@@ -103,11 +108,14 @@ export function UseAllStaff() {
       });
     }
 
+
     console.log(item);
   });
   console.log("sami", refacteredData);
 
   //ADD STAFF
+
+
 
 
 
@@ -130,6 +138,8 @@ export function UseAllStaff() {
     }
     else if (!state.editData?.cnic) {
       ToastWarning('cnic required')
+      
+
     }
     else if (!state.editData?.address) {
       ToastWarning('address required')
@@ -148,6 +158,7 @@ export function UseAllStaff() {
               email: state.editData?.email,
               password: state.editData?.password,
               cnic: state.editData?.cnic,
+              address: state.editData?.address,
               contact: state?.valTel,
               userGroup: {
                 connect: {

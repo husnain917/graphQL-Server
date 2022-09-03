@@ -53,7 +53,7 @@ export function UseTabsPermissions() {
 
     let { data, loading: GET_LOADING, error } = useQuery(GET_USER_GROUP);
 
-  
+    // console.log('data')
 
     console.log("error", error);
     const refacteredData = [];

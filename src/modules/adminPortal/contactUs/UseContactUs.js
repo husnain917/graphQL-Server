@@ -119,13 +119,13 @@ export function UseContactUs() {
                     },
                     refetchQueries: [{ query: GET_CONTACT_US }],
                     onCompleted(data, cache) {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
+                        dispatch({
+                            type: "setModal",
+                            payload: {
+                                modalUpdateFlag: false,
+                                openFormModal: false,
+                            },
+                        });
                         openModal(false)
                         updateFlag(false)
                         ToastSuccess('Contact Added')

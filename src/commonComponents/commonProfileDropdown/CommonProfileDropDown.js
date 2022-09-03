@@ -7,12 +7,14 @@ import student from '../../assets/profile/student.png'
 import teacher from '../../assets/profile/teacher.png'
 import admin from '../../assets/profile/admin.png'
 import owner from '../../assets/profile/owner.png'
+import { UseDrawer } from '../sidebar/UseSidebar';
+
 export default function CommonProfileDropDown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate()
   const { state, dispatch } = React.useContext(AppContext);
-
+const [{ctaLogoutHandler}] = UseDrawer()
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
 
@@ -20,7 +22,7 @@ export default function CommonProfileDropDown() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const ctaLogoutHandler = () => {
+  const ctaHandler = () => {
     dispatch({
       type: "setAuthState",
       payload: {

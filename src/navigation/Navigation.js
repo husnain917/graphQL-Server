@@ -270,7 +270,7 @@ export default function Navigation() {
                                 <CreateOrganization />
                             </PrivateRouting>}
                     />
-                    <Route path='/course-detail'
+                    <Route path='/course-detail/:courseId'
                         element={
                             <PrivateRouting isAllowed={state.authState}>
                                 <CourseDetail />

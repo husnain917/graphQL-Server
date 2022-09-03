@@ -16,10 +16,9 @@ import { CASHED_COURSES, GET_COURSES } from "../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../State";
 import FiltredData from "../../constants/FiltredRoles";
 import { useApolloClient } from "@apollo/client";
-import { openModal, updateFlag, editData, editId } from "../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, editId, userData } from "../../lib/reactivities/reactiveVarables";
 
 
 
@@ -32,12 +31,12 @@ export function UseCourses() {
 
   const useEditData = useReactiveVar(editData)
   const useEditId = useReactiveVar(editId)
+  const useUserData = useReactiveVar(userData)
 
   console.log("Edit data in courses", useEditData);
   console.log("Edit id in courses", useEditId);
   //GET_CATEGORIES
   const [{ teacher, CATEGORY_DATA }] = FiltredData()
-  const { state, dispatch } = useContext(AppContext);
   // const client = useApolloClient()
   // const { findManyCourses:{
   //   courseName,
@@ -197,7 +196,7 @@ export function UseCourses() {
               },
               organization: {
                 connect: {
-                  id: state.user?.id,
+                  id: useUserData?.id,
                 }
               },
               coursePrice: useEditData?.coursePrice,
@@ -321,7 +320,7 @@ export function UseCourses() {
               },
               organization: {
                 connect: {
-                  id: state.user?.id
+                  id: useUserData?.id
                 }
               },
               coursePrice: {

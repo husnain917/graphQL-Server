@@ -15,7 +15,6 @@ import { GET_QUIZ } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../../State";
 import FiltredData from "../../../constants/FiltredRoles";
 import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
@@ -48,7 +47,6 @@ export default function UseQuiz() {
 
         },
     ]
-    const { state, dispatch } = useContext(AppContext);
 
 
 

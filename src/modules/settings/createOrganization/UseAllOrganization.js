@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { useState, useContext } from "react";
 
 import {
@@ -13,14 +13,17 @@ import {
   UPDATE_USER,
 } from "../../../lib/mutation/AllMutations";
 import { GET_ALL_ORGANIZATION } from "../../../lib/queries/AllQueries";
-import { AppContext } from "../../../State";
 import FiltredData from "../../../constants/FiltredRoles";
-import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, userData, editData, editId, valTel } from "../../../lib/reactivities/reactiveVarables";
 
 
 export function UseAllOrganization() {
   let { data, loading: GET_LOADING } = useQuery(GET_ALL_ORGANIZATION);
   const [{ userGroup }] = FiltredData();
+  const useUserData = useReactiveVar(userData)
+  const useEditData = useReactiveVar(editData)
+  const useEditId = useReactiveVar(editId)
+  const useValTel = useReactiveVar(valTel)
 
   const formInputs = [
     {
@@ -61,7 +64,6 @@ export function UseAllOrganization() {
       dropDownUserGroup: userGroup,
     },
   ];
-  const { state, dispatch } = useContext(AppContext);
 
   //GET STAFF
 
@@ -99,36 +101,36 @@ export function UseAllOrganization() {
   let [Register, { loading: ADD_LOADING }] = useMutation(ADD_ORGANIZATION);
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    if (!state.editData?.name) {
+    if (!useEditData?.name) {
       ToastWarning("Name required");
-    } else if (!state.editData?.email) {
+    } else if (!useEditData?.email) {
       ToastWarning("Email required");
-    } else if (!state?.valTel) {
+    } else if (!useValTel) {
       ToastWarning("Contact required");
-    } else if (!state.editData?.cnic) {
+    } else if (!useEditData?.cnic) {
       ToastWarning("cnic required");
-    } else if (!state.editData?.address) {
+    } else if (!useEditData?.address) {
       ToastWarning("address required");
-    } else if (!state.editData?.userGroup) {
+    } else if (!useEditData?.userGroup) {
       ToastWarning("User Group required");
     } else {
       try {
         await Register({
           variables: {
             data: {
-              name: state.editData?.name,
-              email: state.editData?.email,
-              password: state.editData?.password,
-              cnic: state.editData?.cnic,
-              contact: state?.valTel,
+              name: useEditData?.name,
+              email: useEditData?.email,
+              password: useEditData?.password,
+              cnic: useEditData?.cnic,
+              contact: useValTel,
               userGroup: {
                 connect: {
-                  id: state.editData?.userGroup,
+                  id: useEditData?.userGroup,
                 },
               },
               organizations: {
                 connect: {
-                  id: state?.user.id,
+                  id: useUserData.id,
                 },
               },
             },
@@ -144,8 +146,8 @@ export function UseAllOrganization() {
             // });
             openModal(false)
             updateFlag(false)
+            editData({})
             ToastSuccess("Staff Added");
-            console.log(state.user.id);
           },
 
           // update(cache, { data: { addItems } }) {
@@ -197,12 +199,8 @@ export function UseAllOrganization() {
 
         // console.log('sami', queryResult);
       } catch (error) {
-        dispatch({
-          type: "setModal",
-          payload: {
-            openFormModal: false,
-          },
-        });
+
+        openModal(false)
         ToastError(error.message);
       }
     }
@@ -239,48 +237,48 @@ export function UseAllOrganization() {
   let [UpdateUser, { loading: UPDATE_LOADING }] = useMutation(UPDATE_USER);
   const ctaUpdateHandler = async (event) => {
     event.preventDefault();
-    if (!state.editData?.name) {
+    if (!useEditData?.name) {
       ToastWarning("Name required");
-    } else if (!state.editData?.email) {
+    } else if (!useEditData?.email) {
       ToastWarning("Email required");
-    } else if (state.valTel) {
+    } else if (!useValTel) {
       ToastWarning("Contact Required");
-    } else if (!state.editData?.cnic) {
+    } else if (!useEditData?.cnic) {
       ToastWarning("cnic required");
-    } else if (!state.editData?.address) {
+    } else if (!useEditData?.address) {
       ToastWarning("address required");
-    } else if (!state.editData?.userGroup) {
+    } else if (!useEditData?.userGroup) {
       ToastWarning("Role required");
     } else {
       try {
         await UpdateUser({
           variables: {
             where: {
-              id: state.editId,
+              id: useEditId,
             },
 
             data: {
               name: {
-                set: state.editData?.name,
+                set: useEditData?.name,
               },
               email: {
-                set: state.editData?.email,
+                set: useEditData?.email,
               },
               password: {
-                set: state.editData?.password,
+                set: useEditData?.password,
               },
               cnic: {
-                set: state.editData?.cnic,
+                set: useEditData?.cnic,
               },
               address: {
-                set: state.editData?.address,
+                set: useEditData?.address,
               },
               contact: {
-                set: state.valTel,
+                set: useValTel,
               },
               userGroup: {
                 connect: {
-                  id: state.editData?.userGroup,
+                  id: useEditData?.userGroup,
                 },
               },
             },
@@ -296,6 +294,7 @@ export function UseAllOrganization() {
             // });
             openModal(false)
             updateFlag(false)
+            editData({})
             ToastSuccess(" Updated");
           },
         });

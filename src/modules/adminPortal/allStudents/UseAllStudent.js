@@ -14,7 +14,6 @@ import {
 import {
   GET_USERS
 } from "../../../lib/queries/AllQueries";
-import { AppContext } from "../../../State";
 import { openModal, updateFlag, editData, valTel, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
@@ -78,7 +77,6 @@ export function UseAllStudents() {
       dropDownUserGroup: userGroupStudent
     },
   ]
-  const { state, dispatch } = useContext(AppContext);
 
 
 

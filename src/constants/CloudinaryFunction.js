@@ -1,10 +1,8 @@
 import React, { useContext } from 'react'
 import axios from 'axios'
-import { AppContext } from '../State'
 import { imageUrl } from '../lib/reactivities/reactiveVarables'
 export default function CloudinaryFunction() {
     const endPoint = 'https://api.cloudinary.com/v1_1/dj0mewvg0'
-    const { dispatch } = useContext(AppContext)
     const [loading, setLoading] = React.useState(false)
     const ctaImageUpdateHandler = async (e) => {
         const files = e.target.files
@@ -19,10 +17,7 @@ export default function CloudinaryFunction() {
                 data: data
             })
             imageUrl(res.data.secure_url)
-            dispatch({
-                type: "setImageUrl",
-                payload: res.data.secure_url
-            })
+
             console.log(res.data.secure_url);
         } catch (error) {
             console.log(error.message);

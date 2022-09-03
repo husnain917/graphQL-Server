@@ -15,7 +15,6 @@ import { GET_SUCCESS_STORIES } from "../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../State";
 
 
 import FiltredRoles from '../../constants/FiltredRoles'
@@ -69,7 +68,6 @@ export function UseSuccessStory() {
     },
 
   ]
-  const { state, dispatch } = useContext(AppContext);
 
 
 

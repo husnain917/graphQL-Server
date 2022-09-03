@@ -18,7 +18,6 @@ import { visuallyHidden } from "@mui/utils";
 import { Avatar, Divider, Hidden, Icon } from "@mui/material";
 import { NewTableStyle } from "./NewTableStyle";
 import GlobalSearch from "../globalSearch/GlobalSearch";
-import { AppContext } from "../../State";
 import DropDownMenu from "../dropDownMenu/DropDownMenu";
 import FormModal from "../formModal/FormModal";
 import CloudIcon from "../../assets/cloud.png";
@@ -30,7 +29,7 @@ import UseWindowDimensions from "../../customHooks/UseWindowDimensions";
 import moment from "moment";
 import { makeVar, useReactiveVar } from '@apollo/client';
 import { useLocation } from "react-router-dom";
-import { openModal, updateFlag, editData, userGroupData, editId } from "../../lib/reactivities/reactiveVarables"
+import { openModal, updateFlag, editData, userGroupData, editId, tabsPersmission } from "../../lib/reactivities/reactiveVarables"
 
 // export const openModal = makeVar(false);
 // export const updateFlag = makeVar(false)
@@ -137,10 +136,10 @@ const EnhancedTableToolbar = (props) => {
         toolBarTitle,
         handleAnchorClick,
         handleClickOpen,
-        state,
-        dispatch,
+        useTabsPermission
     } = props;
-    const permissions = state.tabsPersmission.map((items) => {
+    // const permissions = state.tabsPersmission.map((items) => {
+    const permissions = useTabsPermission.map((items) => {
         return items.pages;
     });
     const svgIcon = (
@@ -374,7 +373,6 @@ export default function NewTable({
     onDateChange,
 }) {
 
-    const { state, dispatch } = React.useContext(AppContext);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [filterValue, setFilterValue] = React.useState("");
     const [searchQuery, setSearchQuery] = React.useState("");
@@ -389,6 +387,7 @@ export default function NewTable({
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const useEditData = useReactiveVar(editData)
     const useUserGroupData = useReactiveVar(userGroupData)
+    const useTabsPermission = useReactiveVar(tabsPersmission)
 
 
     const handleAnchorClose = (value) => {
@@ -472,10 +471,6 @@ export default function NewTable({
     const ctaEditButtonHandler = (data) => {
         console.log("id in editButtonHandler", data);
         const test = useEditData;
-        dispatch({
-            type: "setEditId",
-            payload: data.id,
-        });
         editId(data.id)
         openModal(true)
         updateFlag(true)
@@ -491,7 +486,6 @@ export default function NewTable({
         ) {
             userGroupData(data)
         }
-        console.log(state.editId);
     };
 
     //open dropDown panel
@@ -571,7 +565,8 @@ export default function NewTable({
             ? Math.max(0, (1 + page) * rowsPerPage - filterDataArray.length)
             : 0;
 
-    const permissions = state.tabsPersmission.map((items) => {
+    // const permissions = state.tabsPersmission.map((items) => {
+    const permissions = useTabsPermission.map((items) => {
         return items.pages;
     });
 
@@ -618,8 +613,7 @@ export default function NewTable({
                 <EnhancedTableToolbar
                     numSelected={selected.length}
                     toolBarTitle={title}
-                    state={state}
-                    dispatch={dispatch}
+                    useTabsPermission={useTabsPermission}
                     handleAnchorClick={handleAnchorClick}
                     handleClickOpen={handleClickOpen}
                 />

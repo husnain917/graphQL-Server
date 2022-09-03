@@ -12,7 +12,6 @@ import {
     UPDATE_COURSE_BATCH
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSE_BATCH } from "../../../lib/queries/AllQueries";
-import { AppContext } from "../../../State";
 import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
@@ -45,7 +44,6 @@ export default function UseCourseBatch() {
             dropDown: COURSE_DATA
         },
     ]
-    const { state, dispatch } = useContext(AppContext);
 
 
 

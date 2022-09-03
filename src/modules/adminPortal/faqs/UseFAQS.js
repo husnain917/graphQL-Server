@@ -14,7 +14,6 @@ import {
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../../State";
 import { GET_COURSES, GET_FAQS } from "../../../lib/queries/AllQueries";
 import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
@@ -48,7 +47,6 @@ export function UseFaqs() {
       dropDown: COURSE_LIST
     },
   ]
-  const { state, dispatch } = useContext(AppContext);
 
 
 

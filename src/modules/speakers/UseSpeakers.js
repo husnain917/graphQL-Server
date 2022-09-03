@@ -14,7 +14,6 @@ import {
 import { GET_SPEAKERS } from "../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
-import { AppContext } from "../../State";
 import { openModal, updateFlag, editData, imageUrl, editId } from "../../lib/reactivities/reactiveVarables";
 
 
@@ -49,7 +48,6 @@ export default function UseSpeakers() {
         },
 
     ]
-    const { state, dispatch } = useContext(AppContext);
 
 
 

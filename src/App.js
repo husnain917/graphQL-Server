@@ -5,20 +5,25 @@ import ScrollToTop from './navigation/ScrollToTop';
 import Navigation from './navigation/Navigation';
 import SplashScreen from './commonComponents/splash/SplashScreen'
 import { ToastContainer } from 'react-toastify';
-import { useMutation } from '@apollo/client';
+import { useMutation, useReactiveVar } from '@apollo/client';
 import { ACTIVE_USER } from './lib/mutation/AllMutations';
-import { AppContext } from './State';
 import { ToastInfo, ToastSuccess } from './commonComponents/commonFunction/CommonFunction'
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import { checkAuth, userData, orgCheck, tabsPersmission } from "./lib/reactivities/reactiveVarables"
 function App() {
+  const useCheckAuth = useReactiveVar(checkAuth)
+  const useOrgCheck = useReactiveVar(orgCheck)
+  const useUserData = useReactiveVar(userData)
+  const useTabsPermission = useReactiveVar(tabsPersmission)
+  console.log("TAbs permission", useTabsPermission);
   const history = createBrowserHistory({ window });
   const [loading, setLoading] = useState(true)
   setTimeout(function () {
     setLoading(false);
   }, 5000);
 
-  const { state, dispatch } = useContext(AppContext)
+
   let [
     GetActiveUser,
     { loading: USER_Loading }
@@ -33,23 +38,16 @@ function App() {
           token: tokenId
         },
         onCompleted(login) {
-          dispatch({
-            type: "setAuthState",
-            payload: {
-              user: login.getActiveUser,
-              authState: true
-            },
-          });
+          userData(login.getActiveUser)
+          checkAuth(true)
           // const str = login.getActiveUser?.name
           // const str2 = str.charAt(0).toUpperCase() + str.slice(1)
           // ToastSuccess(`Welcome at ${str2}`)
           console.log("redirect", login);
           login.getActiveUser?.userGroup.map((item) => {
             // if (item.userGroupRole === "ORGANIZATIONKEY"){
-            dispatch({
-              type: "tabsPermission",
-              payload: item.tabsPermission?.navigationResults
-            })
+            tabsPersmission(item.tabsPermission?.navigationResults)
+
             // }
 
           })
@@ -62,13 +60,8 @@ function App() {
     } catch (error) {
       console.log(error.message);
       localStorage.clear()
-      dispatch({
-        type: "setAuthState",
-        payload: {
-          user: null,
-          authState: false
-        }
-      })
+      userData(null)
+      checkAuth(false)
       ToastInfo('Session Expired')
     }
   }

@@ -9,9 +9,7 @@ import {
     GET_SUCCESS_STORIES,
     GET_USERS
 } from '../../lib/queries/AllQueries';
-import { AppContext } from '../../State';
 export default function UseDashboard() {
-    const { state, dispatch } = useContext(AppContext)
     let {
         data: COURSE_DATA,
         loading: COURSE_LOADING
@@ -42,11 +40,13 @@ export default function UseDashboard() {
         CATEGORY_LOADING,
         SPEAKERS_LOADING,
         USER_GROUP_LOADING,
-        BATCH_LOADING
+        BATCH_LOADING,
+        eventList
     }] = FiltredData()
     let studentLength = student?.length
     let successLength = SUCCESS_DATA?.findManySuccessStories?.length
-    let eventLength = EVENTS_DATA?.findManyEvents?.length
+    // let eventLength = EVENTS_DATA?.findManyEvents?.length
+    let eventLength = eventList
     let courseLength = COURSE_DATA?.findManyCourses?.length
     let TeacherLength = teacher?.length
     let AdminLength = admin?.length
@@ -56,60 +56,61 @@ export default function UseDashboard() {
     let userGroupOrganizationLength = userGroupOrganization?.length
     let all_org = allOrg?.length
 
-    const {
-        data: USER_DATA,
-        loading: USER_LOADING2
-    } = useQuery(GET_USERS)
-    const {
-        data: ORG_DATA,
-        loading: ORG_DATA_LOGIN
-    } = useQuery(GET_ALL_ORGANIZATION)
 
-    const refetchData = () => {
-        const student = USER_DATA?.users?.map((role) => {
-            if (role.userGroup.userGroupRole === 'STUDENT') {
-                return role
-            }
-        })
-        console.log(student)
+    // const {
+    //     data: USER_DATA,
+    //     loading: USER_LOADING2
+    // } = useQuery(GET_USERS)
+    // const {
+    //     data: ORG_DATA,
+    //     loading: ORG_DATA_LOGIN
+    // } = useQuery(GET_ALL_ORGANIZATION)
 
-
-
-        const teacher = USER_DATA?.users?.filter((role) => {
-            if (role.userGroup.userGroupRole === 'TEACHER') {
-                return role
-            }
-        })
+    // const refetchData = () => {
+    //     const student = USER_DATA?.users?.map((role) => {
+    //         if (role.userGroup.userGroupRole === 'STUDENT') {
+    //             return role
+    //         }
+    //     })
+    //     console.log(student)
 
 
 
-        const admin = USER_DATA?.users?.filter((role) => {
-            if (role.userGroup.userGroupRole === 'ADMIN') {
-                return role
-            }
-        })
+    //     const teacher = USER_DATA?.users?.filter((role) => {
+    //         if (role.userGroup.userGroupRole === 'TEACHER') {
+    //             return role
+    //         }
+    //     })
 
-        const organizationDetails = ORG_DATA?.findManyOrganizations.map((item) => {
-            if (item.role === "ORGANIZATIONKEY") {
-                return item
-            }
 
-        })
 
-        dispatch({
-            type: "setUsersObj",
-            payload: {
-                students: student.length,
-                teachers: teacher.length,
-                admins: admin.length,
-                organizationDetails: organizationDetails.length,
-                ORG_DATA_LOGIN: ORG_DATA_LOGIN,
-                USER_LOADING: USER_LOADING2
-            }
-        })
-    }
+    //     const admin = USER_DATA?.users?.filter((role) => {
+    //         if (role.userGroup.userGroupRole === 'ADMIN') {
+    //             return role
+    //         }
+    //     })
 
-  
+    //     const organizationDetails = ORG_DATA?.findManyOrganizations.map((item) => {
+    //         if (item.role === "ORGANIZATIONKEY") {
+    //             return item
+    //         }
+
+    //     })
+
+    //     dispatch({
+    //         type: "setUsersObj",
+    //         payload: {
+    //             students: student.length,
+    //             teachers: teacher.length,
+    //             admins: admin.length,
+    //             organizationDetails: organizationDetails.length,
+    //             ORG_DATA_LOGIN: ORG_DATA_LOGIN,
+    //             USER_LOADING: USER_LOADING2
+    //         }
+    //     })
+    // }
+
+
 
 
     return [{
@@ -124,7 +125,6 @@ export default function UseDashboard() {
         enrollement,
         eventLength,
         userGroupOrganizationLength,
-        state,
         courseLength,
         speakerListLength,
         ENROLMENT_LOADING,

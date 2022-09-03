@@ -14,7 +14,6 @@ import {
     UPDATE_SINGLE_COURSE_CATEGORY
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSE_BATCH, GET_COURSE_CATEGORY } from "../../../lib/queries/AllQueries";
-import { AppContext } from "../../../State";
 import { openModal, updateFlag, editData } from "../../../lib/reactivities/reactiveVarables";
 
 
@@ -40,7 +39,6 @@ export default function UseCourseCategory() {
             type: "text",
         },
     ]
-    const { state, dispatch } = useContext(AppContext);
 
 
 

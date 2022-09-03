@@ -12,7 +12,6 @@ import {
   UPDATE_SINGLE_ENROLLMENT,
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSES, GET_ENROLLMENT } from "../../../lib/queries/AllQueries";
-import { AppContext } from "../../../State";
 import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
@@ -64,7 +63,6 @@ export function UseEnrollmentApproval() {
       dropDownContent: ["PENDING", "APPROVED", "REJECT"],
     },
   ]
-  const { state, dispatch } = useContext(AppContext);
 
 
 

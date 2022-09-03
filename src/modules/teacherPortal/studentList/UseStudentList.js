@@ -15,8 +15,7 @@ import { GET_COURSES } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../../State";
-import { openModal, updateFlag, editData } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -25,6 +24,7 @@ import { openModal, updateFlag, editData } from "../../../lib/reactivities/react
 
 export default function UseStudentList() {
     const useEditData = useReactiveVar(editData)
+    const useEditId = useReactiveVar(editId)
     console.log("Edit data in Student", useEditData);
     const formInputs = [
         {
@@ -64,7 +64,6 @@ export default function UseStudentList() {
             dropDownContent: ["PUBLISH", "UNPUBLISH"],
         },
     ]
-    const { state, dispatch } = useContext(AppContext);
 
 
 
@@ -250,7 +249,7 @@ export default function UseStudentList() {
                 await UpdateCourses({
                     variables: {
                         where: {
-                            id: state.editId
+                            id: useEditId
                         },
                         data: {
                             courseName: {

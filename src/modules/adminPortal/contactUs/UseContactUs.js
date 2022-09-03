@@ -11,7 +11,6 @@ import {
     UPDATE_SINGLE_CONTACT,
 } from "../../../lib/mutation/AllMutations";
 import { GET_CONTACT_US } from "../../../lib/queries/AllQueries";
-import { AppContext } from "../../../State";
 import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
@@ -57,7 +56,6 @@ export function UseContactUs() {
             ],
         },
     ]
-    const { state, dispatch } = useContext(AppContext);
 
 
 

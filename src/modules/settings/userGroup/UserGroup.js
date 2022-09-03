@@ -10,7 +10,6 @@ import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom"
 import PButton from "../../../commonComponents/Pbutton/Pbutton";
 import { UseUserGroup } from "./UseUserGroup";
-import { AppContext } from "../../../State";
 import { data } from '../../../constants/userGroupPagesList'
 import CommonTableLoader from "../../../commonComponents/commonTableLoader/CommonTableLoader";
 import { useReactiveVar } from "@apollo/client";
@@ -34,7 +33,6 @@ export default function UserGroup() {
     }
   ] = UseUserGroup();
 
-  const { state, dispatch } = useContext(AppContext);
   const [stateArray, setStateArray] = useState(data);
 
   return (

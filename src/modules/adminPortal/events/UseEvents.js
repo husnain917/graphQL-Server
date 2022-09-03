@@ -12,7 +12,6 @@ import {
     UPDATE_SINGLE_EVENT,
 } from "../../../lib/mutation/AllMutations";
 import { GET_EVENTS } from "../../../lib/queries/AllQueries";
-import { AppContext } from "../../../State";
 import { openModal, updateFlag, editData, imageUrl, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
@@ -69,7 +68,6 @@ export function UseEvents() {
             type: "upload",
         },
     ]
-    const { state, dispatch } = useContext(AppContext);
 
 
     //GET STAFF 

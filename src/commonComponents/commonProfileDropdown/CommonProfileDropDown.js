@@ -2,16 +2,17 @@ import * as React from 'react';
 import { CPD } from './CommonProfileDropDownStyle'
 import img from '../../assets/profile.jpg'
 import { useNavigate } from 'react-router-dom';
-import { AppContext } from '../../State';
 import student from '../../assets/profile/student.png'
 import teacher from '../../assets/profile/teacher.png'
 import admin from '../../assets/profile/admin.png'
 import owner from '../../assets/profile/owner.png'
+import { checkAuth, userData, orgCheck, tabsPersmission } from '../../lib/reactivities/reactiveVarables';
+import { useReactiveVar } from '@apollo/client';
 export default function CommonProfileDropDown() {
+  const useUserData = useReactiveVar(userData)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate()
-  const { state, dispatch } = React.useContext(AppContext);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -21,13 +22,10 @@ export default function CommonProfileDropDown() {
     setAnchorEl(null);
   };
   const ctaLogoutHandler = () => {
-    dispatch({
-      type: "setAuthState",
-      payload: {
-        user: null,
-        authState: false
-      }
-    })
+    userData(null)
+    checkAuth(false)
+    orgCheck(false)
+    tabsPersmission([])
     localStorage.removeItem('token')
     navigate('/login')
     window.reload()
@@ -44,16 +42,16 @@ export default function CommonProfileDropDown() {
         onClick={handleClick}
       >
         {
-          state.user?.role === "OWNER" ?
+          useUserData?.role === "OWNER" ?
             <CPD.ProfileLinkImage src={owner} alt='img' />
             :
-            state.user?.role === "ADMIN" ?
+            useUserData?.role === "ADMIN" ?
               <CPD.ProfileLinkImage src={admin} alt='img' />
               :
-              state.user?.role === "TEACHER" ?
+              useUserData?.role === "TEACHER" ?
                 <CPD.ProfileLinkImage src={teacher} alt='img' />
                 :
-                state.user?.role === "STUDENT" ?
+                useUserData?.role === "STUDENT" ?
                   <CPD.ProfileLinkImage src={student} alt='img' />
                   :
                   ''

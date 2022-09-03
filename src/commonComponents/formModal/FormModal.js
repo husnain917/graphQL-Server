@@ -11,7 +11,6 @@ import { Editor } from "react-draft-wysiwyg";
 import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Autocomplete, MenuItem, Stack, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
-import { AppContext } from "../../State";
 import { EditorState } from "draft-js";
 import { Calendar } from 'react-calendar';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -35,7 +34,6 @@ import { useQuery } from "@apollo/client"
 
 
 export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date, }) {
-  const { state, dispatch } = useContext(AppContext);
   const [ctaImageUpdateHandler] = CloudinaryFunction()
   const [open, setOpen] = useState(false)
   const theme = useTheme();
@@ -114,10 +112,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                               ? e.target.files[0].name
                               : e.target.value;
                             editData(test)
-                            dispatch({
-                              type: "setEditData",
-                              payload: test,
-                            });
                           }}
                         />
                       )
@@ -139,10 +133,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                             onChange={(e) => {
                               test[item.name] = e.target.value;
                               editData(test)
-                              dispatch({
-                                type: "setEditData",
-                                payload: test,
-                              });
                               console.log('pp', test);
                             }}
 
@@ -173,10 +163,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                               onChange={(e) => {
                                 test[item.name] = e.target.value;
                                 editData(test)
-                                dispatch({
-                                  type: "setEditData",
-                                  payload: test,
-                                });
                                 // console.log('pp', test);
                               }}
                             >
@@ -200,10 +186,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                               onEditorStateChange={(getText) => {
                                 test[item.name] = getText;
                                 editData(test)
-                                //   dispatch({
-                                //     type: "setEditData",
-                                //     payload: test,
-                                //   });
                               }}
                               toolbarClassName="toolbarClassName"
                               wrapperClassName="wrapperClassName"
@@ -244,10 +226,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                       onChange={(e) => {
                                         test[item.name] = e.target.value;
                                         editData(test)
-                                        dispatch({
-                                          type: "setEditData",
-                                          payload: test,
-                                        });
                                       }}
                                     >
                                       {item?.dropDown?.categories?.map((option) => (
@@ -269,10 +247,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                         onChange={(e) => {
                                           test[item.name] = e.target.value;
                                           editData(test)
-                                          dispatch({
-                                            type: "setEditData",
-                                            payload: test,
-                                          });
                                         }}
                                       >
                                         {item?.dropDown?.map((option) => (
@@ -293,10 +267,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                           onChange={(e) => {
                                             test[item.name] = e.target.value;
                                             editData(test)
-                                            dispatch({
-                                              type: "setEditData",
-                                              payload: test,
-                                            });
                                           }}
                                         >
                                           {item?.dropDown?.map((option) => (
@@ -317,10 +287,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                             onChange={(e) => {
                                               test[item.name] = e.target.value;
                                               editData(test)
-                                              dispatch({
-                                                type: "setEditData",
-                                                payload: test,
-                                              });
                                             }}
                                           >
                                             {item?.dropDown?.findManyCourses?.map((option) => (
@@ -345,10 +311,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                 onChange={(e) => {
                                                   test[item.name] = e.target.value;
                                                   editData(test)
-                                                  dispatch({
-                                                    type: "setEditData",
-                                                    payload: test,
-                                                  });
                                                 }}
                                               >
                                                 {item?.dropDown?.map((option) => (
@@ -369,10 +331,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                   onChange={(e) => {
                                                     test[item.name] = e.target.value;
                                                     editData(test)
-                                                    dispatch({
-                                                      type: "setEditData",
-                                                      payload: test,
-                                                    });
                                                   }}
                                                 >
                                                   {item?.dropDown?.map((option) => (
@@ -394,10 +352,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                     onChange={(e) => {
                                                       test[item.name] = e.target.value;
                                                       editData(test)
-                                                      dispatch({
-                                                        type: "setEditData",
-                                                        payload: test,
-                                                      });
                                                     }}
 
                                                   >
@@ -466,10 +420,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                           ? e.target.files[0].name
                                                           : e.target.value;
                                                         editData(test)
-                                                        dispatch({
-                                                          type: "setEditData",
-                                                          payload: test,
-                                                        });
                                                       }}
                                                     />
                                                   )

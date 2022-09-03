@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { ADD_USER_GROUP, UPDATE_USER_GROUP } from '../../../lib/mutation/AllMutations';
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
-import { AppContext } from "../../../State";
 import { ToastError, ToastSuccess, ToastWarning } from '../../../commonComponents/commonFunction/CommonFunction';
 import { GET_USER_GROUP } from '../../../lib/queries/AllQueries';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +10,6 @@ export function UseUserGroup() {
 
 
 
-    const { state, dispatch } = useContext(AppContext)
     let [CreateUserGroup, { loading: ADD_LOADING }] = useMutation(ADD_USER_GROUP);
     const [userName, setUserName] = useState('')
     const [userGroupRole, setuserGroupRole] = useState('')

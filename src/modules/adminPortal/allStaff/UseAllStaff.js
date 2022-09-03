@@ -13,11 +13,8 @@ import {
 import {
   GET_USERS
 } from "../../../lib/queries/AllQueries";
-import {
-  AppContext
-} from "../../../State";
 import FiltredData from '../../../constants/FiltredRoles'
-import { openModal, updateFlag, editData, valTel, editId } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, valTel, editId, userData } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -29,6 +26,7 @@ export function UseAllStaff() {
   const useEditData = useReactiveVar(editData)
   const useContact = useReactiveVar(valTel)
   const useEditId = useReactiveVar(editId)
+  const useUserData = useReactiveVar(userData)
   console.log("Edit data in useAllStaff", useEditData);
   console.log("Contactin useAllStaff", useContact);
   console.log("edit id in useAllStaff", useEditId);
@@ -77,10 +75,7 @@ export function UseAllStaff() {
       dropDownUserGroup: userGroup
     },
   ]
-  const {
-    state,
-    dispatch
-  } = useContext(AppContext);
+
 
   //GET STAFF 
 
@@ -162,7 +157,7 @@ export function UseAllStaff() {
               },
               organizations: {
                 connect: {
-                  id: state?.user.id
+                  id: useUserData.id
                 }
               },
             }
@@ -180,7 +175,6 @@ export function UseAllStaff() {
             editData({})
             valTel("")
             ToastSuccess('Staff Added')
-            console.log(state.user.id)
           },
           refetchQueries: [{ query: GET_USERS }],
 

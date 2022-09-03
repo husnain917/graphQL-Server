@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import React, { useState, useContext } from "react";
 import Axios from "axios";
 import {
@@ -15,9 +15,8 @@ import { GET_QUIZ, GET_USERS, GET_USER_GROUP } from "../../../lib/queries/AllQue
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../../State";
 import FiltredData from "../../../constants/FiltredRoles";
-import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -27,6 +26,8 @@ import { openModal, updateFlag } from "../../../lib/reactivities/reactiveVarable
 
 
 export function UseTabsPermissions() {
+    const useEditData = useReactiveVar(editData)
+    const useEditId = useReactiveVar(editId)
     const [{ courseBatch, COURSE_DATA }] = FiltredData()
     const formInputs = [
 
@@ -44,7 +45,6 @@ export function UseTabsPermissions() {
 
         // },
     ]
-    const { state, dispatch } = useContext(AppContext);
 
 
 
@@ -81,10 +81,10 @@ export function UseTabsPermissions() {
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.courseBatchesId) {
+        if (!useEditData?.courseBatchesId) {
             ToastWarning('Course Batches required')
         }
-        else if (!state.editData?.coursesId) {
+        else if (!useEditData?.coursesId) {
             ToastWarning('Courses required')
         }
         else {
@@ -95,12 +95,12 @@ export function UseTabsPermissions() {
                         data: {
                             courseBatches: {
                                 connect: {
-                                    id: state?.editData?.courseBatchesId
+                                    id: useEditData?.courseBatchesId
                                 }
                             },
                             courses: {
                                 connect: {
-                                    id: state?.editData?.coursesId
+                                    id: useEditData?.coursesId
                                 }
                             },
                         }
@@ -170,10 +170,10 @@ export function UseTabsPermissions() {
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.courseBatchesId) {
+        if (!useEditData.courseBatchesId) {
             ToastWarning('Course Batches required')
         }
-        else if (!state.editData?.coursesId) {
+        else if (!useEditData.coursesId) {
             ToastWarning('Courses required')
         }
         else {
@@ -181,18 +181,18 @@ export function UseTabsPermissions() {
                 await UpdateCourseQuiz({
                     variables: {
                         where: {
-                            id: state.editId
+                            id: useEditId
                         },
 
                         data: {
                             courseBatches: {
                                 connect: {
-                                    id: state?.editData?.courseBatchesId
+                                    id: useEditData?.courseBatchesId
                                 }
                             },
                             courses: {
                                 connect: {
-                                    id: state?.editData?.coursesId
+                                    id: useEditData?.coursesId
                                 }
                             }
                         }

@@ -7,10 +7,13 @@ import CommonTooltip from '../../../commonComponents/commonTooltip/CommonTooltip
 import { ToastContainer } from 'react-toastify';
 import { StageSpinner } from 'react-spinners-kit'
 import { Checkbox, FormControlLabel } from "@mui/material";
+import { orgCheck } from "../../../lib/reactivities/reactiveVarables";
 
 import { colors } from "../../../constants/Color";
+import { useReactiveVar } from "@apollo/client";
 export default function Login() {
-    const [{ values, handleChange, handleClickShowPassword, state, orgLogin, email, setEmail, loginHandler, ORG_LOADING, organizationLoginHandler, loading, ctaOrgHandler, emailTyping, emaiTypingRemove, passwordTyping, passwordTypingRemove, showPassword }] = UseLogin();
+    const [{ values, handleChange, handleClickShowPassword, orgLogin, email, setEmail, loginHandler, ORG_LOADING, organizationLoginHandler, loading, ctaOrgHandler, emailTyping, emaiTypingRemove, passwordTyping, passwordTypingRemove, showPassword }] = UseLogin();
+    const useOrgCheck = useReactiveVar(orgCheck)
     // if (error) {
     //     notify()
     // }
@@ -60,9 +63,9 @@ export default function Login() {
                         </LoginStyle.IconContainer>
                         <LoginStyle.Input value={values.password} onChange={handleChange('password')} type={showPassword ? 'text' : 'password'} placeholder='Enter a password' onBlur={() => passwordTypingRemove()} />
                         {/* Below Code is part of Password input field used for changing Password visible Icon Color   */}
-                            <LoginStyle.PasswordVisibleIconContainer>
-                                <LoginStyle.VisibilityIcon showPassword={showPassword} onClick={()=> handleClickShowPassword()}  />
-                            </LoginStyle.PasswordVisibleIconContainer>                
+                        <LoginStyle.PasswordVisibleIconContainer>
+                            <LoginStyle.VisibilityIcon showPassword={showPassword} onClick={() => handleClickShowPassword()} />
+                        </LoginStyle.PasswordVisibleIconContainer>
                     </LoginStyle.IconAndInputField>
                     <LoginStyle.OrgCheckbox>
                         <FormControlLabel
@@ -87,7 +90,7 @@ export default function Login() {
                         </LoginStyle.LoaderContainer>
                         :
                         <LoginStyle.ButtonContainer>
-                            <LoginStyle.LoginButton onClick={state?.orgLogin ? organizationLoginHandler : loginHandler}>Log In</LoginStyle.LoginButton>
+                            <LoginStyle.LoginButton onClick={useOrgCheck ? organizationLoginHandler : loginHandler}>Log In</LoginStyle.LoginButton>
                         </LoginStyle.ButtonContainer>
                     }
                 </LoginStyle.LoginContainer>

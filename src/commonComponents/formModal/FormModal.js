@@ -36,12 +36,14 @@ import { useQuery } from "@apollo/client"
 export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date, }) {
   const [ctaImageUpdateHandler] = CloudinaryFunction()
   const [open, setOpen] = useState(false)
+  const [editName, setEditName] = useState("")
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [contact, setContact] = useState('')
   var openFormModal = useReactiveVar(openModal)
   var modalUpdateFlag = useReactiveVar(updateFlag)
   var useEditData = useReactiveVar(editData)
+  // console.log("Edit data in modal", useEditData);
 
   const handleChangePhone = (phone) => {
     valTel(phone)
@@ -104,7 +106,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                           required
                           fullWidth
                           variant="standard"
-                          value={
+                          defaultValue={
                             modalUpdateFlag ? item.name === "file" ? "" : useEditData[item.name] : null
                           }
                           onChange={(e) => {
@@ -411,9 +413,9 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                       required
                                                       fullWidth
                                                       variant="standard"
-                                                      value={
+                                                      defaultValue={
                                                         modalUpdateFlag ? item.name === "file" ? "" : useEditData[item.name] : null
-                                                        // modalUpdateFlag ? item.name === "file" ? "" : data?.editData[item.name] : null
+                                                        // modalUpdateFlag ? item.name === "file" ? "" : state?.editData[item.name] : null
                                                       }
                                                       onChange={(e) => {
                                                         test[item.name] = item.name === "file"
@@ -449,6 +451,6 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
           </Stack>
         </DialogActions>
       </Dialog>
-    </div>
+    </div >
   );
 }

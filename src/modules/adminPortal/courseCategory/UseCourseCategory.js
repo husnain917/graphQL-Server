@@ -14,7 +14,7 @@ import {
     UPDATE_SINGLE_COURSE_CATEGORY
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSE_BATCH, GET_COURSE_CATEGORY } from "../../../lib/queries/AllQueries";
-import { openModal, updateFlag, editData } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -25,7 +25,8 @@ import { openModal, updateFlag, editData } from "../../../lib/reactivities/react
 
 export default function UseCourseCategory() {
     const useEditData = useReactiveVar(editData)
-    console.log("Edit data in approval", useEditData);
+    const useEditId = useReactiveVar(editId)
+    console.log("Edit data in courseCatogry", useEditData);
     const [{ COURSE_DATA }] = FiltredData()
     const formInputs = [
         {
@@ -172,7 +173,7 @@ export default function UseCourseCategory() {
                             }
                         },
                         where: {
-                            id: state?.editId
+                            id: useEditId
                         }
 
 

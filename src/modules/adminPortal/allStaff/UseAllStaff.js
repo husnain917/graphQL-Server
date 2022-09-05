@@ -106,7 +106,7 @@ export function UseAllStaff() {
 
     console.log(item);
   });
-  console.log("sami", refacteredData);
+  console.log("in useAllStaff", refacteredData);
 
   //ADD STAFF
 

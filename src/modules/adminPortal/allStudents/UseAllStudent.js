@@ -14,7 +14,7 @@ import {
 import {
   GET_USERS
 } from "../../../lib/queries/AllQueries";
-import { openModal, updateFlag, editData, valTel, editId } from "../../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, valTel, editId, userData } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -26,8 +26,9 @@ export function UseAllStudents() {
   const useEditId = useReactiveVar(editId)
   const useEditData = useReactiveVar(editData)
   const useContact = useReactiveVar(valTel)
+  const useUserData = useReactiveVar(userData)
   console.log("Edit data in students", useEditData);
-  console.log("Contact in students", useContact);
+  console.log("Contact in students", useUserData);
   const [{ userGroupStudent }] = FiltredData()
 
   const formInputs = [
@@ -148,7 +149,7 @@ export function UseAllStudents() {
               contact: useContact,
               userGroup: {
                 connect: {
-                  id: useEditData?.userGroup
+                  id: useEditData.userGroup
                 }
               }
             }

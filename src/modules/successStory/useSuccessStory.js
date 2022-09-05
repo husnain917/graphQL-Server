@@ -61,6 +61,12 @@ export function UseSuccessStory() {
       type: "text",
     },
     {
+      label: "Select User",
+      name: "user",
+      type: "selectUser",
+      dropDown: student
+    },
+    {
       label: "Status",
       name: "status",
       type: "select",

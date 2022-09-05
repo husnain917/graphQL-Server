@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { useState, useContext } from "react";
 import {
   ToastError,
@@ -14,7 +14,7 @@ import {
 import {
   GET_USERS
 } from "../../../lib/queries/AllQueries";
-import { AppContext } from "../../../State";
+import { openModal, updateFlag, editData, valTel, editId, userData } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -23,10 +23,14 @@ import { AppContext } from "../../../State";
 
 
 export function UseAllStudents() {
+  const useEditId = useReactiveVar(editId)
+  const useEditData = useReactiveVar(editData)
+  const useContact = useReactiveVar(valTel)
+  const useUserData = useReactiveVar(userData)
+  console.log("Edit data in students", useEditData);
+  console.log("Contact in students", useUserData);
   const [{ userGroupStudent }] = FiltredData()
-  var regexp = new RegExp('^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$');
-  // var regexp = new RegExp('');
- 
+
   const formInputs = [
     {
       label: "Name",
@@ -74,7 +78,6 @@ export function UseAllStudents() {
       dropDownUserGroup: userGroupStudent
     },
   ]
-  const { state, dispatch } = useContext(AppContext);
 
 
 
@@ -115,22 +118,22 @@ export function UseAllStudents() {
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    if (!state.editData?.name) {
+    if (!useEditData?.name) {
       ToastWarning('Name required')
     }
-    else if (!state.editData?.email) {
+    else if (!useEditData?.email) {
       ToastWarning('Email required')
     }
-    else if (!state.valTel) {
+    else if (useContact == "") {
       ToastWarning('Contact required')
     }
-    else if (!state.editData?.cnic) {
+    else if (!useEditData?.cnic) {
       ToastWarning('cnic required')
     }
-    else if (!state.editData?.address) {
+    else if (!useEditData?.address) {
       ToastWarning('address required')
     }
-    else if (!state.editData?.userGroup) {
+    else if (!useEditData?.userGroup) {
       ToastWarning('User Group required')
     }
     else {
@@ -139,33 +142,37 @@ export function UseAllStudents() {
           variables: {
 
             data: {
-              name: state.editData?.name,
-              email: state.editData?.email,
-              password: state.editData?.password,
-              cnic: state.editData?.cnic,
-              contact: state?.valTel,
+              name: useEditData?.name,
+              email: useEditData?.email,
+              password: useEditData?.password,
+              cnic: useEditData?.cnic,
+              contact: useContact,
               userGroup: {
                 connect: {
-                  id: state.editData?.userGroup
+                  id: useEditData.userGroup
                 }
               }
             }
 
           },
-          refetchQueries: [{ query: GET_USERS }],
-
           onCompleted() {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //   type: "setModal",
+            //   payload: {
+            //     modalUpdateFlag: false,
+            //     openFormModal: false,
+            //   },
+            // });
+            openModal(false)
+            updateFlag(false)
+            editData({})
+            valTel("")
 
 
             ToastSuccess('Student Added')
           },
+          refetchQueries: [{ query: GET_USERS }],
+
           // update(cache, { data: { addItems } }) {
           //   const { tados } = cache.readQuery({
           //     query: GET_STAFF
@@ -195,12 +202,13 @@ export function UseAllStudents() {
         // });
         // console.log('sami', queryResult);
       } catch (error) {
-        dispatch({
-          type: "setModal",
-          payload: {
-            openFormModal: false,
-          },
-        });
+        // dispatch({
+        //   type: "setModal",
+        //   payload: {
+        //     openFormModal: false,
+        //   },
+        // });
+        openModal(false)
         ToastError(error.message);
 
       }
@@ -220,22 +228,22 @@ export function UseAllStudents() {
 
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
-    if (!state.editData?.name) {
+    if (!useEditData?.name) {
       ToastWarning('Name required')
     }
-    else if (!state.editData?.email) {
+    else if (!useEditData?.email) {
       ToastWarning('Email required')
     }
-    else if (!state.valTell) {
+    else if (useContact == "") {
       ToastWarning('contact must be 11 characters')
     }
-    else if (!state.editData?.cnic) {
+    else if (!useEditData?.cnic) {
       ToastWarning('cnic required')
     }
-    else if (!state.editData?.address) {
+    else if (!useEditData?.address) {
       ToastWarning('address required')
     }
-    else if (!state.editData?.userGroup) {
+    else if (!useEditData?.userGroup) {
       ToastWarning('User Group required')
     }
     else {
@@ -243,44 +251,48 @@ export function UseAllStudents() {
         await UpdateStudents({
           variables: {
             where: {
-              id: state.editId
+              id: useEditId
             },
 
             data: {
               name: {
-                set: state.editData?.name,
+                set: useEditData?.name,
               },
               email: {
-                set: state.editData?.email,
+                set: useEditData?.email,
               },
               password: {
-                set: state.editData?.password,
+                set: useEditData?.password,
               },
               cnic: {
-                set: state.editData?.cnic,
+                set: useEditData?.cnic,
               },
               address: {
-                set: state.editData?.address,
+                set: useEditData?.address,
               },
               contact: {
-                set: state.valTel
+                set: useContact
               },
               userGroup: {
                 connect: {
-                  id: state.editData?.userGroup
+                  id: useEditData?.userGroup
                 }
               }
-              
+
             },
           },
           onCompleted() {
-            dispatch({
-              type: "setModal",
-              payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-              },
-            });
+            // dispatch({
+            //   type: "setModal",
+            //   payload: {
+            //     modalUpdateFlag: false,
+            //     openFormModal: false,
+            //   },
+            // });
+            openModal(false)
+            updateFlag(false)
+            editData({})
+            valTel("")
             ToastSuccess('Student Updated')
           },
           refetchQueries: [{ query: GET_USERS }],

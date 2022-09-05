@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { useState, useContext } from "react";
 import {
   ToastError,
@@ -13,11 +13,8 @@ import {
 import {
   GET_USERS
 } from "../../../lib/queries/AllQueries";
-import {
-  AppContext
-} from "../../../State";
 import FiltredData from '../../../constants/FiltredRoles'
-import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag, editData, valTel, editId, userData } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -26,6 +23,13 @@ import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTab
 
 
 export function UseAllStaff() {
+  const useEditData = useReactiveVar(editData)
+  const useContact = useReactiveVar(valTel)
+  const useEditId = useReactiveVar(editId)
+  const useUserData = useReactiveVar(userData)
+  console.log("Edit data in useAllStaff", useEditData);
+  console.log("Contactin useAllStaff", useContact);
+  console.log("edit id in useAllStaff", useEditId);
   let {
     data,
     loading: GET_LOADING,
@@ -72,10 +76,7 @@ export function UseAllStaff() {
       dropDownUserGroup: userGroup
     },
   ]
-  const {
-    state,
-    dispatch
-  } = useContext(AppContext);
+
 
   //GET STAFF 
 
@@ -94,7 +95,7 @@ export function UseAllStaff() {
         role: item.userGroup.userGroupRole
       });
     }
- 
+
 
     if (item.userGroup.userGroupRole === "ADMIN") {
       refacteredData.push({
@@ -111,7 +112,7 @@ export function UseAllStaff() {
 
     console.log(item);
   });
-  console.log("sami", refacteredData);
+  console.log("in useAllStaff", refacteredData);
 
   //ADD STAFF
 
@@ -127,24 +128,22 @@ export function UseAllStaff() {
   const ctaFormHandler = async (event) => {
 
     event.preventDefault();
-    if (!state.editData?.name) {
+    if (!useEditData?.name) {
       ToastWarning('Name required')
     }
-    else if (!state.editData?.email) {
+    else if (!useEditData?.email) {
       ToastWarning('Email required')
     }
-    else if (!state?.valTel) {
+    else if (!useContact) {
       ToastWarning('Contact required')
     }
-    else if (!state.editData?.cnic) {
+    else if (!useEditData?.cnic) {
       ToastWarning('cnic required')
-      
-
     }
-    else if (!state.editData?.address) {
+    else if (!useEditData?.address) {
       ToastWarning('address required')
     }
-    else if (!state.editData?.userGroup) {
+    else if (!useEditData?.userGroup) {
       ToastWarning('User Group required')
     }
 
@@ -154,20 +153,19 @@ export function UseAllStaff() {
         await Register({
           variables: {
             data: {
-              name: state.editData?.name,
-              email: state.editData?.email,
-              password: state.editData?.password,
-              cnic: state.editData?.cnic,
-              address: state.editData?.address,
-              contact: state?.valTel,
+              name: useEditData?.name,
+              email: useEditData?.email,
+              password: useEditData?.password,
+              cnic: useEditData?.cnic,
+              contact: useContact,
               userGroup: {
                 connect: {
-                  id: state.editData?.userGroup
+                  id: useEditData?.userGroup
                 }
               },
               organizations: {
                 connect: {
-                  id: state?.user.id
+                  id: useUserData.id
                 }
               },
             }
@@ -182,8 +180,9 @@ export function UseAllStaff() {
             // });
             openModal(false)
             updateFlag(false)
+            editData({})
+            valTel("")
             ToastSuccess('Staff Added')
-            console.log(state.user.id)
           },
           refetchQueries: [{ query: GET_USERS }],
 
@@ -301,22 +300,22 @@ export function UseAllStaff() {
     }] = useMutation(UPDATE_USER);
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
-    if (!state.editData?.name) {
+    if (!useEditData?.name) {
       ToastWarning('Name required')
     }
-    else if (!state.editData?.email) {
+    else if (!useEditData?.email) {
       ToastWarning('Email required')
     }
-    else if (state.valTel) {
+    else if (!useContact) {
       ToastWarning('Contact Required')
     }
-    else if (!state.editData?.cnic) {
+    else if (!useEditData?.cnic) {
       ToastWarning('cnic required')
     }
-    else if (!state.editData?.address) {
+    else if (!useEditData?.address) {
       ToastWarning('address required')
     }
-    else if (!state.editData?.userGroup) {
+    else if (!useEditData?.userGroup) {
       ToastWarning('Role required')
     }
     else {
@@ -324,31 +323,31 @@ export function UseAllStaff() {
         await UpdateUser({
           variables: {
             where: {
-              id: state.editId
+              id: useEditId
             },
 
             data: {
               name: {
-                set: state.editData?.name,
+                set: useEditData?.name,
               },
               email: {
-                set: state.editData?.email,
+                set: useEditData?.email,
               },
               password: {
-                set: state.editData?.password,
+                set: useEditData?.password,
               },
               cnic: {
-                set: state.editData?.cnic,
+                set: useEditData?.cnic,
               },
               address: {
-                set: state.editData?.address,
+                set: useEditData?.address,
               },
               contact: {
-                set: state.valTel,
+                set: useContact,
               },
               userGroup: {
                 connect: {
-                  id: state.editData?.userGroup
+                  id: useEditData?.userGroup
                 }
               }
             },
@@ -363,6 +362,8 @@ export function UseAllStaff() {
             // });
             openModal(false)
             updateFlag(false)
+            editData({})
+            valTel("")
             ToastSuccess('Staff Updated')
 
           },

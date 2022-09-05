@@ -1,23 +1,23 @@
 import React, { useContext, useState } from 'react'
 import { ADD_USER_GROUP, UPDATE_USER_GROUP } from '../../../lib/mutation/AllMutations';
-import { useMutation, useQuery } from "@apollo/client";
-import { AppContext } from "../../../State";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { ToastError, ToastSuccess, ToastWarning } from '../../../commonComponents/commonFunction/CommonFunction';
 import { GET_USER_GROUP } from '../../../lib/queries/AllQueries';
 import { useNavigate } from 'react-router-dom';
-import { openModal, updateFlag } from '../../../commonComponents/newTable/NewTable';
+import { openModal, updateFlag, userGroupData, editId } from '../../../lib/reactivities/reactiveVarables';
 
 export function UseUserGroup() {
 
 
 
-    const { state, dispatch } = useContext(AppContext)
     let [CreateUserGroup, { loading: ADD_LOADING }] = useMutation(ADD_USER_GROUP);
     const [userName, setUserName] = useState('')
     const [userGroupRole, setuserGroupRole] = useState('')
     const [email, setEmail] = useState('')
     const [flag, setFlag] = useState(false)
     const navigate = useNavigate()
+    const useUserGroupData = useReactiveVar(userGroupData)
+    const useEditId = useReactiveVar(editId)
     const allData = {
         "navigationResults": []
     };
@@ -60,7 +60,7 @@ export function UseUserGroup() {
         else if (userGroupRole === '') {
             ToastWarning('User Group Role Required')
         }
-        else if(userGroupRole === "ORGANIZATIONKEY" || userGroupRole === "ADMIN" || userGroupRole === "TEACHER" || userGroupRole === "STUDENT" ){
+        else if (userGroupRole === "ORGANIZATIONKEY" || userGroupRole === "ADMIN" || userGroupRole === "TEACHER" || userGroupRole === "STUDENT") {
 
             try {
                 await CreateUserGroup({
@@ -78,7 +78,7 @@ export function UseUserGroup() {
                         }
 
                     },
-                    refetchQueries: [{ query: GET_USER_GROUP }],
+
 
                     onCompleted(data, cache) {
                         openModal(false)
@@ -88,8 +88,8 @@ export function UseUserGroup() {
                         setUserName('')
 
                     },
+                    refetchQueries: [{ query: GET_USER_GROUP }],
                 });
-                console.log(state.editData);
             } catch (error) {
                 // dispatch({
                 //     type: "setModal",
@@ -102,7 +102,7 @@ export function UseUserGroup() {
                 console.log(error.message)
 
             }
-        }else{
+        } else {
             ToastError("Spelling mistake in role")
         }
     };
@@ -111,7 +111,7 @@ export function UseUserGroup() {
 
 
     // const refacteredData = [];
-   
+
     // data?.userGroups?.map((item) => {
     //     refacteredData.push({
     //         id: item.id,
@@ -136,26 +136,28 @@ export function UseUserGroup() {
         }] = useMutation(UPDATE_USER_GROUP);
 
     const ctaUpdateHandler = async () => {
-        if (state?.editUserGroupData?.name === '') {
+        // if (state?.editUserGroupData?.name === '') {
+        if (useUserGroupData?.name === '') {
             ToastWarning('User Name Required')
         }
-        else if (state?.editUserGroupData?.role === '') {
+        // else if (state?.editUserGroupData?.role === '') {
+        else if (useUserGroupData?.role === '') {
             ToastWarning('User Group Role Required')
         }
-        else if(state?.editUserGroupData?.role === "ORGANIZATIONKEY" || state?.editUserGroupData?.role === "ADMIN" || state?.editUserGroupData?.role === "TEACHER" || state?.editUserGroupData?.role === "STUDENT"){
-            
+        else if (useUserGroupData?.role === "ORGANIZATIONKEY" || useUserGroupData?.role === "ADMIN" || useUserGroupData?.role === "TEACHER" || useUserGroupData?.role === "STUDENT") {
+
             try {
                 await UpdateUserGroup({
                     variables: {
                         where: {
-                            id: state.editId
+                            id: useEditId
                         },
                         data: {
                             userName: {
-                                set: state?.editUserGroupData?.name
+                                set: useUserGroupData?.name
                             },
                             userGroupRole: {
-                                set: state?.editUserGroupData?.role
+                                set: useUserGroupData?.role
                             },
                             tabsPermission: allData
                             // tabsPermission: {
@@ -169,7 +171,7 @@ export function UseUserGroup() {
                         }
 
                     },
-                    refetchQueries: [{ query: GET_USER_GROUP }],
+
 
                     onCompleted(data, cache) {
                         openModal(false)
@@ -177,8 +179,10 @@ export function UseUserGroup() {
                         ToastSuccess('UserGroup Updated')
                         setuserGroupRole('')
                         setUserName('')
+                        userGroupData({})
 
                     },
+                    refetchQueries: [{ query: GET_USER_GROUP }],
                 });
                 // console.log(state.editData);
             } catch (error) {
@@ -193,7 +197,7 @@ export function UseUserGroup() {
                 console.log(error.message)
 
             }
-        }else{
+        } else {
             ToastError("Spelling mistake in role")
         }
     };

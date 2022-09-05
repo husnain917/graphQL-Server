@@ -15,7 +15,6 @@ import Profile from '../modules/profile/Profile';
 import ChangePassword from '../modules/profile/changePassword/ChangePassword';
 import ProfileData from '../modules/profile/profileData/ProfileData';
 import EditProfile from '../modules/profile/editProfile/EditProfile';
-import { AppContext } from '../State';
 import AllStaff from '../modules/adminPortal/allStaff/AllStaff';
 import { PublicRouting } from './PublicRouting';
 import { PrivateRouting } from './PrivateRouting';
@@ -37,15 +36,20 @@ import CreateOrganization from '../modules/settings/createOrganization/CreateOrg
 import CourseCategory from '../modules/adminPortal/courseCategory/CourseCategory';
 import ViewAllUserGroup from '../modules/settings/userGroup/ViewAllUserGroup';
 import Footer from '../commonComponents/footer/Footer';
+<<<<<<< HEAD
 import CourseDetail from '../modules/courseDetail/CourseDetail';
+=======
+import { checkAuth } from '../lib/reactivities/reactiveVarables';
+import { useReactiveVar } from '@apollo/client';
+>>>>>>> 925d697abe9bd2cc98456d84f9f070cfb2dbf534
 
 export default function Navigation() {
+    const useCheckAuth = useReactiveVar(checkAuth)
     let location = useLocation();
     let navigate = useNavigate()
-    const { state, dispatch } = useContext(AppContext);
 
     React.useEffect(() => {
-        if (!state.authState) {
+        if (!useCheckAuth) {
             navigate(location.pathname)
         }
     }, [])
@@ -57,7 +61,7 @@ export default function Navigation() {
                 <Route
                     path='/login'
                     element={
-                        <PublicRouting isAllowed={state.authState}>
+                        <PublicRouting isAllowed={useCheckAuth}>
                             <Login />
                         </PublicRouting>
                     }
@@ -65,7 +69,7 @@ export default function Navigation() {
                 <Route
                     path='/forgotPassword'
                     element={
-                        <PublicRouting isAllowed={state.authState}>
+                        <PublicRouting isAllowed={useCheckAuth}>
                             <ForgotPassword />
                         </PublicRouting>
                     }
@@ -78,14 +82,14 @@ export default function Navigation() {
                 <Route
                     path='/'
                     element={
-                        <PrivateRouting isAllowed={state.authState}>
+                        <PrivateRouting isAllowed={useCheckAuth}>
                             <Sidebar />
                         </PrivateRouting>
                     }>
                     <Route
                         path='/'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <Dashboard />
                             </PrivateRouting>
                         }
@@ -93,7 +97,7 @@ export default function Navigation() {
                     <Route
                         path='/contact'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <ContactUs />
                             </PrivateRouting>
                         }
@@ -101,7 +105,7 @@ export default function Navigation() {
                     <Route
                         path='/staff'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <AllStaff />
                             </PrivateRouting>
                         }
@@ -109,7 +113,7 @@ export default function Navigation() {
                     <Route
                         path='/students'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <AllStudents />
                             </PrivateRouting>
                         }
@@ -117,7 +121,7 @@ export default function Navigation() {
                     <Route
                         path='/successStories'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <SuccessStory />
                             </PrivateRouting>
                         }
@@ -125,27 +129,27 @@ export default function Navigation() {
                     <Route
                         path='/courses'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <Courses />
                             </PrivateRouting>
                         }
                     />
                     <Route path='/courseCategory'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <CourseCategory />
                             </PrivateRouting>}
                     />
                     <Route path='/lectures'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <Lecture />
                             </PrivateRouting>}
                     />
                     <Route
                         path='/enrollmentApproval'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <EnrollmentApproval />
                             </PrivateRouting>
                         }
@@ -153,7 +157,7 @@ export default function Navigation() {
                     <Route
                         path='/events'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <Events />
                             </PrivateRouting>
                         }
@@ -161,7 +165,7 @@ export default function Navigation() {
                     <Route
                         path='/faqs'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <FAQS />
                             </PrivateRouting>
                         }
@@ -169,7 +173,7 @@ export default function Navigation() {
                     <Route
                         path='/profile'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <Profile />
                             </PrivateRouting>
                         }
@@ -184,25 +188,25 @@ export default function Navigation() {
                     {/* students routes */}
                     <Route path='/myCourses'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <MyCourse />
                             </PrivateRouting>}
                     />
                     <Route path='/assignments'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <Assignment />
                             </PrivateRouting>}
                     />
                     <Route path='/quiz'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <Quiz />
                             </PrivateRouting>}
                     />
                     <Route path='/attandance'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <MyAttandance />
                             </PrivateRouting>}
                     />
@@ -212,61 +216,61 @@ export default function Navigation() {
                     {/*Teacher routes*/}
                     <Route path='/courseAssigned'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <CourseAssigned />
                             </PrivateRouting>}
                     />
                     <Route path='/courseCategory'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <CourseCategory />
                             </PrivateRouting>}
                     />
                     <Route path='/lectures'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <Lecture />
                             </PrivateRouting>}
                     />
                     <Route path='/fileOrAssignment'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <FilesOrAssignment />
                             </PrivateRouting>}
                     />
                     <Route path='/courseBatch'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <CourseBatch />
                             </PrivateRouting>}
                     />
                     <Route path='/speakers'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <Speakers />
                             </PrivateRouting>}
                     />
-                      {/* <Route path='/user-groups'
+                    {/* <Route path='/user-groups'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <UserGroupTable />
                             </PrivateRouting>}
                     /> */}
                     <Route path='/user-groups'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <UserGroupTable />
                             </PrivateRouting>}
                     />
                     <Route path='/api-permissions'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <ApiPermissions />
                             </PrivateRouting>}
                     />
                     <Route path='/crate-organization'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <CreateOrganization />
                             </PrivateRouting>}
                     />
@@ -276,7 +280,6 @@ export default function Navigation() {
                                 <CourseDetail />
                             </PrivateRouting>}
                     />
-                  
                 </Route>
 
             </Routes>

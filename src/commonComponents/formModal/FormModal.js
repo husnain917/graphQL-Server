@@ -11,7 +11,6 @@ import { Editor } from "react-draft-wysiwyg";
 import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Autocomplete, MenuItem, Stack, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
-import { AppContext } from "../../State";
 import { EditorState } from "draft-js";
 import { Calendar } from "react-calendar";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -30,53 +29,41 @@ import CloudinaryFunction from "../../constants/CloudinaryFunction";
 import { blue } from "@mui/material/colors";
 import UserGroupModal from "../userGroupModal/UserGroupModal";
 import UserGroup from "../../modules/settings/userGroup/UserGroup";
-import { openModal, updateFlag } from "../newTable/NewTable";
+import { openModal, updateFlag, editData, userGroupData, imageUrl, valTel } from "../../lib/reactivities/reactiveVarables";
 
-export default function FormModal({
-  formInputs,
-  ctaFormHandler,
-  ctaUpdateHandler,
-  handleChange,
-  onDateChange,
-  date,
-}) {
-  const { state, dispatch } = useContext(AppContext);
-  const [ctaImageUpdateHandler] = CloudinaryFunction();
-  const [open, setOpen] = useState(false);
+
+export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date, }) {
+  const [ctaImageUpdateHandler] = CloudinaryFunction()
+  const [open, setOpen] = useState(false)
+  const [editName, setEditName] = useState("")
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [contact, setContact] = useState('')
   var openFormModal = useReactiveVar(openModal)
   var modalUpdateFlag = useReactiveVar(updateFlag)
+  var useEditData = useReactiveVar(editData)
+  // console.log("Edit data in modal", useEditData);
+
   const handleChangePhone = (phone) => {
-    setContact(phone);
-    dispatch({
-      type: "setValTel",
-      payload: contact,
-    });
-    console.log(contact);
-  };
+    valTel(phone)
+
+  }
   const handleCloseUpdate = () => {
-    // dispatch({
-    //   type: "setModal",
-    //   payload: {
-    //     modalUpdateFlag: false,
-    //     openFormModal: false,
-    //   },
-    // });
+
     openModal(false)
     updateFlag(false)
-    // dispatch({
-    //   type: "setEditUserGroupDataBool",
-    //   payload: false
-    // });
+    editData({})
+    userGroupData({})
+    imageUrl("")
+    valTel("")
+
   };
 
   return (
     <div>
       <Dialog open={openFormModal} onClose={handleCloseUpdate} fullScreen={fullScreen} fullWidth={true} BackdropProps={{ style: { backgroundColor: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(8px)' } }}>
         <DialogTitle>
-          {modalUpdateFlag ? 
+          {modalUpdateFlag ?
             <p>Update</p>
             :
             <p>Add</p>
@@ -95,12 +82,13 @@ export default function FormModal({
           </IconButton>
         </DialogTitle>
         <DialogContent dividers>
-              {/* <DialogContentText>
+          {/* <DialogContentText>
                 Please read carefully and fill all required fields.
               </DialogContentText> */}
           <Box>
             {formInputs.map((item, index) => {
-              const test = state.editData;
+              // const test = state.editData;
+              const test = useEditData;
               return (
                 <>
                   {
@@ -117,17 +105,14 @@ export default function FormModal({
                           required
                           fullWidth
                           variant="standard"
-                          value={
-                            modalUpdateFlag ? item.name === "file" ? "" : state.editData[item.name] : null
+                          defaultValue={
+                            modalUpdateFlag ? item.name === "file" ? "" : useEditData[item.name] : null
                           }
                           onChange={(e) => {
                             test[item.name] = item.name === "file"
                               ? e.target.files[0].name
                               : e.target.value;
-                            dispatch({
-                              type: "setEditData",
-                              payload: test,
-                            });
+                            editData(test)
                           }}
                         />
                       )
@@ -148,10 +133,7 @@ export default function FormModal({
                             // variant="standard"
                             onChange={(e) => {
                               test[item.name] = e.target.value;
-                              dispatch({
-                                type: "setEditData",
-                                payload: test,
-                              });
+                              editData(test)
                               console.log('pp', test);
                             }}
 
@@ -181,11 +163,8 @@ export default function FormModal({
                               name="row-radio-buttons-group"
                               onChange={(e) => {
                                 test[item.name] = e.target.value;
-                                dispatch({
-                                  type: "setEditData",
-                                  payload: test,
-                                });
-                                console.log('pp', test);
+                                editData(test)
+                                // console.log('pp', test);
                               }}
                             >
                               {item?.dropDownContent?.map((option) => (
@@ -203,13 +182,11 @@ export default function FormModal({
                         ) :
                           item.type === "editor" ? (
                             <Editor
-                              editorState={state.editData[item.name]}
+                              // editorState={state.editData[item.name]}
+                              editorState={useEditData[item.name]}
                               onEditorStateChange={(getText) => {
                                 test[item.name] = getText;
-                                dispatch({
-                                  type: "setEditData",
-                                  payload: test,
-                                });
+                                editData(test)
                               }}
                               toolbarClassName="toolbarClassName"
                               wrapperClassName="wrapperClassName"
@@ -249,10 +226,7 @@ export default function FormModal({
                                       name="row-radio-buttons-group"
                                       onChange={(e) => {
                                         test[item.name] = e.target.value;
-                                        dispatch({
-                                          type: "setEditData",
-                                          payload: test,
-                                        });
+                                        editData(test)
                                       }}
                                     >
                                       {item?.dropDown?.categories?.map((option) => (
@@ -273,11 +247,7 @@ export default function FormModal({
                                         name="row-radio-buttons-group"
                                         onChange={(e) => {
                                           test[item.name] = e.target.value;
-                                          console.log("kk", item.name);
-                                          dispatch({
-                                            type: "setEditData",
-                                            payload: test,
-                                          });
+                                          editData(test)
                                         }}
                                       >
                                         {item?.dropDown?.map((option) => (
@@ -297,10 +267,7 @@ export default function FormModal({
                                           name="row-radio-buttons-group"
                                           onChange={(e) => {
                                             test[item.name] = e.target.value;
-                                            dispatch({
-                                              type: "setEditData",
-                                              payload: test,
-                                            });
+                                            editData(test)
                                           }}
                                         >
                                           {item?.dropDown?.map((option) => (
@@ -320,10 +287,7 @@ export default function FormModal({
                                             name="row-radio-buttons-group"
                                             onChange={(e) => {
                                               test[item.name] = e.target.value;
-                                              dispatch({
-                                                type: "setEditData",
-                                                payload: test,
-                                              });
+                                              editData(test)
                                             }}
                                           >
                                             {item?.dropDown?.findManyCourses?.map((option) => (
@@ -347,10 +311,7 @@ export default function FormModal({
                                                 name="row-radio-buttons-group"
                                                 onChange={(e) => {
                                                   test[item.name] = e.target.value;
-                                                  dispatch({
-                                                    type: "setEditData",
-                                                    payload: test,
-                                                  });
+                                                  editData(test)
                                                 }}
                                               >
                                                 {item?.dropDown?.map((option) => (
@@ -370,10 +331,7 @@ export default function FormModal({
                                                   name="row-radio-buttons-group"
                                                   onChange={(e) => {
                                                     test[item.name] = e.target.value;
-                                                    dispatch({
-                                                      type: "setEditData",
-                                                      payload: test,
-                                                    });
+                                                    editData(test)
                                                   }}
                                                 >
                                                   {item?.dropDown?.map((option) => (
@@ -394,10 +352,7 @@ export default function FormModal({
                                                     name="row-radio-buttons-group"
                                                     onChange={(e) => {
                                                       test[item.name] = e.target.value;
-                                                      dispatch({
-                                                        type: "setEditData",
-                                                        payload: test,
-                                                      });
+                                                      editData(test)
                                                     }}
 
                                                   >
@@ -457,17 +412,15 @@ export default function FormModal({
                                                       required
                                                       fullWidth
                                                       variant="standard"
-                                                      value={
-                                                        modalUpdateFlag ? item.name === "file" ? "" : state.editData[item.name] : null
+                                                      defaultValue={
+                                                        modalUpdateFlag ? item.name === "file" ? "" : useEditData[item.name] : null
+                                                        // modalUpdateFlag ? item.name === "file" ? "" : state?.editData[item.name] : null
                                                       }
                                                       onChange={(e) => {
                                                         test[item.name] = item.name === "file"
                                                           ? e.target.files[0].name
                                                           : e.target.value;
-                                                        dispatch({
-                                                          type: "setEditData",
-                                                          payload: test,
-                                                        });
+                                                        editData(test)
                                                       }}
                                                     />
                                                   )
@@ -511,6 +464,6 @@ export default function FormModal({
           </Stack>
         </DialogActions>
       </Dialog>
-    </div>
+    </div >
   );
 }

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import React, { useState, useContext } from "react";
 import Axios from "axios";
 import {
@@ -15,8 +15,7 @@ import { GET_COURSES } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../../State";
-import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -25,6 +24,8 @@ import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTab
 
 
 export default function UseCourseAssigned() {
+    const useEditData = useReactiveVar(editData)
+    const useEditId = useReactiveVar(editId)
     const formInputs = [
         {
             label: "Name",
@@ -63,7 +64,6 @@ export default function UseCourseAssigned() {
             dropDownContent: ["PUBLISH", "UNPUBLISH"],
         },
     ]
-    const { state, dispatch } = useContext(AppContext);
 
 
 
@@ -80,24 +80,24 @@ export default function UseCourseAssigned() {
             name: 'JS PROGRAMS',
             courseBatches: '2',
             courseBatchesId: '21213333',
-            courses:'Flutter',
-            courseId:'23232'
+            courses: 'Flutter',
+            courseId: '23232'
         },
         {
             id: '92739237293729793',
             name: 'JS PROGRAMS',
             courseBatches: '2',
             courseBatchesId: '21213333',
-            courses:'Flutter',
-            courseId:'23232'
+            courses: 'Flutter',
+            courseId: '23232'
         },
         {
             id: '92739237293729793',
             name: 'JS PROGRAMS',
             courseBatches: '2',
             courseBatchesId: '21213333',
-            courses:'Flutter',
-            courseId:'23232'
+            courses: 'Flutter',
+            courseId: '23232'
         },
     ];
     //   data?.findManyCourses?.map((item) => {
@@ -126,25 +126,25 @@ export default function UseCourseAssigned() {
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.courseName) {
+        if (!useEditData?.courseName) {
             ToastWarning('Course name required')
         }
-        else if (!state.editData?.courseDesc) {
+        else if (!useEditData?.courseDesc) {
             ToastWarning('Course description required')
         }
-        else if (!state.editData?.courseIntro) {
+        else if (!useEditData?.courseIntro) {
             ToastWarning('Intro required')
         }
-        else if (!state.editData?.coursePrice) {
+        else if (!useEditData?.coursePrice) {
             ToastWarning('Price required')
         }
-        else if (!state.editData?.instructorId) {
+        else if (!useEditData?.instructorId) {
             ToastWarning('Instructor Id required')
         }
-        else if (!state.editData?.courseCategoryId) {
+        else if (!useEditData?.courseCategoryId) {
             ToastWarning('Course category Id required')
         }
-        else if (!state.editData?.courseStatus) {
+        else if (!useEditData?.courseStatus) {
             ToastWarning('Status required')
         }
         else {
@@ -152,15 +152,15 @@ export default function UseCourseAssigned() {
                 await Mutation({
                     variables: {
                         data: {
-                            courseName: state.editData?.courseName,
-                            courseDesc: state.editData?.courseDesc,
-                            courseIntro: state.editData?.courseIntro,
-                            courseStatus: state.editData?.courseStatus,
-                            instructorId: state.editData?.instructorId,
-                            courseCategoryId: state.editData?.courseCategoryId,
-                            coursePrice: state.editData?.coursePrice,
+                            courseName: useEditData?.courseName,
+                            courseDesc: useEditData?.courseDesc,
+                            courseIntro: useEditData?.courseIntro,
+                            courseStatus: useEditData?.courseStatus,
+                            instructorId: useEditData?.instructorId,
+                            courseCategoryId: useEditData?.courseCategoryId,
+                            coursePrice: useEditData?.coursePrice,
 
-                            // phone: state.editData?.phone
+                            // phone: useEditData?.phone
                         },
                     },
                     onCompleted(data, cache) {
@@ -228,25 +228,25 @@ export default function UseCourseAssigned() {
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.courseName) {
+        if (!useEditData?.courseName) {
             ToastWarning('Course name required')
         }
-        else if (!state.editData?.courseDesc) {
+        else if (!useEditData?.courseDesc) {
             ToastWarning('Course description required')
         }
-        else if (!state.editData?.courseIntro) {
+        else if (!useEditData?.courseIntro) {
             ToastWarning('Intro required')
         }
-        else if (!state.editData?.coursePrice) {
+        else if (!useEditData?.coursePrice) {
             ToastWarning('Price required')
         }
-        else if (!state.editData?.instructorId) {
+        else if (!useEditData?.instructorId) {
             ToastWarning('Instructor Id required')
         }
-        else if (!state.editData?.courseCategoryId) {
+        else if (!useEditData?.courseCategoryId) {
             ToastWarning('Course category Id required')
         }
-        else if (!state.editData?.courseStatus) {
+        else if (!useEditData?.courseStatus) {
             ToastWarning('Status required')
         }
         else {
@@ -254,23 +254,23 @@ export default function UseCourseAssigned() {
                 await UpdateCourses({
                     variables: {
                         where: {
-                            id: state.editId
+                            id: useEditId
                         },
                         data: {
                             courseName: {
-                                set: state.editData?.courseName
+                                set: useEditData?.courseName
                             },
                             courseDesc: {
-                                set: state.editData?.courseDesc
+                                set: useEditData?.courseDesc
                             },
                             courseIntro: {
-                                set: state.editData?.courseIntro
+                                set: useEditData?.courseIntro
                             },
                             courseStatus: {
-                                set: state.editData?.courseStatus
+                                set: useEditData?.courseStatus
                             },
                             coursePrice: {
-                                set: state.editData?.coursePrice
+                                set: useEditData?.coursePrice
                             }
                         }
                     },

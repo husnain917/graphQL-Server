@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { useState, useContext } from "react";
 import {
     ToastError,
@@ -12,8 +12,8 @@ import {
     UPDATE_COURSE_BATCH
 } from "../../../lib/mutation/AllMutations";
 import { GET_COURSE_BATCH } from "../../../lib/queries/AllQueries";
-import { AppContext } from "../../../State";
-import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
+
 
 
 
@@ -22,6 +22,9 @@ import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTab
 
 
 export default function UseCourseBatch() {
+    const useEditId = useReactiveVar(editId)
+    const useEditData = useReactiveVar(editData)
+    console.log("Edit data in useCourseBatch", useEditData);
     const [{ COURSE_DATA }] = FiltredData()
     const formInputs = [
         {
@@ -41,7 +44,6 @@ export default function UseCourseBatch() {
             dropDown: COURSE_DATA
         },
     ]
-    const { state, dispatch } = useContext(AppContext);
 
 
 
@@ -70,19 +72,19 @@ export default function UseCourseBatch() {
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.name) {
+        if (!useEditData?.name) {
             ToastWarning('name required')
         }
-        else if (!state.editData?.coursesId) {
+        else if (!useEditData?.coursesId) {
             ToastWarning('Course Id required')
         }
-        else if (!state.editData?.courseName) {
+        else if (!useEditData?.courseName) {
             ToastWarning('Course Name required')
         }
-        // else if (!state.editData?.assignmentId) {
+        // else if (!useEditData?.assignmentId) {
         //     ToastWarning('assignmentId required')
         // }
-        // else if (!state.editData?.quizId) {
+        // else if (!useEditData?.quizId) {
         //     ToastWarning('quizId required')
         // }
         else {
@@ -90,11 +92,11 @@ export default function UseCourseBatch() {
                 await CreateCourseBatches({
                     variables: {
                         data: {
-                            name: state?.editData?.name,
-                            courseName: state?.editData?.courseName,
+                            name: useEditData?.name,
+                            courseName: useEditData?.courseName,
                             Courses: {
                                 connect: {
-                                    id: state?.editData?.coursesId
+                                    id: useEditData?.coursesId
                                 }
                             }
                         }
@@ -110,6 +112,7 @@ export default function UseCourseBatch() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
                         ToastSuccess('Lecture Added')
 
                     },
@@ -164,13 +167,13 @@ export default function UseCourseBatch() {
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.name) {
+        if (!useEditData?.name) {
             ToastWarning('name required')
         }
-        else if (!state.editData?.coursesId) {
+        else if (!useEditData?.coursesId) {
             ToastWarning('Course Id required')
         }
-        else if (!state.editData?.courseName) {
+        else if (!useEditData?.courseName) {
             ToastWarning('Course Name required')
         }
         else {
@@ -178,19 +181,19 @@ export default function UseCourseBatch() {
                 await UpdateCourseBatches({
                     variables: {
                         where: {
-                            id: state.editId
+                            id: useEditId
                         },
-                        
+
                         data: {
                             name: {
-                                set: state?.editData?.name,
+                                set: useEditData?.name,
                             },
                             courseName: {
-                                set: state?.editData?.courseName,
+                                set: useEditData?.courseName,
                             },
                             Courses: {
                                 connect: {
-                                    id: state?.editData?.coursesId
+                                    id: useEditData?.coursesId
                                 }
                             }
                         }
@@ -198,15 +201,10 @@ export default function UseCourseBatch() {
 
                     },
                     onCompleted() {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
+
                         openModal(false)
                         updateFlag(false)
+                        editData({})
                         ToastSuccess('Course Updated')
                     },
                     refetchQueries: [{ query: GET_COURSE_BATCH }],

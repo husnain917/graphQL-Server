@@ -36,12 +36,9 @@ import CreateOrganization from '../modules/settings/createOrganization/CreateOrg
 import CourseCategory from '../modules/adminPortal/courseCategory/CourseCategory';
 import ViewAllUserGroup from '../modules/settings/userGroup/ViewAllUserGroup';
 import Footer from '../commonComponents/footer/Footer';
-<<<<<<< HEAD
 import CourseDetail from '../modules/courseDetail/CourseDetail';
-=======
 import { checkAuth } from '../lib/reactivities/reactiveVarables';
 import { useReactiveVar } from '@apollo/client';
->>>>>>> 925d697abe9bd2cc98456d84f9f070cfb2dbf534
 
 export default function Navigation() {
     const useCheckAuth = useReactiveVar(checkAuth)
@@ -276,7 +273,7 @@ export default function Navigation() {
                     />
                     <Route path='/course-detail/:courseId'
                         element={
-                            <PrivateRouting isAllowed={state.authState}>
+                            <PrivateRouting isAllowed={useCheckAuth}>
                                 <CourseDetail />
                             </PrivateRouting>}
                     />

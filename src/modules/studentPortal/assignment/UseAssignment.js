@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import React, { useState, useContext } from "react";
 import Axios from "axios";
 import {
@@ -16,15 +16,20 @@ import { GET_ASSIGNMENT, GET_COURSES } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../../State";
 import FiltredData from "../../../constants/FiltredRoles";
-import {
-  openModal,
-  updateFlag,
-} from "../../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
+
+
+
+
+
+
 
 export default function UseAssignment() {
-  const [{ courseBatch, COURSE_DATA }] = FiltredData();
+  const useEditId = useReactiveVar(editId)
+  const useEditData = useReactiveVar(editData)
+  console.log("Edit data in my assignments", useEditData);
+  const [{ courseBatch, COURSE_DATA }] = FiltredData()
   const formInputs = [
     {
       label: "Name",
@@ -35,16 +40,20 @@ export default function UseAssignment() {
       label: "Course Batches",
       name: "courseBatchesId",
       type: "selectBatch",
-      dropDown: courseBatch,
+      dropDown: courseBatch
     },
     {
       label: "Courses",
       name: "coursesId",
       type: "selectCourse",
-      dropDown: COURSE_DATA,
+      dropDown: COURSE_DATA
     },
-  ];
-  const { state, dispatch } = useContext(AppContext);
+  ]
+
+
+
+
+
 
   //GET STAFF
 
@@ -58,7 +67,7 @@ export default function UseAssignment() {
       courseBatchesId: item.courseBatchesId,
       coursesId: item.coursesId,
       createdAt: item.createdAt,
-      updateAt: item.updateAt,
+      updateAt: item.updateAt
     });
   });
   console.log("refacteredData", refacteredData);
@@ -72,29 +81,32 @@ export default function UseAssignment() {
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    if (!state.editData?.courseBatchesId) {
-      ToastWarning("Course Batches required");
-    } else if (!state.editData?.name) {
-      ToastWarning("Name required");
-    } else if (!state.editData?.coursesId) {
-      ToastWarning("Courses required");
-    } else {
+    if (!useEditData?.courseBatchesId) {
+      ToastWarning('Course Batches required')
+    }
+    else if (!useEditData?.name) {
+      ToastWarning('Name required')
+    }
+    else if (!useEditData?.coursesId) {
+      ToastWarning('Courses required')
+    }
+    else {
       try {
         await CreateCourseAssignment({
           variables: {
             data: {
-              name: state.editData?.name,
+              name: useEditData?.name,
               CourseBatches: {
                 connect: {
-                  id: state.editData?.courseBatchesId,
-                },
+                  id: useEditData?.courseBatchesId
+                }
               },
               courses: {
                 connect: {
-                  id: state.editData?.coursesId,
-                },
-              },
-            },
+                  id: useEditData?.coursesId
+                }
+              }
+            }
           },
           onCompleted(data, cache) {
             // dispatch({
@@ -104,9 +116,11 @@ export default function UseAssignment() {
             //         openFormModal: false,
             //     },
             // });
-            openModal(false);
-            updateFlag(false);
-            ToastSuccess("Assignment Added");
+            openModal(false)
+            updateFlag(false)
+            editData({})
+            ToastSuccess('Assignment Added')
+
           },
           refetchQueries: [{ query: GET_ASSIGNMENT }],
         });
@@ -117,9 +131,10 @@ export default function UseAssignment() {
         //         openFormModal: false,
         //     },
         // });
-        openModal(false);
+        openModal(false)
         setLoader(false);
         ToastError(error.message);
+
       }
     }
   };
@@ -147,40 +162,43 @@ export default function UseAssignment() {
 
   //Update staff
 
-  let [UpdateCourseAssignment, { loading: UPDATE_LOADING }] =
-    useMutation(UPDATE_ASSIGNMENT);
+  let [UpdateCourseAssignment, { loading: UPDATE_LOADING }] = useMutation(UPDATE_ASSIGNMENT);
 
   const ctaUpdateHandler = async (event) => {
-    event.preventDefault();
-    if (!state.editData?.courseBatchesId) {
-      ToastWarning("Course Batches required");
-    } else if (!state.editData?.name) {
-      ToastWarning("Name required");
-    } else if (!state.editData?.coursesId) {
-      ToastWarning("Courses required");
-    } else {
+    event.preventDefault()
+    if (!useEditData?.courseBatchesId) {
+      ToastWarning('Course Batches required')
+    }
+    else if (!useEditData?.name) {
+      ToastWarning('Name required')
+    }
+    else if (!useEditData?.coursesId) {
+      ToastWarning('Courses required')
+    }
+    else {
       try {
         await UpdateCourseAssignment({
           variables: {
             where: {
-              id: state.editId,
+              id: useEditId
             },
 
             data: {
               name: {
-                set: state.editData?.name,
+                set: useEditData?.name
               },
               CourseBatches: {
                 connect: {
-                  id: state.editData?.courseBatchesId,
-                },
+                  id: useEditData?.courseBatchesId
+                }
               },
               courses: {
                 connect: {
-                  id: state.editData?.coursesId,
-                },
-              },
-            },
+                  id: useEditData?.coursesId
+                }
+              }
+            }
+
           },
           onCompleted() {
             // dispatch({
@@ -190,16 +208,19 @@ export default function UseAssignment() {
             //         openFormModal: false,
             //     },
             // });
-            openModal(false);
-            ToastSuccess("Course Updated");
+            openModal(false)
+            updateFlag(false)
+            editData({})
+            ToastSuccess('Course Updated')
           },
           refetchQueries: [{ query: GET_ASSIGNMENT }],
-        });
+        })
+
       } catch (error) {
         console.log(error.message);
       }
     }
-  };
+  }
   return [
     {
       loader,

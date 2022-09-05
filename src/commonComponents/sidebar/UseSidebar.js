@@ -1,26 +1,18 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppContext } from '../../State';
+import { checkAuth, orgCheck, userData, tabsPersmission } from '../../lib/reactivities/reactiveVarables';
 export const UseDrawer = () => {
     const [open, setOpen] = React.useState(true);
-    const { state, dispatch } = useContext(AppContext);
     const navigate = useNavigate()
     const handleDrawer = () => {
         setOpen(!open);
     };
     const ctaLogoutHandler = async () => {
         await localStorage.clear()
-        dispatch({
-            type: "setAuthState",
-            payload: {
-                user: null,
-                authState: false
-            }
-        })
-        dispatch({
-            type: "ORGlogin",
-            payload: false
-        })
+        userData(null)
+        checkAuth(false)
+        orgCheck(false)
+        tabsPersmission([])
         navigate('/login')
     }
 

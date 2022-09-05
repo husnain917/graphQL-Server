@@ -5,7 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import client from './lib/ApolloClient'
 import 'react-toastify/dist/ReactToastify.css';
-import { AppContextProvider } from "./State";
 import 'react-calendar/dist/Calendar.css';
 import 'react-phone-input-2/lib/material.css'
 import {
@@ -15,9 +14,7 @@ import {
 ReactDOM.render(
 
   <ApolloProvider client={client} >
-    <AppContextProvider>
-      <App />
-    </AppContextProvider>
+    <App />
   </ApolloProvider>,
 
   document.getElementById('root')

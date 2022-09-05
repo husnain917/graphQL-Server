@@ -2,10 +2,10 @@ import { Grid } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
 import CommonField from '../../../commonComponents/commonField/CommonField'
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader'
-import { AppContext } from '../../../State'
+import { userData } from '../../../lib/reactivities/reactiveVarables'
+import { useReactiveVar } from '@apollo/client'
 export default function ProfileData() {
-
-  const { state } = useContext(AppContext)
+  const useUserData = useReactiveVar(userData)
   const [loading, setLoading] = useState(true)
   setTimeout(function () {
     setLoading(false);
@@ -26,10 +26,12 @@ export default function ProfileData() {
               sm={12}
               xs={12} >
               <CommonField
-                Name={state?.orgLogin ?
-                  state?.user?.organizationLogin.name
-                  :
-                  state?.user.name}
+                Name={useUserData.name
+                  // state?.orgLogin ?
+                  // state?.user?.organizationLogin.name
+                  // :
+                  // state?.user.name
+                }
                 Label='Name'
               />
             </Grid>
@@ -41,10 +43,7 @@ export default function ProfileData() {
               xs={12}
             >
               <CommonField
-                Email={state?.orgLogin ?
-                  state?.user?.organizationLogin.email
-                  :
-                  state?.user.email}
+                Email={useUserData.email}
                 Label='Email'
               />
             </Grid>
@@ -55,10 +54,7 @@ export default function ProfileData() {
               sm={12}
               xs={12}>
               <CommonField
-                Role={state?.orgLogin ?
-                  state?.user?.organizationLogin.role
-                  :
-                  state?.user.userGroup.userGroupRole}
+                Role={useUserData.role}
                 Label='Role'
               />
             </Grid>
@@ -68,14 +64,11 @@ export default function ProfileData() {
               md={12}
               sm={12}
               xs={12}
-              sx={{marginLeft: 5}}
-              >
+              sx={{ marginLeft: 5 }}
+            >
               <CommonField
                 Label='Phone No'
-                PhoneNo={state?.orgLogin ?
-                  state?.user?.organizationLogin.contact
-                  :
-                  state?.user.contact}
+                PhoneNo={useUserData.contact}
               />
             </Grid>
             <Grid item
@@ -85,10 +78,7 @@ export default function ProfileData() {
               sm={12}
               xs={12}>
               <CommonField
-                Address={state?.orgLogin ?
-                  state?.user?.organizationLogin.address
-                  :
-                  state?.user.address}
+                Address={useUserData.address}
                 Label='Address'
               />
             </Grid>

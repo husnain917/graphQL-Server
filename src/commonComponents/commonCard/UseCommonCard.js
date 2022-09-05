@@ -1,48 +1,28 @@
 import React from "react";
 import UseAssignment from "../../modules/studentPortal/assignment/UseAssignment";
-import { AppContext } from "../../State";
 import {
   openModal,
-  updateFlag,
-} from "../../commonComponents/newTable/NewTable";
+  updateFlag, editData, editId
+} from "../../lib/reactivities/reactiveVarables";
 export default function UseCommonCard() {
-  const { state, dispatch } = React.useContext(AppContext);
+  const useEditData = editData()
   const [{ formInputs }] = UseAssignment();
 
   console.log("formInputs", formInputs);
   const handleClickOpen = () => {
-    // dispatch({
-    //   type: "setModal",
-    //   payload: {
-    //     openFormModal: true,
-    //   },
-    // });
     openModal(true)
   };
   const ctaEditButtonHandler = (data) => {
     console.log("data in editButtonHandler in common card", data);
-    const test = state.editData;
+    const test = useEditData;
     console.log("test data", test);
-    dispatch({
-      type: "setEditId",
-      payload: data.id,
-    });
-    // dispatch({
-    //   type: "setModal",
-    //   payload: {
-    //     openFormModal: true,
-    //     modalUpdateFlag: true,
-    //   },
-    // });
+    editId(data.id)
     openModal(true);
     updateFlag(true);
     formInputs.map((item) => {
       test[item.name] = data[item.name];
     });
-    dispatch({
-      type: "setEditData",
-      payload: test,
-    });
+    editData(test)
   };
   return {
     handleClickOpen,

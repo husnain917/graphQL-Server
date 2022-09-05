@@ -1,5 +1,5 @@
-import { useMutation, useQuery } from "@apollo/client";
-import { useState, useContext } from "react";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
+import { useState, useContext, useReducer } from "react";
 import {
     ToastError,
     ToastSuccess,
@@ -13,10 +13,8 @@ import {
 import {
     GET_USERS
 } from "../../../lib/queries/AllQueries";
-import {
-    AppContext
-} from "../../../State";
-import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
+
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -25,6 +23,8 @@ import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTab
 
 
 export function UseApiPermissions() {
+    const useEditData = useReactiveVar(editData)
+    const useEditId = useReactiveVar(editId)
     const formInputs = [
         {
             label: "Name",
@@ -67,10 +67,7 @@ export function UseApiPermissions() {
             ],
         },
     ]
-    const {
-        state,
-        dispatch
-    } = useContext(AppContext);
+
 
     //GET STAFF 
 
@@ -139,25 +136,25 @@ export function UseApiPermissions() {
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.name) {
+        if (!useEditData?.name) {
             ToastWarning('Name required')
         }
-        else if (!state.editData?.email) {
+        else if (!useEditData?.email) {
             ToastWarning('Email required')
         }
-        else if (!state.editData?.contact) {
+        else if (!useEditData?.contact) {
             ToastWarning('Contact required')
         }
-        else if (!state.editData?.cnic) {
+        else if (!useEditData?.cnic) {
             ToastWarning('cnic required')
         }
-        else if (!state.editData?.address) {
+        else if (!useEditData?.address) {
             ToastWarning('address required')
         }
-        else if (!state.editData?.role) {
+        else if (!useEditData?.role) {
             ToastWarning('Role required')
         }
-        else if (state.editData?.contact.length > 10) {
+        else if (useEditData?.contact.length > 10) {
             ToastWarning('Phone No Must be 10 digits')
         }
 
@@ -168,17 +165,17 @@ export function UseApiPermissions() {
                     variables: {
 
                         data: {
-                            name: state.editData?.name,
-                            email: state.editData?.email,
-                            password: state.editData?.password,
-                            cnic: state.editData?.cnic,
-                            contact: state.editData?.contact,
-                            address: state.editData?.address,
-                            role: state.editData?.role,
+                            name: useEditData?.name,
+                            email: useEditData?.email,
+                            password: useEditData?.password,
+                            cnic: useEditData?.cnic,
+                            contact: useEditData?.contact,
+                            address: useEditData?.address,
+                            role: useEditData?.role,
                         }
 
                     },
-                    
+
 
                     onCompleted() {
                         // dispatch({
@@ -281,22 +278,22 @@ export function UseApiPermissions() {
         }] = useMutation(UPDATE_USER);
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.name) {
+        if (!useEditData?.name) {
             ToastWarning('Name required')
         }
-        else if (!state.editData?.email) {
+        else if (!useEditData?.email) {
             ToastWarning('Email required')
         }
-        else if (!state.editData?.contact) {
+        else if (!useEditData?.contact) {
             ToastWarning('contact required')
         }
-        else if (!state.editData?.cnic) {
+        else if (!useEditData?.cnic) {
             ToastWarning('cnic required')
         }
-        else if (!state.editData?.address) {
+        else if (!useEditData?.address) {
             ToastWarning('address required')
         }
-        else if (!state.editData?.role) {
+        else if (!useEditData?.role) {
             ToastWarning('Role required')
         }
         else {
@@ -304,30 +301,30 @@ export function UseApiPermissions() {
                 await UpdateStudents({
                     variables: {
                         where: {
-                            id: state.editId
+                            id: useEditId
                         },
 
                         data: {
                             name: {
-                                set: state.editData?.name,
+                                set: useEditData?.name,
                             },
                             email: {
-                                set: state.editData?.email,
+                                set: useEditData?.email,
                             },
                             password: {
-                                set: state.editData?.password,
+                                set: useEditData?.password,
                             },
                             cnic: {
-                                set: state.editData?.cnic,
+                                set: useEditData?.cnic,
                             },
                             address: {
-                                set: state.editData?.address,
+                                set: useEditData?.address,
                             },
                             contact: {
-                                set: state.editData?.contact,
+                                set: useEditData?.contact,
                             },
                             role: {
-                                set: state.editData?.role,
+                                set: useEditData?.role,
                             }
                         },
                     },

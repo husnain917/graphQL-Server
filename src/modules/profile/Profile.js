@@ -4,15 +4,20 @@ import { P } from './ProfileStyle'
 import { TypoHead, TypoTextProfile } from '../../constants/Typos'
 import img from '../../assets/profile.jpg'
 import { Outlet } from 'react-router-dom'
-import { AppContext } from '../../State'
 import CommonTableLoader from '../../commonComponents/commonTableLoader/CommonTableLoader'
 import student from '../../assets/profile/student.png'
 import teacher from '../../assets/profile/teacher.png'
 import admin from '../../assets/profile/admin.png'
 import owner from '../../assets/profile/owner.png'
+import { orgCheck, userData } from '../../lib/reactivities/reactiveVarables'
+import { useReactiveVar } from '@apollo/client'
 
 export default function Profile() {
-    const { state } = useContext(AppContext)
+    const useOrgCheck = useReactiveVar(orgCheck)
+    const useUserData = useReactiveVar(userData)
+    console.log("user in reactive var", useUserData)
+
+
     const [loading, setLoading] = useState(true)
     setTimeout(function () {
         setLoading(false);
@@ -38,20 +43,17 @@ export default function Profile() {
                                     <P.MycontainerName>
                                         <Stack direction="row" spacing={2}>
                                             {
-                                                state?.orgLogin ?
-                                                    state.user?.organizationLogin.role === "ORGANIZATIONKEY" ?
-                                                        <P.Myimg src={owner} alt='broken-img' />
-                                                        :
-                                                        ''
+                                                useUserData.role === "ORGANIZATIONKEY" ?
+                                                    <P.Myimg src={owner} alt='broken-img' />
                                                     :
 
-                                                    state.user?.userGroup?.userGroupRole === "ADMIN" ?
+                                                    useUserData?.userGroup[0]?.userGroupRole === "ADMIN" ?
                                                         <P.Myimg src={admin} alt='broken-img' />
                                                         :
-                                                        state.user?.userGroup?.userGroupRole === "TEACHER" ?
+                                                        useUserData?.userGroup[0]?.userGroupRole === "TEACHER" ?
                                                             <P.Myimg src={teacher} alt='broken-img' />
                                                             :
-                                                            state.user?.userGroup?.userGroupRole === "STUDENT" ?
+                                                            useUserData?.userGroup[0]?.userGroupRole === "STUDENT" ?
                                                                 <P.Myimg src={student} alt='broken-img' />
                                                                 :
                                                                 ""
@@ -59,10 +61,13 @@ export default function Profile() {
 
                                             }
                                             <TypoTextProfile>
-                                                {state?.orgLogin ?
-                                                    state?.user?.organizationLogin.name
-                                                    :
-                                                    state?.user.name}
+                                                {useUserData.name
+                                                    // state?.orgLogin ?
+                                                    // useOrgCheck ?
+                                                    //     useUserData.name
+                                                    //     :
+                                                    //     useUserData.name
+                                                }
                                             </TypoTextProfile>
                                         </Stack>
                                     </P.MycontainerName>

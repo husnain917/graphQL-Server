@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import React, { useState, useContext } from "react";
 import Axios from "axios";
 import {
@@ -15,9 +15,9 @@ import { GET_ATTANDANCE } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../../State";
 import FiltredData from "../../../constants/FiltredRoles";
-import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
+
 
 
 
@@ -26,6 +26,9 @@ import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTab
 
 
 export default function UseAttandance() {
+    const useEditId = useReactiveVar(editId)
+    const useEditData = useReactiveVar(editData)
+    console.log("Edit data in attendance", useEditData);
     const [{ student }] = FiltredData()
     const formInputs = [
         {
@@ -43,7 +46,6 @@ export default function UseAttandance() {
 
     ]
     console.log("sami", student);
-    const { state, dispatch } = useContext(AppContext);
 
 
 
@@ -73,10 +75,10 @@ export default function UseAttandance() {
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.attendence) {
+        if (!useEditData?.attendence) {
             ToastWarning('attendence required')
         }
-        else if (!state.editData?.user) {
+        else if (!useEditData?.user) {
             ToastWarning('user required')
         }
         else {
@@ -85,11 +87,11 @@ export default function UseAttandance() {
                     variables: {
 
                         data: {
-                            attendence: state.editData?.attendence,
+                            attendence: useEditData?.attendence,
                             date: new Date().toDateString(),
                             user: {
                                 connect: {
-                                    id: state.editData?.user
+                                    id: useEditData?.user
                                 }
                             }
                         }
@@ -104,6 +106,7 @@ export default function UseAttandance() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
                         ToastSuccess('Attandance marked')
 
                     },
@@ -159,10 +162,10 @@ export default function UseAttandance() {
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.attendence) {
+        if (!useEditData?.attendence) {
             ToastWarning('attendence required')
         }
-        else if (!state.editData?.user) {
+        else if (!useEditData?.user) {
             ToastWarning('user required')
         }
         else {
@@ -170,19 +173,19 @@ export default function UseAttandance() {
                 await UpdateAttendence({
                     variables: {
                         where: {
-                            id: state.editId
+                            id: useEditId
                         },
 
                         data: {
                             attendence: {
-                                set: state.editData?.attendence
+                                set: useEditData?.attendence
                             },
                             date: {
                                 set: new Date().toDateString()
                             },
                             user: {
                                 connect: {
-                                    id: state.editData?.user
+                                    id: useEditData?.user
                                 }
                             }
                         },
@@ -198,6 +201,7 @@ export default function UseAttandance() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
                         ToastSuccess('Attandance Updated')
                     },
                     refetchQueries: [{ query: GET_ATTANDANCE }],

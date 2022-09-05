@@ -7,7 +7,8 @@ import {
     GET_COURSE_CATEGORY,
     GET_SPEAKERS,
     GET_USERS,
-    GET_USER_GROUP
+    GET_USER_GROUP,
+    GET_EVENTS
 } from '../lib/queries/AllQueries'
 
 export default function FiltredData() {
@@ -40,6 +41,11 @@ export default function FiltredData() {
         data: ALL_ORG,
         loading: ALL_ORG_LOADING
     } = useQuery(GET_ALL_ORGANIZATION)
+    const {
+        data: ALL_EVENTS,
+        loading: EVENTS_LOADING,
+        error
+    } = useQuery(GET_EVENTS);
 
     const student = USER_DATA?.users?.filter((role) => {
         return role.userGroup.userGroupRole === 'STUDENT'
@@ -95,6 +101,7 @@ export default function FiltredData() {
     const courseBatch = COURSE_BATCH?.findManyCourseBatches?.filter((item) => {
         return item
     })
+    const eventList = ALL_EVENTS?.findManyEvents?.length
 
 
 
@@ -117,6 +124,7 @@ export default function FiltredData() {
         USER_GROUP_LOADING,
         userGroup,
         userGroupStudent,
-        userGroupOrganization
+        userGroupOrganization,
+        eventList
     }]
 }

@@ -1,13 +1,15 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { useState, useContext, useEffect } from 'react';
 import { LOGIN, ORG_LOGIN } from '../../../lib/mutation/LoginMutation';
-import { AppContext } from "../../../State";
 import { ToastError, ToastSuccess } from '../../../commonComponents/commonFunction/CommonFunction';
 import { GET_ALL_ORGANIZATION, GET_USERS } from '../../../lib/queries/AllQueries';
+import { orgCheck, checkAuth, userData, tabsPersmission } from '../../../lib/reactivities/reactiveVarables';
+import { Tune } from '@mui/icons-material';
 export default function UseLogin() {
 
-  const { state, dispatch } = useContext(AppContext);
-
+  const useOrgCheck = useReactiveVar(orgCheck)
+  const useCheckAuth = useReactiveVar(checkAuth)
+  const useUserData = useReactiveVar(userData)
   const [email, setEmail] = useState('');
   const [values, setValues] = useState({
     amount: '',
@@ -60,35 +62,28 @@ export default function UseLogin() {
         },
         onCompleted({ login }) {
           localStorage.setItem("token", login.token)
-          var userNameStr= login.name
-          var activeUserName=userNameStr.charAt(0).toUpperCase() + userNameStr.slice(1)
-          dispatch({
-            type: "setAuthState",
-            payload: {
-              user: login,
-              authState: true
-            },
-          });
+          var userNameStr = login.name
+          var activeUserName = userNameStr.charAt(0).toUpperCase() + userNameStr.slice(1)
+          checkAuth(true)
+          userData(login)
+
           const str = login.name
           const str2 = str.charAt(0).toUpperCase() + str.slice(1)
           ToastSuccess(`Welcome at ${str2}`)
           if (login.userGroup?.userGroupRole === "STUDENT") {
-            dispatch({
-              type: "tabsPermission",
-              payload: login.userGroup?.tabsPermission?.navigationResults
-            })
+            tabsPersmission(login.userGroup?.tabsPermission?.navigationResults)
+
+
           }
           else if (login.userGroup?.userGroupRole === "ADMIN") {
-            dispatch({
-              type: "tabsPermission",
-              payload: login.userGroup?.tabsPermission?.navigationResults
-            })
+            tabsPersmission(login.userGroup?.tabsPermission?.navigationResults)
+
+
           }
           else if (login.userGroup?.userGroupRole === "TEACHER") {
-            dispatch({
-              type: "tabsPermission",
-              payload: login.userGroup?.tabsPermission?.navigationResults
-            })
+            tabsPersmission(login.userGroup?.tabsPermission?.navigationResults)
+
+
           }
         },
       })
@@ -110,22 +105,22 @@ export default function UseLogin() {
         },
         onCompleted(login) {
           localStorage.setItem("token", login.organizationLogin.token)
-          dispatch({
-            type: "setAuthState",
-            payload: {
-              user: login,
-              authState: true
-            },
-          });
+          checkAuth(true)
+
+          //Giving user data to userData reactive var
+          userData(login.organizationLogin)
+
           const str = login.organizationLogin.name
           const str2 = str.charAt(0).toUpperCase() + str.slice(1)
           ToastSuccess(`Welcome at ${str2}`)
           login.organizationLogin?.userGroup.map((item) => {
             if (login.organizationLogin.role === "ORGANIZATIONKEY")
-              dispatch({
-                type: "tabsPermission",
-                payload: item.tabsPermission?.navigationResults
-              })
+              tabsPersmission(item.tabsPermission?.navigationResults)
+
+            // dispatch({
+            //   type: "tabsPermission",
+            //   payload: item.tabsPermission?.navigationResults
+            // })
 
           })
 
@@ -174,6 +169,7 @@ export default function UseLogin() {
         },
       })
     } catch (error) {
+      console.log(error);
       ToastError("Not Valid Member")
     }
   }
@@ -181,11 +177,8 @@ export default function UseLogin() {
 
   const ctaOrgHandler = (e) => {
     setOrgLogin(!orgLogin)
-    dispatch({
-      type: "ORGlogin",
-      payload: orgLogin
-    })
+    orgCheck(orgLogin)
   }
 
-  return [{ values, handleChange, handleClickShowPassword, organizationLoginHandler, state, email, orgLogin, setEmail, loginHandler, loading, ORG_LOADING, ctaOrgHandler, emailTyping, emaiTypingRemove, passwordTyping, passwordTypingRemove, showPassword }]
+  return [{ values, handleChange, handleClickShowPassword, organizationLoginHandler, email, orgLogin, setEmail, loginHandler, loading, ORG_LOADING, ctaOrgHandler, emailTyping, emaiTypingRemove, passwordTyping, passwordTypingRemove, showPassword }]
 }

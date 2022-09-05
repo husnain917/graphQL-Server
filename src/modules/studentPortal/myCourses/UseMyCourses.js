@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import React, { useState, useContext } from "react";
 import Axios from "axios";
 import {
@@ -15,9 +15,8 @@ import { GET_MY_COURSES } from "../../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../../State";
 import FiltredData from "../../../constants/FiltredRoles";
-import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
 
 
 
@@ -26,6 +25,9 @@ import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTab
 
 
 export default function UseMyCourses() {
+    const useEditId = useReactiveVar(editId)
+    const useEditData = useReactiveVar(editData)
+    console.log("Edit data in my courses", useEditData);
     const [{ student, COURSE_DATA, courseBatch }] = FiltredData()
     const formInputs = [
         {
@@ -53,7 +55,6 @@ export default function UseMyCourses() {
             dropDownContent: ["PAID", "PENDING", "HALFPAID"],
         },
     ]
-    const { state, dispatch } = useContext(AppContext);
 
 
 
@@ -88,16 +89,16 @@ export default function UseMyCourses() {
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        if (!state.editData?.coursesId) {
+        if (!useEditData?.coursesId) {
             ToastWarning('Course required')
         }
-        else if (!state.editData?.studentId) {
+        else if (!useEditData?.studentId) {
             ToastWarning('Student  required')
         }
-        else if (!state.editData?.courseBatchesId) {
+        else if (!useEditData?.courseBatchesId) {
             ToastWarning('Course Batches required')
         }
-        else if (!state.editData?.feeStatus) {
+        else if (!useEditData?.feeStatus) {
             ToastWarning('FeeStatus required')
         }
         else {
@@ -107,20 +108,20 @@ export default function UseMyCourses() {
                         data: {
                             courses: {
                                 connect: {
-                                    id: state.editData?.coursesId
+                                    id: useEditData?.coursesId
                                 }
                             },
                             student: {
                                 connect: {
-                                    id: state.editData?.studentId
+                                    id: useEditData?.studentId
                                 }
                             },
                             courseBatches: {
                                 connect: {
-                                    id: state.editData?.courseBatchesId
+                                    id: useEditData?.courseBatchesId
                                 }
                             },
-                            feeStatus: state?.editData?.feeStatus
+                            feeStatus: useEditData?.feeStatus
                         }
 
 
@@ -135,6 +136,7 @@ export default function UseMyCourses() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
                         ToastSuccess('Course Added')
 
                     },
@@ -190,16 +192,16 @@ export default function UseMyCourses() {
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        if (!state.editData?.coursesId) {
+        if (!useEditData?.coursesId) {
             ToastWarning('Course required')
         }
-        else if (!state.editData?.studentId) {
+        else if (!useEditData?.studentId) {
             ToastWarning('Student  required')
         }
-        else if (!state.editData?.courseBatchesId) {
+        else if (!useEditData?.courseBatchesId) {
             ToastWarning('Course Batches required')
         }
-        else if (!state.editData?.feeStatus) {
+        else if (!useEditData?.feeStatus) {
             ToastWarning('FeeStatus required')
         }
         else {
@@ -207,27 +209,27 @@ export default function UseMyCourses() {
                 await UpdateMyCourse({
                     variables: {
                         where: {
-                            id: state.editId
+                            id: useEditId
                         },
 
                         data: {
                             courses: {
                                 connect: {
-                                    id: state.editData?.coursesId
+                                    id: useEditData?.coursesId
                                 }
                             },
                             student: {
                                 connect: {
-                                    id: state.editData?.studentId
+                                    id: useEditData?.studentId
                                 }
                             },
                             courseBatches: {
                                 connect: {
-                                    id: state.editData?.courseBatchesId
+                                    id: useEditData?.courseBatchesId
                                 }
                             },
                             feeStatus: {
-                                set: state.editData?.feeStatus
+                                set: useEditData?.feeStatus
                             }
                         }
 
@@ -242,6 +244,7 @@ export default function UseMyCourses() {
                         // });
                         openModal(false)
                         updateFlag(false)
+                        editData({})
                         ToastSuccess('Course Updated')
                     },
                     refetchQueries: [{ query: GET_MY_COURSES }],

@@ -57,6 +57,7 @@ export function UseAllStaff() {
       label: "Cnic",
       name: "cnic",
       type: "number",
+
     },
     {
       label: "Address",
@@ -79,6 +80,8 @@ export function UseAllStaff() {
 
   //GET STAFF 
 
+
+
   const refacteredData = [];
   data?.users?.map((item) => {
     if (item.userGroup.userGroupRole === "TEACHER") {
@@ -92,6 +95,8 @@ export function UseAllStaff() {
         role: item.userGroup.userGroupRole
       });
     }
+
+
     if (item.userGroup.userGroupRole === "ADMIN") {
       refacteredData.push({
         id: item.id,
@@ -104,11 +109,14 @@ export function UseAllStaff() {
       });
     }
 
+
     console.log(item);
   });
   console.log("in useAllStaff", refacteredData);
 
   //ADD STAFF
+
+
 
 
 

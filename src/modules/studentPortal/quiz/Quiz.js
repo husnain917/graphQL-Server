@@ -3,6 +3,7 @@ import Table from '../../../commonComponents/table/Table';
 import UseQuiz from './UseQuiz';
 import CommonTableLoader from '../../../commonComponents/commonTableLoader/CommonTableLoader';
 import NewTable from '../../../commonComponents/newTable/NewTable';
+import CommonCard from '../../../commonComponents/commonCard/CommonCard';
 export default function Quiz() {
   const [
     {
@@ -28,67 +29,75 @@ export default function Quiz() {
     return <CommonTableLoader />;
   }
   return (
-    <NewTable
-      title={'Quiz'}
-      tableHeadings={[
-        // {
-        //   id: 'courseBatch',
-        //   Label: 'Course Batch'
-        // },
-        {
-          id: 'courseBatchesId',
-          Label: 'Course Batch Id'
-        },
-        {
-          id: 'coursesId',
-          Label: 'Course Id'
-        },
-        {
-          id: 'createdAt',
-          Label: 'Created At'
-        },
-        {
-          id: "updateAt",
-          Label: "Update At"
-        },
-        {
-          id: "action",
-          Label: "Action",
-          marginLeft: 5
-      },
+    <CommonCard
+    title={"Quiz"}
+    formInputs={formInputs}
+    data={refacteredData}
+    // filterData={filterData}
+    ctaFormHandler={ctaFormHandler}
+    ctaUpdateHandler={ctaUpdateHandler}
+  />
+    // <NewTable
+    //   title={'Quiz'}
+    //   tableHeadings={[
+    //     // {
+    //     //   id: 'courseBatch',
+    //     //   Label: 'Course Batch'
+    //     // },
+    //     {
+    //       id: 'courseBatchesId',
+    //       Label: 'Course Batch Id'
+    //     },
+    //     {
+    //       id: 'coursesId',
+    //       Label: 'Course Id'
+    //     },
+    //     {
+    //       id: 'createdAt',
+    //       Label: 'Created At'
+    //     },
+    //     {
+    //       id: "updateAt",
+    //       Label: "Update At"
+    //     },
+    //     {
+    //       id: "action",
+    //       Label: "Action",
+    //       marginLeft: 5
+    //   },
 
-      ]}
-      ctaFormHandler={ctaFormHandler}
-      // ctaDeleteHandler,
-      ctaUpdateHandler={ctaUpdateHandler}
-      printedKeys={[
-        // {
-        //   key: "courseBatch",
-        // },
-        {
-          key: 'courseBatchesId',
-        },
-        {
-          key: "coursesId"
-        },
-        {
-          key: "createdAt"
-        },
-        {
-          key: "updatedAt"
-        },
-        {
-          type: "crud"
-        }
-      ]}
-      formInputs={formInputs}
-      filterdata={{
-        key: "feeStatus",
-        filterTag: ['All', 'Pending', 'Paid'],
-      }}
-      data={refacteredData}
-      disableAddIcon={true}
-    />
+    //   ]}
+    //   ctaFormHandler={ctaFormHandler}
+    //   // ctaDeleteHandler,
+    //   ctaUpdateHandler={ctaUpdateHandler}
+    //   printedKeys={[
+    //     // {
+    //     //   key: "courseBatch",
+    //     // },
+    //     {
+    //       key: 'courseBatchesId',
+    //     },
+    //     {
+    //       key: "coursesId"
+    //     },
+    //     {
+    //       key: "createdAt"
+    //     },
+    //     {
+    //       key: "updatedAt"
+    //     },
+    //     {
+    //       type: "crud"
+    //     }
+    //   ]}
+    //   formInputs={formInputs}
+    //   filterdata={{
+    //     key: "feeStatus",
+    //     filterTag: ['All', 'Pending', 'Paid'],
+    //   }}
+    //   data={refacteredData}
+    //   disableAddIcon={true}
+    // />
 
   )
 }

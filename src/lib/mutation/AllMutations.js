@@ -1,7 +1,6 @@
 import { gql } from "@apollo/client";
 
 
-
 export const ADD_ENROLMMENT_APPROVAL = gql`
 mutation CreateEnrollmentApproval($data: EnrollmentApprovalCreateInput!) {
   createEnrollmentApproval(data: $data) {
@@ -116,8 +115,6 @@ mutation CreateFaq($data: FaqCreateInput!) {
     createdAt
     updateAt
   }
-
-
 }`
 
 export const ADD_USER = gql`
@@ -450,7 +447,6 @@ mutation UpdateSuccessStories($where: SuccessStoriesWhereUniqueInput!, $data: Su
   updateSuccessStories(where: $where, data: $data) {
     id
   }
-
 } `
 
 export const UPDATE_SINGLE_COURSE_CATEGORY = gql`
@@ -529,7 +525,6 @@ mutation UpdateEnrollmentApproval($data: EnrollmentApprovalUpdateInput!, $where:
     amount
     transactionId
   }
-
 } `
 
 export const UPDATE_SINGLE_CONTACT = gql`
@@ -666,66 +661,7 @@ mutation UpdateMyCourse($data: MyCourseUpdateInput!, $where: MyCourseWhereUnique
     feeStatus
     courseBatchesId
   }
-}
-`
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}`
 export const ACTIVE_USER = gql`
 mutation GetActiveUser($token: String!) {
   getActiveUser(token: $token) {

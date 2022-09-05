@@ -700,7 +700,7 @@ export default function NewTable({
                                     return (
                                         <>
                                             <TableRow
-                                                // onClick={(event) => handleClick(event, row.id)}
+                                                onClick={(event) => handleClick(event, row.id)}
                                                 role="checkbox"
                                                 aria-checked={isItemSelected}
                                                 tabIndex={-1}

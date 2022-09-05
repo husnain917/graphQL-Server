@@ -82,7 +82,12 @@ export default function UseDashboard() {
     //         }
     //     })
 
+    //     const organizationDetails = ORG_DATA?.findManyOrganizations.map((item) => {
+    //         if (item.role === "ORGANIZATIONKEY") {
+    //             return item
+    //         }
 
+    //     })
 
     //     const admin = USER_DATA?.users?.filter((role) => {
     //         if (role.userGroup.userGroupRole === 'ADMIN') {

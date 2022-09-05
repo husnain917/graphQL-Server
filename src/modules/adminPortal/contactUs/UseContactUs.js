@@ -141,6 +141,7 @@ export function UseContactUs() {
                         updateFlag(false)
                         editData({})
                         ToastSuccess('Contact Added')
+
                     },
                     refetchQueries: [{ query: GET_CONTACT_US }],
 
@@ -253,6 +254,16 @@ export function UseContactUs() {
                         }
                     },
                     refetchQueries: [{ query: GET_CONTACT_US }],
+                    // onCompleted() {
+                    //     dispatch({
+                    //         type: "setModal",
+                    //         payload: {
+                    //             modalUpdateFlag: false,
+                    //             openFormModal: false,
+                    //         },
+                    //     });
+                    //     ToastSuccess('Contact Updated')
+                    // },
                     onCompleted() {
                         // dispatch({
                         //     type: "setModal",
@@ -265,6 +276,7 @@ export function UseContactUs() {
                         updateFlag(false)
                         editData({})
                         ToastSuccess('Contact Updated')
+
                     },
 
                 })

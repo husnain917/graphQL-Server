@@ -12,25 +12,24 @@ import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Autocomplete, MenuItem, Stack, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import { EditorState } from "draft-js";
-import { Calendar } from 'react-calendar';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import PhoneInput from 'react-phone-input-2'
+import { Calendar } from "react-calendar";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import PhoneInput from "react-phone-input-2";
 
-import { FM } from './FormModalStyle'
+import { FM } from "./FormModalStyle";
 import CloudinaryFunction from "../../constants/CloudinaryFunction";
 import { blue } from "@mui/material/colors";
 import UserGroupModal from "../userGroupModal/UserGroupModal";
 import UserGroup from "../../modules/settings/userGroup/UserGroup";
-import { openModal, updateFlag, editData, imageUrl, userGroupData, valTel } from "../../lib/reactivities/reactiveVarables";
-import { useQuery } from "@apollo/client"
+import { openModal, updateFlag, editData, userGroupData, imageUrl, valTel } from "../../lib/reactivities/reactiveVarables";
 
 
 export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler, handleChange, onDateChange, date, }) {
@@ -73,7 +72,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
             aria-label="close"
             onClick={handleCloseUpdate}
             sx={{
-              position: 'absolute',
+              position: "absolute",
               right: 8,
               top: 8,
               color: (theme) => theme.palette.grey[500],
@@ -84,9 +83,9 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
         </DialogTitle>
         <DialogContent dividers>
           {/* <DialogContentText>
-            Please read carefully and fill all required fields.
-          </DialogContentText> */}
-          <Box >
+                Please read carefully and fill all required fields.
+              </DialogContentText> */}
+          <Box>
             {formInputs.map((item, index) => {
               // const test = state.editData;
               const test = useEditData;
@@ -435,8 +434,17 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
           <br />
         </DialogContent>
         <DialogActions>
-          <Stack direction="row" spacing={2} justifyContent="flex-end" alignItems="center">
-            <FM.FormButton style={{ color: '#1E86FF' }} variant="outlined" onClick={handleCloseUpdate}>
+          <Stack
+            direction="row"
+            spacing={2}
+            justifyContent="flex-end"
+            alignItems="center"
+          >
+            <FM.FormButton
+              style={{ color: "#1E86FF" }}
+              variant="outlined"
+              onClick={handleCloseUpdate}
+            >
               Cancel
             </FM.FormButton>
             {modalUpdateFlag ? (
@@ -444,7 +452,12 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                 Update
               </FM.FormButton>
             ) : (
-              <FM.FormButton style={{ backgroundColor: '#1E86FF' }} type="submit" variant="outlined" onClick={ctaFormHandler}>
+              <FM.FormButton
+                style={{ backgroundColor: "#1E86FF" }}
+                type="submit"
+                variant="outlined"
+                onClick={ctaFormHandler}
+              >
                 Submit
               </FM.FormButton>
             )}

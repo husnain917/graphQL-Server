@@ -1,4 +1,4 @@
-import { Typography,Button } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import AddIcon from '@mui/icons-material/Add';
@@ -6,33 +6,36 @@ import AddIcon from '@mui/icons-material/Add';
 
 export const CD = {
     MainPageContainer: styled('div')(() => ({
-        backgroundColor:'white',
-        padding:'20px',
-        borderRadius:'20px',
+        padding: '20px',
+        borderRadius: '20px',
     })),
     CourseTypo: styled(Typography)(() => ({
-      color:'blue',
-      fontWeight:'bold'
+        color: '#3a0ca3',
+        fontWeight: 'bold'
     })),
     CourseDesc: styled(Typography)(() => ({
-        padding:'8px'
+        padding: '8px'
     })),
-    PriceDiv: styled('div')(() => ({
-        display:'flex',
-        justifyContent:'space-between',
-        padding:'0 8px'
-    })),
-    HeaderDiv: styled(Box)(() => ({
+    LectureDiv: styled('div')(() => ({
         display: 'flex',
-        maxWidth: '100%',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
+        alignItems: 'center'
+    })),
+    PriceDiv: styled('div')(() => ({
+        display: 'flex',
+        justifyContent: 'space-between',
+        padding: '0 8px',
+        boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+        backgroundColor: 'white',
+        borderRadius: '20px',
+        padding: '24px',
+    })),
+    HeaderDiv: styled(Box)(() => ({
+        maxWidth: '100%',
         padding: '12px 30px',
         borderRadius: '20px',
-        backgroundColor:'#ecf8f8',
         marginTop: 1,
-        boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
-        alignItems: 'center'
     })),
     FlexDiv: styled(Box)(() => ({
         display: 'flex',
@@ -43,7 +46,7 @@ export const CD = {
     })),
     TitleTypography: styled(Typography)(() => ({
         fontWeight: 'bold',
-        fontSize: 25,
+        fontSize: 30,
         color: '#3a0ca3',
         margin: 0,
         padding: 0
@@ -52,13 +55,13 @@ export const CD = {
         textTransform: 'none',
         border: 'none',
         borderRadius: '8px',
-        backgroundColor: '#1E86FF;',
+        backgroundColor: '#3d348b',
         color: '#ffffff',
         width: 115,
         height: 37,
         marginLeft: 12,
         "&:hover": {
-            backgroundColor: '#1E86FF;',
+            backgroundColor: '#7b2cbf;',
             border: 'none',
         }
     })),
@@ -66,6 +69,11 @@ export const CD = {
         fontSize: 27,
         cursor: 'pointer',
         color: '#1E86FF'
+    })),
+    noData: styled('p')(() => ({
+        fontWeight:'bold',
+        fontSize:18,
+        paddingTop:'16px'
     })),
 
 }

@@ -1,8 +1,40 @@
-import { useQuery } from "@apollo/client";
+import { useState } from "react";
+import { useQuery, useMutation,useReactiveVar } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { GET_COURSES, GET_LECTURES } from "../../lib/queries/AllQueries";
+import { ADD_LECTURES } from "../../lib/mutation/AllMutations";
+import { openModal,editData, editId } from "../../lib/reactivities/reactiveVarables";
+import FiltredData from "../../constants/FiltredRoles";
+import {
+  ToastError,
+  ToastSuccess,
+  ToastWarning,
+} from "../../commonComponents/commonFunction/CommonFunction";
+
 export default function useCourseDetail() {
   let params = useParams();
+  const useEditId = useReactiveVar(editId)
+  const useEditData = useReactiveVar(editData)
+  const [{ COURSE_DATA }] = FiltredData()
+  const formInputs = [
+    {
+      label: "Lecture Title",
+      name: "lectureTitle",
+      type: "text",
+    },
+    {
+      label: "Lecture Video",
+      name: "lectureVideo",
+      type: "text",
+    },
+    {
+      label: "Course",
+      name: "coursesId",
+      type: "selectCourse",
+      dropDown: COURSE_DATA
+    },
+  ]
+
   let { data, loading: GET_LOADING, error } = useQuery(GET_COURSES);
   console.log("error", error);
   const refacteredData = [];
@@ -21,7 +53,7 @@ export default function useCourseDetail() {
   });
   const courseData = refacteredData.find(item => item.id === params.courseId);
 
-  let { data:leactureData, loading: GET_Leacture_LOADING,error:LectureError } = useQuery(GET_LECTURES);
+  let { data: leactureData, loading: GET_Leacture_LOADING, error: LectureError } = useQuery(GET_LECTURES);
   console.log("error", LectureError);
   const refacteredDataLecture = [];
   leactureData?.findManyLectures?.map((item) => {
@@ -35,13 +67,68 @@ export default function useCourseDetail() {
     });
   });
   console.log({ refacteredDataLecture });
-   const leacturesData = refacteredDataLecture.filter((item)=>item.coursesId ===  params.courseId);
-  // const leacturesData = refacteredDataLecture
-  console.log({ leacturesData });
+  const leacturesData = refacteredDataLecture.filter((item) => item.coursesId === params.courseId);
+
+  const handleClickOpen = () => {
+    openModal(true)
+  };
+
+  const [loader, setLoader] = useState(false);
+  //ADD STAFF
+
+  let [CreateLectures, { loading: ADD_LOADING }] = useMutation(ADD_LECTURES);
+
+  const ctaFormHandler = async (event) => {
+    event.preventDefault();
+    if (!useEditData?.lectureTitle) {
+      ToastWarning('Lecture Title required')
+    }
+    else if (!useEditData?.lectureVideo) {
+      ToastWarning('Lecture Video required')
+    }
+    else if (!useEditData?.coursesId) {
+      ToastWarning('Course required')
+    }
+    else {
+      try {
+        await CreateLectures({
+          variables: {
+
+            data: {
+              lectureTitle: useEditData?.lectureTitle,
+              lectureVideo: useEditData?.lectureVideo,
+              courses: {
+                connect: {
+                  id: useEditData?.coursesId
+                }
+              }
+            }
+
+          },
+          onCompleted(data, cache) {
+            openModal(false)
+            // updateFlag(false)
+            editData({})
+            ToastSuccess('Lecture Added')
+          },
+          refetchQueries: [{ query: GET_LECTURES }],
+        });
+      } catch (error) {
+        openModal(false)
+        setLoader(false);
+        ToastError(error.message);
+      }
+    }
+  };
   return ({
     courseData,
     GET_LOADING,
     GET_Leacture_LOADING,
-    leacturesData
+    leacturesData,
+    handleClickOpen,
+    formInputs,
+    ADD_LOADING,
+    loader,
+    ctaFormHandler
   })
 }

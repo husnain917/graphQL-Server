@@ -13,15 +13,42 @@ import CommonButton from '../../commonComponents/commonButton/CommonButton';
 
 
 export default function CourseDetail() {
-  const { courseData, GET_LOADING , GET_Leacture_LOADING,leacturesData} = useCourseDetail();
+  const { courseData, GET_LOADING, GET_Leacture_LOADING, leacturesData,
+    handleClickOpen,formInputs,ADD_LOADING, loader,ctaFormHandler} = useCourseDetail();
   const { width } = UseWindowDimensions();
   if (
-    GET_LOADING||
+    loader||
+    ADD_LOADING||
+    GET_LOADING ||
     GET_Leacture_LOADING
   ) {
     return <CommonTableLoader />;
   }
-  console.log({ courseData })
+  const AddButton = ({ handleClickOpen }) => {
+    return (
+        <>
+            {width > 600 ? (
+                <CD.AddButton
+                    variant="outlined"
+                    startIcon={<AddIcon />}
+                    onClick={handleClickOpen}
+                >
+                    Add
+                </CD.AddButton>
+            ) : (
+                <IconButton
+                    color="inherit"
+                    aria-label="search"
+                    disableFocusRipple
+                    disableRipple
+                    onClick={handleClickOpen}
+                >
+                    <CD.AddIcon />
+                </IconButton>
+            )}
+        </>
+    );
+};
   return (
     <>
       <CD.MainPageContainer>
@@ -48,34 +75,42 @@ export default function CourseDetail() {
             />
           </div>
         </CD.PriceDiv>
-        <hr />
 
         <CD.HeaderDiv>
-          <CD.TitleTypography gutterBottom variant="h6" component="div">
-            Lectures
-          </CD.TitleTypography>
-          {/* <AddButton handleClickOpen={handleClickOpen} /> */}
-          <CD.AddButton handleClickOpen={null} />
+          <CD.LectureDiv>
+            <CD.TitleTypography gutterBottom variant="h6" component="div">
+              Lectures
+            </CD.TitleTypography>
+            <AddButton handleClickOpen={handleClickOpen} />
+          </CD.LectureDiv>
+          <CD.FlexDiv>
+            {
+              leacturesData.length === 0 ? <CD.noData>No leacture found against this course. </CD.noData>
+                :
+                leacturesData.map((item, index) => {
+                  return (
+                    <>
+                      <Box sx={{ paddingTop: '16px'}}>
+                        <CourseLeactureCard onPress={null} data={item} key={index} />
+                        {/* <CourseLeactureCard onPress={(data) => ctaEditButtonHandler(data)} data={item} key={index} /> */}
+                      </Box>
+                    </>
+                  )
+                })
+            }
+          </CD.FlexDiv>
         </CD.HeaderDiv>
-        <CD.FlexDiv>
-          {
-            leacturesData.map((item, index) => {
-              return (
-                <>
-                  <CourseLeactureCard onPress={null} data={item} key={index} />
-                  {/* <CourseLeactureCard onPress={(data) => ctaEditButtonHandler(data)} data={item} key={index} /> */}
-                </>
-              )
-            })
-          }
-        </CD.FlexDiv>
+
 
         {/* Form Modal */}
-        {/* <FormModal
+         <FormModal
           formInputs={formInputs}
           ctaFormHandler={ctaFormHandler}
-          ctaUpdateHandler={ctaUpdateHandler}
-        /> */}
+          // ctaUpdateHandler={ctaUpdateHandler}
+                // handleChange={handleChange}
+                // onDateChange={onDateChange}
+                // date={date}
+        /> 
 
 
       </CD.MainPageContainer>

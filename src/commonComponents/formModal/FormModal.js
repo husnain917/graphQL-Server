@@ -42,7 +42,8 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
   var openFormModal = useReactiveVar(openModal)
   var modalUpdateFlag = useReactiveVar(updateFlag)
   var useEditData = useReactiveVar(editData)
-  // console.log("Edit data in modal", useEditData);
+  var useValTel = useReactiveVar(valTel)
+  console.log("Edit data in modal", useEditData.contact);
 
   const handleChangePhone = (phone) => {
     valTel(phone)
@@ -389,7 +390,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                     <>
                                                       <FM.PhoneField
                                                         placeholder="Enter phone number"
-                                                        value={contact}
+                                                        value={modalUpdateFlag ? useEditData[item.name] : null}
                                                         onChange={phone => handleChangePhone(phone)}
                                                         country='pk'
                                                         inputStyle={{

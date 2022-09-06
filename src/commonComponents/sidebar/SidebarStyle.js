@@ -78,7 +78,7 @@ export const SidebarStyle = {
         '& .MuiDrawer-paper': closedMixin(theme),
       }),
     }),
-    
+
   ),
   //Mobile Drawer
   MobileDrawer: styled(MuiDrawer)(({ theme, drawerWidth }) => ({
@@ -86,13 +86,13 @@ export const SidebarStyle = {
     minHeight: '100vh',
     [theme.breakpoints.up('xs')]: {
       display: 'block',
-      
+
     },
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
-    "@media(max-width: 415px)":{
-    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: "100%" },
+    "@media(max-width: 415px)": {
+      '& .MuiDrawer-paper': { boxSizing: 'border-box', width: "100%" },
     }
   })),
   //IconButton 
@@ -126,6 +126,13 @@ export const SidebarStyle = {
       padding: theme.spacing(1),
     },
   })),
+  childDiv: styled("div")(({ theme }) => ({
+    display: "flex",
+    minHeight: "85vh",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  })),
+
   // ===================== Sidebar Links =====================
 
   DomLink: styled(Link)(() => ({
@@ -153,7 +160,7 @@ export const SidebarStyle = {
     marginLeft: -2,
     marginRight: 15
   })),
-  ListItemTextTagForDropDown: styled(ListItemText)(({Active}) => ({
+  ListItemTextTagForDropDown: styled(ListItemText)(({ Active }) => ({
     color: Active ? '#1E86FF' : colors.black + 90,
     marginLeft: -22
   })),
@@ -174,13 +181,13 @@ export const SidebarStyle = {
     // paddingRight: 25,
     marginTop: 20,
     marginBottom: 20,
-    
+
     marginLeft: 'auto',
     marginRight: 'auto',
     // "@media (max-width: 700px)": {
     //     width: '95%',
     // },
-})),
+  })),
   LogoutLink: styled(Button)(() => ({
     textDecoration: 'none',
     // position: 'relative',

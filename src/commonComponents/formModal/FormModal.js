@@ -97,8 +97,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
           <Box>
             {formInputs.map((item, index) => {
               // const test = state.editData;
-              // const test = useEditData;
-              const test = EDIT_DATA.editData;
+              const test = useEditData;
               return (
                 <>
                   {

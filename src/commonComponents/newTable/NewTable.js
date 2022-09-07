@@ -27,9 +27,10 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import AddIcon from "@mui/icons-material/Add";
 import UseWindowDimensions from "../../customHooks/UseWindowDimensions";
 import moment from "moment";
-import { makeVar, useReactiveVar } from '@apollo/client';
+import { makeVar, useQuery, useReactiveVar } from '@apollo/client';
 import { useLocation } from "react-router-dom";
 import { openModal, updateFlag, editData, userGroupData, editId, tabsPersmission } from "../../lib/reactivities/reactiveVarables"
+import { GET_EDIT_DATA } from "../../lib/queries/AllQueries"
 
 // export const openModal = makeVar(false);
 // export const updateFlag = makeVar(false)
@@ -385,9 +386,14 @@ export default function NewTable({
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const useEditData = useReactiveVar(editData)
+    // const useEditData = useReactiveVar(editData)
     const useUserGroupData = useReactiveVar(userGroupData)
     const useTabsPermission = useReactiveVar(tabsPersmission)
+    const {
+        data: EDIT_DATA,
+        loading: EDIT_LOADING,
+        editError
+    } = useQuery(GET_EDIT_DATA);
 
 
     const handleAnchorClose = (value) => {
@@ -470,12 +476,14 @@ export default function NewTable({
     //open edit form modal
     const ctaEditButtonHandler = (data) => {
         console.log("id in editButtonHandler", data);
+        console.log("data in editButtonHandler", EDIT_DATA);
+        const useEditData = EDIT_DATA.editData
         const test = useEditData;
         editId(data.id)
         openModal(true)
         updateFlag(true)
         formInputs.map((item) => {
-            test[item?.name] = data[item?.name];
+            test[item.name] = data[item.name];
         });
         editData(test)
         if (

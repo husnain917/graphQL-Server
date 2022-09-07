@@ -11,7 +11,7 @@ import {
   UPDATE_USER,
 } from "../../../lib/mutation/AllMutations";
 import {
-  GET_USERS
+  GET_USERS, GET_EDIT_DATA
 } from "../../../lib/queries/AllQueries";
 import FiltredData from '../../../constants/FiltredRoles'
 import { openModal, updateFlag, editData, valTel, editId, userData } from "../../../lib/reactivities/reactiveVarables";
@@ -34,6 +34,12 @@ export function UseAllStaff() {
     data,
     loading: GET_LOADING,
   } = useQuery(GET_USERS);
+  // const {
+  //   data: EDIT_DATA,
+  //   loading: EDIT_LOADING,
+  //   error
+  // } = useQuery(GET_EDIT_DATA);
+  // console.log(EDIT_DATA.editData)
   const [{ userGroup }] = FiltredData()
 
   const formInputs = [
@@ -184,7 +190,7 @@ export function UseAllStaff() {
             valTel("")
             ToastSuccess('Staff Added')
           },
-          refetchQueries: [{ query: GET_USERS }],
+          // refetchQueries: [{ query: GET_USERS }],
 
 
           // update(cache, { data: { addItems } }) {
@@ -367,7 +373,7 @@ export function UseAllStaff() {
             ToastSuccess('Staff Updated')
 
           },
-          refetchQueries: [{ query: GET_USERS }],
+          // refetchQueries: [{ query: GET_USERS }],
 
         })
 

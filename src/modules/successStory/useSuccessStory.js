@@ -11,7 +11,7 @@ import {
   // DELETE_SINGLE_SUCCESS_STORY,
   UPDATE_SINGLE_SUCCESS,
 } from "../../lib/mutation/AllMutations";
-import { GET_SUCCESS_STORIES } from "../../lib/queries/AllQueries";
+import { GET_SUCCESS_STORIES, GET_EDIT_DATA } from "../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
@@ -83,6 +83,12 @@ export function UseSuccessStory() {
   //GET STAFF 
 
   let { data, loading: GET_LOADING, error } = useQuery(GET_SUCCESS_STORIES);
+  const {
+    data: EDIT_DATA,
+    loading: EDIT_LOADING,
+    editError
+  } = useQuery(GET_EDIT_DATA);
+  console.log(EDIT_DATA)
   console.log("error", error);
   const refacteredData = [];
   data?.findManySuccessStories?.map((item) => {
@@ -178,7 +184,7 @@ export function UseSuccessStory() {
             editData({})
             ToastSuccess('Story Added')
           },
-          refetchQueries: [{ query: GET_SUCCESS_STORIES }],
+          // refetchQueries: [{ query: GET_SUCCESS_STORIES }],
         });
       } catch (error) {
         // dispatch({
@@ -315,7 +321,7 @@ export function UseSuccessStory() {
             editData({})
             ToastSuccess('Story Updated')
           },
-          refetchQueries: [{ query: GET_SUCCESS_STORIES }],
+          // refetchQueries: [{ query: GET_SUCCESS_STORIES }],
         })
 
       } catch (error) {

@@ -475,7 +475,7 @@ export default function NewTable({
         openModal(true)
         updateFlag(true)
         formInputs.map((item) => {
-            test[item.name] = data[item.name];
+            test[item?.name] = data[item?.name];
         });
         editData(test)
         if (

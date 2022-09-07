@@ -6,10 +6,10 @@ import Card from '@mui/material/Card';
 export const CM = {
     MainCard: styled(Card)(() => ({
         width: 290,
-        height: 290,
+        height: 315,
         margin: 16,
         '&:hover':{
-           transform: 'scale(1.05)'
+           transform: 'scale(1.03)'
         }
     })),
     MainCardContent: styled(CardContent)(() => ({
@@ -23,10 +23,10 @@ export const CM = {
         fontWeight: 'bold'
     })),
     CourseDiv: styled('div')(() => ({
-        paddingBottom: '4px'
+        paddingBottom: '2px'
     })),
     LectureDiv: styled('div')(() => ({
-        paddingBottom: '25px'
+        paddingBottom: '2px'
     })),
     CreatedAtTypography: styled(Typography)(() => ({
         fontWeight: 'bold',
@@ -36,12 +36,9 @@ export const CM = {
         fontSize: 10,
         fontWeight: 'bold'
     })),
-    DateDiv: styled('div')(() => ({
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
-        padding: '2px 8px'
-
+    DateDiv: styled('div')(() => ({   
+        display:'flex',
+        justifyContent:'right',
     }))
 
 }

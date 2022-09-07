@@ -14,13 +14,15 @@ import CommonButton from '../../commonComponents/commonButton/CommonButton';
 
 export default function CourseDetail() {
   const { courseData, GET_LOADING, GET_Leacture_LOADING, leacturesData,
-    handleClickOpen,formInputs,ADD_LOADING, loader,ctaFormHandler} = useCourseDetail();
+    handleClickOpen,formInputs,ADD_LOADING, loader,ctaFormHandler,ctaUpdateHandler,
+    UPDATE_LOADING,ctaEditButtonHandler} = useCourseDetail();
   const { width } = UseWindowDimensions();
   if (
     loader||
     ADD_LOADING||
     GET_LOADING ||
-    GET_Leacture_LOADING
+    GET_Leacture_LOADING||
+    UPDATE_LOADING
   ) {
     return <CommonTableLoader />;
   }
@@ -91,8 +93,7 @@ export default function CourseDetail() {
                   return (
                     <>
                       <Box sx={{ paddingTop: '16px'}}>
-                        <CourseLeactureCard onPress={null} data={item} key={index} />
-                        {/* <CourseLeactureCard onPress={(data) => ctaEditButtonHandler(data)} data={item} key={index} /> */}
+                        <CourseLeactureCard onPress={(data) => ctaEditButtonHandler(data)} data={item} key={index} />
                       </Box>
                     </>
                   )
@@ -106,7 +107,7 @@ export default function CourseDetail() {
          <FormModal
           formInputs={formInputs}
           ctaFormHandler={ctaFormHandler}
-          // ctaUpdateHandler={ctaUpdateHandler}
+          ctaUpdateHandler={ctaUpdateHandler}
                 // handleChange={handleChange}
                 // onDateChange={onDateChange}
                 // date={date}

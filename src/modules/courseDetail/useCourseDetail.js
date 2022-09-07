@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useQuery, useMutation,useReactiveVar } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { GET_COURSES, GET_LECTURES } from "../../lib/queries/AllQueries";
-import { ADD_LECTURES } from "../../lib/mutation/AllMutations";
-import { openModal,editData, editId } from "../../lib/reactivities/reactiveVarables";
+import { ADD_LECTURES,UPDATE_LECTURES } from "../../lib/mutation/AllMutations";
+import { openModal,editData, editId,updateFlag } from "../../lib/reactivities/reactiveVarables";
 import FiltredData from "../../constants/FiltredRoles";
 import {
   ToastError,
@@ -107,7 +107,7 @@ export default function useCourseDetail() {
           },
           onCompleted(data, cache) {
             openModal(false)
-            // updateFlag(false)
+            updateFlag(false)
             editData({})
             ToastSuccess('Lecture Added')
           },
@@ -120,6 +120,75 @@ export default function useCourseDetail() {
       }
     }
   };
+
+   //Update staff
+
+   let [UpdateLectures, { loading: UPDATE_LOADING }] = useMutation(UPDATE_LECTURES);
+
+   const ctaUpdateHandler = async (event) => {
+       event.preventDefault()
+       if (!useEditData?.lectureTitle) {
+           ToastWarning('Lecture Title required')
+       }
+       else if (!useEditData?.lectureVideo) {
+           ToastWarning('Lecture Video required')
+       }
+       else if (!useEditData?.coursesId) {
+           ToastWarning('Course required')
+       }
+       else {
+           try {
+               await UpdateLectures({
+                   variables: {
+                       where: {
+                           id: useEditId
+                       },
+                       data: {
+                           lectureTitle: {
+                               set: useEditData?.lectureTitle
+                           },
+                           lectureVideo: {
+                               set: useEditData?.lectureVideo
+                           },
+                           courses: {
+                               connect: {
+                                   id: useEditData?.coursesId
+                               }
+                           }
+                       }
+                   },
+                   onCompleted() {
+                       openModal(false)
+                       updateFlag(false)
+                       editData({})
+                       ToastSuccess('Course Updated')
+                   },
+                   refetchQueries: [{ query: GET_COURSES }],
+               })
+
+           } catch (error) {
+               console.log(error.message);
+           }
+       }
+   }
+   const ctaEditButtonHandler = (data) => {
+    const test = useEditData;
+    editId(data.id)
+    openModal(true)
+    updateFlag(true)
+    formInputs.map((item) => {
+        test[item.name] = data[item.name];
+    });
+    editData(test)
+    // if (
+    //     data.role === "ORGANIZATIONKEY" ||
+    //     data.role === "ADMIN" ||
+    //     data.role === "TEACHER" ||
+    //     data.role === "STUDENT"
+    // ) {
+    //     userGroupData(data)
+    // }
+};
   return ({
     courseData,
     GET_LOADING,
@@ -129,6 +198,9 @@ export default function useCourseDetail() {
     formInputs,
     ADD_LOADING,
     loader,
-    ctaFormHandler
+    ctaFormHandler,
+    ctaUpdateHandler,
+    UPDATE_LOADING,
+    ctaEditButtonHandler
   })
 }

@@ -14,7 +14,12 @@ import PButton from "../Pbutton/Pbutton";
 import { UseUserGroup } from "../../modules/settings/userGroup/UseUserGroup";
 import { data } from "../../constants/userGroupPagesList"
 import CommonTableLoader from "../commonTableLoader/CommonTableLoader";
+import { updateFlag, openModal, userGroupData } from "../../lib/reactivities/reactiveVarables";
+import { useReactiveVar } from "@apollo/client";
 export default function UserGroupModal() {
+    const openFormModal = useReactiveVar(openModal)
+    const modalUpdateFlag = useReactiveVar(updateFlag)
+    const useUserGroupData = useReactiveVar(userGroupData)
     const [
         {
             userName,
@@ -49,25 +54,27 @@ export default function UserGroupModal() {
     ]
 
     const handleCloseUpdate = () => {
-        dispatch({
-            type: "setModal",
-            payload: {
-                modalUpdateFlag: false,
-                openFormModal: false,
-            },
-        });
+        openModal(false)
+        updateFlag(false)
+        // dispatch({
+        //     type: "setModal",
+        //     payload: {
+        //         modalUpdateFlag: false,
+        //         openFormModal: false,
+        //     },
+        // });
     };
     // const roles = [
     //   "ORGANIZATIONKEY", "ADMIN", "TEACHER", "STUDENT"
     // ]
     return (
-        <Dialog open={state.openFormModal} onClose={handleCloseUpdate} fullWidth={true} BackdropProps={{ style: { backgroundColor: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(8px)' } }}>
+        <Dialog open={openFormModal} onClose={handleCloseUpdate} fullWidth={true} BackdropProps={{ style: { backgroundColor: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(8px)' } }}>
             <DialogTitle>Update User Group</DialogTitle>
             <ModalTabsStyle.MainDiv>
                 <Grid container>
 
                     {formInputs.map((item) => {
-                        const test = state.editUserGroupData;
+                        const test = useUserGroupData;
                         return (
                             <Grid item xl={12} lg={12} mg={12} sm={12} xs={12}>
                                 <ModalTabsStyle.InputLabel>
@@ -75,13 +82,14 @@ export default function UserGroupModal() {
                                     <ModalTabsStyle.MyInput
                                         // User Group Name
                                         placeholder={item.placeholder}
-                                        value={state?.editUserGroupData[item.name]}
+                                        value={useUserGroupData[item.name]}
                                         onChange={(e) => {
                                             test[item.name] = e.target.value
-                                            dispatch({
-                                                type: "setEditUserGroupData",
-                                                payload: test
-                                            })
+                                            userGroupData(test)
+                                            // dispatch({
+                                            //     type: "setEditUserGroupData",
+                                            //     payload: test
+                                            // })
                                         }}
                                     />
                                 </ModalTabsStyle.InputLabel>

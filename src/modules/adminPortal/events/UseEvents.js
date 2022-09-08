@@ -114,7 +114,6 @@ export function UseEvents() {
         // else if (state.imageUrl === "") {
         else if (useImageUrl === "") {
             ToastWarning('Image required')
-            console.log(state.imageUrl);
         }
         // else if (!state.editData?.eventStatus) {
         else if (!useEditData?.eventStatus) {

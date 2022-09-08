@@ -11,7 +11,6 @@ import Logo from '../../assets/logo.png'
 import { Divider, Grid } from '@mui/material';
 import { Outlet, useLocation } from 'react-router-dom';
 import CommonProfileDropDown from '../commonProfileDropdown/CommonProfileDropDown';
-import { AppContext } from '../../State';
 import UseWindowDimensions from '../../customHooks/UseWindowDimensions';
 import { Hidden } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -19,6 +18,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Link } from "react-router-dom"
 import { MENU_ITEMS } from '../../constants/Roles'
 import Footer from '../footer/Footer';
+import { tabsPersmission } from '../../lib/reactivities/reactiveVarables';
+import { useReactiveVar } from '@apollo/client';
 const drawerWidth = 240;
 function Sidebar(props) {
   const [{
@@ -26,12 +27,11 @@ function Sidebar(props) {
     ctaLogoutHandler,
     handleDrawer,
   }] = UseDrawer()
-
+  const useTabsPermission = useReactiveVar(tabsPersmission)
   const { width } = UseWindowDimensions();
   const { window } = props;
   const location = useLocation();
   const anchorRef = React.useRef(null);
-  const { state } = React.useContext(AppContext)
   const [dropDownOpen, setDropDownOpen] = useState(0);
   const container = window !== undefined ? () => window().document.body : undefined;
   //List Item 
@@ -135,7 +135,8 @@ function Sidebar(props) {
       <List>
         <>
           {
-            state?.tabsPersmission.map((items, index) => {
+            // state?.tabsPersmission.map((items, index) => {
+            useTabsPermission.map((items, index) => {
               return renderSidebarItems(items, index)
 
             })
@@ -151,7 +152,7 @@ function Sidebar(props) {
       <CssBaseline />
       <SidebarStyle.AppBar elevation={0} position="fixed" open={open}>
         <Toolbar >
-          
+
           <SidebarStyle.IconButton
             aria-label="open drawer"
             onClick={handleDrawer}

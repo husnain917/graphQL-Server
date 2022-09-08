@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import React, { useState, useContext } from "react";
 import Axios from "axios";
 import {
@@ -14,9 +14,9 @@ import {
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
-import { AppContext } from "../../../State";
 import { GET_COURSES, GET_FAQS } from "../../../lib/queries/AllQueries";
-import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTable";
+import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
+
 
 
 
@@ -25,6 +25,9 @@ import { openModal, updateFlag } from "../../../commonComponents/newTable/NewTab
 
 
 export function UseFaqs() {
+  const useEditId = useReactiveVar(editId)
+  const useEditData = useReactiveVar(editData)
+  console.log("Edit Data in FAQ's", useEditData);
   const { data: COURSE_LIST } = useQuery(GET_COURSES)
   const formInputs = [
     {
@@ -44,7 +47,6 @@ export function UseFaqs() {
       dropDown: COURSE_LIST
     },
   ]
-  const { state, dispatch } = useContext(AppContext);
 
 
 
@@ -54,7 +56,7 @@ export function UseFaqs() {
   //GET STAFF 
 
   let { data, loading: GET_LOADING, error } = useQuery(GET_FAQS);
-  console.log("error", error);
+  // console.log("error", error);
   const refacteredData = [];
   data?.faqs?.map((item) => {
     refacteredData.push({
@@ -76,10 +78,12 @@ export function UseFaqs() {
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    if (!state.editData?.faqQuestion) {
+    // if (!state.editData?.faqQuestion) {
+    if (!useEditData?.faqQuestion) {
       ToastWarning('Faq question required')
     }
-    else if (!state.editData?.faqAnswer) {
+    // else if (!state.editData?.faqAnswer) {
+    else if (!useEditData?.faqAnswer) {
       ToastWarning('Faq answer required')
     }
     else {
@@ -87,11 +91,14 @@ export function UseFaqs() {
         await CreateFaq({
           variables: {
             data: {
-              faqQuestion: state.editData?.faqAnswer,
-              faqAnswer: state.editData?.faqQuestion,
+              // faqQuestion: state.editData?.faqAnswer,
+              faqQuestion: useEditData?.faqAnswer,
+              // faqAnswer: state.editData?.faqQuestion,
+              faqAnswer: useEditData?.faqQuestion,
               course: {
                 connect: {
-                  id: state.editData?.courseId
+                  // id: state.editData?.courseId
+                  id: useEditData?.courseId
                 }
               },
               createdAt: new Date(),
@@ -109,6 +116,7 @@ export function UseFaqs() {
             // });
             openModal(false)
             updateFlag(false)
+            editData({})
             ToastSuccess('FAQ Added')
           },
           refetchQueries: [{ query: GET_FAQS }],
@@ -163,10 +171,12 @@ export function UseFaqs() {
 
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
-    if (!state.editData?.faqQuestion) {
+    // if (!state.editData?.faqQuestion) {
+    if (!useEditData?.faqQuestion) {
       ToastWarning('Faq question required')
     }
-    else if (!state.editData?.faqAnswer) {
+    // else if (!state.editData?.faqAnswer) {
+    else if (!useEditData?.faqAnswer) {
       ToastWarning('Faq answer required')
     }
     else {
@@ -174,18 +184,21 @@ export function UseFaqs() {
         await UpdateFaq({
           variables: {
             where: {
-              id: state.editId
+              id: useEditId
             },
             data: {
               faqQuestion: {
-                set: state.editData?.faqQuestion
+                // set: state.editData?.faqQuestion
+                set: useEditData?.faqQuestion
               },
               faqAnswer: {
-                set: state.editData?.faqAnswer
+                // set: state.editData?.faqAnswer
+                set: useEditData?.faqAnswer
               },
               course: {
                 connect: {
-                  id: state.editData?.courseId
+                  // id: state.editData?.courseId
+                  id: useEditData?.courseId
                 }
               },
               updateAt: {
@@ -204,10 +217,12 @@ export function UseFaqs() {
             // });
             openModal(false)
             updateFlag(false)
+            editData({})
             ToastSuccess('FAQ Updated')
           },
           refetchQueries: [{ query: GET_FAQS }],
         })
+
 
       } catch (error) {
         console.log(error.message);

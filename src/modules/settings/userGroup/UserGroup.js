@@ -10,12 +10,13 @@ import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom"
 import PButton from "../../../commonComponents/Pbutton/Pbutton";
 import { UseUserGroup } from "./UseUserGroup";
-import { AppContext } from "../../../State";
 import { data } from '../../../constants/userGroupPagesList'
 import CommonTableLoader from "../../../commonComponents/commonTableLoader/CommonTableLoader";
-import { updateFlag } from "../../../commonComponents/newTable/NewTable";
 import { useReactiveVar } from "@apollo/client";
+import { updateFlag, editData, userGroupData } from "../../../lib/reactivities/reactiveVarables";
 export default function UserGroup() {
+  const useUserGroupData = useReactiveVar(userGroupData)
+  const userGroupUpdateFlag = useReactiveVar(updateFlag)
   const [
     {
       userName,
@@ -32,9 +33,7 @@ export default function UserGroup() {
     }
   ] = UseUserGroup();
 
-  const { state, dispatch } = useContext(AppContext);
   const [stateArray, setStateArray] = useState(data);
-  const userGroupUpdateFlag= useReactiveVar(updateFlag)
 
   return (
     <TabsStyle.MainDiv>
@@ -46,12 +45,11 @@ export default function UserGroup() {
               User Group Name
               placeholder="Enter Name"
               // defaultValue={state.editUserGroupDataBool ? state.editUserGroupData.name : userName}
-              defaultValue={userGroupUpdateFlag ? state.editUserGroupData.name : userName}
+              defaultValue={userGroupUpdateFlag ? useUserGroupData?.name : userName}
               // onChange={(e) => setUserName(e.target.value)}
               onChange={((e) => {
-                // state.editUserGroupDataBool ?
                 userGroupUpdateFlag ?
-                  state.editUserGroupData.name = e.target.value
+                  useUserGroupData.name = e.target.value
                   :
                   setUserName(e.target.value)
               })}
@@ -65,11 +63,11 @@ export default function UserGroup() {
 
               placeholder="Enter Role"
               // defaultValue={state.editUserGroupDataBool ? state.editUserGroupData.role : userGroupRole}
-              defaultValue={userGroupUpdateFlag ? state.editUserGroupData.role : userGroupRole}
+              defaultValue={userGroupUpdateFlag ? useUserGroupData?.role : userGroupRole}
               // onChange={(e) => setuserGroupRole(e.target.value.toUpperCase())}
               onChange={((e) => {
-                state.editUserGroupDataBool ?
-                  state.editUserGroupData.role = e.target.value.toUpperCase()
+                userGroupUpdateFlag ?
+                  useUserGroupData.role = e.target.value.toUpperCase()
                   :
                   setuserGroupRole(e.target.value.toUpperCase())
               })}
@@ -195,85 +193,85 @@ export default function UserGroup() {
 
                       : */}
                   <>
-                        {
-                          stateArray?.navigationResults?.map((navModule, navModuleIndex) => {
-                            return navModule?.pages.map((navPage, navPageIndex) => {
-                              return (
-                                <>
-                                  <TableRow
-                                    key={navModuleIndex}
-                                    sx={{
-                                      "&:last-child td, &:last-child th": { border: 0 },
-                                    }}
-                                  >
-                                    <TabsStyle.PermissionTitletTxt
-                                      component="th"
-                                      scope="row"
-                                    >
-                                      {navPage.pageName}
-                                    </TabsStyle.PermissionTitletTxt>
-                                    <TableCell
-                                      style={{ paddingBottom: 10, paddingTop: 10 }}
-                                      align="right"
-                                    >
-                                      <Checkbox
-                                        onChange={() =>
-                                          handlingPermission(
-                                            navModule,
-                                            navPageIndex,
-                                            "ViewPermission"
-                                          )
-                                        }
-                                      />
-                                    </TableCell>
-                                    <TableCell
-                                      style={{ paddingBottom: 10, paddingTop: 10 }}
-                                      align="right"
-                                    >
-                                      <Checkbox
-                                        onChange={() =>
-                                          handlingPermission(
-                                            navModule,
-                                            navPageIndex,
-                                            "CreatePermission"
-                                          )
-                                        }
-                                      />
-                                    </TableCell>
-                                    <TableCell
-                                      style={{ paddingBottom: 10, paddingTop: 10 }}
-                                      align="right"
-                                    >
-                                      <Checkbox
-                                        onChange={() =>
-                                          handlingPermission(
-                                            navModule,
-                                            navPageIndex,
-                                            "EditPermission"
-                                          )
-                                        }
-                                      />
-                                    </TableCell>
-                                    <TableCell
-                                      style={{ paddingBottom: 10, paddingTop: 10 }}
-                                      align="right"
-                                    >
-                                      <Checkbox
-                                        onChange={() =>
-                                          handlingPermission(
-                                            navModule,
-                                            navPageIndex,
-                                            "DelPermission"
-                                          )
-                                        }
-                                      />
-                                    </TableCell>
-                                  </TableRow>
-                                </>
-                              );
-                            });
-                          })}
-                      </>
+                    {
+                      stateArray?.navigationResults?.map((navModule, navModuleIndex) => {
+                        return navModule?.pages.map((navPage, navPageIndex) => {
+                          return (
+                            <>
+                              <TableRow
+                                key={navModuleIndex}
+                                sx={{
+                                  "&:last-child td, &:last-child th": { border: 0 },
+                                }}
+                              >
+                                <TabsStyle.PermissionTitletTxt
+                                  component="th"
+                                  scope="row"
+                                >
+                                  {navPage.pageName}
+                                </TabsStyle.PermissionTitletTxt>
+                                <TableCell
+                                  style={{ paddingBottom: 10, paddingTop: 10 }}
+                                  align="right"
+                                >
+                                  <Checkbox
+                                    onChange={() =>
+                                      handlingPermission(
+                                        navModule,
+                                        navPageIndex,
+                                        "ViewPermission"
+                                      )
+                                    }
+                                  />
+                                </TableCell>
+                                <TableCell
+                                  style={{ paddingBottom: 10, paddingTop: 10 }}
+                                  align="right"
+                                >
+                                  <Checkbox
+                                    onChange={() =>
+                                      handlingPermission(
+                                        navModule,
+                                        navPageIndex,
+                                        "CreatePermission"
+                                      )
+                                    }
+                                  />
+                                </TableCell>
+                                <TableCell
+                                  style={{ paddingBottom: 10, paddingTop: 10 }}
+                                  align="right"
+                                >
+                                  <Checkbox
+                                    onChange={() =>
+                                      handlingPermission(
+                                        navModule,
+                                        navPageIndex,
+                                        "EditPermission"
+                                      )
+                                    }
+                                  />
+                                </TableCell>
+                                <TableCell
+                                  style={{ paddingBottom: 10, paddingTop: 10 }}
+                                  align="right"
+                                >
+                                  <Checkbox
+                                    onChange={() =>
+                                      handlingPermission(
+                                        navModule,
+                                        navPageIndex,
+                                        "DelPermission"
+                                      )
+                                    }
+                                  />
+                                </TableCell>
+                              </TableRow>
+                            </>
+                          );
+                        });
+                      })}
+                  </>
 
 
                   {/* <>

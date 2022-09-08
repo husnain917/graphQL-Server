@@ -28,8 +28,8 @@ export default function Dashboard() {
     SPEAKERS_LOADING,
     SUCCESS_LOADING,
     BATCH_LOADING,
-    USER_GROUP_LOADING
-}] = UseDashboard();
+    USER_GROUP_LOADING,
+  }] = UseDashboard();
 
 
   // const userRole = state?.user.userGroup.map((items) => {
@@ -99,7 +99,7 @@ export default function Dashboard() {
           <DS.CardContainer>
             <Link to='/events' className="link">
               <Card
-                value={0}
+                value={eventLength}
                 // EVENTS_LOADING={EVENTS_LOADING}
                 heading='EVENTS'
                 icon={<DS.EventAvailableIcon />}

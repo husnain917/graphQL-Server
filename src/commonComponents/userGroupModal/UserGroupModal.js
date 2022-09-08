@@ -12,9 +12,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Link } from "react-router-dom"
 import PButton from "../Pbutton/Pbutton";
 import { UseUserGroup } from "../../modules/settings/userGroup/UseUserGroup";
-import { AppContext } from "../../State";
 import { data } from "../../constants/userGroupPagesList"
 import CommonTableLoader from "../commonTableLoader/CommonTableLoader";
+import { useReducer } from "react";
 export default function UserGroupModal() {
     const [
         {
@@ -32,9 +32,8 @@ export default function UserGroupModal() {
         }
     ] = UseUserGroup();
 
-    const { state, dispatch } = useContext(AppContext);
     const [stateArray, setStateArray] = useState(data);
-
+    const [state, dispatch] = useReducer();
     const formInputs = [
         {
             label: "Name",

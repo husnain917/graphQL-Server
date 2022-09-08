@@ -6,7 +6,10 @@ import CommonTableLoader from '../../../commonComponents/commonTableLoader/Commo
 import PButton from '../../../commonComponents/Pbutton/Pbutton'
 import { Pd } from '../profileData/profileDataStyle'
 import { UseEditProfile } from './UseEditProfile'
+import { orgCheck, userData } from '../../../lib/reactivities/reactiveVarables'
+import { useReactiveVar } from '@apollo/client'
 export default function EditProfile() {
+
     const [{
         ctaUpdateHandler,
         name,
@@ -23,6 +26,8 @@ export default function EditProfile() {
         // handleChange,
         UPDATE_LOADING
     }] = UseEditProfile()
+    const useOrgCheck = useReactiveVar(orgCheck)
+    const useUserData = useReactiveVar(userData)
     if (UPDATE_LOADING) {
         return <CommonTableLoader />
     }
@@ -40,10 +45,12 @@ export default function EditProfile() {
                     <CommonEditField
                         Label='Name'
                         type='text'
-                        placeholder={state?.orgLogin ?
-                            state?.user?.organizationLogin.name
-                            :
-                            state?.user.email}
+                        placeholder={
+                            // state?.orgLogin ?
+                            useOrgCheck ?
+                                useUserData?.name
+                                :
+                                useUserData?.name}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
@@ -56,10 +63,12 @@ export default function EditProfile() {
                     <CommonEditField
                         Label='Email'
                         type='email'
-                        placeholder={state?.orgLogin ?
-                            state?.user?.organizationLogin.email
-                            :
-                            state?.user.userGroup.email}
+                        placeholder={
+                            // state?.orgLogin ?
+                            useOrgCheck ?
+                                useUserData?.email
+                                :
+                                useUserData.email}
                         value={email}
                     />
                 </Grid>
@@ -72,10 +81,12 @@ export default function EditProfile() {
                     <CommonEditField
                         Label='Role'
                         value={role}
-                        placeholder={state?.orgLogin ?
-                            state?.user?.organizationLogin.role
-                            :
-                            state?.user.userGroup.userGroupRole}
+                        placeholder={
+                            // state?.orgLogin ?
+                            useOrgCheck ?
+                                useUserData?.role
+                                :
+                                useUserData?.userGroup[0]?.userGroupRole}
                     />
                 </Grid>
                 <Grid item
@@ -84,15 +95,17 @@ export default function EditProfile() {
                     md={12}
                     sm={12}
                     xs={12}
-                    sx={{marginLeft: 5}}
-                    >
+                    sx={{ marginLeft: 5 }}
+                >
                     <CommonEditField
                         Label='Phone No'
                         type='tel'
-                        placeholder={state?.orgLogin ?
-                            state?.user?.organizationLogin.contact
-                            :
-                            state?.user.contact}
+                        placeholder={
+                            // state?.orgLogin ?
+                            useOrgCheck ?
+                                useUserData?.contact
+                                :
+                                useUserData?.contact}
                         value={contact}
                         onChange={(e) => setContact(e.target.value)}
                     />
@@ -123,11 +136,13 @@ export default function EditProfile() {
                     <CommonEditField
                         Label='Address'
                         type='text'
-                        placeholder={state?.orgLogin ?
-                            state?.user?.organizationLogin.address
-                            :
-                            state?.user.address}
-                        value={address}
+                        placeholder={
+                            // state?.orgLogin ?
+                            useOrgCheck ?
+                                useUserData?.address
+                                :
+                                useUserData?.address}
+                        value={address} ORGANIZ
                         onChange={(e) => setAddress(e.target.value)}
                     />
                 </Grid>

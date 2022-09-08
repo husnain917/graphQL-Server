@@ -42,15 +42,15 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
   const [contact, setContact] = useState('')
   var openFormModal = useReactiveVar(openModal)
   var modalUpdateFlag = useReactiveVar(updateFlag)
-  // var useEditData = useReactiveVar(editData)
+  var useEditData = useReactiveVar(editData)
   var useValTel = useReactiveVar(valTel)
   // console.log("Edit data in modal", useEditData);
-  const {
-    data: EDIT_DATA,
-    loading: EDIT_LOADING,
-    editError
-  } = useQuery(GET_EDIT_DATA);
-  const useEditData = EDIT_DATA.editData
+  // const {
+  //   data: EDIT_DATA,
+  //   loading: EDIT_LOADING,
+  //   editError
+  // } = useQuery(GET_EDIT_DATA);
+  // const useEditData = EDIT_DATA.editData
   console.log("query data in form modal", useEditData);
 
   const handleChangePhone = (phone) => {

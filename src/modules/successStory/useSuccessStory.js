@@ -83,12 +83,12 @@ export function UseSuccessStory() {
   //GET STAFF 
 
   let { data, loading: GET_LOADING, error } = useQuery(GET_SUCCESS_STORIES);
-  const {
-    data: EDIT_DATA,
-    loading: EDIT_LOADING,
-    editError
-  } = useQuery(GET_EDIT_DATA);
-  console.log(EDIT_DATA)
+  // const {
+  //   data: EDIT_DATA,
+  //   loading: EDIT_LOADING,
+  //   editError
+  // } = useQuery(GET_EDIT_DATA);
+  // console.log(EDIT_DATA)
   console.log("error", error);
   const refacteredData = [];
   data?.findManySuccessStories?.map((item) => {

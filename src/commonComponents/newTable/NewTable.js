@@ -386,7 +386,7 @@ export default function NewTable({
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    // const useEditData = useReactiveVar(editData)
+    const useEditData = useReactiveVar(editData)
     const useUserGroupData = useReactiveVar(userGroupData)
     const useTabsPermission = useReactiveVar(tabsPersmission)
     const {
@@ -476,9 +476,7 @@ export default function NewTable({
     //open edit form modal
     const ctaEditButtonHandler = (data) => {
         console.log("id in editButtonHandler", data);
-        console.log("data in editButtonHandler", EDIT_DATA);
-        const useEditData = EDIT_DATA.editData
-        const test = useEditData;
+        const test = useEditData
         editId(data.id)
         openModal(true)
         updateFlag(true)

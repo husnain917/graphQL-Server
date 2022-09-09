@@ -7,6 +7,7 @@ import {
 } from "../../../commonComponents/commonFunction/CommonFunction";
 import {
     ADD_CONTACT_US,
+
     // DELETE_CONTACT,
     UPDATE_SINGLE_CONTACT,
 } from "../../../lib/mutation/AllMutations";
@@ -84,29 +85,32 @@ export function UseContactUs() {
 
 
     //ADD STAFF
+    const updateContacts = (cache, { data }) => {
+        const newContact = data.createContactUs
+        console.log("data of new contact", newContact);
+        console.log("cache", cache);
+        const contacts = cache.readQuery({
+            query: GET_CONTACT_US,
+        })
+        console.log("Existing contacts", contacts.contactuses);
+
+        cache.writeQuery({
+            query: GET_CONTACT_US,
+            data: {
+                contactuses: [
+                    ...contacts.contactuses,
+                    newContact
+                ]
+            }
+        })
+    };
 
     let [
         CreateContactUs,
         {
             loading: ADD_LOADING
         }] = useMutation(ADD_CONTACT_US, {
-            update(cache, { data }) {
-                const { contacts } = cache.readQuery({
-                    query: GET_CONTACT_US
-                })
-
-                console.log("contacts in readquery", contacts);
-
-                cache.writeQuery({
-                    query: GET_CONTACT_US,
-                    data: {
-                        contacts: [
-                            data?.CreateContactUs,
-                            ...contacts.contactuses
-                        ]
-                    }
-                })
-            }
+            update: updateContacts
         });
     const ctaFormHandler = async (event) => {
         event.preventDefault();

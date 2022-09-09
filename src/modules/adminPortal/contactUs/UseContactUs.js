@@ -87,8 +87,6 @@ export function UseContactUs() {
     //ADD STAFF
     const AddContactInCache = (cache, { data }) => {
         const newContact = data.createContactUs
-        console.log("data of new contact", newContact);
-        console.log("cache", cache);
         const contacts = cache.readQuery({
             query: GET_CONTACT_US,
         })

@@ -184,7 +184,7 @@ export function UseSuccessStory() {
             editData({})
             ToastSuccess('Story Added')
           },
-          // refetchQueries: [{ query: GET_SUCCESS_STORIES }],
+          refetchQueries: [{ query: GET_SUCCESS_STORIES }],
         });
       } catch (error) {
         // dispatch({
@@ -309,19 +309,12 @@ export function UseSuccessStory() {
             },
           },
           onCompleted() {
-            // dispatch({
-            //   type: "setModal",
-            //   payload: {
-            //     modalUpdateFlag: false,
-            //     openFormModal: false,
-            //   },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})
             ToastSuccess('Story Updated')
           },
-          // refetchQueries: [{ query: GET_SUCCESS_STORIES }],
+          refetchQueries: [{ query: GET_SUCCESS_STORIES }],
         })
 
       } catch (error) {

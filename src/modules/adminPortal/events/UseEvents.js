@@ -157,15 +157,24 @@ export function UseEvents() {
                         imageUrl("")
                         ToastSuccess('Event Added')
                     },
-                    refetchQueries: [{ query: GET_EVENTS }],
+                    // refetchQueries: [{ query: GET_EVENTS }],
+                    // update(cache, { data }) {
+                    //     const { events } = cache.readQuery({
+                    //         query: GET_EVENTS
+                    //     })
+
+                    //     cache.writeQuery({
+                    //         query: GET_EVENTS,
+                    //         data: {
+                    //             events: [
+                    //                 data.CreateEvents,
+                    //                 ...events
+                    //             ]
+                    //         }
+                    //     })
+                    // }
                 });
             } catch (error) {
-                // dispatch({
-                //     type: "setModal",
-                //     payload: {
-                //         openFormModal: false,
-                //     },
-                // });
                 openModal(false)
                 setLoader(false);
                 ToastError(error.message);
@@ -262,20 +271,18 @@ export function UseEvents() {
 
                     },
                     onCompleted() {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData({})
                         imageUrl("")
                         ToastSuccess('Event Updated')
                     },
-                    refetchQueries: [{ query: GET_EVENTS }],
+                    // refetchQueries: [{ query: GET_EVENTS }],
+                    // update(cache, { data }) {
+                    //     const { events } = cache.readQuery({
+                    //         query: GET_EVENTS
+                    //     })
+                    // }
                 })
 
             } catch (error) {

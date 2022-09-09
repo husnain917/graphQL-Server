@@ -190,7 +190,7 @@ export function UseAllStaff() {
             valTel("")
             ToastSuccess('Staff Added')
           },
-          // refetchQueries: [{ query: GET_USERS }],
+          refetchQueries: [{ query: GET_USERS }],
 
 
           // update(cache, { data: { addItems } }) {

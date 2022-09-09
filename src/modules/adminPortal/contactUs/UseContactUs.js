@@ -12,6 +12,7 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_CONTACT_US } from "../../../lib/queries/AllQueries";
 import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
+import ApolloCacheUpdater from "apollo-cache-updater";
 
 
 
@@ -88,7 +89,25 @@ export function UseContactUs() {
         CreateContactUs,
         {
             loading: ADD_LOADING
-        }] = useMutation(ADD_CONTACT_US);
+        }] = useMutation(ADD_CONTACT_US, {
+            update(cache, { data }) {
+                const { contacts } = cache.readQuery({
+                    query: GET_CONTACT_US
+                })
+
+                console.log("contacts in readquery", contacts);
+
+                cache.writeQuery({
+                    query: GET_CONTACT_US,
+                    data: {
+                        contacts: [
+                            data?.CreateContactUs,
+                            ...contacts.contactuses
+                        ]
+                    }
+                })
+            }
+        });
     const ctaFormHandler = async (event) => {
         event.preventDefault();
         // if (!state.editData?.name) {
@@ -130,29 +149,33 @@ export function UseContactUs() {
                     },
 
                     onCompleted(data, cache) {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData({})
                         ToastSuccess('Contact Added')
 
                     },
-                    refetchQueries: [{ query: GET_CONTACT_US }],
+                    // refetchQueries: [{ query: GET_CONTACT_US }],
+                    // update(cache, { data }) {
+                    //     const { contacts } = cache.readQuery({
+                    //         query: GET_CONTACT_US
+                    //     })
+
+                    //     console.log("contacts in readquery", contacts);
+
+                    //     cache.writeQuery({
+                    //         query: GET_CONTACT_US,
+                    //         data: {
+                    //             contacts: [
+                    //                 data?.CreateContactUs,
+                    //                 ...contacts?.contactuses
+                    //             ]
+                    //         }
+                    //     })
+                    // }
 
                 });
             } catch (error) {
-                // dispatch({
-                //     type: "setModal",
-                //     payload: {
-                //         openFormModal: false,
-                //     },
-                // });
                 openModal(false)
                 ToastError("Contact not added");
 
@@ -253,7 +276,7 @@ export function UseContactUs() {
                             }
                         }
                     },
-                    refetchQueries: [{ query: GET_CONTACT_US }],
+                    // refetchQueries: [{ query: GET_CONTACT_US }],
                     // onCompleted() {
                     //     dispatch({
                     //         type: "setModal",

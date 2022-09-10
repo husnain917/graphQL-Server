@@ -201,29 +201,8 @@ export function UseEvents() {
 
 
     //Update staff
-    const updateEventInCache = (cache, { data }) => {
-        const updateEvent = data.updateEvents
-        console.log("data of update Event", updateEvent);
-        console.log("cache", cache);
-        const events = cache.readQuery({
-            query: GET_EVENTS,
-        })
-        console.log("Existing Events", events.findManyEvents);
 
-        // cache.writeQuery({
-        //     query: GET_EVENTS,
-        //     data: {
-        //         findManyEvents: [
-        //             ...events.findManyEvents,
-        //             newEvent
-        //         ]
-        //     }
-        // })
-    };
-
-    let [UpdateEvents, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_EVENT, {
-        update: updateEventInCache
-    });
+    let [UpdateEvents, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_EVENT);
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()

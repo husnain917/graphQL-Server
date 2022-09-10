@@ -37,7 +37,6 @@ export default function UserGroupModal() {
     ] = UseUserGroup();
 
     const [stateArray, setStateArray] = useState(data);
-
     const formInputs = [
         {
             label: "Name",

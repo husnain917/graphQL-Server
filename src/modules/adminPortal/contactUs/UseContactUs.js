@@ -13,7 +13,6 @@ import {
 } from "../../../lib/mutation/AllMutations";
 import { GET_CONTACT_US } from "../../../lib/queries/AllQueries";
 import { openModal, updateFlag, editData, editId } from "../../../lib/reactivities/reactiveVarables";
-import ApolloCacheUpdater from "apollo-cache-updater";
 
 
 

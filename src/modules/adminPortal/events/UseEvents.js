@@ -33,7 +33,6 @@ export function UseEvents() {
         setDate(newDate);
         console.log(newDate);
     }
-    console.log(speakerList)
     const formInputs = [
         {
             label: "Name",
@@ -202,8 +201,29 @@ export function UseEvents() {
 
 
     //Update staff
+    const updateEventInCache = (cache, { data }) => {
+        const updateEvent = data.updateEvents
+        console.log("data of update Event", updateEvent);
+        console.log("cache", cache);
+        const events = cache.readQuery({
+            query: GET_EVENTS,
+        })
+        console.log("Existing Events", events.findManyEvents);
 
-    let [UpdateEvents, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_EVENT);
+        // cache.writeQuery({
+        //     query: GET_EVENTS,
+        //     data: {
+        //         findManyEvents: [
+        //             ...events.findManyEvents,
+        //             newEvent
+        //         ]
+        //     }
+        // })
+    };
+
+    let [UpdateEvents, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SINGLE_EVENT, {
+        update: updateEventInCache
+    });
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()

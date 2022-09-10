@@ -190,12 +190,33 @@ export function UseContactUs() {
 
 
 
-    //Update staff
+    //Update Contacts
+    const updateContactsInCache = (cache, { data }) => {
+        const updateContact = data
+        console.log("data of update Event", updateContact);
+        console.log("cache", cache);
+        const contacts = cache.readQuery({
+            query: GET_CONTACT_US,
+        })
+        console.log("Existing Events", contacts.contactuses);
+
+        // cache.writeQuery({
+        //     query: GET_EVENTS,
+        //     data: {
+        //         findManyEvents: [
+        //             ...events.findManyEvents,
+        //             newEvent
+        //         ]
+        //     }
+        // })
+    };
     let [
         UpdateContactUs,
         {
             loading: UPDATE_LOADING
-        }] = useMutation(UPDATE_SINGLE_CONTACT);
+        }] = useMutation(UPDATE_SINGLE_CONTACT, {
+            update: updateContactsInCache
+        });
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault();

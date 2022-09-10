@@ -28,7 +28,6 @@ import { openModal, updateFlag, editData, editId } from "../../../lib/reactiviti
 export default function UseAssignment() {
   const useEditId = useReactiveVar(editId)
   const useEditData = useReactiveVar(editData)
-  console.log("Edit data in my assignments", useEditData);
   const [{ courseBatch, COURSE_DATA }] = FiltredData()
   const formInputs = [
     {
@@ -74,10 +73,28 @@ export default function UseAssignment() {
 
   const [loader, setLoader] = useState(false);
 
-  //ADD STAFF
+  //ADD Assignment
+  const AddAssignmentInCache = (cache, { data }) => {
+    const newAssignment = data.createCourseAssignment
+    const assignments = cache.readQuery({
+      query: GET_ASSIGNMENT,
+    })
+
+    cache.writeQuery({
+      query: GET_ASSIGNMENT,
+      data: {
+        courseAssignments: [
+          ...assignments.courseAssignments,
+          newAssignment
+        ]
+      }
+    })
+  };
 
   let [CreateCourseAssignment, { loading: ADD_LOADING }] =
-    useMutation(ADD_ASSIGNMENT);
+    useMutation(ADD_ASSIGNMENT, {
+      update: AddAssignmentInCache
+    });
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
@@ -109,28 +126,14 @@ export default function UseAssignment() {
             }
           },
           onCompleted(data, cache) {
-            // dispatch({
-            //     type: "setModal",
-            //     payload: {
-            //         modalUpdateFlag: false,
-            //         openFormModal: false,
-            //     },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})
             ToastSuccess('Assignment Added')
 
           },
-          refetchQueries: [{ query: GET_ASSIGNMENT }],
         });
       } catch (error) {
-        // dispatch({
-        //     type: "setModal",
-        //     payload: {
-        //         openFormModal: false,
-        //     },
-        // });
         openModal(false)
         setLoader(false);
         ToastError(error.message);
@@ -201,19 +204,11 @@ export default function UseAssignment() {
 
           },
           onCompleted() {
-            // dispatch({
-            //     type: "setModal",
-            //     payload: {
-            //         modalUpdateFlag: false,
-            //         openFormModal: false,
-            //     },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})
             ToastSuccess('Course Updated')
           },
-          refetchQueries: [{ query: GET_ASSIGNMENT }],
         })
 
       } catch (error) {

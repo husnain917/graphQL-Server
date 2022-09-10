@@ -26,7 +26,6 @@ import { openModal, updateFlag, editData, editId } from "../../../lib/reactiviti
 export default function UseCourseCategory() {
     const useEditData = useReactiveVar(editData)
     const useEditId = useReactiveVar(editId)
-    console.log("Edit data in courseCatogry", useEditData);
     const [{ COURSE_DATA }] = FiltredData()
     const formInputs = [
         {
@@ -61,16 +60,32 @@ export default function UseCourseCategory() {
     });
 
 
-    //ADD STAFF
+    //ADD category
+    const AddCategoryInCache = (cache, { data }) => {
+        const newCategory = data.createCategory
+        const courseCategories = cache.readQuery({
+            query: GET_COURSE_CATEGORY,
+        })
 
-    let [CreateCategory, { loading: ADD_LOADING }] = useMutation(ADD_COURSE_CATEGORY);
+        cache.writeQuery({
+            query: GET_COURSE_CATEGORY,
+            data: {
+                categories: [
+                    ...courseCategories.categories,
+                    newCategory
+                ]
+            }
+        })
+    };
+
+    let [CreateCategory, { loading: ADD_LOADING }] = useMutation(ADD_COURSE_CATEGORY, {
+        update: AddCategoryInCache
+    });
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        // if (!state.editData?.categoryName) {
         if (!useEditData?.categoryName) {
             ToastWarning('category Name required')
-            // } else if (!state.editData?.imageUrl) {
         } else if (!useEditData?.imageUrl) {
             ToastWarning('Image URL required')
         }
@@ -79,36 +94,20 @@ export default function UseCourseCategory() {
                 await CreateCategory({
                     variables: {
                         data: {
-                            // categoryName: state?.editData.categoryName,
                             categoryName: useEditData.categoryName,
-                            // imageUrl: state?.editData.imageUrl
                             imageUrl: useEditData.imageUrl
                         }
 
                     },
                     onCompleted(data, cache) {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData({})
                         ToastSuccess('Category Added')
 
                     },
-                    refetchQueries: [{ query: GET_COURSE_CATEGORY }],
                 });
             } catch (error) {
-                // dispatch({
-                //     type: "setModal",
-                //     payload: {
-                //         openFormModal: false,
-                //     },
-                // });
                 openModal(false)
                 ToastError(error.message);
 
@@ -151,7 +150,6 @@ export default function UseCourseCategory() {
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        // if (!state.editData?.categoryName) {
         if (!useEditData?.categoryName) {
             ToastWarning('categoryName required')
         } else if (!useEditData?.imageUrl) {
@@ -164,11 +162,9 @@ export default function UseCourseCategory() {
 
                         data: {
                             categoryName: {
-                                // set: state?.editData.categoryName
                                 set: useEditData?.categoryName
                             },
                             imageUrl: {
-                                // set: state?.editData.imageUrl
                                 set: useEditData?.imageUrl
                             }
                         },
@@ -180,19 +176,11 @@ export default function UseCourseCategory() {
 
                     },
                     onCompleted() {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData({})
                         ToastSuccess('Course Updated')
                     },
-                    refetchQueries: [{ query: GET_COURSE_BATCH }],
                 })
 
             } catch (error) {

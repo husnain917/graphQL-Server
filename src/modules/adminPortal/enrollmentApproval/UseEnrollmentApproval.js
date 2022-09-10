@@ -96,7 +96,6 @@ export function UseEnrollmentApproval() {
     const approvals = cache.readQuery({
       query: GET_ENROLLMENT,
     })
-    console.log("Existing approvals", approvals.enrollmentApprovals);
 
     cache.writeQuery({
       query: GET_ENROLLMENT,

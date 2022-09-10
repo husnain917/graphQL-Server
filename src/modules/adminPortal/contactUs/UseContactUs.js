@@ -90,7 +90,6 @@ export function UseContactUs() {
         const contacts = cache.readQuery({
             query: GET_CONTACT_US,
         })
-        console.log("Existing contacts", contacts.contactuses);
 
         cache.writeQuery({
             query: GET_CONTACT_US,

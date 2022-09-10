@@ -108,7 +108,6 @@ export function UseSuccessStory() {
     const stories = cache.readQuery({
       query: GET_SUCCESS_STORIES,
     })
-    console.log("Existing contacts", stories.findManySuccessStories);
 
     cache.writeQuery({
       query: GET_SUCCESS_STORIES,

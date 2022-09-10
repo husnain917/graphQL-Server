@@ -108,13 +108,29 @@ export function UseAllStudents() {
   });
 
 
-  //ADD STAFF
+  //ADD Student
+  const AddUserInCache = (cache, { data }) => {
+    const newUser = data.register
+    const users = cache.readQuery({
+      query: GET_USERS,
+    })
+
+    cache.writeQuery({
+      query: GET_USERS,
+      data: {
+        users: [
+          ...users.users,
+          newUser
+        ]
+      }
+    })
+  };
 
   let [
     Register,
     {
       loading: ADD_LOADING
-    }] = useMutation(ADD_USER);
+    }] = useMutation(ADD_USER, { update: AddUserInCache });
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
@@ -156,13 +172,6 @@ export function UseAllStudents() {
 
           },
           onCompleted() {
-            // dispatch({
-            //   type: "setModal",
-            //   payload: {
-            //     modalUpdateFlag: false,
-            //     openFormModal: false,
-            //   },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})
@@ -171,7 +180,6 @@ export function UseAllStudents() {
 
             ToastSuccess('Student Added')
           },
-          refetchQueries: [{ query: GET_USERS }],
 
           // update(cache, { data: { addItems } }) {
           //   const { tados } = cache.readQuery({
@@ -202,12 +210,6 @@ export function UseAllStudents() {
         // });
         // console.log('sami', queryResult);
       } catch (error) {
-        // dispatch({
-        //   type: "setModal",
-        //   payload: {
-        //     openFormModal: false,
-        //   },
-        // });
         openModal(false)
         ToastError(error.message);
 
@@ -282,20 +284,12 @@ export function UseAllStudents() {
             },
           },
           onCompleted() {
-            // dispatch({
-            //   type: "setModal",
-            //   payload: {
-            //     modalUpdateFlag: false,
-            //     openFormModal: false,
-            //   },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})
             valTel("")
             ToastSuccess('Student Updated')
           },
-          refetchQueries: [{ query: GET_USERS }],
         })
 
       } catch (error) {

@@ -7,7 +7,7 @@ import { FooterStyle } from "./FooterStyle";
 
 export default function Footer() {
   return (
-    <Paper sx={{ marginTop: 'calc(10% + 10px)', bottom: 0, width: "100%", borderRadius: 4 }} component="footer" square variant="outlined">
+    <Paper sx={{ marginTop: 'calc(10% + 10px)', width: "100%", borderRadius: 4, }} component="footer" square variant="outlined">
       <Container maxWidth="lg">
 
         <Box

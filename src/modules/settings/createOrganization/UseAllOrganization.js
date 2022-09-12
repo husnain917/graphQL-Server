@@ -42,11 +42,11 @@ export function UseAllOrganization() {
       name: "password",
       type: "password",
     },
-    {
-      label: "Cnic",
-      name: "cnic",
-      type: "number",
-    },
+    // {
+    //   label: "Cnic",
+    //   name: "cnic",
+    //   type: "number",
+    // },
     {
       label: "Address",
       name: "address",
@@ -68,37 +68,39 @@ export function UseAllOrganization() {
   //GET STAFF
 
   const refacteredData = [];
-  data?.users?.map((item) => {
-    if (item.userGroup.userGroupRole === "TEACHER") {
-      refacteredData.push({
-        id: item.id,
-        name: item.name,
-        email: item.email,
-        cnic: item.cnic,
-        address: item.address,
-        contact: item.contact,
-        role: item.userGroup.userGroupRole,
-      });
-    }
-    if (item.userGroup.userGroupRole === "ADMIN") {
-      refacteredData.push({
-        id: item.id,
-        name: item.name,
-        email: item.email,
-        cnic: item.cnic,
-        address: item.address,
-        contact: item.contact,
-        role: item.userGroup.userGroupRole,
-      });
-    }
-
-    console.log(item);
+  data?.findManyOrganizations?.map((item) => {
+    refacteredData.push({
+      id: item.id,
+      name: item.name,
+      email: item.email,
+      role: item.role,
+      address: item.address,
+      contact: item.contact,
+    });
   });
   console.log("sami", refacteredData);
 
-  //ADD STAFF
+  //ADD Organization
+  const AddOrganizationInCache = (cache, { data }) => {
+    const newOrganization = data.createOrganization
+    const organizations = cache.readQuery({
+      query: GET_ALL_ORGANIZATION,
+    })
 
-  let [Register, { loading: ADD_LOADING }] = useMutation(ADD_ORGANIZATION);
+    cache.writeQuery({
+      query: GET_ALL_ORGANIZATION,
+      data: {
+        findManyOrganizations: [
+          ...organizations.findManyOrganizations,
+          newOrganization
+        ]
+      }
+    })
+  };
+
+  let [CreateOrganization, { loading: ADD_LOADING }] = useMutation(ADD_ORGANIZATION, {
+    update: AddOrganizationInCache
+  });
   const ctaFormHandler = async (event) => {
     event.preventDefault();
     if (!useEditData?.name) {
@@ -107,97 +109,41 @@ export function UseAllOrganization() {
       ToastWarning("Email required");
     } else if (!useValTel) {
       ToastWarning("Contact required");
-    } else if (!useEditData?.cnic) {
-      ToastWarning("cnic required");
     } else if (!useEditData?.address) {
       ToastWarning("address required");
     } else if (!useEditData?.userGroup) {
       ToastWarning("User Group required");
     } else {
       try {
-        await Register({
+        await CreateOrganization({
           variables: {
             data: {
               name: useEditData?.name,
               email: useEditData?.email,
               password: useEditData?.password,
-              cnic: useEditData?.cnic,
+              role: "ORGANIZATIONKEY",
               contact: useValTel,
               userGroup: {
                 connect: {
                   id: useEditData?.userGroup,
                 },
               },
-              organizations: {
-                connect: {
-                  id: useUserData.id,
-                },
-              },
+              // organizations: {
+              //   connect: {
+              //     id: useUserData.id,
+              //   },
+              // },
             },
           },
-          refetchQueries: [{ query: GET_ALL_ORGANIZATION }],
           onCompleted() {
-            // dispatch({
-            //   type: "setModal",
-            //   payload: {
-            //     modalUpdateFlag: false,
-            //     openFormModal: false,
-            //   },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})
-            ToastSuccess("Staff Added");
+            ToastSuccess("Organization Added");
           },
 
-          // update(cache, { data: { addItems } }) {
 
-          //   const { tados } = cache.readQuery({
-
-          //     query: GET_STAFF
-
-          //   })
-
-          //   cache.writeQuery({
-
-          //     query: GET_STAFF,
-
-          //     data: {
-
-          //       tados: [
-
-          //         data.CreateManyStaff,
-
-          //         ...tados
-
-          //       ]
-
-          //     }
-
-          //   })
-
-          // }
-
-          // update: (cache, { data: { addItem } }) => {
-
-          //   const data = cache.readQuery({ query: GET_STAFF });
-
-          //   console.log('sami',data);
-
-          //   data.items = [...data.items, addItem];
-
-          //   cache.writeQuery({ query: GET_STAFF }, data);
-
-          // },
         });
-
-        // const queryResult = cache.readQuery({
-
-        //   query: GET_STAFF
-
-        // });
-
-        // console.log('sami', queryResult);
       } catch (error) {
 
         openModal(false)
@@ -283,15 +229,7 @@ export function UseAllOrganization() {
               },
             },
           },
-          refetchQueries: [{ query: GET_ALL_ORGANIZATION }],
           onCompleted() {
-            // dispatch({
-            //   type: "setModal",
-            //   payload: {
-            //     modalUpdateFlag: false,
-            //     openFormModal: false,
-            //   },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})

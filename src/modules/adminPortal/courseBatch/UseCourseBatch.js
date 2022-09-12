@@ -66,9 +66,27 @@ export default function UseCourseBatch() {
     });
 
 
-    //ADD STAFF
+    //ADD Course Batch
+    const AddCourseBatchInCache = (cache, { data }) => {
+        const newCourseBatch = data.createCourseBatches
+        const courseBatches = cache.readQuery({
+            query: GET_COURSE_BATCH,
+        })
 
-    let [CreateCourseBatches, { loading: ADD_LOADING }] = useMutation(ADD_COURSE_BATCH);
+        cache.writeQuery({
+            query: GET_COURSE_BATCH,
+            data: {
+                findManyCourseBatches: [
+                    ...courseBatches.findManyCourseBatches,
+                    newCourseBatch
+                ]
+            }
+        })
+    };
+
+    let [CreateCourseBatches, { loading: ADD_LOADING }] = useMutation(ADD_COURSE_BATCH, {
+        update: AddCourseBatchInCache
+    });
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
@@ -103,28 +121,14 @@ export default function UseCourseBatch() {
 
                     },
                     onCompleted(data, cache) {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData({})
                         ToastSuccess('Lecture Added')
 
                     },
-                    refetchQueries: [{ query: GET_COURSE_BATCH }],
                 });
             } catch (error) {
-                // dispatch({
-                //     type: "setModal",
-                //     payload: {
-                //         openFormModal: false,
-                //     },
-                // });
                 openModal(false)
                 ToastError(error.message);
 
@@ -207,7 +211,6 @@ export default function UseCourseBatch() {
                         editData({})
                         ToastSuccess('Course Updated')
                     },
-                    refetchQueries: [{ query: GET_COURSE_BATCH }],
                 })
 
             } catch (error) {

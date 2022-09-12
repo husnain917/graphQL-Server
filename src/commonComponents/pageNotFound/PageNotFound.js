@@ -4,7 +4,6 @@ import ErrorImage from "../../assets/error.png";
 import { PNF } from "./PageNotFoundStyle";
 import { Link } from "react-router-dom";
 export default function PageNotFound() {
-  
   return (
     <PNF.NFContainer>
       <PNF.NFHeading>Oops! Page not found</PNF.NFHeading>
@@ -13,10 +12,10 @@ export default function PageNotFound() {
         Sorry! We can't find the page you are looking for.
       </PNF.NFSubHeading>
       <PNF.NFGoHomeButton>
-        <Link to="/" style={{textDecoration:'none',color:'white'}}>
-        Go to Home
+        <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+          Go to Home
         </Link>
-        </PNF.NFGoHomeButton>
+      </PNF.NFGoHomeButton>
     </PNF.NFContainer>
   );
 }

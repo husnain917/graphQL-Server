@@ -11,7 +11,7 @@ import {
   // DELETE_SINGLE_SUCCESS_STORY,
   UPDATE_SINGLE_SUCCESS,
 } from "../../lib/mutation/AllMutations";
-import { GET_SUCCESS_STORIES } from "../../lib/queries/AllQueries";
+import { GET_SUCCESS_STORIES, GET_EDIT_DATA } from "../../lib/queries/AllQueries";
 // import { convertToRaw } from "draft-js";
 // import draftToHtml from "draftjs-to-html";
 import { Slide, toast } from "react-toastify";
@@ -102,36 +102,48 @@ export function UseSuccessStory() {
 
   const [loader, setLoader] = useState(false);
 
-  //ADD STAFF
+  //ADD Success story
+  const AddSuccesStoryInCache = (cache, { data }) => {
+    const newStory = data.createSuccessStories
+    const stories = cache.readQuery({
+      query: GET_SUCCESS_STORIES,
+    })
 
-  let [CreateSuccessStories, { loading: ADD_LOADING }] = useMutation(ADD_SUCCESS_STORY);
+    cache.writeQuery({
+      query: GET_SUCCESS_STORIES,
+      data: {
+        findManySuccessStories: [
+          ...stories.findManySuccessStories,
+          newStory
+        ]
+      }
+    })
+  };
+
+
+  let [CreateSuccessStories, { loading: ADD_LOADING }] = useMutation(ADD_SUCCESS_STORY, {
+    update: AddSuccesStoryInCache
+  });
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    // if (!state.editData?.city) {
     if (!useEditData?.city) {
       ToastWarning('City name required')
     }
-    // else if (!state.editData?.freelancingProfileUrl) {
     else if (!useEditData?.freelancingProfileUrl) {
       ToastWarning('Freelancing profile url required')
     }
-    // else if (!state.editData?.paymentProof) {
     else if (!useEditData?.paymentProof) {
       ToastWarning('Payment proof required')
     }
-    // else if (!state.editData?.description) {
     else if (!useEditData?.description) {
       ToastWarning('Description required')
     }
-    // else if (!state.editData?.totalEarnedAmount) {
     else if (!useEditData?.totalEarnedAmount) {
       ToastWarning('Total earned amount required')
     }
-    // else if (!state.editData?.whyReject) {
     else if (!useEditData?.whyReject) {
       ToastWarning('Why reject required')
     }
-    // else if (!state.editData?.status) {
     else if (!useEditData?.status) {
       ToastWarning('Status required')
     }
@@ -140,24 +152,16 @@ export function UseSuccessStory() {
         await CreateSuccessStories({
           variables: {
             data: {
-              // freelancingProfileUrl: state.editData?.freelancingProfileUrl,
               freelancingProfileUrl: useEditData?.freelancingProfileUrl,
-              // paymentProof: state.editData?.paymentProof,
               paymentProof: useEditData?.paymentProof,
-              // description: state.editData?.description,
               description: useEditData?.description,
-              // status: state.editData?.status,
               status: useEditData?.status,
-              // totalEarnedAmount: state.editData?.totalEarnedAmount,
               totalEarnedAmount: useEditData?.totalEarnedAmount,
-              // city: state.editData?.city,
               city: useEditData?.city,
-              // whyReject: state.editData?.whyReject,
               whyReject: useEditData?.whyReject,
               user: {
                 connect: [
                   {
-                    // id: state.editData?.user
                     id: useEditData?.user
                   }
                 ]
@@ -166,27 +170,13 @@ export function UseSuccessStory() {
 
           },
           onCompleted(data, cache) {
-            // dispatch({
-            //   type: "setModal",
-            //   payload: {
-            //     modalUpdateFlag: false,
-            //     openFormModal: false,
-            //   },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})
             ToastSuccess('Story Added')
           },
-          refetchQueries: [{ query: GET_SUCCESS_STORIES }],
         });
       } catch (error) {
-        // dispatch({
-        //   type: "setModal",
-        //   payload: {
-        //     openFormModal: false,
-        //   },
-        // });
         openModal(false)
         setLoader(false);
         ToastError(error.message);
@@ -230,31 +220,24 @@ export function UseSuccessStory() {
 
   const ctaUpdateHandler = async (event) => {
     event.preventDefault();
-    // if (!state.editData?.city) {
     if (!useEditData?.city) {
       ToastWarning('City name required')
     }
-    // else if (!state.editData?.freelancingProfileUrl) {
     else if (!useEditData?.freelancingProfileUrl) {
       ToastWarning('Freelancing profile url required')
     }
-    // else if (!state.editData?.paymentProof) {
     else if (!useEditData?.paymentProof) {
       ToastWarning('Payment proof required')
     }
-    // else if (!state.editData?.description) {
     else if (!useEditData?.description) {
       ToastWarning('Description required')
     }
-    // else if (!state.editData?.totalEarnedAmount) {
     else if (!useEditData?.totalEarnedAmount) {
       ToastWarning('Total earned amount required')
     }
-    // else if (!state.editData?.whyReject) {
     else if (!useEditData?.whyReject) {
       ToastWarning('Why reject required')
     }
-    // else if (!state.editData?.status) {
     else if (!useEditData?.status) {
       ToastWarning('Status required')
     }
@@ -267,27 +250,21 @@ export function UseSuccessStory() {
             },
             data: {
               freelancingProfileUrl: {
-                // set: state.editData?.freelancingProfileUrl
                 set: useEditData?.freelancingProfileUrl
               },
               paymentProof: {
-                // set: state.editData?.paymentProof
                 set: useEditData?.paymentProof
               },
               description: {
-                // set: state.editData?.description
                 set: useEditData?.description
               },
               status: {
-                // set: state.editData?.status
                 set: useEditData?.status
               },
               totalEarnedAmount: {
-                // set: state.editData?.totalEarnedAmount
                 set: useEditData?.totalEarnedAmount
               },
               city: {
-                // set: state.editData?.city
                 set: useEditData?.city
               },
               whyReject: {
@@ -303,19 +280,11 @@ export function UseSuccessStory() {
             },
           },
           onCompleted() {
-            // dispatch({
-            //   type: "setModal",
-            //   payload: {
-            //     modalUpdateFlag: false,
-            //     openFormModal: false,
-            //   },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})
             ToastSuccess('Story Updated')
           },
-          refetchQueries: [{ query: GET_SUCCESS_STORIES }],
         })
 
       } catch (error) {

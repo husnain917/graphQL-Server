@@ -544,6 +544,12 @@ export const UPDATE_SINGLE_EVENT = gql`
 mutation UpdateEvents($data: EventsUpdateInput!, $where: EventsWhereUniqueInput!) {
   updateEvents(data: $data, where: $where) {
     id
+    eventName
+    eventImage
+    eventDesc
+    eventDate
+    eventStatus
+    speakerId
   }
 } `
 

@@ -72,17 +72,34 @@ export function UseFaqs() {
 
   const [loader, setLoader] = useState(false);
 
-  //ADD STAFF
+  //ADD FAQ's
+  const AddFaqInCache = (cache, { data }) => {
+    const newFaq = data.createFaq
+    const faqs = cache.readQuery({
+      query: GET_FAQS,
+    })
+    console.log("Existing approvals", faqs.faqs);
 
-  let [CreateFaq, { loading: ADD_LOADING }] = useMutation(ADD_FAQS);
+    cache.writeQuery({
+      query: GET_FAQS,
+      data: {
+        faqs: [
+          ...faqs.faqs,
+          newFaq
+        ]
+      }
+    })
+  };
+
+  let [CreateFaq, { loading: ADD_LOADING }] = useMutation(ADD_FAQS, {
+    update: AddFaqInCache
+  });
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
-    // if (!state.editData?.faqQuestion) {
     if (!useEditData?.faqQuestion) {
       ToastWarning('Faq question required')
     }
-    // else if (!state.editData?.faqAnswer) {
     else if (!useEditData?.faqAnswer) {
       ToastWarning('Faq answer required')
     }
@@ -91,13 +108,10 @@ export function UseFaqs() {
         await CreateFaq({
           variables: {
             data: {
-              // faqQuestion: state.editData?.faqAnswer,
               faqQuestion: useEditData?.faqAnswer,
-              // faqAnswer: state.editData?.faqQuestion,
               faqAnswer: useEditData?.faqQuestion,
               course: {
                 connect: {
-                  // id: state.editData?.courseId
                   id: useEditData?.courseId
                 }
               },
@@ -107,27 +121,13 @@ export function UseFaqs() {
 
           },
           onCompleted(data, cache) {
-            // dispatch({
-            //   type: "setModal",
-            //   payload: {
-            //     modalUpdateFlag: false,
-            //     openFormModal: false,
-            //   },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})
             ToastSuccess('FAQ Added')
           },
-          refetchQueries: [{ query: GET_FAQS }],
         });
       } catch (error) {
-        // dispatch({
-        //   type: "setModal",
-        //   payload: {
-        //     openFormModal: false,
-        //   },
-        // });
         openModal(false)
         setLoader(false);
         ToastError(error.message);
@@ -171,11 +171,9 @@ export function UseFaqs() {
 
   const ctaUpdateHandler = async (event) => {
     event.preventDefault()
-    // if (!state.editData?.faqQuestion) {
     if (!useEditData?.faqQuestion) {
       ToastWarning('Faq question required')
     }
-    // else if (!state.editData?.faqAnswer) {
     else if (!useEditData?.faqAnswer) {
       ToastWarning('Faq answer required')
     }
@@ -188,16 +186,13 @@ export function UseFaqs() {
             },
             data: {
               faqQuestion: {
-                // set: state.editData?.faqQuestion
                 set: useEditData?.faqQuestion
               },
               faqAnswer: {
-                // set: state.editData?.faqAnswer
                 set: useEditData?.faqAnswer
               },
               course: {
                 connect: {
-                  // id: state.editData?.courseId
                   id: useEditData?.courseId
                 }
               },
@@ -208,19 +203,11 @@ export function UseFaqs() {
 
           },
           onCompleted() {
-            // dispatch({
-            //   type: "setModal",
-            //   payload: {
-            //     modalUpdateFlag: false,
-            //     openFormModal: false,
-            //   },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})
             ToastSuccess('FAQ Updated')
           },
-          refetchQueries: [{ query: GET_FAQS }],
         })
 
 

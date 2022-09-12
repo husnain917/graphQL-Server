@@ -142,7 +142,7 @@ export default function EditProfile() {
                                 useUserData?.address
                                 :
                                 useUserData?.address}
-                        value={address} ORGANIZ
+                        value={address}
                         onChange={(e) => setAddress(e.target.value)}
                     />
                 </Grid>

@@ -11,7 +11,7 @@ import {
   UPDATE_USER,
 } from "../../../lib/mutation/AllMutations";
 import {
-  GET_USERS
+  GET_USERS, GET_EDIT_DATA
 } from "../../../lib/queries/AllQueries";
 import FiltredData from '../../../constants/FiltredRoles'
 import { openModal, updateFlag, editData, valTel, editId, userData } from "../../../lib/reactivities/reactiveVarables";
@@ -114,17 +114,30 @@ export function UseAllStaff() {
   });
   console.log("in useAllStaff", refacteredData);
 
+
   //ADD STAFF
+  const AddUserInCache = (cache, { data }) => {
+    const newUser = data.register
+    const users = cache.readQuery({
+      query: GET_USERS,
+    })
 
-
-
-
+    cache.writeQuery({
+      query: GET_USERS,
+      data: {
+        users: [
+          ...users.users,
+          newUser
+        ]
+      }
+    })
+  };
 
   let [
     Register,
     {
       loading: ADD_LOADING
-    }] = useMutation(ADD_USER);
+    }] = useMutation(ADD_USER, { update: AddUserInCache });
   const ctaFormHandler = async (event) => {
 
     event.preventDefault();
@@ -171,20 +184,12 @@ export function UseAllStaff() {
             }
           },
           onCompleted() {
-            // dispatch({
-            //   type: "setModal",
-            //   payload: {
-            //     modalUpdateFlag: false,
-            //     openFormModal: false,
-            //   },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})
             valTel("")
             ToastSuccess('Staff Added')
           },
-          refetchQueries: [{ query: GET_USERS }],
 
 
           // update(cache, { data: { addItems } }) {
@@ -244,12 +249,6 @@ export function UseAllStaff() {
         // console.log('sami', queryResult);
 
       } catch (error) {
-        // dispatch({
-        //   type: "setModal",
-        //   payload: {
-        //     openFormModal: false,
-        //   },
-        // });
         openModal(false)
         ToastError(error.message);
       }
@@ -353,13 +352,6 @@ export function UseAllStaff() {
             },
           },
           onCompleted() {
-            // dispatch({
-            //   type: "setModal",
-            //   payload: {
-            //     modalUpdateFlag: false,
-            //     openFormModal: false,
-            //   },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})
@@ -367,7 +359,6 @@ export function UseAllStaff() {
             ToastSuccess('Staff Updated')
 
           },
-          refetchQueries: [{ query: GET_USERS }],
 
         })
 

@@ -54,7 +54,7 @@ export default function UseSpeakers() {
 
 
 
-    //GET STAFF 
+    //GET Speaker
 
     let { data, loading: GET_LOADING, error } = useQuery(GET_SPEAKERS);
     console.log("error", error);
@@ -73,9 +73,27 @@ export default function UseSpeakers() {
 
     const [loader, setLoader] = useState(false);
 
-    //ADD STAFF
+    //ADD Speakers
+    const AddSpeakerInCache = (cache, { data }) => {
+        const newSpeaker = data.createSpeaker
+        const speakers = cache.readQuery({
+            query: GET_SPEAKERS,
+        })
 
-    let [CreateSpeaker, { loading: ADD_LOADING }] = useMutation(ADD_SPEAKERS);
+        cache.writeQuery({
+            query: GET_SPEAKERS,
+            data: {
+                speakers: [
+                    ...speakers.speakers,
+                    newSpeaker
+                ]
+            }
+        })
+    };
+
+    let [CreateSpeaker, { loading: ADD_LOADING }] = useMutation(ADD_SPEAKERS, {
+        update: AddSpeakerInCache
+    });
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
@@ -99,13 +117,6 @@ export default function UseSpeakers() {
                         }
                     },
                     onCompleted(data, cache) {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData({})
@@ -113,15 +124,8 @@ export default function UseSpeakers() {
                         ToastSuccess('Speaker Added')
 
                     },
-                    refetchQueries: [{ query: GET_SPEAKERS }],
                 });
             } catch (error) {
-                // dispatch({
-                //     type: "setModal",
-                //     payload: {
-                //         openFormModal: false,
-                //     },
-                // });
                 openModal(false)
                 setLoader(false);
                 ToastError(error.message);
@@ -157,6 +161,7 @@ export default function UseSpeakers() {
 
     //Update staff
 
+
     let [UpdateSpeaker, { loading: UPDATE_LOADING }] = useMutation(UPDATE_SPEAKER);
 
     const ctaUpdateHandler = async (event) => {
@@ -190,20 +195,12 @@ export default function UseSpeakers() {
                         },
                     },
                     onCompleted() {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData("")
                         imageUrl("")
                         ToastSuccess('Speaker Updated')
                     },
-                    refetchQueries: [{ query: GET_SPEAKERS }],
                 })
 
             } catch (error) {

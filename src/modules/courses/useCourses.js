@@ -153,7 +153,26 @@ export function UseCourses() {
     openModal(true)
   };
 
-  let [CreateCourses, { loading: ADD_LOADING }] = useMutation(ADD_COURSES);
+  const AddCourseInCache = (cache, { data }) => {
+    const newCourse = data.createCourses
+    const courses = cache.readQuery({
+      query: GET_COURSES,
+    })
+
+    cache.writeQuery({
+      query: GET_COURSES,
+      data: {
+        findManyCourses: [
+          ...courses.findManyCourses,
+          newCourse
+        ]
+      }
+    })
+  };
+
+  let [CreateCourses, { loading: ADD_LOADING }] = useMutation(ADD_COURSES, {
+    update: AddCourseInCache
+  });
 
   const ctaFormHandler = async (event) => {
     event.preventDefault();
@@ -207,28 +226,14 @@ export function UseCourses() {
 
           },
           onCompleted(data, cache) {
-            // dispatch({
-            //   type: "setModal",
-            //   payload: {
-            //     modalUpdateFlag: false,
-            //     openFormModal: false,
-            //   },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})
             ToastSuccess('Course Added')
 
           },
-          refetchQueries: [{ query: GET_COURSES }],
         });
       } catch (error) {
-        // dispatch({
-        //   type: "setModal",
-        //   payload: {
-        //     openFormModal: false,
-        //   },
-        // });
         openModal(false)
         setLoader(false);
         ToastError(error.message);
@@ -335,19 +340,11 @@ export function UseCourses() {
           },
 
           onCompleted() {
-            // dispatch({
-            //   type: "setModal",
-            //   payload: {
-            //     modalUpdateFlag: false,
-            //     openFormModal: false,
-            //   },
-            // });
             openModal(false)
             updateFlag(false)
             editData({})
             ToastSuccess('Course Updated')
           },
-          refetchQueries: [{ query: GET_COURSES }],
         })
 
       } catch (error) {

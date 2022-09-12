@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useReactiveVar } from "@apollo/client";
+import { useQuery, useReactiveVar } from "@apollo/client";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -29,6 +29,7 @@ import CloudinaryFunction from "../../constants/CloudinaryFunction";
 import { blue } from "@mui/material/colors";
 import UserGroupModal from "../userGroupModal/UserGroupModal";
 import UserGroup from "../../modules/settings/userGroup/UserGroup";
+import { GET_EDIT_DATA } from "../../lib/queries/AllQueries";
 import { openModal, updateFlag, editData, userGroupData, imageUrl, valTel } from "../../lib/reactivities/reactiveVarables";
 
 
@@ -42,7 +43,15 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
   var openFormModal = useReactiveVar(openModal)
   var modalUpdateFlag = useReactiveVar(updateFlag)
   var useEditData = useReactiveVar(editData)
-  // console.log("Edit data in modal", useEditData);
+  var useValTel = useReactiveVar(valTel)
+  console.log("Edit data in modal", useEditData);
+  // const {
+  //   data: EDIT_DATA,
+  //   loading: EDIT_LOADING,
+  //   editError
+  // } = useQuery(GET_EDIT_DATA);
+  // const useEditData = EDIT_DATA.editData
+  // console.log("query data in form modal", useEditData);
 
   const handleChangePhone = (phone) => {
     valTel(phone)
@@ -389,7 +398,7 @@ export default function FormModal({ formInputs, ctaFormHandler, ctaUpdateHandler
                                                     <>
                                                       <FM.PhoneField
                                                         placeholder="Enter phone number"
-                                                        value={contact}
+                                                        value={modalUpdateFlag ? useEditData[item.name] : null}
                                                         onChange={phone => handleChangePhone(phone)}
                                                         country='pk'
                                                         inputStyle={{

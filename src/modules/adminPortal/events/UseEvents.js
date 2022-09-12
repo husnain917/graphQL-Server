@@ -33,7 +33,6 @@ export function UseEvents() {
         setDate(newDate);
         console.log(newDate);
     }
-    console.log(speakerList)
     const formInputs = [
         {
             label: "Name",
@@ -93,30 +92,45 @@ export function UseEvents() {
     const [loader, setLoader] = useState(false);
 
     //ADD STAFF
+    const AddEventInCache = (cache, { data }) => {
+        const newEvent = data.createEvents
+        console.log("data of new Event", newEvent);
+        console.log("cache", cache);
+        const events = cache.readQuery({
+            query: GET_EVENTS,
+        })
+        console.log("Existing Events", events.findManyEvents);
 
-    let [CreateEvents, { loading: ADD_LOADING }] = useMutation(ADD_EVENTS);
+        cache.writeQuery({
+            query: GET_EVENTS,
+            data: {
+                findManyEvents: [
+                    ...events.findManyEvents,
+                    newEvent
+                ]
+            }
+        })
+    };
+
+    let [CreateEvents, { loading: ADD_LOADING }] = useMutation(ADD_EVENTS, {
+        update: AddEventInCache
+    });
 
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
-        // if (!state.editData?.eventName) {
         if (!useEditData?.eventName) {
             ToastWarning('Event name required')
         }
-        // else if (!state.editData?.eventDesc) {
         else if (!useEditData?.eventDesc) {
             ToastWarning('Event description  required')
         }
-        // else if (!state.editData?.speakerId) {
         else if (!useEditData?.speakerId) {
             ToastWarning('Speaker Id required')
         }
-        // else if (state.imageUrl === "") {
         else if (useImageUrl === "") {
             ToastWarning('Image required')
-            // console.log(state.imageUrl);
         }
-        // else if (!state.editData?.eventStatus) {
         else if (!useEditData?.eventStatus) {
             ToastWarning('Status required')
         }
@@ -127,46 +141,28 @@ export function UseEvents() {
                     variables: {
 
                         data: {
-                            // eventName: state.editData?.eventName,
                             eventName: useEditData?.eventName,
-                            // eventDesc: state.editData?.eventDesc,
                             eventDesc: useEditData?.eventDesc,
-                            // eventImage: state?.imageUrl,
                             eventImage: useImageUrl,
                             eventDate: new Date(),
                             Speaker: {
                                 connect: {
-                                    // id: state.editData?.speakerId
                                     id: useEditData?.speakerId
                                 }
                             },
-                            // eventStatus: state.editData?.eventStatus
                             eventStatus: useEditData?.eventStatus
                         }
                     },
                     onCompleted(data, cache) {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData({})
                         imageUrl("")
                         ToastSuccess('Event Added')
                     },
-                    refetchQueries: [{ query: GET_EVENTS }],
+
                 });
             } catch (error) {
-                // dispatch({
-                //     type: "setModal",
-                //     payload: {
-                //         openFormModal: false,
-                //     },
-                // });
                 openModal(false)
                 setLoader(false);
                 ToastError(error.message);
@@ -210,15 +206,12 @@ export function UseEvents() {
 
     const ctaUpdateHandler = async (event) => {
         event.preventDefault()
-        // if (!state.editData?.eventName) {
         if (!useEditData?.eventName) {
             ToastWarning('Event name required')
         }
-        // else if (!state.editData?.eventDesc) {
         else if (!useEditData?.eventDesc) {
             ToastWarning('Event description  required')
         }
-        // else if (!state.editData?.speakerId) {
         else if (!useEditData?.speakerId) {
             ToastWarning('Speaker Id required')
         }
@@ -235,15 +228,12 @@ export function UseEvents() {
 
                         data: {
                             eventName: {
-                                // set: state.editData?.eventName
                                 set: useEditData?.eventName
                             },
                             eventDesc: {
-                                // set: state.editData?.eventDesc
                                 set: useEditData?.eventDesc
                             },
                             eventImage: {
-                                // set: state?.imageUrl,
                                 set: useImageUrl,
                             },
                             eventDate: {
@@ -251,32 +241,23 @@ export function UseEvents() {
                             },
                             Speaker: {
                                 connect: {
-                                    // id: state.editData?.speakerId
                                     id: useEditData?.speakerId
                                 }
                             },
                             eventStatus: {
-                                // set: state.editData?.eventStatus
                                 set: useEditData?.eventStatus
                             }
                         }
 
                     },
                     onCompleted() {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData({})
                         imageUrl("")
                         ToastSuccess('Event Updated')
                     },
-                    refetchQueries: [{ query: GET_EVENTS }],
+
                 })
 
             } catch (error) {

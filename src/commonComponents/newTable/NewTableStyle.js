@@ -2,19 +2,19 @@
 import { styled, alpha } from '@mui/material/styles';
 import { Avatar, Box, Button, Checkbox, Paper, TableContainer, TableHead, Toolbar } from '@mui/material';
 import { Close, Delete, Edit } from '@mui/icons-material'
-import { TableRow, Table, TableCell , } from '@mui/material';
+import { TableRow, Table, TableCell, } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { colors } from '../../constants/Color';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import AddIcon from '@mui/icons-material/Add';
-import  { tableCellClasses } from "@mui/material/TableCell";
+import { tableCellClasses } from "@mui/material/TableCell";
 export const NewTableStyle = {
     Paper: styled(Paper)(() => ({
-    width: '100%',
-    mb: 2 ,
-    borderRadius: 16
+        width: '100%',
+        mb: 2,
+        borderRadius: 16
     })),
     SelectedContainer: styled('div')(() => ({
         display: 'flex'
@@ -63,38 +63,38 @@ export const NewTableStyle = {
     })),
     EmailNameContainer: styled('div')(({ theme }) => ({
         marginLeft: 12,
-        
+
     })),
     PTime: styled('p')(({ theme }) => ({
         margin: 0,
-        
+
     })),
     PTagName: styled('p')(({ theme }) => ({
         fontSize: '14px',
         margin: 0,
         fontWeight: '500',
         marginBottom: 4,
-        
+
     })),
     PTagEmail: styled('p')(({ theme }) => ({
         fontSize: '12px',
         margin: 0,
         fontWeight: '500',
         color: '#96A0B5',
-        
+
     })),
     Image: styled('img')(({ theme }) => ({
         height: "50px",
         width: "100px",
-        
+
     })),
     AvatarBox: styled('div')(({ theme }) => ({
         display: 'flex',
-        alignItems: 'center' 
-        
+        alignItems: 'center'
+
     })),
-    Avatar: styled(Avatar)(({ bgColor , Color }) => ({
-        backgroundColor: `${bgColor}`, 
+    Avatar: styled(Avatar)(({ bgColor, Color }) => ({
+        backgroundColor: `${bgColor}`,
         color: `${Color}`
     })),
 
@@ -114,7 +114,8 @@ export const NewTableStyle = {
     CloseIcon: styled(Close)({
         color: '#fff',
         fontSize: 22,
-        marginTop: 2    }),
+        marginTop: 2
+    }),
     SearchIcon: styled(SearchIcon)(() => ({
         fontSize: 27,
         color: '#1E86FF'
@@ -149,11 +150,11 @@ export const NewTableStyle = {
         alignItems: 'center',
     })),
     PaginationText: styled('p')(() => ({
-        margin: 0 ,
+        margin: 0,
         color: '#96A0B5',
         marginLeft: 8,
         fontSize: 14,
-    })), 
+    })),
     SearchBox: styled(Box)(({ theme }) => ({
         display: 'flex',
         alignItems: 'center',
@@ -177,7 +178,7 @@ export const NewTableStyle = {
     })),
     Role: styled('div')(({ bgColor, Color }) => ({
         borderRadius: '8px',
-        backgroundColor: `${bgColor}`, 
+        backgroundColor: `${bgColor}`,
         color: `${Color}`,
         border: 'none',
         width: 78,

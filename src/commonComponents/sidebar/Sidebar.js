@@ -71,14 +71,6 @@ function Sidebar(props) {
               })
             }
             <SidebarStyle.ListItemTextTag primary={items?.moduleName} Active={location?.pathname === items?.moduleUrl || dropDownOpen === items.module_id} />
-            {
-              items?.collapse === 'true' ?
-                dropDownOpen === items.module_id ?
-                  <SidebarStyle.ListItemIconTag Active><KeyboardArrowDownIcon /></SidebarStyle.ListItemIconTag>
-                  :
-                  <SidebarStyle.ListItemIconTag ><KeyboardArrowRightIcon /></SidebarStyle.ListItemIconTag>
-                : null
-            }
           </ListItem>
         </SidebarStyle.DomLink>
         {
@@ -110,7 +102,14 @@ function Sidebar(props) {
                                 }
                               })
                             }
-                            <SidebarStyle.ListItemTextTagForDropDown primary={item?.pageName} Active={location?.pathname === item?.pageURL} />
+                            <>
+                              {
+                                item?.pageName === 'Attandance' ?
+                                  'Attendance'
+                                  :
+                                  <SidebarStyle.ListItemTextTagForDropDown primary={item?.pageName} />
+                              }
+                            </>
                           </ListItem>
                         </SidebarStyle.DomLink>
                         //   )
@@ -210,8 +209,10 @@ function Sidebar(props) {
       <SidebarStyle.Main component="main" open={open} >
         <SidebarStyle.DrawerHeader />
         {/* {props.children} */}
-        <Outlet />
-        <Footer />
+        <SidebarStyle.childDiv>
+          <Outlet />
+          <Footer />
+        </SidebarStyle.childDiv>
       </SidebarStyle.Main>
     </SidebarStyle.Box>
   );

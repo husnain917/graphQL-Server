@@ -73,9 +73,27 @@ export default function UseLecture() {
 
     const [loader, setLoader] = useState(false);
 
-    //ADD STAFF
+    //ADD Lecture
+    const AddLectureInCache = (cache, { data }) => {
+        const newLecture = data.createLectures
+        const lectures = cache.readQuery({
+            query: GET_LECTURES,
+        })
 
-    let [CreateLectures, { loading: ADD_LOADING }] = useMutation(ADD_LECTURES);
+        cache.writeQuery({
+            query: GET_LECTURES,
+            data: {
+                findManyLectures: [
+                    ...lectures.findManyLectures,
+                    newLecture
+                ]
+            }
+        })
+    };
+
+    let [CreateLectures, { loading: ADD_LOADING }] = useMutation(ADD_LECTURES, {
+        update: AddLectureInCache
+    });
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
@@ -105,28 +123,14 @@ export default function UseLecture() {
 
                     },
                     onCompleted(data, cache) {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData({})
                         ToastSuccess('Lecture Added')
 
                     },
-                    refetchQueries: [{ query: GET_LECTURES }],
                 });
             } catch (error) {
-                // dispatch({
-                //     type: "setModal",
-                //     payload: {
-                //         openFormModal: false,
-                //     },
-                // });
                 openModal(false)
                 setLoader(false);
 
@@ -202,19 +206,11 @@ export default function UseLecture() {
                         }
                     },
                     onCompleted() {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData({})
                         ToastSuccess('Course Updated')
                     },
-                    refetchQueries: [{ query: GET_COURSES }],
                 })
 
             } catch (error) {

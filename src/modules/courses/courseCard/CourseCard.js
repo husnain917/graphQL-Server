@@ -13,6 +13,7 @@ import moment from 'moment';
 import UseWindowDimensions from "../../../customHooks/UseWindowDimensions";
 import { NewTableStyle } from "../../../commonComponents/newTable/NewTableStyle";
 import AddIcon from "@mui/icons-material/Add";
+import { Link } from 'react-router-dom';
 
 
 
@@ -91,38 +92,6 @@ export default function CourseCard({ data, title, formInputs, ctaFormHandler, ct
                                             </Card>
                                         </Grid>
                                     </>
-                                    // <Card sx={{ width: 270, margin: 2, borderRadius: 2,  }}>
-                                    //     <CardMedia
-                                    //         component="img"
-                                    //         height="140"
-                                    //         image="https://robohash.org/random.png"
-                                    //         alt="Course_pic"
-                                    //     />
-                                    //     <CardContent >
-                                    //         <Box sx={{
-                                    //             display: "flex",
-                                    //             justifyContent: "space-between",
-                                    //             alignItems: "center",
-                                    //         }}>
-                                    //             <Typography gutterBottom variant="h6" component="div">
-                                    //                 
-                                    //             </Typography>
-                                    //             
-                                    //         </Box>
-
-                                    //         <Typography variant="body2" color="text.secondary">
-                                    //             
-                                    //         </Typography>
-                                    //         <Typography variant="body2" color="text.secondary">
-                                    //             
-                                    //         </Typography>
-                                    //     </CardContent>
-                                    //     <CardActions>
-                                    //         <Tooltip title="Update" sx={{ marginTop: -3 }}>
-                                    //             
-                                    //         </Tooltip>
-                                    //     </CardActions>
-                                    // </Card>
                                 );
                             })
                         }
@@ -135,6 +104,6 @@ export default function CourseCard({ data, title, formInputs, ctaFormHandler, ct
                 ctaFormHandler={ctaFormHandler}
                 ctaUpdateHandler={ctaUpdateHandler}
             />
-        </Paper>
+        </Paper >
     )
 }

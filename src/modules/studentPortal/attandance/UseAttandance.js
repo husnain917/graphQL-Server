@@ -69,9 +69,27 @@ export default function UseAttandance() {
 
     const [loader, setLoader] = useState(false);
 
-    //ADD STAFF
+    //ADD Attendance
+    const AddAttendenceInCache = (cache, { data }) => {
+        const newAttendence = data.createAttendence
+        const attendences = cache.readQuery({
+            query: GET_ATTANDANCE,
+        })
 
-    let [CreateAttendence, { loading: ADD_LOADING }] = useMutation(ADD_ATTANDANCE);
+        cache.writeQuery({
+            query: GET_ATTANDANCE,
+            data: {
+                attendences: [
+                    ...attendences.attendences,
+                    newAttendence
+                ]
+            }
+        })
+    };
+
+    let [CreateAttendence, { loading: ADD_LOADING }] = useMutation(ADD_ATTANDANCE, {
+        update: AddAttendenceInCache
+    });
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
@@ -97,28 +115,14 @@ export default function UseAttandance() {
                         }
                     },
                     onCompleted(data, cache) {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData({})
                         ToastSuccess('Attandance marked')
 
                     },
-                    refetchQueries: [{ query: GET_ATTANDANCE }],
                 });
             } catch (error) {
-                // dispatch({
-                //     type: "setModal",
-                //     payload: {
-                //         openFormModal: false,
-                //     },
-                // });
                 openModal(false)
                 setLoader(false);
                 ToastError(error.message);
@@ -192,19 +196,11 @@ export default function UseAttandance() {
 
                     },
                     onCompleted() {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData({})
                         ToastSuccess('Attandance Updated')
                     },
-                    refetchQueries: [{ query: GET_ATTANDANCE }],
                 })
 
             } catch (error) {

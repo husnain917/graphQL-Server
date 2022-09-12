@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { editData } from "./reactivities/reactiveVarables";
+import { editData, checkAuth } from "./reactivities/reactiveVarables";
 const httpLink = createHttpLink({
     // uri: 'http://localhost:3000/graphql',
     uri: "https://training-portal-backend.herokuapp.com/graphql",
@@ -15,17 +15,17 @@ const authLink = setContext(async (_, { headers }) => {
             ...headers,
             authorization: token,
             organizationKey:
-                "1314a8b6f240f6d5d0689f878a7e672370611fd8f81e7162ce9447ca2246dab7",
+                "1bb54554831e4d61d2765760e8ce395a9b9f2d3239152768f8c589f03be5378c",
         },
     };
 });
 
-// const cache= new InMemoryCache({
+// const cache = new InMemoryCache({
 //     typePolicies: {
 //         Query: {
 //             fields: {
 //                 editData: {
-//                     read(){
+//                     read() {
 //                         return editData()
 //                     }
 //                 }

@@ -68,10 +68,10 @@ export default function CreateOrganization() {
             id: "email",
             Label: "Email",
           },
-          {
-            id: "cnic",
-            Label: "CNIC",
-          },
+          // {
+          //   id: "cnic",
+          //   Label: "CNIC",
+          // },
           {
             id: "contact",
             Label: "Contact",
@@ -98,9 +98,9 @@ export default function CreateOrganization() {
           {
             key: "email",
           },
-          {
-            key: "cnic",
-          },
+          // {
+          //   key: "cnic",
+          // },
           {
             key: "contact",
           },

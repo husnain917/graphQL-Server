@@ -77,9 +77,7 @@ export function UseEditProfile() {
                     },
                     onCompleted() {
                         ToastSuccess('User Updated')
-                        // navigate('/profile/id')
                     },
-                    refetchQueries: [{ query: GET_USERS }],
                 });
             } catch (error) {
                 console.log(error.message);

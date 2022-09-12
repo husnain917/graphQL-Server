@@ -10,7 +10,7 @@ export function UseUserGroup() {
 
 
 
-    let [CreateUserGroup, { loading: ADD_LOADING }] = useMutation(ADD_USER_GROUP);
+
     const [userName, setUserName] = useState('')
     const [userGroupRole, setuserGroupRole] = useState('')
     const [email, setEmail] = useState('')
@@ -50,7 +50,28 @@ export function UseUserGroup() {
         }
         console.log("allData", allData);
     };
-    // console.log(state?.user?.organizationLogin?.id)
+
+    // Add User Group
+    const AddUserGroupInCache = (cache, { data }) => {
+        const newUserGroup = data.createUserGroup
+        const userGroups = cache.readQuery({
+            query: GET_USER_GROUP,
+        })
+
+        cache.writeQuery({
+            query: GET_USER_GROUP,
+            data: {
+                userGroups: [
+                    ...userGroups.userGroups,
+                    newUserGroup
+                ]
+            }
+        })
+    };
+
+    let [CreateUserGroup, { loading: ADD_LOADING }] = useMutation(ADD_USER_GROUP, {
+        update: AddUserGroupInCache
+    });
     const ctaHandler = async (event) => {
 
         // event.preventDefault();
@@ -88,17 +109,10 @@ export function UseUserGroup() {
                         setUserName('')
 
                     },
-                    refetchQueries: [{ query: GET_USER_GROUP }],
                 });
             } catch (error) {
-                // dispatch({
-                //     type: "setModal",
-                //     payload: {
-                //         openFormModal: false,
-                //     },
-                // });
                 openModal(false)
-                // ToastError(error.message);
+                ToastError(error.message);
                 console.log(error.message)
 
             }
@@ -136,11 +150,9 @@ export function UseUserGroup() {
         }] = useMutation(UPDATE_USER_GROUP);
 
     const ctaUpdateHandler = async () => {
-        // if (state?.editUserGroupData?.name === '') {
         if (useUserGroupData?.name === '') {
             ToastWarning('User Name Required')
         }
-        // else if (state?.editUserGroupData?.role === '') {
         else if (useUserGroupData?.role === '') {
             ToastWarning('User Group Role Required')
         }
@@ -182,18 +194,10 @@ export function UseUserGroup() {
                         userGroupData({})
 
                     },
-                    refetchQueries: [{ query: GET_USER_GROUP }],
                 });
-                // console.log(state.editData);
             } catch (error) {
-                // dispatch({
-                //     type: "setModal",
-                //     payload: {
-                //         openFormModal: false,
-                //     },
-                // });
                 openModal(false)
-                // ToastError(error.message);
+                ToastError(error.message);
                 console.log(error.message)
 
             }

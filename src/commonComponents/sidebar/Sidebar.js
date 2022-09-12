@@ -210,8 +210,10 @@ function Sidebar(props) {
       <SidebarStyle.Main component="main" open={open} >
         <SidebarStyle.DrawerHeader />
         {/* {props.children} */}
-        <Outlet />
-        <Footer />
+        <SidebarStyle.childDiv>
+          <Outlet />
+          <Footer />
+        </SidebarStyle.childDiv>
       </SidebarStyle.Main>
     </SidebarStyle.Box>
   );

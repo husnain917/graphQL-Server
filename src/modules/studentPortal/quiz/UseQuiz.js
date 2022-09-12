@@ -70,9 +70,27 @@ export default function UseQuiz() {
     console.log("refacteredData in quiz section", refacteredData);
 
 
-    //ADD STAFF
+    //ADD Quiz
+    const AddQuizInCache = (cache, { data }) => {
+        const newQuiz = data.createCourseQuiz
+        const quizs = cache.readQuery({
+            query: GET_QUIZ,
+        })
 
-    let [CreateCourseQuiz, { loading: ADD_LOADING }] = useMutation(ADD_QUIZ);
+        cache.writeQuery({
+            query: GET_QUIZ,
+            data: {
+                courseQuizs: [
+                    ...quizs.courseQuizs,
+                    newQuiz
+                ]
+            }
+        })
+    };
+
+    let [CreateCourseQuiz, { loading: ADD_LOADING }] = useMutation(ADD_QUIZ, {
+        update: AddQuizInCache
+    });
 
     const ctaFormHandler = async (event) => {
         event.preventDefault();
@@ -102,28 +120,14 @@ export default function UseQuiz() {
 
                     },
                     onCompleted(data, cache) {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData({})
                         ToastSuccess('Quiz Added')
 
                     },
-                    refetchQueries: [{ query: GET_QUIZ }],
                 });
             } catch (error) {
-                // dispatch({
-                //     type: "setModal",
-                //     payload: {
-                //         openFormModal: false,
-                //     },
-                // });
                 openModal(false)
                 ToastError(error.message);
 
@@ -195,19 +199,11 @@ export default function UseQuiz() {
 
                     },
                     onCompleted() {
-                        // dispatch({
-                        //     type: "setModal",
-                        //     payload: {
-                        //         modalUpdateFlag: false,
-                        //         openFormModal: false,
-                        //     },
-                        // });
                         openModal(false)
                         updateFlag(false)
                         editData({})
                         ToastSuccess('Quiz Updated')
                     },
-                    refetchQueries: [{ query: GET_QUIZ }],
                 })
 
             } catch (error) {

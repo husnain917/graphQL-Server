@@ -124,7 +124,7 @@ export const NewTableStyle = {
     })),
     EditIcon: styled(Edit)(({ theme }) => ({
         color: '#96A0B5',
-        
+        marginRight : '300%'
     
     })),
     IconDiv: styled('div')(() => ({

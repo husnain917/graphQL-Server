@@ -19,7 +19,8 @@ export default function Course() {
       // ctaDeleteHandler,
       ctaUpdateHandler,
       formInputs,
-      handleClickOpen
+      handleClickOpen,
+      useTabsPermission
     },
   ] = UseCourses();
   if (
@@ -32,113 +33,154 @@ export default function Course() {
     return <CommonTableLoader />;
   }
   return (
-        <CourseCard title="Courses" data={refacteredData} formInputs={formInputs} handleClickOpen={handleClickOpen} ctaFormHandler={ctaFormHandler} ctaUpdateHandler={ctaUpdateHandler}/>
-      
 
-    // {/*
-    //   <>
-    //  <NewTable
-    //     title={'Courses'}
-    //     tableHeadings={[
-    //     {
-    //         id: "courseName",
-    //         Label: "Course Name"
-    //     },
-    //     {
-    //         id: "description",
-    //         Label: "Description"
-    //     },
-    //     {
-    //         id: "introduction",
-    //         Label: "Introduction"
-    //     },
-    //     {
-    //         id: "instructorId",
-    //         Label: "Instructor Id"
-    //     },
-    //     {
-    //         id: "categoryId",
-    //         Label: "Category Id"
-    //     },
-    //     {
-    //       id: "price",
-    //       Label: "Price"
-    //     },
-    //     {
-    //       id: "status",
-    //       Label: "Status"
-    //     },
-    //     {
-    //         id: "action",
-    //         Label: "Action"
-    //     },
-    //     ]}
-    //     printedKeys={[
-    //       {
-    //         key: "courseName",
-    //       },
-    //       {
-    //         key: "courseDesc",
-    //       },
-    //       {
-    //         key: "courseIntro",
-    //       },
-    //       {
-    //         key: "instructorId",
-    //       },
-    //       {
-    //         key: "courseCategoryId",
-    //       },
-    //       {
-    //         key: "coursePrice",
-    //       },
-    //       {
-    //         key: "courseStatus",
-    //       },
-    //       {
-    //         type: "crud",
-    //       },
-    //       // {
-    //       //   key: "postUrl",
-    //       //   type: "image",
-    //       // },
-    //       // {
-    //       //   key: "postDesc",
-    //       //   type: "editor",
-    //       // },
-    //     ]}
-    //     formInputs={formInputs}
-    //     // {[
-    //       // {
-    //       //   type: "editor",
-    //       //   name: "editor",
-    //       // },
-
-
-    //       // {
-    //       //   label: 'CategoryName',
-    //       //   name: 'categoryName',
-    //       //   type: 'text',
-    //       // },
-    //       // {
-    //       //   label: 'createrName',
-    //       //   name: 'createrName',
-    //       //   type: 'text',
-    //       // }
-    //     // ]}
-    //     filterdata={{
-    //       key: "role",
-    //       filterTag: ['All', 'PUBLISH', 'UNPUBLISH'],
-    //     }}
-    //     data={refacteredData}
-    //     ctaFormHandler={ctaFormHandler}
-    //     // ctaDeleteHandler={ctaDeleteHandler}
-    //     ctaUpdateHandler={ctaUpdateHandler}
-
-    // /> 
-    // </>
-    // */}
+    <>
+      {
+        useTabsPermission?.map((items) => {
+          // console.log(items, "this is a pages data");
+          return (
+            <>
+              {
+                items?.moduleName === "Courses" ?
+                  <>
+                    {
+                      items?.pages?.map((item) => {
+                        // console.log(item, "this is a pages data for access");
+                        return (
+                          <>
+                            {
+                              item?.pageName === "Courses" ?
+                                <>
+                                  {
+                                    item?.FullAccess === true ?
+                                      <>
+                                        <NewTable
+                                          title={'Courses'}
+                                          tableHeadings={[
+                                            {
+                                              id: "courseName",
+                                              Label: "Course Name"
+                                            },
+                                            {
+                                              id: "description",
+                                              Label: "Description"
+                                            },
+                                            {
+                                              id: "introduction",
+                                              Label: "Introduction"
+                                            },
+                                            // {
+                                            //   id: "instructorId",
+                                            //   Label: "Instructor Id"
+                                            // },
+                                            // {
+                                            //   id: "categoryId",
+                                            //   Label: "Category Id"
+                                            // },
+                                            {
+                                              id: "price",
+                                              Label: "Price"
+                                            },
+                                            {
+                                              id: "status",
+                                              Label: "Status"
+                                            },
+                                            {
+                                              id: "action",
+                                              Label: "Action"
+                                            },
+                                          ]}
+                                          printedKeys={[
+                                            {
+                                              key: "courseName",
+                                            },
+                                            {
+                                              key: "courseDesc",
+                                            },
+                                            {
+                                              key: "courseIntro",
+                                            },
+                                            // {
+                                            //   key: "instructorId",
+                                            // },
+                                            // {
+                                            //   key: "courseCategoryId",
+                                            // },
+                                            {
+                                              key: "coursePrice",
+                                            },
+                                            {
+                                              key: "courseStatus",
+                                            },
+                                            {
+                                              type: "crud",
+                                            },
+                                            // {
+                                            //   key: "postUrl",
+                                            //   type: "image",
+                                            // },
+                                            // {
+                                            //   key: "postDesc",
+                                            //   type: "editor",
+                                            // },
+                                          ]}
+                                          formInputs={formInputs}
+                                          // {[
+                                          //   {
+                                          //     type: "editor",
+                                          //     name: "editor",
+                                          //   },
 
 
+                                          //   {
+                                          //     label: 'CategoryName',
+                                          //     name: 'categoryName',
+                                          //     type: 'text',
+                                          //   },
+                                          //   {
+                                          //     label: 'createrName',
+                                          //     name: 'createrName',
+                                          //     type: 'text',
+                                          //   }
+                                          // ]}
+                                          filterdata={{
+                                            key: "role",
+                                            filterTag: ['All', 'PUBLISH', 'UNPUBLISH'],
+                                          }}
+                                          data={refacteredData}
+                                          ctaFormHandler={ctaFormHandler}
+                                          // ctaDeleteHandler={ctaDeleteHandler}
+                                          ctaUpdateHandler={ctaUpdateHandler}
+                                        />
+                                      </>
+                                      :
+                                      <>
+                                        <CourseCard
+                                          title="Courses"
+                                          data={refacteredData}
+                                          formInputs={formInputs}
+                                          handleClickOpen={handleClickOpen}
+                                          ctaFormHandler={ctaFormHandler}
+                                          ctaUpdateHandler={ctaUpdateHandler} />
+                                      </>
+                                  }
+                                </>
+                                :
+                                <></>
+                            }
+                          </>
+                        )
+                      })
+                    }
+                  </>
+                  :
+                  <></>
+              }
+            </>
+          )
+        })
+      }
+    </>
   );
 }
+

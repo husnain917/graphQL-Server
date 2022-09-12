@@ -18,7 +18,7 @@ import { CASHED_COURSES, GET_COURSES } from "../../lib/queries/AllQueries";
 import { Slide, toast } from "react-toastify";
 import FiltredData from "../../constants/FiltredRoles";
 import { useApolloClient } from "@apollo/client";
-import { openModal, updateFlag, editData, editId, userData } from "../../lib/reactivities/reactiveVarables";
+import { openModal, updateFlag, editData, editId, userData,tabsPersmission } from "../../lib/reactivities/reactiveVarables";
 
 
 
@@ -32,9 +32,11 @@ export function UseCourses() {
   const useEditData = useReactiveVar(editData)
   const useEditId = useReactiveVar(editId)
   const useUserData = useReactiveVar(userData)
+  const useTabsPermission = useReactiveVar(tabsPersmission)
+  // console.log(useTabsPermission,'my data all ');
 
-  console.log("Edit data in courses", useEditData);
-  console.log("Edit id in courses", useEditId);
+  // console.log("Edit data in courses", useEditData);
+  // console.log("Edit id in courses", useEditId);
   //GET_CATEGORIES
   const [{ teacher, CATEGORY_DATA }] = FiltredData()
   // const client = useApolloClient()
@@ -365,7 +367,8 @@ export function UseCourses() {
       //,
       ctaUpdateHandler,
       formInputs,
-      handleClickOpen
+      handleClickOpen,
+      useTabsPermission
     },
   ];
 }

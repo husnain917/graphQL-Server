@@ -33,10 +33,10 @@ export default function CourseBatch() {
                     id: "name",
                     Label: "Name"
                 },
-                {
-                    id: "courseId",
-                    Label: "Course Id"
-                },
+                // {
+                //     id: "courseId",
+                //     Label: "Course Id"
+                // },
                 {
                     id: "courseName",
                     Label: "Course Name"
@@ -63,9 +63,9 @@ export default function CourseBatch() {
                 {
                     key: "name",
                 },
-                {
-                    key: 'coursesId',
-                },
+                // {
+                //     key: 'coursesId',
+                // },
                 {
                     key: 'courseName'
                 },

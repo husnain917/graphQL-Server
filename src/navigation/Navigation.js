@@ -183,12 +183,12 @@ export default function Navigation() {
 
 
                     {/* students routes */}
-                    <Route path='/myCourses'
+                    {/* <Route path='/myCourses'
                         element={
                             <PrivateRouting isAllowed={useCheckAuth}>
                                 <MyCourse />
                             </PrivateRouting>}
-                    />
+                    /> */}
                     <Route path='/assignments'
                         element={
                             <PrivateRouting isAllowed={useCheckAuth}>
@@ -223,12 +223,12 @@ export default function Navigation() {
                                 <CourseCategory />
                             </PrivateRouting>}
                     />
-                    <Route path='/lectures'
+                    {/* <Route path='/lectures'
                         element={
                             <PrivateRouting isAllowed={useCheckAuth}>
                                 <Lecture />
                             </PrivateRouting>}
-                    />
+                    /> */}
                     <Route path='/fileOrAssignment'
                         element={
                             <PrivateRouting isAllowed={useCheckAuth}>

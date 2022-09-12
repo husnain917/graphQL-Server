@@ -13,6 +13,9 @@ import moment from "moment";
 import UseCommonCard from "./UseCommonCard";
 import FormModal from "../formModal/FormModal";
 import { Edit } from "@mui/icons-material";
+import UseWindowDimensions from "../../customHooks/UseWindowDimensions";
+import { NewTableStyle } from "../../commonComponents/newTable/NewTableStyle";
+import AddIcon from "@mui/icons-material/Add";
 
 export default function CommonCard({
   title,
@@ -23,6 +26,7 @@ export default function CommonCard({
 }) {
   const { handleClickOpen, ctaEditButtonHandler } = UseCommonCard();
   console.log("data in common card", data);
+  const { width } = UseWindowDimensions();
 
   return (
     <>
@@ -34,16 +38,27 @@ export default function CommonCard({
             alignItems: "center",
           }}
         >
-          <h2>{title}</h2>
+          <Typography variant="h6">{title}</Typography>
           <div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleClickOpen}
-              handleClickOpen={handleClickOpen}
-            >
-              +Add
-            </Button>
+            {width > 600 ? (
+              <NewTableStyle.AddButton
+                variant="outlined"
+                startIcon={<AddIcon />}
+                onClick={handleClickOpen}
+              >
+                Add
+              </NewTableStyle.AddButton>
+            ) : (
+              <IconButton
+                color="inherit"
+                aria-label="search"
+                disableFocusRipple
+                disableRipple
+                onClick={handleClickOpen}
+              >
+                <NewTableStyle.AddIcon />
+              </IconButton>
+            )}
           </div>
         </Toolbar>
         <Divider />
@@ -85,9 +100,9 @@ export default function CommonCard({
                       >
                         <Edit sx={{ color: "#96A0B5" }} />
                       </IconButton>
-                      
+
                     </Tooltip>
-                 
+
                   </CardActions>
                 </Card>
               );

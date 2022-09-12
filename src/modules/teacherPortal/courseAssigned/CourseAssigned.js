@@ -48,8 +48,8 @@ export default function CourseAssigned() {
           Label: 'Courses'
         },
         {
-          id: 'courseId',
-          Label: 'Course Id'
+          // id: 'courseId',
+          // Label: 'Course Id'
         },
       ]}
       ctaFormHandler={ctaFormHandler}
@@ -68,9 +68,9 @@ export default function CourseAssigned() {
         {
           key: 'courses'
         },
-        {
-          key: 'courseId'
-        },
+        // {
+        //   key: 'courseId'
+        // },
       ]}
       formInputs={formInputs}
       filterdata={{

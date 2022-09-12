@@ -31,10 +31,10 @@ export default function Lecture() {
     <NewTable
       title={'Lectures'}
       tableHeadings={[
-        {
-          id: 'courseId',
-          Label: 'Course Id'
-        },
+        // {
+        //   id: 'courseId',
+        //   Label: 'Course Id'
+        // },
         {
           id: 'lectureTitle',
           Label: 'Lecture Title',
@@ -62,9 +62,9 @@ export default function Lecture() {
       // ctaDeleteHandler={ctaDeleteHandler}
       ctaUpdateHandler={ctaUpdateHandler}
       printedKeys={[
-        {
-          key: 'coursesId'
-        },
+        // {
+        //   key: 'coursesId'
+        // },
         {
           key: "lectureTitle",
         },
